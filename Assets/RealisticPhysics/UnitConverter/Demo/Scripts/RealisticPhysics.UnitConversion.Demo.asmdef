@@ -1,0 +1,16 @@
+{
+    "name": "RealisticPhysics.UnitConversion.Demo",
+    "rootNamespace": "RealisticPhysics.UnitConversion.Demo",
+    "references": [
+        "RealisticPhysics.UnitConversion"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

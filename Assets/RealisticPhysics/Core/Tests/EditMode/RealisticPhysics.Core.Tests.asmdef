@@ -1,0 +1,21 @@
+{
+    "name": "RealisticPhysics.Core.Tests",
+    "rootNamespace": "RealisticPhysics.Core.Tests",
+    "references": [
+        "RealisticPhysics.Core"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

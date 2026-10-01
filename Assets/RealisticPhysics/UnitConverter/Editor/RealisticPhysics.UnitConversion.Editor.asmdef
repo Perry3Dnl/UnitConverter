@@ -1,0 +1,20 @@
+{
+    "name": "RealisticPhysics.UnitConversion.Editor",
+    "rootNamespace": "RealisticPhysics.UnitConversion.Editor",
+    "references": [
+        "RealisticPhysics.Core",
+        "RealisticPhysics.Core.Editor",
+        "RealisticPhysics.UnitConversion"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
