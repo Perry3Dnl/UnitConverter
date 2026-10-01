@@ -5,9 +5,9 @@ A unit family is a quantity type such as Length, Mass, Power, or Pressure.
 Each family should have:
 
 ```text
-src/RealisticPhysics.UnitConversion/[Family]/UnitConverter[Family].cs
-src/RealisticPhysics.UnitConversion/[Family]/UnitConverter[Family]Extensions.cs
-src/RealisticPhysics.UnitConversion/[Family]/[System]/UnitConverter[System][Family].cs
+src/UnitConverter/[Family]/UnitConverter[Family].cs
+src/UnitConverter/[Family]/UnitConverter[Family]Extensions.cs
+src/UnitConverter/[Family]/[System]/UnitConverter[System][Family].cs
 ```
 
 ## Required Pieces
@@ -53,6 +53,6 @@ Add extension overloads for common value types.
 
 ### 5. Catalog, documentation and tests
 
-Update `UnitConverterCatalog` and the supported-family documentation. Add known-value, from-base, and round-trip tests under `tests/RealisticPhysics.UnitConversion.Tests`. Update the coverage counts in `UnitConverterAssemblyTests` when deliberately expanding the supported set.
+Update `UnitConverterCatalog` and the supported-family documentation. Add known-value, from-base, and round-trip tests under `tests/UnitConverter.Tests`. Update the coverage counts in `UnitConverterAssemblyTests` when deliberately expanding the supported set.
 
 Run the NUnit suite and package installation check described in [Testing](Testing.md).

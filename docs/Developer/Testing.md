@@ -3,7 +3,7 @@
 Run the tests with the .NET 10 SDK:
 
 ```sh
-dotnet test tests/RealisticPhysics.UnitConversion.Tests/RealisticPhysics.UnitConversion.Tests.csproj --configuration Release
+dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release
 ```
 
 The original 100 conversion test files cover known to-base/from-base values, round trips, reflection smoke checks, and numeric extensions. The shared assertion helper now belongs to the test project. NUnit 3 is retained so its existing assertions can run unchanged.

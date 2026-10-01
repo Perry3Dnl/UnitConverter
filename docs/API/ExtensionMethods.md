@@ -27,7 +27,7 @@ value.Convert(fromUnit, toUnit);
 ## Example
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
+using UnitConverter.Length;
 
 double value = 12.5;
 
@@ -50,7 +50,7 @@ Integral overloads return `double` because conversions often produce fractional 
 Extension methods are only visible when the matching namespace is imported.
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
+using UnitConverter.Length;
 ```
 
 This keeps the API from polluting projects that do not use UnitConverter.

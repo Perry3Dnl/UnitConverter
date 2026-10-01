@@ -7,7 +7,7 @@ This is useful when a developer wants very clear method names and namespace auto
 ## Length Metric
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length.Metric;
+using UnitConverter.Length.Metric;
 
 double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
 double millimeters = UnitConverterMetricLength.MeterToMillimeter(meters);
@@ -16,7 +16,7 @@ double millimeters = UnitConverterMetricLength.MeterToMillimeter(meters);
 ## Length Imperial
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length.Imperial;
+using UnitConverter.Length.Imperial;
 
 double meters = UnitConverterImperialLength.FootToMeter(10);
 double feet = UnitConverterImperialLength.MeterToFoot(meters);
@@ -27,8 +27,8 @@ double feet = UnitConverterImperialLength.MeterToFoot(meters);
 US and UK Imperial volume units are separate because some names are shared but values differ.
 
 ```csharp
-using RealisticPhysics.UnitConversion.Volume.ImperialUS;
-using RealisticPhysics.UnitConversion.Volume.ImperialUK;
+using UnitConverter.Volume.ImperialUS;
+using UnitConverter.Volume.ImperialUK;
 
 double usGallonLiters = UnitConverterImperialUSVolume.GallonToLiter(1);
 double ukGallonLiters = UnitConverterImperialUKVolume.GallonToLiter(1);
@@ -37,13 +37,13 @@ double ukGallonLiters = UnitConverterImperialUKVolume.GallonToLiter(1);
 ## Namespace Convention
 
 ```text
-RealisticPhysics.UnitConversion.Length.Metric
-RealisticPhysics.UnitConversion.Length.Imperial
-RealisticPhysics.UnitConversion.Length.Survey
-RealisticPhysics.UnitConversion.Length.Nautical
-RealisticPhysics.UnitConversion.Volume.ImperialUS
-RealisticPhysics.UnitConversion.Volume.ImperialUK
-RealisticPhysics.UnitConversion.Mass.Troy
+UnitConverter.Length.Metric
+UnitConverter.Length.Imperial
+UnitConverter.Length.Survey
+UnitConverter.Length.Nautical
+UnitConverter.Volume.ImperialUS
+UnitConverter.Volume.ImperialUK
+UnitConverter.Mass.Troy
 ```
 
 ## Product Rule

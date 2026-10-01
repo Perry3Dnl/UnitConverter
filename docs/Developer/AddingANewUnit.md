@@ -9,7 +9,7 @@ Example: adding a new length unit.
 Open:
 
 ```text
-src/RealisticPhysics.UnitConversion/Length/UnitConverterLength.cs
+src/UnitConverter/Length/UnitConverterLength.cs
 ```
 
 Add the new value to `UnitConverterLengthUnit`.
@@ -21,7 +21,7 @@ Choose the correct unit-system namespace.
 Example:
 
 ```text
-src/RealisticPhysics.UnitConversion/Length/Historical/UnitConverterHistoricalLength.cs
+src/UnitConverter/Length/Historical/UnitConverterHistoricalLength.cs
 ```
 
 Add methods:

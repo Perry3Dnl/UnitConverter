@@ -2,8 +2,9 @@
 
 ## 2.0.0-preview.1 — standalone .NET package
 
-- Move the 496 portable runtime files to an SDK-style .NET Standard 2.0 library without changing converter code.
-- Preserve public APIs, enum values, conversion constants, and base-unit routing.
+- Move the 496 portable runtime files to an SDK-style .NET Standard 2.0 library, changing only namespace references in the converter code.
+- Use `UnitConverter` as the package ID, assembly name, and root namespace.
+- Preserve converter class/method names, enum values, conversion constants, and base-unit routing.
 - Migrate conversion tests to a .NET 10 NUnit project.
 - Remove Unity settings, editor integration, shared Core, scenes, metadata, and import archives.
 - Add NuGet metadata, a console sample, build/test/pack automation, and updated documentation.

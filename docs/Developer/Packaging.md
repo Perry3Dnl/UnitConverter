@@ -1,6 +1,6 @@
 # Packaging
 
-The package ID is `RealisticPhysics.UnitConversion`, targeting `netstandard2.0`. The initial standalone candidate version is `2.0.0-preview.1`, defined in `Directory.Build.props`.
+The package ID is `UnitConverter`, targeting `netstandard2.0`. The initial standalone candidate version is `2.0.0-preview.1`, defined in `Directory.Build.props`.
 
 ## Create the package
 
@@ -9,8 +9,8 @@ With the .NET 10 SDK installed, run from the repository root:
 ```sh
 dotnet restore UnitConverter.sln
 dotnet build UnitConverter.sln --configuration Release --no-restore
-dotnet test tests/RealisticPhysics.UnitConversion.Tests/RealisticPhysics.UnitConversion.Tests.csproj --configuration Release --no-build
-dotnet pack src/RealisticPhysics.UnitConversion/RealisticPhysics.UnitConversion.csproj --configuration Release --no-build --output artifacts/packages
+dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
+dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
 python scripts/verify_package.py artifacts/packages
 ```
 

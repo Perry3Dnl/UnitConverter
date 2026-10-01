@@ -20,7 +20,7 @@ UnitConverterFamily.Convert(value, fromUnit, toUnit);
 ## Length Example
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
+using UnitConverter.Length;
 
 double result = UnitConverterLength.Convert(
     12.5,
@@ -31,7 +31,7 @@ double result = UnitConverterLength.Convert(
 ## Mass Example
 
 ```csharp
-using RealisticPhysics.UnitConversion.Mass;
+using UnitConverter.Mass;
 
 double kilograms = UnitConverterMass.Convert(
     150,
@@ -42,7 +42,7 @@ double kilograms = UnitConverterMass.Convert(
 ## Power Example
 
 ```csharp
-using RealisticPhysics.UnitConversion.Power;
+using UnitConverter.Power;
 
 double kilowatts = UnitConverterPower.Convert(
     5,

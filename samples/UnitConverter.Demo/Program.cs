@@ -1,11 +1,11 @@
 using System;
 using System.Globalization;
-using RealisticPhysics.UnitConversion.Catalog;
-using RealisticPhysics.UnitConversion.FuelEconomy;
-using RealisticPhysics.UnitConversion.Length;
-using RealisticPhysics.UnitConversion.Length.Metric;
-using RealisticPhysics.UnitConversion.Mass;
-using RealisticPhysics.UnitConversion.Temperature;
+using UnitConverter.Catalog;
+using UnitConverter.FuelEconomy;
+using UnitConverter.Length;
+using UnitConverter.Length.Metric;
+using UnitConverter.Mass;
+using UnitConverter.Temperature;
 
 internal static class Program
 {

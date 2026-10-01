@@ -3,7 +3,7 @@
 ## Voltage
 
 ```csharp
-using RealisticPhysics.UnitConversion.Voltage;
+using UnitConverter.Voltage;
 
 double volts = UnitConverterVoltage.Convert(
     12,
@@ -14,7 +14,7 @@ double volts = UnitConverterVoltage.Convert(
 ## Current
 
 ```csharp
-using RealisticPhysics.UnitConversion.Current;
+using UnitConverter.Current;
 
 double amps = UnitConverterCurrent.Convert(
     500,
@@ -25,7 +25,7 @@ double amps = UnitConverterCurrent.Convert(
 ## Power
 
 ```csharp
-using RealisticPhysics.UnitConversion.Power;
+using UnitConverter.Power;
 
 double watts = UnitConverterPower.Convert(
     1,
@@ -36,7 +36,7 @@ double watts = UnitConverterPower.Convert(
 ## Resistance
 
 ```csharp
-using RealisticPhysics.UnitConversion.ElectricResistance;
+using UnitConverter.ElectricResistance;
 
 double ohms = UnitConverterElectricResistance.Convert(
     2.2,

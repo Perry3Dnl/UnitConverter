@@ -12,16 +12,16 @@ import zipfile
 
 root = Path(__file__).resolve().parents[1]
 feed = Path(sys.argv[1] if len(sys.argv) > 1 else root / "artifacts/packages").resolve()
-packages = list(feed.glob("RealisticPhysics.UnitConversion.*.nupkg"))
+packages = list(feed.glob("UnitConverter.*.nupkg"))
 if len(packages) != 1:
-    raise SystemExit("Expected exactly one UnitConversion .nupkg in " + str(feed))
+    raise SystemExit("Expected exactly one UnitConverter .nupkg in " + str(feed))
 
 with zipfile.ZipFile(packages[0]) as archive:
     names = archive.namelist()
-    assert "lib/netstandard2.0/RealisticPhysics.UnitConversion.dll" in names
+    assert "lib/netstandard2.0/UnitConverter.dll" in names
     assert "README.md" in names
     assert [name for name in names if name.endswith(".dll")] == [
-        "lib/netstandard2.0/RealisticPhysics.UnitConversion.dll"
+        "lib/netstandard2.0/UnitConverter.dll"
     ], "Only the conversion assembly belongs in the package"
     forbidden = ("UnityEngine", "UnityEditor", "RealisticPhysics.Core", "NUnit", "nunit")
     assert not any(part in name for name in names for part in forbidden)
@@ -31,7 +31,7 @@ with zipfile.ZipFile(packages[0]) as archive:
     metadata = specification.find("n:metadata", namespace)
     package_id = metadata.findtext("n:id", namespaces=namespace)
     version = metadata.findtext("n:version", namespaces=namespace)
-    assert package_id == "RealisticPhysics.UnitConversion"
+    assert package_id == "UnitConverter"
     dependencies = metadata.findall(".//n:dependency", namespace)
     assert all(dependency.attrib["id"] == "NETStandard.Library" for dependency in dependencies)
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"

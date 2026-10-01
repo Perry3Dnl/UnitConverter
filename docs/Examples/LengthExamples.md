@@ -3,7 +3,7 @@
 ## Static Router
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
+using UnitConverter.Length;
 
 double mm = UnitConverterLength.Convert(
     12.5,
@@ -14,7 +14,7 @@ double mm = UnitConverterLength.Convert(
 ## Extension Method
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
+using UnitConverter.Length;
 
 double value = 12.5;
 
@@ -26,7 +26,7 @@ double mm = value.Convert(
 ## Direct Metric Method
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length.Metric;
+using UnitConverter.Length.Metric;
 
 double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
 ```
@@ -34,7 +34,7 @@ double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
 ## Imperial to Metric
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
+using UnitConverter.Length;
 
 double meters = UnitConverterLength.Convert(
     6,

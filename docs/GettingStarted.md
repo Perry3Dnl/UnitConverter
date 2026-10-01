@@ -9,22 +9,22 @@ From the repository root:
 ```sh
 dotnet restore UnitConverter.sln
 dotnet build UnitConverter.sln --configuration Release --no-restore
-dotnet test tests/RealisticPhysics.UnitConversion.Tests/RealisticPhysics.UnitConversion.Tests.csproj --configuration Release --no-build
-dotnet pack src/RealisticPhysics.UnitConversion/RealisticPhysics.UnitConversion.csproj --configuration Release --no-build --output artifacts/packages
+dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
+dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
 ```
 
 The package candidate is not yet published to nuget.org. Install a local build into an existing application using the absolute package output directory:
 
 ```sh
-dotnet add package RealisticPhysics.UnitConversion --version 2.0.0-preview.1 --source /absolute/path/to/UnitConverter/artifacts/packages
+dotnet add package UnitConverter --version 2.0.0-preview.1 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
-Alternatively, add a project reference to `src/RealisticPhysics.UnitConversion/RealisticPhysics.UnitConversion.csproj` during development.
+Alternatively, add a project reference to `src/UnitConverter/UnitConverter.csproj` during development.
 
 ## Convert a value
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
+using UnitConverter.Length;
 
 double millimeters = UnitConverterLength.Convert(
     12.5,
@@ -37,8 +37,8 @@ Each family has its own unit enum and converts through a family base unit. Lengt
 ## Use extensions or direct methods
 
 ```csharp
-using RealisticPhysics.UnitConversion.Length;
-using RealisticPhysics.UnitConversion.Length.Metric;
+using UnitConverter.Length;
+using UnitConverter.Length.Metric;
 
 double value = 12.5;
 double millimeters = value.Convert(
