@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
+      - name: Verify generated aliases
+        run: python scripts/generate_aliases.py --check
       - name: Restore
         run: dotnet restore UnitConverter.sln
       - name: Build
