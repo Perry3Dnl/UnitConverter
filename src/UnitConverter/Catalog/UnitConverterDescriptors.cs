@@ -108,7 +108,8 @@ namespace UnitConverter.Catalog
                     enumName,
                     symbol,
                     displayName,
-                    additionalAliases);
+                    additionalAliases,
+                    UnitConverterAliasVariants.GetNotationVariants(symbol));
 
                 UnitConverterDimensions unitDimensions =
                     getDimensions == null
@@ -132,21 +133,10 @@ namespace UnitConverter.Catalog
                     acceptedAliases,
                     unitDimensions));
 
-                AddExact(_exactAliases, enumName, unit);
-                AddExact(_exactAliases, symbol, unit);
-                AddExact(_exactAliases, displayName, unit);
-
-                AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, enumName, unit);
-                AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, symbol, unit);
-                AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, displayName, unit);
-
-                if (additionalAliases != null)
+                foreach (string alias in acceptedAliases)
                 {
-                    foreach (string alias in additionalAliases)
-                    {
-                        AddExact(_exactAliases, alias, unit);
-                        AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, alias, unit);
-                    }
+                    AddExact(_exactAliases, alias, unit);
+                    AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, alias, unit);
                 }
             }
 
@@ -247,7 +237,8 @@ namespace UnitConverter.Catalog
             string enumName,
             string symbol,
             string displayName,
-            string[] additionalAliases)
+            string[] additionalAliases,
+            string[] notationAliases)
         {
             var aliases = new List<string>();
             AddAliasToList(aliases, enumName);
@@ -257,6 +248,14 @@ namespace UnitConverter.Catalog
             if (additionalAliases != null)
             {
                 foreach (string alias in additionalAliases)
+                {
+                    AddAliasToList(aliases, alias);
+                }
+            }
+
+            if (notationAliases != null)
+            {
+                foreach (string alias in notationAliases)
                 {
                     AddAliasToList(aliases, alias);
                 }
