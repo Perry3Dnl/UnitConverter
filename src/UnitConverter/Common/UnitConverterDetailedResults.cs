@@ -71,6 +71,8 @@ namespace UnitConverter
             UnitConverterFamily family,
             UnitConverterUnitDescriptor fromUnit,
             UnitConverterUnitDescriptor toUnit,
+            UnitConverterCustomUnit customFromUnit,
+            UnitConverterCustomUnit customToUnit,
             UnitConverterError error,
             string errorMessage)
         {
@@ -79,6 +81,8 @@ namespace UnitConverter
             Family = family;
             FromUnit = fromUnit;
             ToUnit = toUnit;
+            CustomFromUnit = customFromUnit;
+            CustomToUnit = customToUnit;
             Error = error;
             ErrorMessage = errorMessage;
         }
@@ -88,6 +92,8 @@ namespace UnitConverter
         public UnitConverterFamily Family { get; }
         public UnitConverterUnitDescriptor FromUnit { get; }
         public UnitConverterUnitDescriptor ToUnit { get; }
+        public UnitConverterCustomUnit CustomFromUnit { get; }
+        public UnitConverterCustomUnit CustomToUnit { get; }
         public UnitConverterError Error { get; }
         public string ErrorMessage { get; }
 
@@ -103,6 +109,28 @@ namespace UnitConverter
                 family,
                 fromUnit,
                 toUnit,
+                null,
+                null,
+                UnitConverterError.None,
+                null);
+        }
+
+        public static UnitConverterDynamicResult Ok(
+            double value,
+            UnitConverterFamily family,
+            UnitConverterUnitDescriptor fromUnit,
+            UnitConverterUnitDescriptor toUnit,
+            UnitConverterCustomUnit customFromUnit,
+            UnitConverterCustomUnit customToUnit)
+        {
+            return new UnitConverterDynamicResult(
+                true,
+                value,
+                family,
+                fromUnit,
+                toUnit,
+                customFromUnit,
+                customToUnit,
                 UnitConverterError.None,
                 null);
         }
@@ -116,6 +144,8 @@ namespace UnitConverter
                 false,
                 0d,
                 family,
+                null,
+                null,
                 null,
                 null,
                 error,
