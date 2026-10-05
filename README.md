@@ -23,7 +23,7 @@ Install the candidate into an existing application using the absolute path to th
 dotnet add package UnitConverter --version 2.0.0-preview.1 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
-GitHub Actions also builds the solution, runs the NUnit suite, creates the packages, and tests installation into a clean console application. Successful runs expose a `nuget-packages` artifact.
+GitHub Actions also builds the solution, runs the NUnit suite, creates the packages, and tests installation into a clean console application. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors.
 
 ## Use the existing API
 
@@ -176,6 +176,7 @@ dotnet run --project samples/UnitConverter.Demo --configuration Release
 - [Supported families and units](docs/API/SupportedFamiliesAndUnits.md)
 - [Migration from the Unity package](docs/Migration.md)
 - [Testing](docs/Developer/Testing.md)
+- [Conversion provenance](docs/Provenance.md)
 - [Packaging](docs/Developer/Packaging.md)
 
 Unity inspectors, settings assets, scenes, assembly definitions, metadata files, and the shared Unity Core layer have been removed. The original Unity package remains available in [the 1.1.3 import commit](https://github.com/Perry3Dnl/UnitConverter/tree/332369313b1a428a66432e811c542562efa24e40).
