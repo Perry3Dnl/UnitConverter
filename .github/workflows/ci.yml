@@ -28,7 +28,9 @@ jobs:
       - name: Test
         run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitConverter.trx" --results-directory artifacts/test-results
       - name: Pack
-        run: dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
+        run: |
+          dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
       - name: Verify package and consume it in a clean project
         run: python scripts/verify_package.py artifacts/packages
       - name: Upload NuGet packages
