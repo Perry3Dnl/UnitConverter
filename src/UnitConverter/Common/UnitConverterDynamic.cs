@@ -156,38 +156,100 @@ namespace UnitConverter
                     "The unit family '" + family + "' is not registered.");
             }
 
-            object from;
-            UnitConverterUnitResolution fromResolution =
-                descriptor.ResolveUnit(fromUnit, out from);
+            object fromBuiltIn;
+            UnitConverterUnitResolution fromBuiltInResolution =
+                descriptor.ResolveUnit(fromUnit, out fromBuiltIn);
+            UnitConverterCustomUnit fromCustom;
+            UnitConverterUnitResolution fromCustomResolution =
+                UnitConverterCustomUnits.Resolve(family, fromUnit, out fromCustom);
+
+            object toBuiltIn;
+            UnitConverterUnitResolution toBuiltInResolution =
+                descriptor.ResolveUnit(toUnit, out toBuiltIn);
+            UnitConverterCustomUnit toCustom;
+            UnitConverterUnitResolution toCustomResolution =
+                UnitConverterCustomUnits.Resolve(family, toUnit, out toCustom);
 
             UnitConverterDynamicResult fromFailure =
-                GetUnitFailure(descriptor, family, fromUnit, fromResolution, "source");
+                GetEndpointFailure(
+                    descriptor,
+                    family,
+                    fromUnit,
+                    fromBuiltInResolution,
+                    fromCustomResolution,
+                    "source");
 
-            if (!fromFailure.Success && fromFailure.Error != UnitConverterError.None)
+            if (!fromFailure.Success &&
+                fromFailure.Error != UnitConverterError.None)
             {
                 return fromFailure;
             }
 
-            object to;
-            UnitConverterUnitResolution toResolution =
-                descriptor.ResolveUnit(toUnit, out to);
-
             UnitConverterDynamicResult toFailure =
-                GetUnitFailure(descriptor, family, toUnit, toResolution, "target");
+                GetEndpointFailure(
+                    descriptor,
+                    family,
+                    toUnit,
+                    toBuiltInResolution,
+                    toCustomResolution,
+                    "target");
 
-            if (!toFailure.Success && toFailure.Error != UnitConverterError.None)
+            if (!toFailure.Success &&
+                toFailure.Error != UnitConverterError.None)
             {
                 return toFailure;
             }
 
+            bool sourceIsBuiltIn =
+                fromBuiltInResolution == UnitConverterUnitResolution.Resolved;
+            bool targetIsBuiltIn =
+                toBuiltInResolution == UnitConverterUnitResolution.Resolved;
+
             try
             {
-                double converted = descriptor.Convert(value, from, to);
+                double converted;
+                UnitConverterUnitDescriptor fromDescriptor = null;
+                UnitConverterUnitDescriptor toDescriptor = null;
+
+                if (sourceIsBuiltIn && targetIsBuiltIn)
+                {
+                    converted = descriptor.Convert(
+                        value,
+                        fromBuiltIn,
+                        toBuiltIn);
+                    fromDescriptor =
+                        FindUnitDescriptor(descriptor, fromBuiltIn);
+                    toDescriptor =
+                        FindUnitDescriptor(descriptor, toBuiltIn);
+                }
+                else
+                {
+                    converted = UnitConverterCustomUnits.Convert(
+                        value,
+                        family,
+                        fromUnit,
+                        toUnit);
+
+                    if (sourceIsBuiltIn)
+                    {
+                        fromDescriptor =
+                            FindUnitDescriptor(descriptor, fromBuiltIn);
+                    }
+
+                    if (targetIsBuiltIn)
+                    {
+                        toDescriptor =
+                            FindUnitDescriptor(descriptor, toBuiltIn);
+                    }
+                }
+
                 return UnitConverterDynamicResult.Ok(
                     converted,
                     family,
-                    FindUnitDescriptor(descriptor, from),
-                    FindUnitDescriptor(descriptor, to));
+                    fromDescriptor,
+                    toDescriptor,
+                    sourceIsBuiltIn ? null : fromCustom,
+                    targetIsBuiltIn ? null : toCustom);
             }
             catch (Exception exception)
             {
@@ -330,6 +392,60 @@ namespace UnitConverter
                     UnitConverterError.ConversionFailed,
                     exception.Message);
             }
+        }
+
+        private static UnitConverterDynamicResult GetEndpointFailure(
+            UnitConverterFamilyDescriptor descriptor,
+            UnitConverterFamily family,
+            string unitText,
+            UnitConverterUnitResolution builtInResolution,
+            UnitConverterUnitResolution customResolution,
+            string role)
+        {
+            if (builtInResolution == UnitConverterUnitResolution.Ambiguous ||
+                customResolution == UnitConverterUnitResolution.Ambiguous)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.AmbiguousUnit,
+                    "The " + role + " unit '" + unitText +
+                    "' is ambiguous in " + descriptor.Name + ".");
+            }
+
+            bool builtIn =
+                builtInResolution == UnitConverterUnitResolution.Resolved;
+            bool custom =
+                customResolution == UnitConverterUnitResolution.Resolved;
+
+            if (builtIn && custom)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.AmbiguousUnit,
+                    "The " + role + " unit '" + unitText +
+                    "' matches both a built-in and a custom unit in " +
+                    descriptor.Name + ".");
+            }
+
+            if (builtIn || custom)
+            {
+                return default(UnitConverterDynamicResult);
+            }
+
+            if (ExistsInAnotherFamily(descriptor, unitText))
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.WrongUnitFamily,
+                    "The " + role + " unit '" + unitText +
+                    "' does not belong to " + descriptor.Name + ".");
+            }
+
+            return UnitConverterDynamicResult.Fail(
+                family,
+                UnitConverterError.UnknownUnit,
+                "The " + role + " unit '" + unitText +
+                "' is not recognized.");
         }
 
         private static UnitConverterDynamicResult GetUnitFailure(
