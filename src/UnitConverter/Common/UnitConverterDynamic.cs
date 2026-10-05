@@ -63,9 +63,18 @@ namespace UnitConverter
             foreach (UnitConverterUnitCandidate candidate in detection.Candidates)
             {
                 object ignored;
-                if (candidate.Family.ResolveUnit(
-                    toUnit,
-                    out ignored) == UnitConverterUnitResolution.Resolved)
+                UnitConverterCustomUnit ignoredCustom;
+                bool builtInTarget =
+                    candidate.Family.ResolveUnit(
+                        toUnit,
+                        out ignored) == UnitConverterUnitResolution.Resolved;
+                bool customTarget =
+                    UnitConverterCustomUnits.Resolve(
+                        candidate.Family.Family,
+                        toUnit,
+                        out ignoredCustom) == UnitConverterUnitResolution.Resolved;
+
+                if (builtInTarget || customTarget)
                 {
                     if (selected != null)
                     {
@@ -350,11 +359,37 @@ namespace UnitConverter
             UnitConverterUnitCandidate candidate,
             string toUnit)
         {
+            if (candidate.IsCustom)
+            {
+                return TryConvert(
+                    value,
+                    candidate.Family.Family,
+                    candidate.CustomUnit.Name,
+                    toUnit);
+            }
+
+            UnitConverterCustomUnit customTarget;
+            UnitConverterUnitResolution customResolution =
+                UnitConverterCustomUnits.Resolve(
+                    candidate.Family.Family,
+                    toUnit,
+                    out customTarget);
+
+            if (customResolution == UnitConverterUnitResolution.Resolved)
+            {
+                return TryConvert(
+                    value,
+                    candidate.Family.Family,
+                    candidate.Unit.Name,
+                    toUnit);
+            }
+
             object target;
             UnitConverterUnitResolution resolution =
                 candidate.Family.ResolveUnit(toUnit, out target);
 
-            if (resolution == UnitConverterUnitResolution.Ambiguous)
+            if (resolution == UnitConverterUnitResolution.Ambiguous ||
+                customResolution == UnitConverterUnitResolution.Ambiguous)
             {
                 return UnitConverterDynamicResult.Fail(
                     candidate.Family.Family,
