@@ -90,6 +90,67 @@ UnitConverterUnitExpression expression =
 
 The expression parser supports multiplication, division, parentheses, integer powers, superscript `²`/`³`, and middle-dot notation. Ambiguous symbols remain explicit when parsed alone. When a complete conversion provides enough dimensional context, ambiguity can be resolved safely; for example `h` can mean hour or Planck constant, but `km/h -> m/s` has only one dimensionally compatible interpretation.
 
+### Custom units
+
+Runtime custom units can be registered without modifying the built-in enums or generated catalogue:
+
+```csharp
+UnitConverterCustomUnit perryLength =
+    UnitConverterCustomUnits.RegisterLinear(
+        UnitConverterFamily.Length,
+        "PerryLength",
+        "perryLength",
+        "Meter",
+        1.7018);
+
+double meters = UnitConverterDynamic.Convert(
+    "2 perryLength",
+    "Meter");
+```
+
+Affine units are also supported when a scale and offset are required:
+
+```csharp
+UnitConverterCustomUnit customTemperature =
+    UnitConverterCustomUnits.RegisterAffine(
+        UnitConverterFamily.Temperature,
+        "CustomTemperature",
+        "°X",
+        "Custom temperature",
+        "Celsius",
+        2.0,
+        10.0);
+```
+
+Custom aliases cannot shadow built-in aliases in the same family. Registered units participate in family-specific dynamic conversion and global detection. Linear custom units can also participate in composite expressions; affine custom units are rejected as multiplicative expression factors because offsets are not representable by a pure scale expression.
+
+### System.Text.Json serialization
+
+Serialization support is kept out of the dependency-free core package. Install the companion package `UnitConverter.SystemTextJson` and register its converter factory:
+
+```csharp
+using System.Text.Json;
+using UnitConverter.SystemTextJson;
+
+var options = new JsonSerializerOptions()
+    .AddUnitConverter();
+
+var distance = new UnitValue<UnitConverterLengthUnit>(
+    1.8,
+    UnitConverterLengthUnit.Kilometer);
+
+string json = JsonSerializer.Serialize(distance, options);
+// {"value":1.8,"unit":"Kilometer"}
+
+UnitValue<UnitConverterLengthUnit> restored =
+    JsonSerializer.Deserialize<UnitValue<UnitConverterLengthUnit>>(
+        json,
+        options);
+```
+
+Deserialization accepts the catalogue's aliases as unit values, while serialization writes the stable enum name. The companion package depends on `System.Text.Json`; the `UnitConverter` core package remains free of third-party runtime dependencies.
+
+
  Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 ## Repository layout
