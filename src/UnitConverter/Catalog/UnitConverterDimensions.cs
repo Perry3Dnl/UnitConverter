@@ -240,6 +240,44 @@ namespace UnitConverter.Catalog
             }
         }
 
+
+        internal static UnitConverterDimensions ForFuelEconomyUnit(
+            UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit unit)
+        {
+            switch (unit)
+            {
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.KilometerPerLiter:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.MilePerUSGallon:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.MilePerImperialGallon:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.MilePerLiter:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.NauticalMilePerUSGallon:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.MeterPerLiter:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.KilometerPerUSGallon:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.KilometerPerImperialGallon:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.NauticalMilePerImperialGallon:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.KilometerPerMilliliter:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.MeterPerMilliliter:
+                    return D(0, -2, 0);
+
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.LiterPer100Kilometer:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.LiterPerKilometer:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.LiterPerMile:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.USGallonPerMile:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.ImperialGallonPerMile:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.MilliliterPerKilometer:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.LiterPer10Kilometer:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.LiterPer100Mile:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.USGallonPer100Mile:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.ImperialGallonPer100Mile:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.USGallonPer100Kilometer:
+                case UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit.ImperialGallonPer100Kilometer:
+                    return D(0, 2, 0);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(unit), unit, "No dimensional metadata is registered.");
+            }
+        }
+
         private static UnitConverterDimensions D(
             int mass,
             int length,
