@@ -2,6 +2,7 @@ using System;
 using UnitConverter;
 using UnitConverter.Catalog;
 using UnitConverter.Length;
+using UnitConverter.Numbers;
 
 public static class Program
 {
@@ -65,6 +66,22 @@ public static class Program
                 .Units[(int)UnitConverterLengthUnit.Kilometer];
 
         Require(kilometer.Provenance != null, "provenance");
+        ArbitraryScaleNumber huge =
+            ArbitraryScaleNumber.Parse("1 ginozillion");
+
+        Require(
+            huge.ToScientific() == "1e10000",
+            "arbitrary-scale number");
+
+        GeneratedNumberScalePosition generated =
+            GeneratedNumberNames.Parse("ginozillion");
+
+        Require(
+            generated.Layer == 2 &&
+            generated.Magnitude == 4 &&
+            generated.Coefficient == 1,
+            "generated number name");
+
     }
 
     private static void Require(bool condition, string name)
