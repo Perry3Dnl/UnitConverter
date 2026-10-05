@@ -15,13 +15,6 @@ namespace UnitConverter.Tests
             123.456d,
         };
 
-        private static readonly double[] RoundTripValues =
-        {
-            0.125d,
-            1d,
-            10d,
-        };
-
         [Test]
         public void Catalogue_HasExpectedFamilyAndUnitCounts()
         {
@@ -117,18 +110,42 @@ namespace UnitConverter.Tests
         }
 
         [Test]
-        public void EveryConversionPath_RoundTripsRepresentativeValues()
+        public void EveryConversionPath_RoundTripsSharedPhysicalValues()
         {
+            double[] baseValues = { 0.5d, 1d, 2d };
+
             foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
             {
-                foreach (UnitConverterUnitDescriptor from in family.Units)
+                UnitConverterUnitDescriptor baseUnit = null;
+                foreach (UnitConverterUnitDescriptor unit in family.Units)
                 {
-                    foreach (UnitConverterUnitDescriptor to in family.Units)
+                    if (unit.Name == family.BaseUnitName)
                     {
-                        foreach (double value in RoundTripValues)
+                        baseUnit = unit;
+                        break;
+                    }
+                }
+
+                Assert.That(baseUnit, Is.Not.Null, family.Name);
+
+                foreach (double baseValue in baseValues)
+                {
+                    foreach (UnitConverterUnitDescriptor from in family.Units)
+                    {
+                        double sourceValue = family.Convert(
+                            baseValue,
+                            baseUnit.Unit,
+                            from.Unit);
+
+                        Assert.That(
+                            double.IsNaN(sourceValue) || double.IsInfinity(sourceValue),
+                            Is.False,
+                            family.Name + ": " + baseUnit.Name + " -> " + from.Name);
+
+                        foreach (UnitConverterUnitDescriptor to in family.Units)
                         {
                             double converted = family.Convert(
-                                value,
+                                sourceValue,
                                 from.Unit,
                                 to.Unit);
                             double restored = family.Convert(
@@ -143,9 +160,9 @@ namespace UnitConverter.Tests
 
                             Assert.That(
                                 restored,
-                                Is.EqualTo(value).Within(RoundTripTolerance(value)),
+                                Is.EqualTo(sourceValue).Within(RoundTripTolerance(sourceValue)),
                                 family.Name + ": " + from.Name + " -> " + to.Name +
-                                " -> " + from.Name + " at " + value);
+                                " -> " + from.Name + " for base " + baseValue);
                         }
                     }
                 }
@@ -179,7 +196,7 @@ namespace UnitConverter.Tests
 
         private static double RoundTripTolerance(double value)
         {
-            return Math.Max(1e-6d, Math.Abs(value) * 1e-9d);
+            return Math.Max(1e-10d, Math.Abs(value) * 1e-10d);
         }
     }
 }
