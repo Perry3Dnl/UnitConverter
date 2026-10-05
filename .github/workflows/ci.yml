@@ -19,6 +19,10 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
+      - name: Verify generated APIs
+        run: |
+          python scripts/generate.py
+          git diff --exit-code
       - name: Restore
         run: dotnet restore UnitConverter.sln
       - name: Build

@@ -28,8 +28,8 @@ namespace UnitConverter.Tests
                 .Where(type => type.IsEnum && type.Name.StartsWith("UnitConverter", StringComparison.Ordinal))
                 .Where(type => type.Name.EndsWith("Unit", StringComparison.Ordinal))
                 .ToArray();
-            Assert.AreEqual(97, unitEnums.Length);
-            Assert.AreEqual(1632, unitEnums.Sum(type => Enum.GetNames(type).Length));
+            Assert.AreEqual(191, unitEnums.Length);
+            Assert.AreEqual(3010, unitEnums.Sum(type => Enum.GetNames(type).Length));
             CollectionAssert.AreEquivalent(
                 UnitConverterCatalog.GetFamilyNames(),
                 unitEnums.Select(type => type.Name.Substring("UnitConverter".Length,

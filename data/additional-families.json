@@ -1,0 +1,13 @@
+[
+  {"name":"SpecificThermalResistance","base":"MeterKelvinPerWatt","dimensions":{"L":-1,"M":-1,"T":3,"Θ":1},"units":[
+    {"name":"MeterKelvinPerWatt","symbol":"m·K/W","factor":"1"},
+    {"name":"MeterDegreeCelsiusPerWatt","symbol":"m·°C/W","factor":"1"},
+    {"name":"MeterKelvinPerKilowatt","symbol":"m·K/kW","factor":"0.001"},
+    {"name":"CentimeterKelvinPerWatt","symbol":"cm·K/W","factor":"0.01"}
+  ]},
+  {"name":"VolumetricHeatTransferCoefficient","base":"WattPerCubicMeterKelvin","dimensions":{"L":-1,"M":1,"T":-3,"Θ":-1},"units":[
+    {"name":"WattPerCubicMeterKelvin","symbol":"W/(m³·K)","factor":"1"},
+    {"name":"KilowattPerCubicMeterKelvin","symbol":"kW/(m³·K)","factor":"1000"},
+    {"name":"WattPerCubicCentimeterKelvin","symbol":"W/(cm³·K)","factor":"1000000"}
+  ]}
+]

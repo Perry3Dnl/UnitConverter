@@ -12,5 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../../src/UnitConverter/UnitConverter.csproj" />
+    <None Include="../../data/legacy-api.json" Link="legacy-api.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../data/catalog.json" Link="catalog.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

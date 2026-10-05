@@ -18,3 +18,7 @@ TestResults/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Reproducible intermediate catalog used by generator/test fixtures.
+data/catalog.json
+__pycache__/
