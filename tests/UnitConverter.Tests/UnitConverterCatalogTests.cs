@@ -71,6 +71,45 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void Catalog_ExposesStandardsAndLegacyProvenanceStates()
+        {
+            UnitConverterFamilyDescriptor length =
+                UnitConverterCatalog.GetFamily(UnitConverterFamily.Length);
+            UnitConverterUnitDescriptor meter =
+                length.Units.First(unit => unit.Name == "Meter");
+
+            Assert.That(
+                meter.Provenance.Status,
+                Is.EqualTo(UnitConverterProvenanceStatus.StandardsReferenced));
+            Assert.That(meter.Provenance.HasAuthoritativeReference, Is.True);
+
+            UnitConverterFamilyDescriptor yank =
+                UnitConverterCatalog.GetFamily(UnitConverterFamily.Yank);
+            UnitConverterUnitDescriptor yankBase = yank.Units.First();
+
+            Assert.That(
+                yankBase.Provenance.Status,
+                Is.EqualTo(UnitConverterProvenanceStatus.LegacyMigrated));
+            Assert.That(yankBase.Provenance.HasAuthoritativeReference, Is.False);
+        }
+
+        [Test]
+        public void Catalog_FundamentalConstantUnitsReferenceCodata()
+        {
+            UnitConverterFamilyDescriptor temperature =
+                UnitConverterCatalog.GetFamily(UnitConverterFamily.Temperature);
+            UnitConverterUnitDescriptor planckTemperature =
+                temperature.Units.First(unit => unit.Name == "PlanckTemperature");
+
+            Assert.That(
+                planckTemperature.Provenance.Status,
+                Is.EqualTo(UnitConverterProvenanceStatus.FundamentalConstantReferenced));
+            Assert.That(
+                planckTemperature.Provenance.Sources.Any(source => source.Id == "codata-2022"),
+                Is.True);
+        }
+
+        [Test]
         public void Catalog_ResolvesFamilyNamesCaseInsensitively()
         {
             UnitConverterFamilyDescriptor descriptor;
