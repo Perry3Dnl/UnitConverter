@@ -430,12 +430,53 @@ namespace UnitConverter
                     return true;
                 }
 
+                IReadOnlyList<UnitConverterUnitCandidate> candidates =
+                    detection.Candidates;
+                var exactSymbolCandidates =
+                    new List<UnitConverterUnitCandidate>();
+
+                foreach (UnitConverterUnitCandidate candidate in detection.Candidates)
+                {
+                    if (string.Equals(
+                        candidate.Unit.Symbol,
+                        atom,
+                        StringComparison.Ordinal))
+                    {
+                        exactSymbolCandidates.Add(candidate);
+                    }
+                }
+
+                if (exactSymbolCandidates.Count == 1)
+                {
+                    double exactScale;
+                    if (!TryGetCanonicalScale(
+                        exactSymbolCandidates[0],
+                        out exactScale))
+                    {
+                        return Fail(
+                            UnitConverterError.UnsupportedUnit,
+                            "The unit '" + atom +
+                            "' cannot be used as a multiplicative expression factor.");
+                    }
+
+                    expression = new UnitConverterUnitExpression(
+                        atom,
+                        exactSymbolCandidates[0].Unit.Dimensions,
+                        exactScale);
+                    return true;
+                }
+
+                if (exactSymbolCandidates.Count > 1)
+                {
+                    candidates = exactSymbolCandidates;
+                }
+
                 UnitConverterUnitCandidate first = null;
                 UnitConverterDimensions dimensions =
                     UnitConverterDimensions.Dimensionless;
                 double firstScale = 0d;
 
-                foreach (UnitConverterUnitCandidate candidate in detection.Candidates)
+                foreach (UnitConverterUnitCandidate candidate in candidates)
                 {
                     double scale;
                     if (!TryGetCanonicalScale(candidate, out scale))
