@@ -37,7 +37,7 @@ namespace UnitConverter.Tests
 
             Assert.That(
                 expression.Dimensions,
-                Is.EqualTo(UnitConverterCatalog.GetFamily(UnitConverterFamily.ThermalConductivity).Dimensions));
+                Is.EqualTo(UnitConverterCatalog.GetFamily(UnitConverterFamily.HeatTransferCoefficient).Dimensions));
             Assert.That(expression.ScaleToCanonical, Is.EqualTo(1d));
         }
 
@@ -68,7 +68,7 @@ namespace UnitConverter.Tests
         {
             double result = UnitConverterComposite.Convert(
                 1000d,
-                "L",
+                "liter",
                 "m^3");
 
             Assert.That(result, Is.EqualTo(1d).Within(1e-12d));
@@ -95,6 +95,16 @@ namespace UnitConverter.Tests
             Assert.That(
                 result.Expression.Dimensions,
                 Is.EqualTo(UnitConverterCatalog.GetFamily(UnitConverterFamily.Pressure).Dimensions));
+        }
+
+        [Test]
+        public void Parse_TrueSymbolCollision_RemainsAmbiguous()
+        {
+            UnitConverterExpressionParseResult result =
+                UnitConverterExpressionParser.TryParse("L");
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Error, Is.EqualTo(UnitConverterError.AmbiguousUnit));
         }
 
         [Test]
