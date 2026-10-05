@@ -2,10 +2,10 @@
 
 This page is generated from the runtime converter enums in the package.
 
-- Conversion families: 97
-- Supported units: 1632
-- Compatible paths including same-unit conversions: 40,160
-- Compatible paths excluding same-unit conversions: 38,528
+- Conversion families: 98
+- Supported units: 1650
+- Compatible paths including same-unit conversions: 40,484
+- Compatible paths excluding same-unit conversions: 38,834
 
 ## Acceleration
 
@@ -1803,6 +1803,29 @@ This page is generated from the runtime converter enums in the package.
 - `OunceForcePerFoot`
 
 ## Temperature
+
+18 units.
+
+- `Kelvin`
+- `Celsius`
+- `Fahrenheit`
+- `Rankine`
+- `Delisle`
+- `Newton`
+- `Reaumur`
+- `Romer`
+- `Millikelvin`
+- `Microkelvin`
+- `Nanokelvin`
+- `Kilokelvin`
+- `Megakelvin`
+- `Gigakelvin`
+- `PlanckTemperature`
+- `ElectronVoltTemperature`
+- `MillielectronVoltTemperature`
+- `KiloelectronVoltTemperature`
+
+## Temperature Delta
 
 18 units.
 
