@@ -4,8 +4,11 @@ namespace UnitConverter.Tests
     using UnitConverter.AngularVelocity;
     using UnitConverter.Area;
     using UnitConverter.Length;
+    using UnitConverter.MagneticFlux;
     using UnitConverter.Mass;
+    using UnitConverter.MolarConcentration;
     using UnitConverter.Speed;
+    using UnitConverter.ThermalConductivity;
     using UnitConverter.Time;
     using UnitConverter.Volume;
 
@@ -109,6 +112,29 @@ namespace UnitConverter.Tests
 
             Assert.That(UnitConverterParser.TryParse(input, out value, out unit), Is.True);
             Assert.That(unit, Is.EqualTo(UnitConverterAreaUnit.SquareMeter));
+        }
+
+        [Test]
+        public void GeneratedAliases_CoverPreviouslyUncuratedScientificFamilies()
+        {
+            double value;
+            UnitConverterMolarConcentrationUnit concentration;
+            Assert.That(
+                UnitConverterParser.TryParse("2 mole per cubic meter", out value, out concentration),
+                Is.True);
+            Assert.That(concentration, Is.EqualTo(UnitConverterMolarConcentrationUnit.MolePerCubicMeter));
+
+            UnitConverterThermalConductivityUnit conductivity;
+            Assert.That(
+                UnitConverterParser.TryParse("2 watt per meter kelvin", out value, out conductivity),
+                Is.True);
+            Assert.That(conductivity, Is.EqualTo(UnitConverterThermalConductivityUnit.WattPerMeterKelvin));
+
+            UnitConverterMagneticFluxUnit flux;
+            Assert.That(
+                UnitConverterParser.TryParse("2 volt second", out value, out flux),
+                Is.True);
+            Assert.That(flux, Is.EqualTo(UnitConverterMagneticFluxUnit.VoltSecond));
         }
 
         [Test]
