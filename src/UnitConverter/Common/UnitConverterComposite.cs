@@ -799,7 +799,7 @@ namespace UnitConverter
             return string.Join(", ", parts);
         }
 
-        private static bool NearlyEqual(double left, double right)
+        internal static bool NearlyEqual(double left, double right)
         {
             if (left.Equals(right))
             {
@@ -839,40 +839,93 @@ namespace UnitConverter
             string fromExpression,
             string toExpression)
         {
-            UnitConverterExpressionParseResult from =
-                UnitConverterExpressionParser.TryParse(fromExpression);
-            if (!from.Success)
+            UnitConverterUnitExpression[] fromCandidates;
+            UnitConverterError fromError;
+            string fromErrorMessage;
+
+            if (!UnitConverterExpressionParser.TryParseCandidates(
+                fromExpression,
+                out fromCandidates,
+                out fromError,
+                out fromErrorMessage))
             {
                 return UnitConverterCompositeResult.Fail(
-                    from.Error,
-                    from.ErrorMessage);
+                    fromError,
+                    fromErrorMessage);
             }
 
-            UnitConverterExpressionParseResult to =
-                UnitConverterExpressionParser.TryParse(toExpression);
-            if (!to.Success)
+            UnitConverterUnitExpression[] toCandidates;
+            UnitConverterError toError;
+            string toErrorMessage;
+
+            if (!UnitConverterExpressionParser.TryParseCandidates(
+                toExpression,
+                out toCandidates,
+                out toError,
+                out toErrorMessage))
             {
                 return UnitConverterCompositeResult.Fail(
-                    to.Error,
-                    to.ErrorMessage);
+                    toError,
+                    toErrorMessage);
             }
 
-            if (!from.Expression.IsCompatibleWith(to.Expression))
+            bool found = false;
+            double ratio = 0d;
+            UnitConverterUnitExpression selectedFrom =
+                default(UnitConverterUnitExpression);
+            UnitConverterUnitExpression selectedTo =
+                default(UnitConverterUnitExpression);
+
+            foreach (UnitConverterUnitExpression from in fromCandidates)
+            {
+                foreach (UnitConverterUnitExpression to in toCandidates)
+                {
+                    if (!from.IsCompatibleWith(to))
+                    {
+                        continue;
+                    }
+
+                    double candidateRatio =
+                        from.ScaleToCanonical /
+                        to.ScaleToCanonical;
+
+                    if (!found)
+                    {
+                        found = true;
+                        ratio = candidateRatio;
+                        selectedFrom = from;
+                        selectedTo = to;
+                        continue;
+                    }
+
+                    if (!UnitConverterExpressionParser.NearlyEqual(
+                        ratio,
+                        candidateRatio))
+                    {
+                        return UnitConverterCompositeResult.Fail(
+                            UnitConverterError.AmbiguousUnit,
+                            "The conversion has multiple dimensionally valid interpretations.");
+                    }
+                }
+            }
+
+            if (!found)
             {
                 return UnitConverterCompositeResult.Fail(
                     UnitConverterError.IncompatibleDimensions,
                     "The unit expressions do not have compatible dimensions.");
             }
 
-            double converted =
-                value *
-                from.Expression.ScaleToCanonical /
-                to.Expression.ScaleToCanonical;
-
             return UnitConverterCompositeResult.Ok(
-                converted,
-                from.Expression,
-                to.Expression);
+                value * ratio,
+                new UnitConverterUnitExpression(
+                    fromExpression.Trim(),
+                    selectedFrom.Dimensions,
+                    selectedFrom.ScaleToCanonical),
+                new UnitConverterUnitExpression(
+                    toExpression.Trim(),
+                    selectedTo.Dimensions,
+                    selectedTo.ScaleToCanonical));
         }
     }
 }
