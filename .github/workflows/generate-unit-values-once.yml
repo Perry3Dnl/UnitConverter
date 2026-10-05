@@ -1,0 +1,29 @@
+name: Generate AOT unit values once
+
+on:
+  push:
+    branches:
+      - feature/string-parser
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+      - name: Generate catalogue sources
+        run: python scripts/generate_aliases.py
+      - name: Commit generated sources
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/UnitConverter/Catalog/UnitConverterAliases.Generated*.cs src/UnitConverter/Catalog/UnitConverterUnitValues.Generated.cs
+          git rm .github/workflows/generate-unit-values-once.yml
+          git commit -m "Generate AOT-safe unit value tables"
+          git push
