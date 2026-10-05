@@ -18,7 +18,8 @@ namespace UnitConverter.Catalog
             string symbol,
             string displayName,
             string[] aliases,
-            UnitConverterDimensions dimensions)
+            UnitConverterDimensions dimensions,
+            UnitConverterProvenance provenance)
         {
             Unit = unit;
             Name = name;
@@ -26,6 +27,7 @@ namespace UnitConverter.Catalog
             DisplayName = displayName;
             Aliases = aliases ?? new string[0];
             Dimensions = dimensions;
+            Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
         }
 
         public object Unit { get; }
@@ -34,6 +36,7 @@ namespace UnitConverter.Catalog
         public string DisplayName { get; }
         public string[] Aliases { get; }
         public UnitConverterDimensions Dimensions { get; }
+        public UnitConverterProvenance Provenance { get; }
     }
 
     public abstract class UnitConverterFamilyDescriptor
@@ -134,7 +137,8 @@ namespace UnitConverter.Catalog
                     symbol,
                     displayName,
                     acceptedAliases,
-                    unitDimensions));
+                    unitDimensions,
+                    UnitConverterProvenanceCatalog.Get(family, enumName)));
 
                 foreach (string alias in acceptedAliases)
                 {
