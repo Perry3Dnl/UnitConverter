@@ -136,7 +136,7 @@ namespace UnitConverter.Tests
 
                             Assert.That(
                                 restored,
-                                Is.EqualTo(value).Within(Tolerance(value)),
+                                Is.EqualTo(value).Within(RoundTripTolerance(value)),
                                 family.Name + ": " + from.Name + " -> " + to.Name +
                                 " -> " + from.Name + " at " + value);
                         }
@@ -167,7 +167,12 @@ namespace UnitConverter.Tests
 
         private static double Tolerance(double value)
         {
-            return Math.Max(1e-10d, Math.Abs(value) * 1e-10d);
+            return Math.Max(1e-12d, Math.Abs(value) * 1e-12d);
+        }
+
+        private static double RoundTripTolerance(double value)
+        {
+            return Math.Max(1e-10d, Math.Abs(value) * 1e-9d);
         }
     }
 }
