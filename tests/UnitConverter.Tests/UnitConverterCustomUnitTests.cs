@@ -20,19 +20,19 @@ namespace UnitConverter.Tests
         [Test]
         public void RegisterLinear_CustomLength_ConvertsToBuiltIn()
         {
-            UnitConverterCustomUnit perry-length =
+            UnitConverterCustomUnit perryLength =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
                     "PerryLength",
-                    "perry-length",
+                    "perryLength",
                     "Meter",
                     1.7018d,
-                    "perry-lengths");
+                    "perryLengths");
 
             double meters =
                 UnitConverterCustomUnits.Convert(
                     2d,
-                    perry-length,
+                    perryLength,
                     "Meter");
 
             Assert.That(meters, Is.EqualTo(3.4036d).Within(1e-12d));
@@ -41,32 +41,32 @@ namespace UnitConverter.Tests
         [Test]
         public void RegisterLinear_BuiltInConvertsToCustom()
         {
-            UnitConverterCustomUnit perry-length =
+            UnitConverterCustomUnit perryLength =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
                     "PerryLength",
-                    "perry-length",
+                    "perryLength",
                     "Meter",
                     1.7018d);
 
-            double perry-lengths =
+            double perryLengths =
                 UnitConverterCustomUnits.Convert(
                     1.7018d,
                     UnitConverterFamily.Length,
                     "Meter",
-                    perry-length);
+                    perryLength);
 
-            Assert.That(perry-lengths, Is.EqualTo(1d).Within(1e-12d));
+            Assert.That(perryLengths, Is.EqualTo(1d).Within(1e-12d));
         }
 
         [Test]
         public void CustomToCustom_UsesFamilyConversion()
         {
-            UnitConverterCustomUnit perry-length =
+            UnitConverterCustomUnit perryLength =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
                     "PerryLength",
-                    "perry-length",
+                    "perryLength",
                     "Meter",
                     1.7018d);
 
@@ -74,14 +74,14 @@ namespace UnitConverter.Tests
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
                     "DoublePerryLength",
-                    "double-perry-length",
+                    "double-perryLength",
                     "Meter",
                     3.4036d);
 
             double result =
                 UnitConverterCustomUnits.Convert(
                     2d,
-                    perry-length,
+                    perryLength,
                     doublePerryLength);
 
             Assert.That(result, Is.EqualTo(1d).Within(1e-12d));
@@ -121,11 +121,11 @@ namespace UnitConverter.Tests
         [Test]
         public void DynamicConversion_ResolvesCustomUnits()
         {
-            UnitConverterCustomUnit perry-length =
+            UnitConverterCustomUnit perryLength =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
                     "PerryLength",
-                    "perry-length",
+                    "perryLength",
                     "Meter",
                     1.7018d);
 
@@ -133,12 +133,12 @@ namespace UnitConverter.Tests
                 UnitConverterDynamic.TryConvert(
                     2d,
                     UnitConverterFamily.Length,
-                    "perry-length",
+                    "perryLength",
                     "Meter");
 
             Assert.That(result.Success, Is.True);
             Assert.That(result.Value, Is.EqualTo(3.4036d).Within(1e-12d));
-            Assert.That(result.CustomFromUnit, Is.SameAs(perry-length));
+            Assert.That(result.CustomFromUnit, Is.SameAs(perryLength));
             Assert.That(result.FromUnit, Is.Null);
             Assert.That(result.ToUnit, Is.Not.Null);
         }
@@ -161,7 +161,7 @@ namespace UnitConverter.Tests
             UnitConverterCustomUnits.RegisterLinear(
                 UnitConverterFamily.Length,
                 "PerryLength",
-                "perry-length",
+                "perryLength",
                 "Meter",
                 1.7018d);
 
@@ -177,21 +177,21 @@ namespace UnitConverter.Tests
         [Test]
         public void Unregister_RemovesCustomUnit()
         {
-            UnitConverterCustomUnit perry-length =
+            UnitConverterCustomUnit perryLength =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
                     "PerryLength",
-                    "perry-length",
+                    "perryLength",
                     "Meter",
                     1.7018d);
 
-            Assert.That(UnitConverterCustomUnits.Unregister(perry-length), Is.True);
+            Assert.That(UnitConverterCustomUnits.Unregister(perryLength), Is.True);
 
             UnitConverterCustomUnit resolved;
             Assert.That(
                 UnitConverterCustomUnits.TryResolve(
                     UnitConverterFamily.Length,
-                    "perry-length",
+                    "perryLength",
                     out resolved),
                 Is.False);
         }
