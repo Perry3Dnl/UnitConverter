@@ -173,6 +173,21 @@ GeneratedNumberScalePosition restored =
     GeneratedNumberNames.Parse(name);
 ```
 
+The folded Ginor naming model is preserved as well:
+
+```csharp
+var address = new GeneratedNumberNameAddress(
+    new GeneratedNumberScalePosition(2, 4, 1),
+    foldDepth: 1);
+
+string foldedName = GeneratedNumberNames.GetName(address);
+GeneratedNumberNameAddress restoredAddress =
+    GeneratedNumberNames.ParseAddress(foldedName);
+
+string symbolic = restoredAddress.ToSymbolicExpression();
+// 10^(10^(10^4))
+```
+
 The number subsystem also exposes `ArbitraryScaleMath`, exact sparse addition/subtraction/multiplication, non-negative integer powers, checked conversion to `double`, `decimal`, and `BigInteger`, and the registered conventional scale catalogue from one through googol plus generated scales.
 
 This functionality is part of the dependency-free core package; existing unit-conversion APIs remain unchanged.
