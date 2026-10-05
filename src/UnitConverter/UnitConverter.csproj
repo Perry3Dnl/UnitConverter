@@ -6,7 +6,7 @@
     <IsPackable>true</IsPackable>
     <PackageId>UnitConverter</PackageId>
     <Authors>Perry3Dnl</Authors>
-    <Description>Standalone unit conversion library with 97 conversion families, static converters, direct methods, numeric extensions, and unit metadata.</Description>
+    <Description>Standalone unit conversion library with 98 conversion families, static converters, direct methods, numeric extensions, and unit metadata.</Description>
     <PackageTags>units;conversion;physics;engineering</PackageTags>
     <PackageProjectUrl>https://github.com/Perry3Dnl/UnitConverter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
