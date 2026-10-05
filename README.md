@@ -1,6 +1,6 @@
 # UnitConverter
 
-A standalone .NET unit conversion library with **97 conversion families** and **1,632 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
+A standalone .NET unit conversion library with **98 conversion families** and **1,650 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
 
 The package candidate is **`UnitConverter` `2.0.0-preview.1`**, targeting **.NET Standard 2.0**. This repository prepares the package; it has not been published to nuget.org.
 
@@ -47,7 +47,16 @@ double alsoMillimeters = centimeters.Convert(
 double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
 ```
 
-The root namespace is now `UnitConverter`. Converter class names, enum values, conversion factors, overloads, and the base-unit conversion flow are preserved from version 1.1.3. Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
+The root namespace is now `UnitConverter`. Converter class names, existing enum values, conversion factors, overloads, and the base-unit conversion flow are preserved from version 1.1.3. Higher-level APIs are additive: strings can be parsed and formatted through the shared catalog, and `UnitValue<TUnit>` can retain a unit when that is useful without replacing the numeric API.
+
+```csharp
+double miles = UnitConverterParser.Convert("1.8 km", UnitConverterLengthUnit.Mile);
+
+var distance = new UnitValue<UnitConverterLengthUnit>(1.8, UnitConverterLengthUnit.Kilometer);
+string text = distance.ToString(); // "1.8 km"
+```
+
+`TemperatureDelta` is a separate family from absolute `Temperature`, so temperature differences use scale factors without absolute-temperature offsets. Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 ## Repository layout
 
