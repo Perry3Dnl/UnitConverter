@@ -122,6 +122,8 @@ namespace UnitConverter
 
     public static class UnitConverterExpressionParser
     {
+        private const int MaxCandidates = 128;
+
         public static UnitConverterUnitExpression Parse(string expression)
         {
             UnitConverterExpressionParseResult result = TryParse(expression);
@@ -135,29 +137,67 @@ namespace UnitConverter
 
         public static UnitConverterExpressionParseResult TryParse(string expression)
         {
-            if (string.IsNullOrWhiteSpace(expression))
+            UnitConverterUnitExpression[] candidates;
+            UnitConverterError error;
+            string errorMessage;
+
+            if (!TryParseCandidates(
+                expression,
+                out candidates,
+                out error,
+                out errorMessage))
             {
                 return UnitConverterExpressionParseResult.Fail(
-                    UnitConverterError.InvalidExpression,
-                    "The unit expression is empty.");
+                    error,
+                    errorMessage);
             }
 
-            string normalized = Normalize(expression);
-            var parser = new Parser(normalized);
-            UnitConverterUnitExpression parsed;
-
-            if (!parser.TryParse(out parsed))
+            UnitConverterUnitExpression collapsed;
+            if (!TryCollapseCandidates(candidates, out collapsed))
             {
                 return UnitConverterExpressionParseResult.Fail(
-                    parser.Error,
-                    parser.ErrorMessage);
+                    UnitConverterError.AmbiguousUnit,
+                    "The unit expression '" + expression +
+                    "' has multiple dimensionally distinct interpretations.");
             }
 
             return UnitConverterExpressionParseResult.Ok(
                 new UnitConverterUnitExpression(
                     expression.Trim(),
-                    parsed.Dimensions,
-                    parsed.ScaleToCanonical));
+                    collapsed.Dimensions,
+                    collapsed.ScaleToCanonical));
+        }
+
+        internal static bool TryParseCandidates(
+            string expression,
+            out UnitConverterUnitExpression[] candidates,
+            out UnitConverterError error,
+            out string errorMessage)
+        {
+            candidates = new UnitConverterUnitExpression[0];
+            error = UnitConverterError.InvalidExpression;
+            errorMessage = null;
+
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                errorMessage = "The unit expression is empty.";
+                return false;
+            }
+
+            string normalized = Normalize(expression);
+            var parser = new Parser(normalized);
+            List<UnitConverterUnitExpression> parsed;
+
+            if (!parser.TryParseCandidates(out parsed))
+            {
+                error = parser.Error;
+                errorMessage = parser.ErrorMessage;
+                return false;
+            }
+
+            candidates = parsed.ToArray();
+            error = UnitConverterError.None;
+            return true;
         }
 
         private static string Normalize(string expression)
@@ -184,12 +224,13 @@ namespace UnitConverter
             public UnitConverterError Error { get; private set; }
             public string ErrorMessage { get; private set; }
 
-            public bool TryParse(out UnitConverterUnitExpression expression)
+            public bool TryParseCandidates(
+                out List<UnitConverterUnitExpression> expressions)
             {
-                expression = default(UnitConverterUnitExpression);
+                expressions = null;
                 SkipWhitespace();
 
-                if (!TryParseProduct(out expression))
+                if (!TryParseProduct(out expressions))
                 {
                     return false;
                 }
@@ -205,9 +246,10 @@ namespace UnitConverter
                 return true;
             }
 
-            private bool TryParseProduct(out UnitConverterUnitExpression expression)
+            private bool TryParseProduct(
+                out List<UnitConverterUnitExpression> expressions)
             {
-                if (!TryParsePower(out expression))
+                if (!TryParsePower(out expressions))
                 {
                     return false;
                 }
@@ -233,21 +275,26 @@ namespace UnitConverter
                             "Unexpected exponent operator at position " + _index + ".");
                     }
 
-                    UnitConverterUnitExpression right;
+                    List<UnitConverterUnitExpression> right;
                     if (!TryParsePower(out right))
                     {
                         return false;
                     }
 
-                    expression = operation == '/'
-                        ? Divide(expression, right)
-                        : Multiply(expression, right);
+                    List<UnitConverterUnitExpression> combined;
+                    if (!TryCombine(expressions, right, operation, out combined))
+                    {
+                        return false;
+                    }
+
+                    expressions = combined;
                 }
             }
 
-            private bool TryParsePower(out UnitConverterUnitExpression expression)
+            private bool TryParsePower(
+                out List<UnitConverterUnitExpression> expressions)
             {
-                if (!TryParsePrimary(out expression))
+                if (!TryParsePrimary(out expressions))
                 {
                     return false;
                 }
@@ -286,13 +333,21 @@ namespace UnitConverter
                 }
 
                 exponent *= sign;
-                expression = Power(expression, exponent);
+                var powered = new List<UnitConverterUnitExpression>();
+
+                foreach (UnitConverterUnitExpression expression in expressions)
+                {
+                    AddCandidate(powered, Power(expression, exponent));
+                }
+
+                expressions = powered;
                 return true;
             }
 
-            private bool TryParsePrimary(out UnitConverterUnitExpression expression)
+            private bool TryParsePrimary(
+                out List<UnitConverterUnitExpression> expressions)
             {
-                expression = default(UnitConverterUnitExpression);
+                expressions = null;
                 SkipWhitespace();
 
                 if (_index >= _text.Length)
@@ -305,7 +360,7 @@ namespace UnitConverter
                 if (_text[_index] == '(')
                 {
                     _index++;
-                    if (!TryParseProduct(out expression))
+                    if (!TryParseProduct(out expressions))
                     {
                         return false;
                     }
@@ -346,20 +401,20 @@ namespace UnitConverter
                         "A unit is required at position " + start + ".");
                 }
 
-                return TryResolveAtom(atom, out expression);
+                return TryResolveAtom(atom, out expressions);
             }
 
             private bool TryResolveAtom(
                 string atom,
-                out UnitConverterUnitExpression expression)
+                out List<UnitConverterUnitExpression> expressions)
             {
-                expression = default(UnitConverterUnitExpression);
+                expressions = null;
                 UnitConverterDetectionResult detection =
                     UnitConverterDetector.DetectUnit(atom);
 
                 if (detection.Status != UnitConverterDetectionStatus.Unknown)
                 {
-                    return TryResolveDetection(atom, detection, out expression);
+                    return TryResolveDetection(atom, detection, out expressions);
                 }
 
                 string[] pieces = atom.Split(
@@ -373,36 +428,44 @@ namespace UnitConverter
                         "The unit '" + atom + "' is not recognized.");
                 }
 
-                UnitConverterUnitExpression combined =
+                var combined = new List<UnitConverterUnitExpression>
+                {
                     new UnitConverterUnitExpression(
                         atom,
                         UnitConverterDimensions.Dimensionless,
-                        1d);
+                        1d)
+                };
 
                 foreach (string piece in pieces)
                 {
                     UnitConverterDetectionResult pieceDetection =
                         UnitConverterDetector.DetectUnit(piece);
-                    UnitConverterUnitExpression resolved;
+                    List<UnitConverterUnitExpression> resolved;
 
                     if (!TryResolveDetection(piece, pieceDetection, out resolved))
                     {
                         return false;
                     }
 
-                    combined = Multiply(combined, resolved);
+                    List<UnitConverterUnitExpression> next;
+                    if (!TryCombine(combined, resolved, '*', out next))
+                    {
+                        return false;
+                    }
+
+                    combined = next;
                 }
 
-                expression = combined;
+                expressions = combined;
                 return true;
             }
 
             private bool TryResolveDetection(
                 string atom,
                 UnitConverterDetectionResult detection,
-                out UnitConverterUnitExpression expression)
+                out List<UnitConverterUnitExpression> expressions)
             {
-                expression = default(UnitConverterUnitExpression);
+                expressions = new List<UnitConverterUnitExpression>();
 
                 if (detection.Status == UnitConverterDetectionStatus.Unknown)
                 {
@@ -413,68 +476,33 @@ namespace UnitConverter
                         detection.ErrorMessage ?? ("The unit '" + atom + "' is not recognized."));
                 }
 
+                IReadOnlyList<UnitConverterUnitCandidate> candidates;
                 if (detection.Status == UnitConverterDetectionStatus.Resolved)
                 {
-                    double scale;
-                    if (!TryGetCanonicalScale(detection.Candidate, out scale))
+                    candidates = new[] { detection.Candidate };
+                }
+                else
+                {
+                    candidates = detection.Candidates;
+                    var exactSymbolCandidates =
+                        new List<UnitConverterUnitCandidate>();
+
+                    foreach (UnitConverterUnitCandidate candidate in detection.Candidates)
                     {
-                        return Fail(
-                            UnitConverterError.UnsupportedUnit,
-                            "The unit '" + atom + "' cannot be used as a multiplicative expression factor.");
+                        if (string.Equals(
+                            candidate.Unit.Symbol,
+                            atom,
+                            StringComparison.Ordinal))
+                        {
+                            exactSymbolCandidates.Add(candidate);
+                        }
                     }
 
-                    expression = new UnitConverterUnitExpression(
-                        atom,
-                        detection.Candidate.Unit.Dimensions,
-                        scale);
-                    return true;
-                }
-
-                IReadOnlyList<UnitConverterUnitCandidate> candidates =
-                    detection.Candidates;
-                var exactSymbolCandidates =
-                    new List<UnitConverterUnitCandidate>();
-
-                foreach (UnitConverterUnitCandidate candidate in detection.Candidates)
-                {
-                    if (string.Equals(
-                        candidate.Unit.Symbol,
-                        atom,
-                        StringComparison.Ordinal))
+                    if (exactSymbolCandidates.Count > 0)
                     {
-                        exactSymbolCandidates.Add(candidate);
+                        candidates = exactSymbolCandidates;
                     }
                 }
-
-                if (exactSymbolCandidates.Count == 1)
-                {
-                    double exactScale;
-                    if (!TryGetCanonicalScale(
-                        exactSymbolCandidates[0],
-                        out exactScale))
-                    {
-                        return Fail(
-                            UnitConverterError.UnsupportedUnit,
-                            "The unit '" + atom +
-                            "' cannot be used as a multiplicative expression factor.");
-                    }
-
-                    expression = new UnitConverterUnitExpression(
-                        atom,
-                        exactSymbolCandidates[0].Unit.Dimensions,
-                        exactScale);
-                    return true;
-                }
-
-                if (exactSymbolCandidates.Count > 1)
-                {
-                    candidates = exactSymbolCandidates;
-                }
-
-                UnitConverterUnitCandidate first = null;
-                UnitConverterDimensions dimensions =
-                    UnitConverterDimensions.Dimensionless;
-                double firstScale = 0d;
 
                 foreach (UnitConverterUnitCandidate candidate in candidates)
                 {
@@ -484,36 +512,52 @@ namespace UnitConverter
                         continue;
                     }
 
-                    if (first == null)
-                    {
-                        first = candidate;
-                        dimensions = candidate.Unit.Dimensions;
-                        firstScale = scale;
-                        continue;
-                    }
-
-                    if (candidate.Unit.Dimensions != dimensions ||
-                        !NearlyEqual(scale, firstScale))
-                    {
-                        return Fail(
-                            UnitConverterError.AmbiguousUnit,
-                            "The unit '" + atom +
-                            "' is ambiguous across incompatible candidates: " +
-                            DescribeCandidates(candidates) + ".");
-                    }
+                    AddCandidate(
+                        expressions,
+                        new UnitConverterUnitExpression(
+                            atom,
+                            candidate.Unit.Dimensions,
+                            scale));
                 }
 
-                if (first == null)
+                if (expressions.Count == 0)
                 {
                     return Fail(
                         UnitConverterError.UnsupportedUnit,
-                        "The unit '" + atom + "' cannot be used as a multiplicative expression factor.");
+                        "The unit '" + atom +
+                        "' cannot be used as a multiplicative expression factor.");
                 }
 
-                expression = new UnitConverterUnitExpression(
-                    atom,
-                    dimensions,
-                    firstScale);
+                return true;
+            }
+
+            private bool TryCombine(
+                List<UnitConverterUnitExpression> left,
+                List<UnitConverterUnitExpression> right,
+                char operation,
+                out List<UnitConverterUnitExpression> combined)
+            {
+                combined = new List<UnitConverterUnitExpression>();
+
+                foreach (UnitConverterUnitExpression leftExpression in left)
+                {
+                    foreach (UnitConverterUnitExpression rightExpression in right)
+                    {
+                        AddCandidate(
+                            combined,
+                            operation == '/'
+                                ? Divide(leftExpression, rightExpression)
+                                : Multiply(leftExpression, rightExpression));
+
+                        if (combined.Count > MaxCandidates)
+                        {
+                            return Fail(
+                                UnitConverterError.AmbiguousUnit,
+                                "The unit expression has too many ambiguous interpretations.");
+                        }
+                    }
+                }
+
                 return true;
             }
 
@@ -531,6 +575,51 @@ namespace UnitConverter
                 ErrorMessage = message;
                 return false;
             }
+        }
+
+        private static void AddCandidate(
+            List<UnitConverterUnitExpression> candidates,
+            UnitConverterUnitExpression candidate)
+        {
+            foreach (UnitConverterUnitExpression existing in candidates)
+            {
+                if (existing.Dimensions == candidate.Dimensions &&
+                    NearlyEqual(
+                        existing.ScaleToCanonical,
+                        candidate.ScaleToCanonical))
+                {
+                    return;
+                }
+            }
+
+            candidates.Add(candidate);
+        }
+
+        private static bool TryCollapseCandidates(
+            UnitConverterUnitExpression[] candidates,
+            out UnitConverterUnitExpression expression)
+        {
+            expression = default(UnitConverterUnitExpression);
+
+            if (candidates == null || candidates.Length == 0)
+            {
+                return false;
+            }
+
+            expression = candidates[0];
+
+            for (int index = 1; index < candidates.Length; index++)
+            {
+                if (candidates[index].Dimensions != expression.Dimensions ||
+                    !NearlyEqual(
+                        candidates[index].ScaleToCanonical,
+                        expression.ScaleToCanonical))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static UnitConverterUnitExpression Multiply(
