@@ -67,6 +67,7 @@ namespace UnitConverter.Catalog
         private readonly UnitConverterUnitDescriptor[] _units;
         private readonly Dictionary<string, TUnit> _exactAliases;
         private readonly Dictionary<string, TUnit> _ignoreCaseAliases;
+        private readonly HashSet<string> _ambiguousExactAliases;
         private readonly HashSet<string> _ambiguousIgnoreCaseAliases;
         private readonly UnitConverterDimensions _dimensions;
         private readonly bool _hasUniformDimensions;
@@ -90,7 +91,7 @@ namespace UnitConverter.Catalog
             _convert = convert ?? throw new ArgumentNullException(nameof(convert));
             _exactAliases = new Dictionary<string, TUnit>(StringComparer.Ordinal);
             _ignoreCaseAliases = new Dictionary<string, TUnit>(StringComparer.OrdinalIgnoreCase);
-
+            _ambiguousExactAliases = new HashSet<string>(StringComparer.Ordinal);
             _ambiguousIgnoreCaseAliases = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var units = new List<UnitConverterUnitDescriptor>();
             UnitConverterDimensions? firstDimensions = null;
@@ -135,9 +136,14 @@ namespace UnitConverter.Catalog
 
                 foreach (string alias in acceptedAliases)
                 {
-                    AddExact(_exactAliases, alias, unit);
+                    AddExact(_exactAliases, _ambiguousExactAliases, alias, unit);
                     AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, alias, unit);
                 }
+            }
+
+            foreach (string ambiguousAlias in _ambiguousExactAliases)
+            {
+                _exactAliases.Remove(ambiguousAlias);
             }
 
             foreach (string ambiguousAlias in _ambiguousIgnoreCaseAliases)
@@ -170,6 +176,11 @@ namespace UnitConverter.Catalog
             }
 
             string candidate = text.Trim();
+
+            if (_ambiguousExactAliases.Contains(candidate))
+            {
+                return UnitConverterUnitResolution.Ambiguous;
+            }
 
             if (_exactAliases.TryGetValue(candidate, out unit))
             {
@@ -280,6 +291,7 @@ namespace UnitConverter.Catalog
 
         private static void AddExact(
             Dictionary<string, TUnit> aliases,
+            HashSet<string> ambiguous,
             string alias,
             TUnit unit)
         {
@@ -289,10 +301,19 @@ namespace UnitConverter.Catalog
             }
 
             string candidate = alias.Trim();
-            if (!aliases.ContainsKey(candidate))
+            TUnit existing;
+
+            if (aliases.TryGetValue(candidate, out existing))
             {
-                aliases.Add(candidate, unit);
+                if (!EqualityComparer<TUnit>.Default.Equals(existing, unit))
+                {
+                    ambiguous.Add(candidate);
+                }
+
+                return;
             }
+
+            aliases.Add(candidate, unit);
         }
 
         private static void AddIgnoreCase(
