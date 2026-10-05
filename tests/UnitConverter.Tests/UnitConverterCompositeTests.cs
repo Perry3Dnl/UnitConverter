@@ -97,14 +97,26 @@ namespace UnitConverter.Tests
                 Is.EqualTo(UnitConverterCatalog.GetFamily(UnitConverterFamily.Pressure).Dimensions));
         }
 
-        [Test]
-        public void Parse_TrueSymbolCollision_RemainsAmbiguous()
+        [TestCase("L")]
+        [TestCase("h")]
+        public void Parse_TrueSymbolCollision_RemainsAmbiguous(string expression)
         {
             UnitConverterExpressionParseResult result =
-                UnitConverterExpressionParser.TryParse("L");
+                UnitConverterExpressionParser.TryParse(expression);
 
             Assert.That(result.Success, Is.False);
             Assert.That(result.Error, Is.EqualTo(UnitConverterError.AmbiguousUnit));
+        }
+
+        [Test]
+        public void Convert_TrueSymbolCollision_CanResolveFromTargetDimensions()
+        {
+            double result = UnitConverterComposite.Convert(
+                1000d,
+                "L",
+                "m^3");
+
+            Assert.That(result, Is.EqualTo(1d).Within(1e-12d));
         }
 
         [Test]
