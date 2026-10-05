@@ -124,6 +124,59 @@ UnitConverterCustomUnit customTemperature =
 
 Custom aliases cannot shadow built-in aliases in the same family. Registered units participate in family-specific dynamic conversion and global detection. Linear custom units can also participate in composite expressions; affine custom units are rejected as multiplicative expression factors because offsets are not representable by a pure scale expression.
 
+### Arbitrary-scale number conversion
+
+UnitConverter now also includes the former Ginor number-conversion engine under `UnitConverter.Numbers`. It handles exact sparse base-10 values whose exponents can be far beyond conventional CLR numeric ranges:
+
+```csharp
+using UnitConverter.Numbers;
+
+ArbitraryScaleNumber huge =
+    ArbitraryScaleNumber.Parse("1e100000000000000000000");
+
+Console.WriteLine(huge.ToScientific());
+// 1e100000000000000000000
+```
+
+Named-scale conversion uses the same straightforward conversion style:
+
+```csharp
+ArbitraryScaleNumber billions =
+    NumberScaleConverter.Convert(
+        "500 million",
+        "billion");
+
+Console.WriteLine(billions.ToScientific());
+// 5e-1
+```
+
+The integrated generated-name grammar retains Ginor's deterministic large-number naming model. `ginozillion` is the generated scale at layer 2, magnitude 4 and coefficient 1, corresponding to `10^10000` in the arbitrary-scale number engine:
+
+```csharp
+ArbitraryScaleNumber ginozillion =
+    ArbitraryScaleNumber.Parse("1 ginozillion");
+
+GeneratedNumberScalePosition position =
+    GeneratedNumberNames.Parse("ginozillion");
+```
+
+Generated names are reversible addresses:
+
+```csharp
+var position = new GeneratedNumberScalePosition(
+    layer: 3,
+    magnitude: 27,
+    coefficient: 7);
+
+string name = GeneratedNumberNames.GetName(position);
+GeneratedNumberScalePosition restored =
+    GeneratedNumberNames.Parse(name);
+```
+
+The number subsystem also exposes `ArbitraryScaleMath`, exact sparse addition/subtraction/multiplication, non-negative integer powers, checked conversion to `double`, `decimal`, and `BigInteger`, and the registered conventional scale catalogue from one through googol plus generated scales.
+
+This functionality is part of the dependency-free core package; existing unit-conversion APIs remain unchanged.
+
 ### System.Text.Json serialization
 
 Serialization support is kept out of the dependency-free core package. Install the companion package `UnitConverter.SystemTextJson` and register its converter factory:
