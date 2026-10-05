@@ -294,6 +294,163 @@ namespace UnitConverter.Tests
                     "10^(10^(10^4))"));
         }
 
+        [TestCase("deci", -1)]
+        [TestCase("centi", -2)]
+        [TestCase("milli", -3)]
+        [TestCase("micro", -6)]
+        [TestCase("nano", -9)]
+        [TestCase("pico", -12)]
+        [TestCase("femto", -15)]
+        [TestCase("atto", -18)]
+        [TestCase("zepto", -21)]
+        [TestCase("yocto", -24)]
+        [TestCase("ronto", -27)]
+        [TestCase("quecto", -30)]
+        public void SmallSiScales_HaveExpectedExponent(
+            string name,
+            int expectedExponent)
+        {
+            NumberScaleDescriptor scale =
+                NumberScaleCatalog.Get(name);
+
+            Assert.That(
+                scale.Exponent,
+                Is.EqualTo(new BigInteger(expectedExponent)));
+        }
+
+        [Test]
+        public void MilliToMicro_ConvertsToOneThousand()
+        {
+            ArbitraryScaleNumber result =
+                NumberScaleConverter.Convert(
+                    "1 milli",
+                    "micro");
+
+            Assert.That(
+                result.ToScientific(),
+                Is.EqualTo("1e3"));
+        }
+
+        [Test]
+        public void TinyGeneratedName_IsDistinctAndReversible()
+        {
+            var large =
+                new GeneratedNumberScalePosition(
+                    new BigInteger(2),
+                    new BigInteger(4),
+                    BigInteger.One);
+
+            var tiny =
+                new GeneratedNumberScalePosition(
+                    GeneratedNumberScaleDirection.Tiny,
+                    new BigInteger(2),
+                    new BigInteger(4),
+                    BigInteger.One);
+
+            string largeName =
+                GeneratedNumberNames.GetName(large);
+
+            string tinyName =
+                GeneratedNumberNames.GetName(tiny);
+
+            Assert.That(
+                largeName,
+                Is.EqualTo("ginozillion"));
+
+            Assert.That(
+                tinyName,
+                Is.Not.EqualTo(largeName));
+
+            Assert.That(
+                GeneratedNumberNames.Parse(tinyName),
+                Is.EqualTo(tiny));
+        }
+
+        [Test]
+        public void TinyGeneratedScale_RepresentsTenToMinusTenThousand()
+        {
+            var tinyPosition =
+                new GeneratedNumberScalePosition(
+                    GeneratedNumberScaleDirection.Tiny,
+                    new BigInteger(2),
+                    new BigInteger(4),
+                    BigInteger.One);
+
+            string tinyName =
+                GeneratedNumberNames.GetName(
+                    tinyPosition);
+
+            NumberScaleDescriptor scale =
+                NumberScaleCatalog.Get(
+                    tinyName);
+
+            Assert.That(
+                scale.Exponent,
+                Is.EqualTo(new BigInteger(-10000)));
+
+            ArbitraryScaleNumber value =
+                ArbitraryScaleNumber.Parse(
+                    "1 " + tinyName);
+
+            Assert.That(
+                value.ToScientific(),
+                Is.EqualTo("1e-10000"));
+        }
+
+        [Test]
+        public void GeneratedTinyScale_CanConvertToQuecto()
+        {
+            var tinyPosition =
+                new GeneratedNumberScalePosition(
+                    GeneratedNumberScaleDirection.Tiny,
+                    new BigInteger(2),
+                    new BigInteger(4),
+                    BigInteger.One);
+
+            string tinyName =
+                GeneratedNumberNames.GetName(
+                    tinyPosition);
+
+            ArbitraryScaleNumber value =
+                NumberScaleConverter.Convert(
+                    "1 " + tinyName,
+                    "quecto");
+
+            Assert.That(
+                value.ToScientific(),
+                Is.EqualTo("1e-9970"));
+        }
+
+        [Test]
+        public void TinyFoldedGeneratedNames_AreReversible()
+        {
+            var address =
+                new GeneratedNumberNameAddress(
+                    new GeneratedNumberScalePosition(
+                        GeneratedNumberScaleDirection.Tiny,
+                        new BigInteger(2),
+                        new BigInteger(4),
+                        BigInteger.One),
+                    BigInteger.One);
+
+            string name =
+                GeneratedNumberNames.GetName(
+                    address);
+
+            GeneratedNumberNameAddress restored =
+                GeneratedNumberNames.ParseAddress(
+                    name);
+
+            Assert.That(
+                restored,
+                Is.EqualTo(address));
+
+            Assert.That(
+                restored.ToSymbolicExpression(),
+                Is.EqualTo(
+                    "1/(10^(10^(10^4)))"));
+        }
+
         [Test]
         public void Ginozillion_CanBeUsedAsNumericScale()
         {
