@@ -84,6 +84,7 @@ namespace UnitConverter.Numbers
 
             if (!TryMaterializeLayerTwoExponent(
                 position.Magnitude,
+                position.Direction,
                 out exponent))
             {
                 return false;
@@ -114,10 +115,36 @@ namespace UnitConverter.Numbers
                 new Dictionary<string, NumberScaleDescriptor>(
                     StringComparer.OrdinalIgnoreCase);
 
+            Add(result, "quecto", -30);
+            Add(result, "ronto", -27);
+            Add(result, "yocto", -24);
+            Add(result, "zepto", -21);
+            Add(result, "atto", -18);
+            Add(result, "femto", -15);
+            Add(result, "pico", -12);
+            Add(result, "nano", -9);
+            Add(result, "micro", -6);
+            Add(result, "milli", -3);
+            Add(result, "centi", -2);
+            Add(result, "deci", -1);
+
             Add(result, "one", 0);
+
+            Add(result, "deca", 1);
+            Add(result, "hecto", 2);
+            Add(result, "kilo", 3);
             Add(result, "ten", 1);
             Add(result, "hundred", 2);
             Add(result, "thousand", 3);
+            Add(result, "mega", 6);
+            Add(result, "giga", 9);
+            Add(result, "tera", 12);
+            Add(result, "peta", 15);
+            Add(result, "exa", 18);
+            Add(result, "zetta", 21);
+            Add(result, "yotta", 24);
+            Add(result, "ronna", 27);
+            Add(result, "quetta", 30);
             Add(result, "million", 6);
             Add(result, "billion", 9);
             Add(result, "trillion", 12);
@@ -141,6 +168,20 @@ namespace UnitConverter.Numbers
                 result,
                 ginozillion,
                 new BigInteger(10000),
+                true);
+
+            string tinyGinozillion =
+                GeneratedNumberNames.GetName(
+                    new GeneratedNumberScalePosition(
+                        GeneratedNumberScaleDirection.Tiny,
+                        new BigInteger(2),
+                        new BigInteger(4),
+                        BigInteger.One));
+
+            Add(
+                result,
+                tinyGinozillion,
+                new BigInteger(-10000),
                 true);
 
             return result;
@@ -174,6 +215,7 @@ namespace UnitConverter.Numbers
 
         private static bool TryMaterializeLayerTwoExponent(
             BigInteger magnitude,
+            GeneratedNumberScaleDirection direction,
             out BigInteger exponent)
         {
             exponent = BigInteger.Zero;
@@ -189,6 +231,11 @@ namespace UnitConverter.Numbers
                 BigInteger.Pow(
                     new BigInteger(10),
                     (int)magnitude);
+
+            if (direction == GeneratedNumberScaleDirection.Tiny)
+            {
+                exponent = -exponent;
+            }
 
             return true;
         }
