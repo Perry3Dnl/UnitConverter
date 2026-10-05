@@ -56,7 +56,19 @@ var distance = new UnitValue<UnitConverterLengthUnit>(1.8, UnitConverterLengthUn
 string text = distance.ToString(); // "1.8 km"
 ```
 
-`TemperatureDelta` is a separate family from absolute `Temperature`, so temperature differences use scale factors without absolute-temperature offsets. Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
+`TemperatureDelta` is a separate family from absolute `Temperature`, so temperature differences use scale factors without absolute-temperature offsets.
+
+Runtime family detection is also available when the caller does not know the family in advance:
+
+```csharp
+UnitConverterDetectionResult detected = UnitConverterDetector.Detect("2 light-year");
+
+// Or convert directly when the detected family is unambiguous.
+double meters = UnitConverterDynamic.Convert("2 light-year", "m");
+```
+
+Global detection returns explicit candidates for ambiguous symbols instead of guessing. Family and unit descriptors also expose physical dimensions, including a separate information dimension for digital storage/data rate. Dimensions can be multiplied, divided, and raised to integer powers for future dimensional-analysis APIs. Fuel economy is modeled with unit-specific reciprocal dimensions because `km/L` and `L/100 km` are physically reciprocal representations.
+ Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 ## Repository layout
 
