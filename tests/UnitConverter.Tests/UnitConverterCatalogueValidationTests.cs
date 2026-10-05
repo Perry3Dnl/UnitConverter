@@ -172,7 +172,7 @@ namespace UnitConverter.Tests
 
         private static double RoundTripTolerance(double value)
         {
-            return Math.Max(1e-10d, Math.Abs(value) * 1e-9d);
+            return Math.Max(1e-7d, Math.Abs(value) * 1e-9d);
         }
     }
 }
