@@ -16,6 +16,70 @@ namespace UnitConverter
             return TryParse(input, CultureInfo.InvariantCulture, out value, out unit);
         }
 
+        public static UnitConverterParseResult<TUnit> ParseDetailed<TUnit>(string input)
+            where TUnit : struct
+        {
+            return ParseDetailed<TUnit>(input, CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterParseResult<TUnit> ParseDetailed<TUnit>(
+            string input,
+            IFormatProvider formatProvider)
+            where TUnit : struct
+        {
+            if (!typeof(TUnit).IsEnum)
+            {
+                return UnitConverterParseResult<TUnit>.Fail(
+                    UnitConverterError.UnsupportedUnit,
+                    typeof(TUnit).FullName + " is not a unit enum.");
+            }
+
+            double parsedValue;
+            string unitText;
+            UnitConverterError splitError;
+
+            if (!TrySplitValueAndUnit(
+                input,
+                formatProvider ?? CultureInfo.InvariantCulture,
+                out parsedValue,
+                out unitText,
+                out splitError))
+            {
+                return UnitConverterParseResult<TUnit>.Fail(
+                    splitError,
+                    splitError == UnitConverterError.MissingUnit
+                        ? "The input does not contain a unit."
+                        : "The numeric value could not be parsed.");
+            }
+
+            UnitConverterFamilyDescriptor<TUnit> descriptor;
+            if (!UnitConverterCatalog.TryGetFamily(out descriptor))
+            {
+                return UnitConverterParseResult<TUnit>.Fail(
+                    UnitConverterError.UnknownFamily,
+                    "No unit family descriptor is registered for " + typeof(TUnit).FullName + ".");
+            }
+
+            TUnit unit;
+            UnitConverterUnitResolution resolution = descriptor.ResolveUnit(unitText, out unit);
+
+            if (resolution == UnitConverterUnitResolution.Ambiguous)
+            {
+                return UnitConverterParseResult<TUnit>.Fail(
+                    UnitConverterError.AmbiguousUnit,
+                    "The unit '" + unitText + "' is ambiguous.");
+            }
+
+            if (resolution == UnitConverterUnitResolution.Unknown)
+            {
+                return UnitConverterParseResult<TUnit>.Fail(
+                    UnitConverterError.UnknownUnit,
+                    "The unit '" + unitText + "' is not recognized for " + descriptor.Name + ".");
+            }
+
+            return UnitConverterParseResult<TUnit>.Ok(parsedValue, unit);
+        }
+
         public static bool TryParse<TUnit>(
             string input,
             IFormatProvider formatProvider,
@@ -23,35 +87,12 @@ namespace UnitConverter
             out TUnit unit)
             where TUnit : struct
         {
-            value = 0d;
-            unit = default(TUnit);
+            UnitConverterParseResult<TUnit> result =
+                ParseDetailed<TUnit>(input, formatProvider);
 
-            if (!typeof(TUnit).IsEnum || string.IsNullOrWhiteSpace(input))
-            {
-                return false;
-            }
-
-            double parsedValue;
-            string unitText;
-
-            if (!TrySplitValueAndUnit(
-                input.Trim(),
-                formatProvider ?? CultureInfo.InvariantCulture,
-                out parsedValue,
-                out unitText))
-            {
-                return false;
-            }
-
-            UnitConverterFamilyDescriptor<TUnit> descriptor;
-            if (!UnitConverterCatalog.TryGetFamily(out descriptor) ||
-                !descriptor.TryResolveUnit(unitText, out unit))
-            {
-                return false;
-            }
-
-            value = parsedValue;
-            return true;
+            value = result.Value;
+            unit = result.Unit;
+            return result.Success;
         }
 
         public static UnitConverterParsedValue<TUnit> Parse<TUnit>(string input)
@@ -114,19 +155,39 @@ namespace UnitConverter
             }
         }
 
-        private static bool TrySplitValueAndUnit(
+        internal static bool TrySplitValueAndUnit(
             string text,
             IFormatProvider formatProvider,
             out double value,
-            out string unitText)
+            out string unitText,
+            out UnitConverterError error)
         {
             value = 0d;
             unitText = null;
+            error = UnitConverterError.InvalidNumber;
 
-            for (int splitIndex = text.Length - 1; splitIndex > 0; splitIndex--)
+            if (string.IsNullOrWhiteSpace(text))
             {
-                string numberPart = text.Substring(0, splitIndex).TrimEnd();
-                string candidateUnit = text.Substring(splitIndex).Trim();
+                return false;
+            }
+
+            string trimmed = text.Trim();
+            double numericOnly;
+
+            if (double.TryParse(
+                trimmed,
+                NumberStyles.Float,
+                formatProvider,
+                out numericOnly))
+            {
+                error = UnitConverterError.MissingUnit;
+                return false;
+            }
+
+            for (int splitIndex = trimmed.Length - 1; splitIndex > 0; splitIndex--)
+            {
+                string numberPart = trimmed.Substring(0, splitIndex).TrimEnd();
+                string candidateUnit = trimmed.Substring(splitIndex).Trim();
 
                 if (candidateUnit.Length == 0)
                 {
@@ -142,6 +203,7 @@ namespace UnitConverter
                 {
                     value = candidateValue;
                     unitText = candidateUnit;
+                    error = UnitConverterError.None;
                     return true;
                 }
             }
