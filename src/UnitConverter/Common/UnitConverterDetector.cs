@@ -22,8 +22,22 @@ namespace UnitConverter
             Unit = unit;
         }
 
+        internal UnitConverterUnitCandidate(UnitConverterCustomUnit customUnit)
+        {
+            CustomUnit = customUnit ?? throw new ArgumentNullException(nameof(customUnit));
+            Family = customUnit.Family;
+        }
+
         public UnitConverterFamilyDescriptor Family { get; }
         public UnitConverterUnitDescriptor Unit { get; }
+        public UnitConverterCustomUnit CustomUnit { get; }
+        public bool IsCustom => CustomUnit != null;
+        public UnitConverterDimensions Dimensions =>
+            IsCustom ? CustomUnit.Dimensions : Unit.Dimensions;
+        public string Symbol =>
+            IsCustom ? CustomUnit.Symbol : Unit.Symbol;
+        public string Name =>
+            IsCustom ? CustomUnit.Name : Unit.Name;
     }
 
     public readonly struct UnitConverterDetectionResult
@@ -209,7 +223,31 @@ namespace UnitConverter
                 }
             }
 
+            foreach (UnitConverterCustomUnit custom in UnitConverterCustomUnits.GetUnits())
+            {
+                if (MatchesAlias(custom, text, comparison))
+                {
+                    matches.Add(new UnitConverterUnitCandidate(custom));
+                }
+            }
+
             return matches.ToArray();
+        }
+
+        private static bool MatchesAlias(
+            UnitConverterCustomUnit unit,
+            string text,
+            StringComparison comparison)
+        {
+            foreach (string alias in unit.Aliases)
+            {
+                if (string.Equals(alias, text, comparison))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool MatchesAlias(
