@@ -13,6 +13,7 @@ namespace UnitConverter
             string displayName,
             string[] aliases,
             object referenceUnit,
+            UnitConverterDimensions dimensions,
             double scaleToReference,
             double offsetToReference)
         {
@@ -22,6 +23,7 @@ namespace UnitConverter
             DisplayName = displayName;
             Aliases = aliases ?? new string[0];
             ReferenceUnit = referenceUnit;
+            Dimensions = dimensions;
             ScaleToReference = scaleToReference;
             OffsetToReference = offsetToReference;
         }
@@ -31,7 +33,7 @@ namespace UnitConverter
         public string Symbol { get; }
         public string DisplayName { get; }
         public IReadOnlyList<string> Aliases { get; }
-        public UnitConverterDimensions Dimensions => Family.Dimensions;
+        public UnitConverterDimensions Dimensions { get; }
         public double ScaleToReference { get; }
         public double OffsetToReference { get; }
         internal object ReferenceUnit { get; }
@@ -131,6 +133,15 @@ namespace UnitConverter
                     nameof(referenceUnit));
             }
 
+            UnitConverterUnitDescriptor referenceDescriptor =
+                FindUnitDescriptor(descriptor, reference);
+
+            if (referenceDescriptor == null)
+            {
+                throw new InvalidOperationException(
+                    "The reference unit descriptor could not be found.");
+            }
+
             string[] acceptedAliases = BuildAliases(
                 name,
                 symbol,
@@ -151,6 +162,7 @@ namespace UnitConverter
                     string.IsNullOrWhiteSpace(displayName) ? name.Trim() : displayName.Trim(),
                     acceptedAliases,
                     reference,
+                    referenceDescriptor.Dimensions,
                     scaleToReference,
                     offsetToReference);
 
@@ -553,6 +565,21 @@ namespace UnitConverter
                     }
                 }
             }
+        }
+
+        private static UnitConverterUnitDescriptor FindUnitDescriptor(
+            UnitConverterFamilyDescriptor family,
+            object unit)
+        {
+            foreach (UnitConverterUnitDescriptor descriptor in family.Units)
+            {
+                if (object.Equals(descriptor.Unit, unit))
+                {
+                    return descriptor;
+                }
+            }
+
+            return null;
         }
 
         private static void EnsureSameFamily(
