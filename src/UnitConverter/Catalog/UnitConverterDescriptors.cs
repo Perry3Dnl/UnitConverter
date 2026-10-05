@@ -43,11 +43,13 @@ namespace UnitConverter.Catalog
             Family = family;
             Name = name;
             BaseUnitName = baseUnitName;
+            Dimensions = UnitConverterDimensions.ForFamily(family);
         }
 
         public UnitConverterFamily Family { get; }
         public string Name { get; }
         public string BaseUnitName { get; }
+        public UnitConverterDimensions Dimensions { get; }
         public abstract Type UnitType { get; }
         public abstract IReadOnlyList<UnitConverterUnitDescriptor> Units { get; }
 
