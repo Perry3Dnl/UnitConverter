@@ -13,6 +13,8 @@ namespace UnitConverter
         WrongUnitFamily = 6,
         UnsupportedUnit = 7,
         ConversionFailed = 8,
+        InvalidExpression = 9,
+        IncompatibleDimensions = 10,
     }
 
     public readonly struct UnitConverterParseResult<TUnit>
