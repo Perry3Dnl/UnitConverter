@@ -81,6 +81,29 @@ public static class Program
             generated.Magnitude == 4 &&
             generated.Coefficient == 1,
             "generated number name");
+        var tinyPosition =
+            new GeneratedNumberScalePosition(
+                GeneratedNumberScaleDirection.Tiny,
+                2,
+                4,
+                1);
+
+        string tinyName =
+            GeneratedNumberNames.GetName(
+                tinyPosition);
+
+        Require(
+            tinyName == "ginuzillion",
+            "generated tiny number name");
+
+        ArbitraryScaleNumber tiny =
+            ArbitraryScaleNumber.Parse(
+                "1 " + tinyName);
+
+        Require(
+            tiny.ToScientific() == "1e-10000",
+            "generated tiny number scale");
+
 
     }
 
