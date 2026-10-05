@@ -7,6 +7,27 @@ namespace UnitConverter.SystemTextJson
 
     public static class UnitConverterJson
     {
+        public static JsonSerializerOptions AddUnitConverter<TUnit>(
+            this JsonSerializerOptions options)
+            where TUnit : struct
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            foreach (JsonConverter converter in options.Converters)
+            {
+                if (converter is UnitValueJsonConverter<TUnit>)
+                {
+                    return options;
+                }
+            }
+
+            options.Converters.Add(new UnitValueJsonConverter<TUnit>());
+            return options;
+        }
+
         public static JsonSerializerOptions AddUnitConverter(
             this JsonSerializerOptions options)
         {
