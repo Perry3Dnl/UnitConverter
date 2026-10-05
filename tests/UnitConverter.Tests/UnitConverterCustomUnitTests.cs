@@ -1,6 +1,7 @@
 namespace UnitConverter.Tests
 {
     using NUnit.Framework;
+    using UnitConverter.Catalog;
 
     public sealed class UnitConverterCustomUnitTests
     {
