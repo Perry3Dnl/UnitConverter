@@ -1,0 +1,266 @@
+namespace UnitConverter
+{
+    using System;
+    using System.Globalization;
+    using UnitConverter.Catalog;
+
+    public static class UnitConverterDynamic
+    {
+        public static double Convert(
+            double value,
+            UnitConverterFamily family,
+            string fromUnit,
+            string toUnit)
+        {
+            UnitConverterDynamicResult result =
+                TryConvert(value, family, fromUnit, toUnit);
+
+            if (!result.Success)
+            {
+                throw new ArgumentException(result.ErrorMessage);
+            }
+
+            return result.Value;
+        }
+
+        public static double Convert(
+            string input,
+            UnitConverterFamily family,
+            string toUnit)
+        {
+            return Convert(
+                input,
+                family,
+                toUnit,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static double Convert(
+            string input,
+            UnitConverterFamily family,
+            string toUnit,
+            IFormatProvider formatProvider)
+        {
+            UnitConverterDynamicResult result =
+                TryConvert(input, family, toUnit, formatProvider);
+
+            if (!result.Success)
+            {
+                throw new FormatException(result.ErrorMessage);
+            }
+
+            return result.Value;
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            double value,
+            UnitConverterFamily family,
+            string fromUnit,
+            string toUnit)
+        {
+            UnitConverterFamilyDescriptor descriptor;
+            if (!UnitConverterCatalog.TryGetFamily(family, out descriptor))
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.UnknownFamily,
+                    "The unit family '" + family + "' is not registered.");
+            }
+
+            object from;
+            UnitConverterUnitResolution fromResolution =
+                descriptor.ResolveUnit(fromUnit, out from);
+
+            UnitConverterDynamicResult fromFailure =
+                GetUnitFailure(descriptor, family, fromUnit, fromResolution, "source");
+
+            if (!fromFailure.Success && fromFailure.Error != UnitConverterError.None)
+            {
+                return fromFailure;
+            }
+
+            object to;
+            UnitConverterUnitResolution toResolution =
+                descriptor.ResolveUnit(toUnit, out to);
+
+            UnitConverterDynamicResult toFailure =
+                GetUnitFailure(descriptor, family, toUnit, toResolution, "target");
+
+            if (!toFailure.Success && toFailure.Error != UnitConverterError.None)
+            {
+                return toFailure;
+            }
+
+            try
+            {
+                double converted = descriptor.Convert(value, from, to);
+                return UnitConverterDynamicResult.Ok(
+                    converted,
+                    family,
+                    FindUnitDescriptor(descriptor, from),
+                    FindUnitDescriptor(descriptor, to));
+            }
+            catch (Exception exception)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.ConversionFailed,
+                    exception.Message);
+            }
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            string input,
+            UnitConverterFamily family,
+            string toUnit)
+        {
+            return TryConvert(
+                input,
+                family,
+                toUnit,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            string input,
+            UnitConverterFamily family,
+            string toUnit,
+            IFormatProvider formatProvider)
+        {
+            UnitConverterFamilyDescriptor descriptor;
+            if (!UnitConverterCatalog.TryGetFamily(family, out descriptor))
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.UnknownFamily,
+                    "The unit family '" + family + "' is not registered.");
+            }
+
+            double value;
+            string fromUnit;
+            UnitConverterError splitError;
+
+            if (!UnitConverterParser.TrySplitValueAndUnit(
+                input,
+                formatProvider ?? CultureInfo.InvariantCulture,
+                out value,
+                out fromUnit,
+                out splitError))
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    splitError,
+                    splitError == UnitConverterError.MissingUnit
+                        ? "The input does not contain a source unit."
+                        : "The numeric value could not be parsed.");
+            }
+
+            return TryConvert(value, family, fromUnit, toUnit);
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            double value,
+            string familyName,
+            string fromUnit,
+            string toUnit)
+        {
+            UnitConverterFamilyDescriptor descriptor;
+            if (!UnitConverterCatalog.TryGetFamily(familyName, out descriptor))
+            {
+                return UnitConverterDynamicResult.Fail(
+                    default(UnitConverterFamily),
+                    UnitConverterError.UnknownFamily,
+                    "The unit family '" + familyName + "' is not registered.");
+            }
+
+            return TryConvert(value, descriptor.Family, fromUnit, toUnit);
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            string input,
+            string familyName,
+            string toUnit)
+        {
+            UnitConverterFamilyDescriptor descriptor;
+            if (!UnitConverterCatalog.TryGetFamily(familyName, out descriptor))
+            {
+                return UnitConverterDynamicResult.Fail(
+                    default(UnitConverterFamily),
+                    UnitConverterError.UnknownFamily,
+                    "The unit family '" + familyName + "' is not registered.");
+            }
+
+            return TryConvert(input, descriptor.Family, toUnit);
+        }
+
+        private static UnitConverterDynamicResult GetUnitFailure(
+            UnitConverterFamilyDescriptor descriptor,
+            UnitConverterFamily family,
+            string unitText,
+            UnitConverterUnitResolution resolution,
+            string role)
+        {
+            if (resolution == UnitConverterUnitResolution.Resolved)
+            {
+                return default(UnitConverterDynamicResult);
+            }
+
+            if (resolution == UnitConverterUnitResolution.Ambiguous)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.AmbiguousUnit,
+                    "The " + role + " unit '" + unitText + "' is ambiguous in " + descriptor.Name + ".");
+            }
+
+            if (ExistsInAnotherFamily(descriptor, unitText))
+            {
+                return UnitConverterDynamicResult.Fail(
+                    family,
+                    UnitConverterError.WrongUnitFamily,
+                    "The " + role + " unit '" + unitText + "' does not belong to " + descriptor.Name + ".");
+            }
+
+            return UnitConverterDynamicResult.Fail(
+                family,
+                UnitConverterError.UnknownUnit,
+                "The " + role + " unit '" + unitText + "' is not recognized.");
+        }
+
+        private static bool ExistsInAnotherFamily(
+            UnitConverterFamilyDescriptor requestedFamily,
+            string unitText)
+        {
+            foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
+            {
+                if (family.Family == requestedFamily.Family)
+                {
+                    continue;
+                }
+
+                object ignored;
+                if (family.ResolveUnit(unitText, out ignored) != UnitConverterUnitResolution.Unknown)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static UnitConverterUnitDescriptor FindUnitDescriptor(
+            UnitConverterFamilyDescriptor family,
+            object unit)
+        {
+            foreach (UnitConverterUnitDescriptor descriptor in family.Units)
+            {
+                if (object.Equals(descriptor.Unit, unit))
+                {
+                    return descriptor;
+                }
+            }
+
+            return null;
+        }
+    }
+}
