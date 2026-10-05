@@ -474,6 +474,14 @@ namespace UnitConverter
                 return true;
             }
 
+            private void SkipWhitespace()
+            {
+                while (_index < _text.Length && char.IsWhiteSpace(_text[_index]))
+                {
+                    _index++;
+                }
+            }
+
             private bool Fail(UnitConverterError error, string message)
             {
                 Error = error;
@@ -653,10 +661,6 @@ namespace UnitConverter
             }
 
             return Math.Abs(left - right) <= scale * 1e-12d;
-        }
-
-        private static void SkipWhitespace(this Parser parser)
-        {
         }
     }
 
