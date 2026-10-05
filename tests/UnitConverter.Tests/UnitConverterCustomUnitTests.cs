@@ -20,19 +20,19 @@ namespace UnitConverter.Tests
         [Test]
         public void RegisterLinear_CustomLength_ConvertsToBuiltIn()
         {
-            UnitConverterCustomUnit smoot =
+            UnitConverterCustomUnit perry-length =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
-                    "Smoot",
-                    "smoot",
+                    "PerryLength",
+                    "perry-length",
                     "Meter",
                     1.7018d,
-                    "smoots");
+                    "perry-lengths");
 
             double meters =
                 UnitConverterCustomUnits.Convert(
                     2d,
-                    smoot,
+                    perry-length,
                     "Meter");
 
             Assert.That(meters, Is.EqualTo(3.4036d).Within(1e-12d));
@@ -41,48 +41,48 @@ namespace UnitConverter.Tests
         [Test]
         public void RegisterLinear_BuiltInConvertsToCustom()
         {
-            UnitConverterCustomUnit smoot =
+            UnitConverterCustomUnit perry-length =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
-                    "Smoot",
-                    "smoot",
+                    "PerryLength",
+                    "perry-length",
                     "Meter",
                     1.7018d);
 
-            double smoots =
+            double perry-lengths =
                 UnitConverterCustomUnits.Convert(
                     1.7018d,
                     UnitConverterFamily.Length,
                     "Meter",
-                    smoot);
+                    perry-length);
 
-            Assert.That(smoots, Is.EqualTo(1d).Within(1e-12d));
+            Assert.That(perry-lengths, Is.EqualTo(1d).Within(1e-12d));
         }
 
         [Test]
         public void CustomToCustom_UsesFamilyConversion()
         {
-            UnitConverterCustomUnit smoot =
+            UnitConverterCustomUnit perry-length =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
-                    "Smoot",
-                    "smoot",
+                    "PerryLength",
+                    "perry-length",
                     "Meter",
                     1.7018d);
 
-            UnitConverterCustomUnit doubleSmoot =
+            UnitConverterCustomUnit doublePerryLength =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
-                    "DoubleSmoot",
-                    "dsmoot",
+                    "DoublePerryLength",
+                    "double-perry-length",
                     "Meter",
                     3.4036d);
 
             double result =
                 UnitConverterCustomUnits.Convert(
                     2d,
-                    smoot,
-                    doubleSmoot);
+                    perry-length,
+                    doublePerryLength);
 
             Assert.That(result, Is.EqualTo(1d).Within(1e-12d));
         }
@@ -121,11 +121,11 @@ namespace UnitConverter.Tests
         [Test]
         public void DynamicConversion_ResolvesCustomUnits()
         {
-            UnitConverterCustomUnit smoot =
+            UnitConverterCustomUnit perry-length =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
-                    "Smoot",
-                    "smoot",
+                    "PerryLength",
+                    "perry-length",
                     "Meter",
                     1.7018d);
 
@@ -133,12 +133,12 @@ namespace UnitConverter.Tests
                 UnitConverterDynamic.TryConvert(
                     2d,
                     UnitConverterFamily.Length,
-                    "smoot",
+                    "perry-length",
                     "Meter");
 
             Assert.That(result.Success, Is.True);
             Assert.That(result.Value, Is.EqualTo(3.4036d).Within(1e-12d));
-            Assert.That(result.CustomFromUnit, Is.SameAs(smoot));
+            Assert.That(result.CustomFromUnit, Is.SameAs(perry-length));
             Assert.That(result.FromUnit, Is.Null);
             Assert.That(result.ToUnit, Is.Not.Null);
         }
@@ -160,16 +160,16 @@ namespace UnitConverter.Tests
         {
             UnitConverterCustomUnits.RegisterLinear(
                 UnitConverterFamily.Length,
-                "Smoot",
-                "smoot",
+                "PerryLength",
+                "perry-length",
                 "Meter",
                 1.7018d);
 
             Assert.Throws<System.InvalidOperationException>(() =>
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
-                    "OtherSmoot",
-                    "SMOOT",
+                    "OtherPerryLength",
+                    "PERRY-LENGTH",
                     "Meter",
                     2d));
         }
@@ -177,21 +177,21 @@ namespace UnitConverter.Tests
         [Test]
         public void Unregister_RemovesCustomUnit()
         {
-            UnitConverterCustomUnit smoot =
+            UnitConverterCustomUnit perry-length =
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
-                    "Smoot",
-                    "smoot",
+                    "PerryLength",
+                    "perry-length",
                     "Meter",
                     1.7018d);
 
-            Assert.That(UnitConverterCustomUnits.Unregister(smoot), Is.True);
+            Assert.That(UnitConverterCustomUnits.Unregister(perry-length), Is.True);
 
             UnitConverterCustomUnit resolved;
             Assert.That(
                 UnitConverterCustomUnits.TryResolve(
                     UnitConverterFamily.Length,
-                    "smoot",
+                    "perry-length",
                     out resolved),
                 Is.False);
         }
