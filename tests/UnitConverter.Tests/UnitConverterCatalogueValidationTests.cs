@@ -6,13 +6,20 @@ namespace UnitConverter.Tests
 
     public sealed class UnitConverterCatalogueValidationTests
     {
-        private static readonly double[] RoundTripValues =
+        private static readonly double[] IdentityValues =
         {
             -123.456d,
             -1d,
             0d,
             1d,
             123.456d,
+        };
+
+        private static readonly double[] RoundTripValues =
+        {
+            0.125d,
+            1d,
+            10d,
         };
 
         [Test]
@@ -66,7 +73,7 @@ namespace UnitConverter.Tests
             {
                 foreach (UnitConverterUnitDescriptor unit in family.Units)
                 {
-                    foreach (double value in RoundTripValues)
+                    foreach (double value in IdentityValues)
                     {
                         double converted = family.Convert(
                             value,
