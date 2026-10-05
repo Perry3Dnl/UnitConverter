@@ -2,6 +2,7 @@ namespace UnitConverter.Catalog
 {
     using UnitConverter.Length;
     using UnitConverter.Temperature;
+    using UnitConverter.TemperatureDelta;
 
     internal static class UnitConverterAliases
     {
@@ -45,6 +46,31 @@ namespace UnitConverter.Catalog
                     return new[] { "parsecs" };
                 case UnitConverterLengthUnit.Angstrom:
                     return new[] { "angstrom", "angstroms", "ångströms" };
+                default:
+                    return null;
+            }
+        }
+
+        public static string[] GetTemperatureDeltaAliases(UnitConverterTemperatureDeltaUnit unit)
+        {
+            switch (unit)
+            {
+                case UnitConverterTemperatureDeltaUnit.Kelvin:
+                    return new[] { "delta k", "kelvin delta", "kelvin difference" };
+                case UnitConverterTemperatureDeltaUnit.Celsius:
+                    return new[] { "delta c", "delta °c", "celsius delta", "celsius difference", "degree celsius difference" };
+                case UnitConverterTemperatureDeltaUnit.Fahrenheit:
+                    return new[] { "delta f", "delta °f", "fahrenheit delta", "fahrenheit difference", "degree fahrenheit difference" };
+                case UnitConverterTemperatureDeltaUnit.Rankine:
+                    return new[] { "delta r", "delta °r", "rankine delta", "rankine difference" };
+                case UnitConverterTemperatureDeltaUnit.Delisle:
+                    return new[] { "delisle delta", "delisle difference" };
+                case UnitConverterTemperatureDeltaUnit.Newton:
+                    return new[] { "newton delta", "newton difference" };
+                case UnitConverterTemperatureDeltaUnit.Reaumur:
+                    return new[] { "reaumur delta", "réaumur delta", "reaumur difference", "réaumur difference" };
+                case UnitConverterTemperatureDeltaUnit.Romer:
+                    return new[] { "romer delta", "rømer delta", "romer difference", "rømer difference" };
                 default:
                     return null;
             }
