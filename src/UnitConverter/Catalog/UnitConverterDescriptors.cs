@@ -17,13 +17,15 @@ namespace UnitConverter.Catalog
             string name,
             string symbol,
             string displayName,
-            string[] aliases)
+            string[] aliases,
+            UnitConverterDimensions dimensions)
         {
             Unit = unit;
             Name = name;
             Symbol = symbol;
             DisplayName = displayName;
             Aliases = aliases ?? new string[0];
+            Dimensions = dimensions;
         }
 
         public object Unit { get; }
@@ -31,6 +33,7 @@ namespace UnitConverter.Catalog
         public string Symbol { get; }
         public string DisplayName { get; }
         public string[] Aliases { get; }
+        public UnitConverterDimensions Dimensions { get; }
     }
 
     public abstract class UnitConverterFamilyDescriptor
@@ -43,13 +46,13 @@ namespace UnitConverter.Catalog
             Family = family;
             Name = name;
             BaseUnitName = baseUnitName;
-            Dimensions = UnitConverterDimensions.ForFamily(family);
         }
 
         public UnitConverterFamily Family { get; }
         public string Name { get; }
         public string BaseUnitName { get; }
-        public UnitConverterDimensions Dimensions { get; }
+        public abstract UnitConverterDimensions Dimensions { get; }
+        public abstract bool HasUniformDimensions { get; }
         public abstract Type UnitType { get; }
         public abstract IReadOnlyList<UnitConverterUnitDescriptor> Units { get; }
 
@@ -65,6 +68,8 @@ namespace UnitConverter.Catalog
         private readonly Dictionary<string, TUnit> _exactAliases;
         private readonly Dictionary<string, TUnit> _ignoreCaseAliases;
         private readonly HashSet<string> _ambiguousIgnoreCaseAliases;
+        private readonly UnitConverterDimensions _dimensions;
+        private readonly bool _hasUniformDimensions;
 
         internal UnitConverterFamilyDescriptor(
             UnitConverterFamily family,
@@ -73,7 +78,8 @@ namespace UnitConverter.Catalog
             Func<TUnit, string> getSymbol,
             Func<TUnit, string> getDisplayName,
             Func<double, TUnit, TUnit, double> convert,
-            Func<TUnit, string[]> getAliases)
+            Func<TUnit, string[]> getAliases,
+            Func<TUnit, UnitConverterDimensions> getDimensions)
             : base(family, name, baseUnitName)
         {
             if (!typeof(TUnit).IsEnum)
@@ -87,6 +93,8 @@ namespace UnitConverter.Catalog
 
             _ambiguousIgnoreCaseAliases = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var units = new List<UnitConverterUnitDescriptor>();
+            UnitConverterDimensions? firstDimensions = null;
+            bool uniformDimensions = true;
 
             foreach (object rawUnit in Enum.GetValues(typeof(TUnit)))
             {
@@ -102,12 +110,27 @@ namespace UnitConverter.Catalog
                     displayName,
                     additionalAliases);
 
+                UnitConverterDimensions unitDimensions =
+                    getDimensions == null
+                        ? UnitConverterDimensions.ForFamily(family)
+                        : getDimensions(unit);
+
+                if (!firstDimensions.HasValue)
+                {
+                    firstDimensions = unitDimensions;
+                }
+                else if (firstDimensions.Value != unitDimensions)
+                {
+                    uniformDimensions = false;
+                }
+
                 units.Add(new UnitConverterUnitDescriptor(
                     unit,
                     enumName,
                     symbol,
                     displayName,
-                    acceptedAliases));
+                    acceptedAliases,
+                    unitDimensions));
 
                 AddExact(_exactAliases, enumName, unit);
                 AddExact(_exactAliases, symbol, unit);
@@ -133,8 +156,12 @@ namespace UnitConverter.Catalog
             }
 
             _units = units.ToArray();
+            _dimensions = firstDimensions ?? UnitConverterDimensions.Dimensionless;
+            _hasUniformDimensions = uniformDimensions;
         }
 
+        public override UnitConverterDimensions Dimensions => _dimensions;
+        public override bool HasUniformDimensions => _hasUniformDimensions;
         public override Type UnitType => typeof(TUnit);
         public override IReadOnlyList<UnitConverterUnitDescriptor> Units => _units;
 
@@ -337,7 +364,7 @@ namespace UnitConverter.Catalog
                 Create<UnitConverter.ForcePerLength.UnitConverterForcePerLengthUnit>(UnitConverterFamily.ForcePerLength, "ForcePerLength", "NewtonPerMeter", UnitConverter.ForcePerLength.UnitConverterForcePerLength.GetSymbol, UnitConverter.ForcePerLength.UnitConverterForcePerLength.GetDisplayName, UnitConverter.ForcePerLength.UnitConverterForcePerLength.Convert),
                 Create<UnitConverter.FrameRate.UnitConverterFrameRateUnit>(UnitConverterFamily.FrameRate, "FrameRate", "FramePerSecond", UnitConverter.FrameRate.UnitConverterFrameRate.GetSymbol, UnitConverter.FrameRate.UnitConverterFrameRate.GetDisplayName, UnitConverter.FrameRate.UnitConverterFrameRate.Convert),
                 Create<UnitConverter.Frequency.UnitConverterFrequencyUnit>(UnitConverterFamily.Frequency, "Frequency", "Hertz", UnitConverter.Frequency.UnitConverterFrequency.GetSymbol, UnitConverter.Frequency.UnitConverterFrequency.GetDisplayName, UnitConverter.Frequency.UnitConverterFrequency.Convert),
-                Create<UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit>(UnitConverterFamily.FuelEconomy, "FuelEconomy", "KilometerPerLiter", UnitConverter.FuelEconomy.UnitConverterFuelEconomy.GetSymbol, UnitConverter.FuelEconomy.UnitConverterFuelEconomy.GetDisplayName, UnitConverter.FuelEconomy.UnitConverterFuelEconomy.Convert),
+                Create<UnitConverter.FuelEconomy.UnitConverterFuelEconomyUnit>(UnitConverterFamily.FuelEconomy, "FuelEconomy", "KilometerPerLiter", UnitConverter.FuelEconomy.UnitConverterFuelEconomy.GetSymbol, UnitConverter.FuelEconomy.UnitConverterFuelEconomy.GetDisplayName, UnitConverter.FuelEconomy.UnitConverterFuelEconomy.Convert, null, UnitConverterDimensions.ForFuelEconomyUnit),
                 Create<UnitConverter.HeatTransferCoefficient.UnitConverterHeatTransferCoefficientUnit>(UnitConverterFamily.HeatTransferCoefficient, "HeatTransferCoefficient", "WattPerSquareMeterKelvin", UnitConverter.HeatTransferCoefficient.UnitConverterHeatTransferCoefficient.GetSymbol, UnitConverter.HeatTransferCoefficient.UnitConverterHeatTransferCoefficient.GetDisplayName, UnitConverter.HeatTransferCoefficient.UnitConverterHeatTransferCoefficient.Convert),
                 Create<UnitConverter.HydraulicPermeability.UnitConverterHydraulicPermeabilityUnit>(UnitConverterFamily.HydraulicPermeability, "HydraulicPermeability", "SquareMeter", UnitConverter.HydraulicPermeability.UnitConverterHydraulicPermeability.GetSymbol, UnitConverter.HydraulicPermeability.UnitConverterHydraulicPermeability.GetDisplayName, UnitConverter.HydraulicPermeability.UnitConverterHydraulicPermeability.Convert),
                 Create<UnitConverter.Illuminance.UnitConverterIlluminanceUnit>(UnitConverterFamily.Illuminance, "Illuminance", "Lux", UnitConverter.Illuminance.UnitConverterIlluminance.GetSymbol, UnitConverter.Illuminance.UnitConverterIlluminance.GetDisplayName, UnitConverter.Illuminance.UnitConverterIlluminance.Convert),
@@ -469,7 +496,8 @@ namespace UnitConverter.Catalog
             Func<TUnit, string> getSymbol,
             Func<TUnit, string> getDisplayName,
             Func<double, TUnit, TUnit, double> convert,
-            Func<TUnit, string[]> getAliases = null)
+            Func<TUnit, string[]> getAliases = null,
+            Func<TUnit, UnitConverterDimensions> getDimensions = null)
             where TUnit : struct
         {
             return new UnitConverterFamilyDescriptor<TUnit>(
@@ -479,7 +507,8 @@ namespace UnitConverter.Catalog
                 getSymbol,
                 getDisplayName,
                 convert,
-                getAliases);
+                getAliases,
+                getDimensions);
         }
 
         private static Dictionary<UnitConverterFamily, UnitConverterFamilyDescriptor> BuildFamiliesById()
