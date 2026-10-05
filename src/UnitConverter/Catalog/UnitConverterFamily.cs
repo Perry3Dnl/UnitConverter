@@ -99,5 +99,6 @@ namespace UnitConverter.Catalog
         VolumetricFlowRate = 94,
         VolumetricFlux = 95,
         Yank = 96,
+        TemperatureDelta = 97,
     }
 }
