@@ -380,29 +380,29 @@ namespace UnitConverter.Numbers
             BigInteger coefficient,
             BigInteger exponent)
         {
-            if (coefficient.IsZero)
+            while (!coefficient.IsZero)
             {
-                return;
-            }
+                while (coefficient % 10 == 0)
+                {
+                    coefficient /= 10;
+                    exponent++;
+                }
 
-            while (coefficient % 10 == 0)
-            {
-                coefficient /= 10;
-                exponent++;
-            }
+                BigInteger existing;
 
-            BigInteger existing;
-            terms.TryGetValue(exponent, out existing);
+                if (!terms.TryGetValue(
+                    exponent,
+                    out existing))
+                {
+                    terms.Add(
+                        exponent,
+                        coefficient);
 
-            coefficient += existing;
-            terms.Remove(exponent);
+                    return;
+                }
 
-            if (!coefficient.IsZero)
-            {
-                AddCanonical(
-                    terms,
-                    coefficient,
-                    exponent);
+                terms.Remove(exponent);
+                coefficient += existing;
             }
         }
 
