@@ -6,6 +6,95 @@ namespace UnitConverter
 
     public static class UnitConverterDynamic
     {
+
+        public static double Convert(
+            string input,
+            string toUnit)
+        {
+            UnitConverterDynamicResult result = TryConvert(input, toUnit);
+
+            if (!result.Success)
+            {
+                throw new FormatException(result.ErrorMessage);
+            }
+
+            return result.Value;
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            string input,
+            string toUnit)
+        {
+            return TryConvert(
+                input,
+                toUnit,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            string input,
+            string toUnit,
+            IFormatProvider formatProvider)
+        {
+            UnitConverterDetectionResult detection =
+                UnitConverterDetector.Detect(
+                    input,
+                    formatProvider ?? CultureInfo.InvariantCulture);
+
+            if (detection.Status == UnitConverterDetectionStatus.Unknown)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    default(UnitConverterFamily),
+                    detection.Error,
+                    detection.ErrorMessage);
+            }
+
+            if (detection.Status == UnitConverterDetectionStatus.Resolved)
+            {
+                UnitConverterUnitCandidate candidate = detection.Candidate;
+                return TryConvertDetectedCandidate(
+                    detection.Value,
+                    candidate,
+                    toUnit);
+            }
+
+            UnitConverterUnitCandidate selected = null;
+
+            foreach (UnitConverterUnitCandidate candidate in detection.Candidates)
+            {
+                object ignored;
+                if (candidate.Family.ResolveUnit(
+                    toUnit,
+                    out ignored) == UnitConverterUnitResolution.Resolved)
+                {
+                    if (selected != null)
+                    {
+                        return UnitConverterDynamicResult.Fail(
+                            default(UnitConverterFamily),
+                            UnitConverterError.AmbiguousUnit,
+                            "The source unit '" + detection.UnitText +
+                            "' remains ambiguous for target unit '" + toUnit + "'.");
+                    }
+
+                    selected = candidate;
+                }
+            }
+
+            if (selected == null)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    default(UnitConverterFamily),
+                    UnitConverterError.AmbiguousUnit,
+                    "The source unit '" + detection.UnitText +
+                    "' is ambiguous across " + detection.Candidates.Count + " candidates.");
+            }
+
+            return TryConvertDetectedCandidate(
+                detection.Value,
+                selected,
+                toUnit);
+        }
+
         public static double Convert(
             double value,
             UnitConverterFamily family,
@@ -191,6 +280,56 @@ namespace UnitConverter
             }
 
             return TryConvert(input, descriptor.Family, toUnit);
+        }
+
+
+        private static UnitConverterDynamicResult TryConvertDetectedCandidate(
+            double value,
+            UnitConverterUnitCandidate candidate,
+            string toUnit)
+        {
+            object target;
+            UnitConverterUnitResolution resolution =
+                candidate.Family.ResolveUnit(toUnit, out target);
+
+            if (resolution == UnitConverterUnitResolution.Ambiguous)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    candidate.Family.Family,
+                    UnitConverterError.AmbiguousUnit,
+                    "The target unit '" + toUnit + "' is ambiguous in " +
+                    candidate.Family.Name + ".");
+            }
+
+            if (resolution == UnitConverterUnitResolution.Unknown)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    candidate.Family.Family,
+                    UnitConverterError.WrongUnitFamily,
+                    "The target unit '" + toUnit + "' does not belong to " +
+                    candidate.Family.Name + ".");
+            }
+
+            try
+            {
+                double converted = candidate.Family.Convert(
+                    value,
+                    candidate.Unit.Unit,
+                    target);
+
+                return UnitConverterDynamicResult.Ok(
+                    converted,
+                    candidate.Family.Family,
+                    candidate.Unit,
+                    FindUnitDescriptor(candidate.Family, target));
+            }
+            catch (Exception exception)
+            {
+                return UnitConverterDynamicResult.Fail(
+                    candidate.Family.Family,
+                    UnitConverterError.ConversionFailed,
+                    exception.Message);
+            }
         }
 
         private static UnitConverterDynamicResult GetUnitFailure(
