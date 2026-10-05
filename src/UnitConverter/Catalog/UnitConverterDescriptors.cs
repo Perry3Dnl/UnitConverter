@@ -100,9 +100,8 @@ namespace UnitConverter.Catalog
             UnitConverterDimensions? firstDimensions = null;
             bool uniformDimensions = true;
 
-            foreach (object rawUnit in Enum.GetValues(typeof(TUnit)))
+            foreach (TUnit unit in UnitConverterUnitValues.GetValues<TUnit>())
             {
-                TUnit unit = (TUnit)rawUnit;
                 string enumName = unit.ToString();
                 string symbol = getSymbol == null ? null : getSymbol(unit);
                 string displayName = getDisplayName == null ? null : getDisplayName(unit);
