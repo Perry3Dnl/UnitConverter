@@ -148,16 +148,35 @@ ArbitraryScaleNumber billions =
 
 Console.WriteLine(billions.ToScientific());
 // 5e-1
+
+ArbitraryScaleNumber micros =
+    NumberScaleConverter.Convert(
+        "1 milli",
+        "micro");
+
+Console.WriteLine(micros.ToScientific());
+// 1e3
 ```
 
-The integrated generated-name grammar retains Ginor's deterministic large-number naming model. `ginozillion` is the generated scale at layer 2, magnitude 4 and coefficient 1, corresponding to `10^10000` in the arbitrary-scale number engine:
+The scale catalogue is symmetric around `10^0`. In addition to conventional large names, it includes SI prefixes from `deci` through `quecto` for small values and `deca` through `quetta` for large values.
+
+The integrated generated-name grammar retains Ginor's deterministic naming model and now works in both exponent directions. `ginozillion` is the large generated scale at layer 2, magnitude 4 and coefficient 1, corresponding to `10^10000`. Its tiny counterpart uses the same reversible address with the tiny direction and deterministically becomes `ginuzillion`, corresponding to `10^-10000`:
 
 ```csharp
 ArbitraryScaleNumber ginozillion =
     ArbitraryScaleNumber.Parse("1 ginozillion");
 
-GeneratedNumberScalePosition position =
+ArbitraryScaleNumber ginuzillion =
+    ArbitraryScaleNumber.Parse("1 ginuzillion");
+
+GeneratedNumberScalePosition large =
     GeneratedNumberNames.Parse("ginozillion");
+
+GeneratedNumberScalePosition tiny =
+    GeneratedNumberNames.Parse("ginuzillion");
+
+// large.Direction == GeneratedNumberScaleDirection.Large
+// tiny.Direction  == GeneratedNumberScaleDirection.Tiny
 ```
 
 Generated names are reversible addresses:
