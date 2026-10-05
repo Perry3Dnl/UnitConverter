@@ -16,6 +16,7 @@ namespace UnitConverter.Tests
             Assert.That((int)UnitConverterFamily.FuelEconomy, Is.EqualTo(21));
             Assert.That((int)UnitConverterFamily.ActivityConcentration, Is.EqualTo(22));
             Assert.That((int)UnitConverterFamily.Yank, Is.EqualTo(96));
+            Assert.That((int)UnitConverterFamily.TemperatureDelta, Is.EqualTo(97));
         }
 
         [Test]
@@ -24,7 +25,7 @@ namespace UnitConverter.Tests
             UnitConverterFamilyDescriptor[] descriptors = UnitConverterCatalog.GetFamilies();
             Array enumValues = Enum.GetValues(typeof(UnitConverterFamily));
 
-            Assert.That(descriptors.Length, Is.EqualTo(97));
+            Assert.That(descriptors.Length, Is.EqualTo(98));
             Assert.That(descriptors.Length, Is.EqualTo(enumValues.Length));
 
             foreach (UnitConverterFamily family in enumValues)
