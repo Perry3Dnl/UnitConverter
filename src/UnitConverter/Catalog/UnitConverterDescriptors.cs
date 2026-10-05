@@ -152,6 +152,32 @@ namespace UnitConverter.Catalog
             return _convert(value, from, to);
         }
 
+        public UnitConverterUnitDescriptor GetUnit(TUnit unit)
+        {
+            UnitConverterUnitDescriptor descriptor;
+            if (!TryGetUnit(unit, out descriptor))
+            {
+                throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit.");
+            }
+
+            return descriptor;
+        }
+
+        public bool TryGetUnit(TUnit unit, out UnitConverterUnitDescriptor descriptor)
+        {
+            foreach (UnitConverterUnitDescriptor candidate in _units)
+            {
+                if (EqualityComparer<TUnit>.Default.Equals((TUnit)candidate.Unit, unit))
+                {
+                    descriptor = candidate;
+                    return true;
+                }
+            }
+
+            descriptor = null;
+            return false;
+        }
+
         internal override bool TryResolveUnitObject(string text, out object unit)
         {
             TUnit typedUnit;
