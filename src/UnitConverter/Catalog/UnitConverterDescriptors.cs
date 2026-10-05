@@ -3,6 +3,13 @@ namespace UnitConverter.Catalog
     using System;
     using System.Collections.Generic;
 
+    public enum UnitConverterUnitResolution
+    {
+        Unknown = 0,
+        Resolved = 1,
+        Ambiguous = 2,
+    }
+
     public sealed class UnitConverterUnitDescriptor
     {
         internal UnitConverterUnitDescriptor(
@@ -44,8 +51,8 @@ namespace UnitConverter.Catalog
         public abstract Type UnitType { get; }
         public abstract IReadOnlyList<UnitConverterUnitDescriptor> Units { get; }
 
-        internal abstract bool TryResolveUnitObject(string text, out object unit);
-        internal abstract double ConvertObject(double value, object from, object to);
+        public abstract UnitConverterUnitResolution ResolveUnit(string text, out object unit);
+        public abstract double Convert(double value, object from, object to);
     }
 
     public sealed class UnitConverterFamilyDescriptor<TUnit> : UnitConverterFamilyDescriptor
@@ -55,6 +62,7 @@ namespace UnitConverter.Catalog
         private readonly UnitConverterUnitDescriptor[] _units;
         private readonly Dictionary<string, TUnit> _exactAliases;
         private readonly Dictionary<string, TUnit> _ignoreCaseAliases;
+        private readonly HashSet<string> _ambiguousIgnoreCaseAliases;
 
         internal UnitConverterFamilyDescriptor(
             UnitConverterFamily family,
@@ -75,7 +83,7 @@ namespace UnitConverter.Catalog
             _exactAliases = new Dictionary<string, TUnit>(StringComparer.Ordinal);
             _ignoreCaseAliases = new Dictionary<string, TUnit>(StringComparer.OrdinalIgnoreCase);
 
-            var ambiguousIgnoreCaseAliases = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            _ambiguousIgnoreCaseAliases = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var units = new List<UnitConverterUnitDescriptor>();
 
             foreach (object rawUnit in Enum.GetValues(typeof(TUnit)))
@@ -103,21 +111,21 @@ namespace UnitConverter.Catalog
                 AddExact(_exactAliases, symbol, unit);
                 AddExact(_exactAliases, displayName, unit);
 
-                AddIgnoreCase(_ignoreCaseAliases, ambiguousIgnoreCaseAliases, enumName, unit);
-                AddIgnoreCase(_ignoreCaseAliases, ambiguousIgnoreCaseAliases, symbol, unit);
-                AddIgnoreCase(_ignoreCaseAliases, ambiguousIgnoreCaseAliases, displayName, unit);
+                AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, enumName, unit);
+                AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, symbol, unit);
+                AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, displayName, unit);
 
                 if (additionalAliases != null)
                 {
                     foreach (string alias in additionalAliases)
                     {
                         AddExact(_exactAliases, alias, unit);
-                        AddIgnoreCase(_ignoreCaseAliases, ambiguousIgnoreCaseAliases, alias, unit);
+                        AddIgnoreCase(_ignoreCaseAliases, _ambiguousIgnoreCaseAliases, alias, unit);
                     }
                 }
             }
 
-            foreach (string ambiguousAlias in ambiguousIgnoreCaseAliases)
+            foreach (string ambiguousAlias in _ambiguousIgnoreCaseAliases)
             {
                 _ignoreCaseAliases.Remove(ambiguousAlias);
             }
@@ -130,21 +138,36 @@ namespace UnitConverter.Catalog
 
         public bool TryResolveUnit(string text, out TUnit unit)
         {
+            return ResolveUnit(text, out unit) == UnitConverterUnitResolution.Resolved;
+        }
+
+        public UnitConverterUnitResolution ResolveUnit(string text, out TUnit unit)
+        {
             unit = default(TUnit);
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                return false;
+                return UnitConverterUnitResolution.Unknown;
             }
 
             string candidate = text.Trim();
 
             if (_exactAliases.TryGetValue(candidate, out unit))
             {
-                return true;
+                return UnitConverterUnitResolution.Resolved;
             }
 
-            return _ignoreCaseAliases.TryGetValue(candidate, out unit);
+            if (_ambiguousIgnoreCaseAliases.Contains(candidate))
+            {
+                return UnitConverterUnitResolution.Ambiguous;
+            }
+
+            if (_ignoreCaseAliases.TryGetValue(candidate, out unit))
+            {
+                return UnitConverterUnitResolution.Resolved;
+            }
+
+            return UnitConverterUnitResolution.Unknown;
         }
 
         public double Convert(double value, TUnit from, TUnit to)
@@ -178,15 +201,15 @@ namespace UnitConverter.Catalog
             return false;
         }
 
-        internal override bool TryResolveUnitObject(string text, out object unit)
+        public override UnitConverterUnitResolution ResolveUnit(string text, out object unit)
         {
             TUnit typedUnit;
-            bool success = TryResolveUnit(text, out typedUnit);
-            unit = success ? (object)typedUnit : null;
-            return success;
+            UnitConverterUnitResolution resolution = ResolveUnit(text, out typedUnit);
+            unit = resolution == UnitConverterUnitResolution.Resolved ? (object)typedUnit : null;
+            return resolution;
         }
 
-        internal override double ConvertObject(double value, object from, object to)
+        public override double Convert(double value, object from, object to)
         {
             return _convert(value, (TUnit)from, (TUnit)to);
         }
