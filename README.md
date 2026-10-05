@@ -68,6 +68,28 @@ double meters = UnitConverterDynamic.Convert("2 light-year", "m");
 ```
 
 Global detection returns explicit candidates for ambiguous symbols instead of guessing. Family and unit descriptors also expose physical dimensions, including a separate information dimension for digital storage/data rate. Dimensions can be multiplied, divided, and raised to integer powers for future dimensional-analysis APIs. Fuel economy is modeled with unit-specific reciprocal dimensions because `km/L` and `L/100 km` are physically reciprocal representations.
+
+Aliases are definition-driven. Curated vocabulary lives in `definitions/unit-aliases.json`; `scripts/generate_aliases.py` combines those overrides with safe generated human forms for all 98 families and 1,650 unit entries, then emits checked-in static C#. CI verifies the generated files are current, so consumers do not need Python and the runtime remains dependency-free.
+
+Composite unit expressions are supported through the dimensional metadata:
+
+```csharp
+double metersPerSecond = UnitConverterComposite.Convert(
+    36,
+    "km/h",
+    "m/s"); // 10
+
+double joules = UnitConverterComposite.Convert(
+    1,
+    "N*m",
+    "J"); // 1
+
+UnitConverterUnitExpression expression =
+    UnitConverterExpressionParser.Parse("kg*m/s^2");
+```
+
+The expression parser supports multiplication, division, parentheses, integer powers, superscript `²`/`³`, and middle-dot notation. Ambiguous symbols remain explicit when parsed alone. When a complete conversion provides enough dimensional context, ambiguity can be resolved safely; for example `h` can mean hour or Planck constant, but `km/h -> m/s` has only one dimensionally compatible interpretation.
+
  Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 ## Repository layout
