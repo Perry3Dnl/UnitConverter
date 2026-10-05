@@ -497,7 +497,9 @@ namespace UnitConverter
                     {
                         return Fail(
                             UnitConverterError.AmbiguousUnit,
-                            "The unit '" + atom + "' is ambiguous across incompatible candidates.");
+                            "The unit '" + atom +
+                            "' is ambiguous across incompatible candidates: " +
+                            DescribeCandidates(candidates) + ".");
                     }
                 }
 
@@ -686,6 +688,26 @@ namespace UnitConverter
                 default:
                     return 1d;
             }
+        }
+
+        private static string DescribeCandidates(
+            IReadOnlyList<UnitConverterUnitCandidate> candidates)
+        {
+            var parts = new string[candidates.Count];
+
+            for (int index = 0; index < candidates.Count; index++)
+            {
+                UnitConverterUnitCandidate candidate = candidates[index];
+                parts[index] =
+                    candidate.Family.Name +
+                    "." +
+                    candidate.Unit.Name +
+                    " [" +
+                    candidate.Unit.Symbol +
+                    "]";
+            }
+
+            return string.Join(", ", parts);
         }
 
         private static bool NearlyEqual(double left, double right)
