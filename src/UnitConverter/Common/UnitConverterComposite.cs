@@ -490,7 +490,7 @@ namespace UnitConverter
                     foreach (UnitConverterUnitCandidate candidate in detection.Candidates)
                     {
                         if (string.Equals(
-                            candidate.Unit.Symbol,
+                            candidate.Symbol,
                             atom,
                             StringComparison.Ordinal))
                         {
@@ -516,7 +516,7 @@ namespace UnitConverter
                         expressions,
                         new UnitConverterUnitExpression(
                             atom,
-                            candidate.Unit.Dimensions,
+                            candidate.Dimensions,
                             scale));
                 }
 
@@ -659,6 +659,49 @@ namespace UnitConverter
             scale = 0d;
             UnitConverterFamilyDescriptor family = candidate.Family;
 
+            if (candidate.IsCustom)
+            {
+                if (candidate.CustomUnit.OffsetToReference != 0d)
+                {
+                    return false;
+                }
+
+                UnitConverterUnitDescriptor referenceDescriptor = null;
+                foreach (UnitConverterUnitDescriptor unit in family.Units)
+                {
+                    if (object.Equals(
+                        unit.Unit,
+                        candidate.CustomUnit.ReferenceUnit))
+                    {
+                        referenceDescriptor = unit;
+                        break;
+                    }
+                }
+
+                if (referenceDescriptor == null)
+                {
+                    return false;
+                }
+
+                double referenceScale;
+                if (!TryGetCanonicalScale(
+                    new UnitConverterUnitCandidate(
+                        family,
+                        referenceDescriptor),
+                    out referenceScale))
+                {
+                    return false;
+                }
+
+                scale =
+                    candidate.CustomUnit.ScaleToReference *
+                    referenceScale;
+
+                return !double.IsNaN(scale) &&
+                    !double.IsInfinity(scale) &&
+                    scale != 0d;
+            }
+
             if (family.Family == UnitConverterFamily.FuelEconomy)
             {
                 return TryGetFuelEconomyScale(candidate, out scale);
@@ -790,9 +833,9 @@ namespace UnitConverter
                 parts[index] =
                     candidate.Family.Name +
                     "." +
-                    candidate.Unit.Name +
+                    candidate.Name +
                     " [" +
-                    candidate.Unit.Symbol +
+                    candidate.Symbol +
                     "]";
             }
 
