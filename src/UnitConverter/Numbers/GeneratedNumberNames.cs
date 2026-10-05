@@ -76,6 +76,84 @@ namespace UnitConverter.Numbers
         }
     }
 
+    public readonly struct GeneratedNumberNameAddress
+        : IEquatable<GeneratedNumberNameAddress>
+    {
+        public GeneratedNumberNameAddress(
+            GeneratedNumberScalePosition position,
+            BigInteger foldDepth)
+        {
+            if (foldDepth < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(foldDepth));
+            }
+
+            Position = position;
+            FoldDepth = foldDepth;
+        }
+
+        public GeneratedNumberScalePosition Position { get; }
+        public BigInteger FoldDepth { get; }
+
+        public string ToSymbolicExpression()
+        {
+            string expression =
+                "10^(10^" +
+                Position.Magnitude.ToString() +
+                ")";
+
+            BigInteger remaining = FoldDepth;
+
+            while (remaining > 0)
+            {
+                expression =
+                    "10^(" +
+                    expression +
+                    ")";
+
+                remaining--;
+            }
+
+            return expression;
+        }
+
+        public bool Equals(GeneratedNumberNameAddress other)
+        {
+            return Position == other.Position &&
+                FoldDepth == other.FoldDepth;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is GeneratedNumberNameAddress &&
+                Equals((GeneratedNumberNameAddress)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return
+                    (Position.GetHashCode() * 397) ^
+                    FoldDepth.GetHashCode();
+            }
+        }
+
+        public static bool operator ==(
+            GeneratedNumberNameAddress left,
+            GeneratedNumberNameAddress right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(
+            GeneratedNumberNameAddress left,
+            GeneratedNumberNameAddress right)
+        {
+            return !left.Equals(right);
+        }
+    }
+
     /// <summary>
     /// Deterministic reversible generated number-name grammar inherited from Ginor.
     /// Ginozillion is the generated name at layer 2, magnitude 4, coefficient 1.
@@ -96,6 +174,7 @@ namespace UnitConverter.Numbers
 
         private const int LexicalOffset = 90;
         private const string Suffix = "zillion";
+        private const string FoldSeparator = "ra";
 
         private static readonly Dictionary<string, int> SyllableIndexes =
             CreateSyllableIndexes();
@@ -128,6 +207,166 @@ namespace UnitConverter.Numbers
             return EncodeNameInteger(
                     lexicalOrdinal) +
                 Suffix;
+        }
+
+        public static string GetName(
+            GeneratedNumberNameAddress address)
+        {
+            if (address.FoldDepth.IsZero)
+            {
+                return GetName(address.Position);
+            }
+
+            string foldCode =
+                EncodeNameInteger(
+                    address.FoldDepth);
+
+            string positionCode =
+                EncodeCoordinate(
+                    CreatePositionCoordinate(
+                        address.Position),
+                    0);
+
+            return
+                foldCode +
+                FoldSeparator +
+                positionCode +
+                Suffix;
+        }
+
+        public static GeneratedNumberNameAddress ParseAddress(
+            string name)
+        {
+            GeneratedNumberNameAddress address;
+
+            if (!TryParseAddress(
+                name,
+                out address))
+            {
+                throw new FormatException(
+                    "'" + name +
+                    "' is not a generated number name.");
+            }
+
+            return address;
+        }
+
+        public static bool TryParseAddress(
+            string name,
+            out GeneratedNumberNameAddress address)
+        {
+            address =
+                default(GeneratedNumberNameAddress);
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return false;
+            }
+
+            string candidate =
+                name.Trim()
+                    .ToLowerInvariant();
+
+            if (!candidate.EndsWith(
+                Suffix,
+                StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            string body =
+                candidate.Substring(
+                    0,
+                    candidate.Length - Suffix.Length);
+
+            int separator =
+                body.IndexOf(
+                    FoldSeparator,
+                    StringComparison.Ordinal);
+
+            if (separator < 0)
+            {
+                GeneratedNumberScalePosition position;
+
+                if (!TryParse(
+                    candidate,
+                    out position))
+                {
+                    return false;
+                }
+
+                address =
+                    new GeneratedNumberNameAddress(
+                        position,
+                        BigInteger.Zero);
+
+                return true;
+            }
+
+            if (body.IndexOf(
+                    FoldSeparator,
+                    separator + FoldSeparator.Length,
+                    StringComparison.Ordinal) >= 0)
+            {
+                return false;
+            }
+
+            string foldText =
+                body.Substring(
+                    0,
+                    separator);
+
+            string coordinateText =
+                body.Substring(
+                    separator + FoldSeparator.Length);
+
+            BigInteger foldDepth;
+
+            if (!TryDecodeNameInteger(
+                foldText,
+                out foldDepth) ||
+                foldDepth <= 0)
+            {
+                return false;
+            }
+
+            int index = 0;
+            CoordinateNode node;
+
+            if (!TryDecodeCoordinate(
+                    coordinateText,
+                    ref index,
+                    0,
+                    out node) ||
+                index != coordinateText.Length)
+            {
+                return false;
+            }
+
+            GeneratedNumberScalePosition decodedPosition;
+
+            if (!TryReadPositionCoordinate(
+                node,
+                out decodedPosition))
+            {
+                return false;
+            }
+
+            var decoded =
+                new GeneratedNumberNameAddress(
+                    decodedPosition,
+                    foldDepth);
+
+            if (!string.Equals(
+                GetName(decoded),
+                candidate,
+                StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            address = decoded;
+            return true;
         }
 
         public static GeneratedNumberScalePosition Parse(
@@ -227,6 +466,212 @@ namespace UnitConverter.Numbers
                 }
 
                 position = decoded;
+                return true;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return false;
+            }
+        }
+
+        private sealed class CoordinateNode
+        {
+            public bool IsInteger;
+            public BigInteger Integer;
+            public CoordinateNode Left;
+            public CoordinateNode Right;
+        }
+
+        private static CoordinateNode CreatePositionCoordinate(
+            GeneratedNumberScalePosition position)
+        {
+            return PairNode(
+                IntegerNode(BigInteger.One),
+                PairNode(
+                    IntegerNode(position.Layer),
+                    PairNode(
+                        IntegerNode(position.Magnitude),
+                        IntegerNode(position.Coefficient - 1))));
+        }
+
+        private static CoordinateNode IntegerNode(
+            BigInteger value)
+        {
+            return new CoordinateNode
+            {
+                IsInteger = true,
+                Integer = value
+            };
+        }
+
+        private static CoordinateNode PairNode(
+            CoordinateNode left,
+            CoordinateNode right)
+        {
+            return new CoordinateNode
+            {
+                Left = left,
+                Right = right
+            };
+        }
+
+        private static string EncodeCoordinate(
+            CoordinateNode node,
+            int depth)
+        {
+            if (node.IsInteger)
+            {
+                return
+                    "re" +
+                    EncodeNameInteger(node.Integer) +
+                    "ri";
+            }
+
+            string marker =
+                depth % 2 == 0
+                    ? "ro"
+                    : "ru";
+
+            return
+                marker +
+                EncodeCoordinate(
+                    node.Left,
+                    depth + 1) +
+                EncodeCoordinate(
+                    node.Right,
+                    depth + 1);
+        }
+
+        private static bool TryDecodeCoordinate(
+            string text,
+            ref int index,
+            int depth,
+            out CoordinateNode node)
+        {
+            node = null;
+
+            if (index + 2 > text.Length)
+            {
+                return false;
+            }
+
+            string marker =
+                text.Substring(
+                    index,
+                    2);
+
+            if (marker == "re")
+            {
+                int end =
+                    text.IndexOf(
+                        "ri",
+                        index + 2,
+                        StringComparison.Ordinal);
+
+                if (end < 0)
+                {
+                    return false;
+                }
+
+                string encodedInteger =
+                    text.Substring(
+                        index + 2,
+                        end - index - 2);
+
+                BigInteger integer;
+
+                if (!TryDecodeNameInteger(
+                    encodedInteger,
+                    out integer))
+                {
+                    return false;
+                }
+
+                index = end + 2;
+                node = IntegerNode(integer);
+                return true;
+            }
+
+            string expected =
+                depth % 2 == 0
+                    ? "ro"
+                    : "ru";
+
+            if (marker != expected)
+            {
+                return false;
+            }
+
+            index += 2;
+
+            CoordinateNode left;
+            CoordinateNode right;
+
+            if (!TryDecodeCoordinate(
+                    text,
+                    ref index,
+                    depth + 1,
+                    out left) ||
+                !TryDecodeCoordinate(
+                    text,
+                    ref index,
+                    depth + 1,
+                    out right))
+            {
+                return false;
+            }
+
+            node = PairNode(left, right);
+            return true;
+        }
+
+        private static bool TryReadPositionCoordinate(
+            CoordinateNode node,
+            out GeneratedNumberScalePosition position)
+        {
+            position =
+                default(GeneratedNumberScalePosition);
+
+            if (node == null ||
+                node.IsInteger ||
+                node.Left == null ||
+                !node.Left.IsInteger ||
+                node.Left.Integer != BigInteger.One)
+            {
+                return false;
+            }
+
+            CoordinateNode layerPair = node.Right;
+
+            if (layerPair == null ||
+                layerPair.IsInteger ||
+                layerPair.Left == null ||
+                !layerPair.Left.IsInteger)
+            {
+                return false;
+            }
+
+            CoordinateNode magnitudePair =
+                layerPair.Right;
+
+            if (magnitudePair == null ||
+                magnitudePair.IsInteger ||
+                magnitudePair.Left == null ||
+                !magnitudePair.Left.IsInteger ||
+                magnitudePair.Right == null ||
+                !magnitudePair.Right.IsInteger)
+            {
+                return false;
+            }
+
+            try
+            {
+                position =
+                    new GeneratedNumberScalePosition(
+                        layerPair.Left.Integer,
+                        magnitudePair.Left.Integer,
+                        magnitudePair.Right.Integer + 1);
+
                 return true;
             }
             catch (ArgumentOutOfRangeException)
@@ -453,33 +898,20 @@ namespace UnitConverter.Numbers
                 return value;
             }
 
-            BigInteger low = BigInteger.One;
-            BigInteger high = value;
+            BigInteger current = value;
+            BigInteger next =
+                (current + 1) / 2;
 
-            while (low <= high)
+            while (next < current)
             {
-                BigInteger middle =
-                    (low + high) / 2;
-
-                BigInteger square =
-                    middle * middle;
-
-                if (square == value)
-                {
-                    return middle;
-                }
-
-                if (square < value)
-                {
-                    low = middle + 1;
-                }
-                else
-                {
-                    high = middle - 1;
-                }
+                current = next;
+                next =
+                    (current +
+                    (value / current)) /
+                    2;
             }
 
-            return high;
+            return current;
         }
 
         private static Dictionary<string, int>
