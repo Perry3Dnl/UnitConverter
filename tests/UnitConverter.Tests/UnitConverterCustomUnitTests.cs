@@ -169,7 +169,7 @@ namespace UnitConverter.Tests
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Length,
                     "OtherPerryLength",
-                    "PERRY-LENGTH",
+                    "PERRYLENGTH",
                     "Meter",
                     2d));
         }
