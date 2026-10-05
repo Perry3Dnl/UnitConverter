@@ -4,6 +4,12 @@ namespace UnitConverter.Numbers
     using System.Collections.Generic;
     using System.Numerics;
 
+    public enum GeneratedNumberScaleDirection
+    {
+        Large = 0,
+        Tiny = 1,
+    }
+
     public readonly struct GeneratedNumberScalePosition
         : IEquatable<GeneratedNumberScalePosition>
     {
@@ -11,7 +17,25 @@ namespace UnitConverter.Numbers
             BigInteger layer,
             BigInteger magnitude,
             BigInteger coefficient)
+            : this(
+                GeneratedNumberScaleDirection.Large,
+                layer,
+                magnitude,
+                coefficient)
         {
+        }
+
+        public GeneratedNumberScalePosition(
+            GeneratedNumberScaleDirection direction,
+            BigInteger layer,
+            BigInteger magnitude,
+            BigInteger coefficient)
+        {
+            if (direction != GeneratedNumberScaleDirection.Large &&
+                direction != GeneratedNumberScaleDirection.Tiny)
+            {
+                throw new ArgumentOutOfRangeException(nameof(direction));
+            }
             if (layer < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(layer));
@@ -27,18 +51,21 @@ namespace UnitConverter.Numbers
                 throw new ArgumentOutOfRangeException(nameof(coefficient));
             }
 
+            Direction = direction;
             Layer = layer;
             Magnitude = magnitude;
             Coefficient = coefficient;
         }
 
+        public GeneratedNumberScaleDirection Direction { get; }
         public BigInteger Layer { get; }
         public BigInteger Magnitude { get; }
         public BigInteger Coefficient { get; }
 
         public bool Equals(GeneratedNumberScalePosition other)
         {
-            return Layer == other.Layer &&
+            return Direction == other.Direction &&
+                Layer == other.Layer &&
                 Magnitude == other.Magnitude &&
                 Coefficient == other.Coefficient;
         }
@@ -54,6 +81,7 @@ namespace UnitConverter.Numbers
             unchecked
             {
                 int hash = 17;
+                hash = (hash * 31) + Direction.GetHashCode();
                 hash = (hash * 31) + Layer.GetHashCode();
                 hash = (hash * 31) + Magnitude.GetHashCode();
                 hash = (hash * 31) + Coefficient.GetHashCode();
@@ -114,7 +142,9 @@ namespace UnitConverter.Numbers
                 remaining--;
             }
 
-            return expression;
+            return Position.Direction == GeneratedNumberScaleDirection.Tiny
+                ? "1/(" + expression + ")"
+                : expression;
         }
 
         public bool Equals(GeneratedNumberNameAddress other)
@@ -200,7 +230,11 @@ namespace UnitConverter.Numbers
                         position.Magnitude),
                     position.Coefficient - 1);
 
-            BigInteger payload = structure * 2;
+            BigInteger payload =
+                (structure * 2) +
+                (position.Direction == GeneratedNumberScaleDirection.Tiny
+                    ? BigInteger.One
+                    : BigInteger.Zero);
             BigInteger lexicalOrdinal =
                 payload + LexicalOffset;
 
@@ -424,11 +458,15 @@ namespace UnitConverter.Numbers
             BigInteger payload =
                 lexicalOrdinal - LexicalOffset;
 
-            if (payload < 0 ||
-                payload % 2 != 0)
+            if (payload < 0)
             {
                 return false;
             }
+
+            GeneratedNumberScaleDirection direction =
+                payload % 2 == 0
+                    ? GeneratedNumberScaleDirection.Large
+                    : GeneratedNumberScaleDirection.Tiny;
 
             BigInteger structure =
                 payload / 2;
@@ -453,6 +491,7 @@ namespace UnitConverter.Numbers
             {
                 var decoded =
                     new GeneratedNumberScalePosition(
+                        direction,
                         layer,
                         magnitude,
                         coefficientMinusOne + 1);
@@ -486,7 +525,10 @@ namespace UnitConverter.Numbers
             GeneratedNumberScalePosition position)
         {
             return PairNode(
-                IntegerNode(BigInteger.One),
+                IntegerNode(
+                    position.Direction == GeneratedNumberScaleDirection.Tiny
+                        ? new BigInteger(2)
+                        : BigInteger.One),
                 PairNode(
                     IntegerNode(position.Layer),
                     PairNode(
@@ -636,10 +678,16 @@ namespace UnitConverter.Numbers
                 node.IsInteger ||
                 node.Left == null ||
                 !node.Left.IsInteger ||
-                node.Left.Integer != BigInteger.One)
+                (node.Left.Integer != BigInteger.One &&
+                 node.Left.Integer != new BigInteger(2)))
             {
                 return false;
             }
+
+            GeneratedNumberScaleDirection direction =
+                node.Left.Integer == new BigInteger(2)
+                    ? GeneratedNumberScaleDirection.Tiny
+                    : GeneratedNumberScaleDirection.Large;
 
             CoordinateNode layerPair = node.Right;
 
@@ -668,6 +716,7 @@ namespace UnitConverter.Numbers
             {
                 position =
                     new GeneratedNumberScalePosition(
+                        direction,
                         layerPair.Left.Integer,
                         magnitudePair.Left.Integer,
                         magnitudePair.Right.Integer + 1);
