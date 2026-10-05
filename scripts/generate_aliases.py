@@ -234,8 +234,13 @@ def render_dispatcher(chunk_count):
         "        {",
     ]
     for index in range(1, chunk_count + 1):
+        assignment = (
+            "            string[] result = GetAliasesPart1(family, unitName);"
+            if index == 1
+            else "            result = GetAliasesPart" + str(index) + "(family, unitName);"
+        )
         lines.extend([
-            "            string[] result = GetAliasesPart" + str(index) + "(family, unitName);",
+            assignment,
             "            if (result != null)",
             "            {",
             "                return result;",
