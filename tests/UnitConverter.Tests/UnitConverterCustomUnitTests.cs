@@ -144,6 +144,83 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void GlobalDetection_FindsCustomUnit()
+        {
+            UnitConverterCustomUnit perryLength =
+                UnitConverterCustomUnits.RegisterLinear(
+                    UnitConverterFamily.Length,
+                    "PerryLength",
+                    "perryLength",
+                    "Meter",
+                    1.7018d);
+
+            UnitConverterDetectionResult result =
+                UnitConverterDetector.Detect("2 perryLength");
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(result.Candidate.IsCustom, Is.True);
+            Assert.That(result.Candidate.CustomUnit, Is.SameAs(perryLength));
+        }
+
+        [Test]
+        public void GlobalDynamicConversion_UsesCustomUnit()
+        {
+            UnitConverterCustomUnits.RegisterLinear(
+                UnitConverterFamily.Length,
+                "PerryLength",
+                "perryLength",
+                "Meter",
+                1.7018d);
+
+            double meters =
+                UnitConverterDynamic.Convert(
+                    "2 perryLength",
+                    "Meter");
+
+            Assert.That(meters, Is.EqualTo(3.4036d).Within(1e-12d));
+        }
+
+        [Test]
+        public void CompositeConversion_UsesLinearCustomUnit()
+        {
+            UnitConverterCustomUnits.RegisterLinear(
+                UnitConverterFamily.Length,
+                "PerryLength",
+                "perryLength",
+                "Meter",
+                1.7018d);
+
+            double metersPerSecond =
+                UnitConverterComposite.Convert(
+                    2d,
+                    "perryLength/s",
+                    "m/s");
+
+            Assert.That(
+                metersPerSecond,
+                Is.EqualTo(3.4036d).Within(1e-12d));
+        }
+
+        [Test]
+        public void CompositeParser_RejectsAffineCustomUnitAsFactor()
+        {
+            UnitConverterCustomUnits.RegisterAffine(
+                UnitConverterFamily.Temperature,
+                "CustomTemperature",
+                "°X",
+                "Custom temperature",
+                "Celsius",
+                2d,
+                10d);
+
+            UnitConverterExpressionParseResult result =
+                UnitConverterExpressionParser.TryParse("°X");
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Error, Is.EqualTo(UnitConverterError.UnsupportedUnit));
+        }
+
+        [Test]
         public void Registration_RejectsBuiltInAliasCollision()
         {
             Assert.Throws<System.InvalidOperationException>(() =>
