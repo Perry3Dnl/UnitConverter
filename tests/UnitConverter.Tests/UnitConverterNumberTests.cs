@@ -250,6 +250,50 @@ namespace UnitConverter.Tests
                 Is.EqualTo(position));
         }
 
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(5)]
+        public void FoldedGeneratedNames_AreReversible(
+            int foldDepth)
+        {
+            var address =
+                new GeneratedNumberNameAddress(
+                    new GeneratedNumberScalePosition(
+                        new BigInteger(2),
+                        new BigInteger(4),
+                        BigInteger.One),
+                    new BigInteger(foldDepth));
+
+            string name =
+                GeneratedNumberNames.GetName(
+                    address);
+
+            GeneratedNumberNameAddress restored =
+                GeneratedNumberNames.ParseAddress(
+                    name);
+
+            Assert.That(
+                restored,
+                Is.EqualTo(address));
+        }
+
+        [Test]
+        public void FoldedGeneratedName_PreservesWebsiteValueExpression()
+        {
+            var address =
+                new GeneratedNumberNameAddress(
+                    new GeneratedNumberScalePosition(
+                        new BigInteger(2),
+                        new BigInteger(4),
+                        BigInteger.One),
+                    BigInteger.One);
+
+            Assert.That(
+                address.ToSymbolicExpression(),
+                Is.EqualTo(
+                    "10^(10^(10^4))"));
+        }
+
         [Test]
         public void Ginozillion_CanBeUsedAsNumericScale()
         {
