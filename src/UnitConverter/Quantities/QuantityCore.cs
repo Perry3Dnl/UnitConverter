@@ -6,17 +6,17 @@ namespace UnitConverter.Quantities
 {
     internal readonly struct RationalFactor
     {
-        public RationalFactor(long numerator, long denominator)
+        public RationalFactor(BigInteger numerator, BigInteger denominator)
         {
-            if (denominator == 0)
+            if (denominator.IsZero)
                 throw new DivideByZeroException();
 
             Numerator = numerator;
             Denominator = denominator;
         }
 
-        public long Numerator { get; }
-        public long Denominator { get; }
+        public BigInteger Numerator { get; }
+        public BigInteger Denominator { get; }
 
         public T Apply<T>(T value) where T : IFloatingPoint<T>
             => value * T.CreateChecked(Numerator) / T.CreateChecked(Denominator);
@@ -25,7 +25,7 @@ namespace UnitConverter.Quantities
             => value * T.CreateChecked(Denominator) / T.CreateChecked(Numerator);
     }
 
-    public readonly struct Length<T> :
+    public readonly partial struct Length<T> :
         IEquatable<Length<T>>,
         IComparable<Length<T>>,
         IFormattable,
