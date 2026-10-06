@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public readonly struct Energy<T> :
+    public readonly partial struct Energy<T> :
         IEquatable<Energy<T>>,
         IComparable<Energy<T>>,
         IFormattable,
@@ -45,7 +45,7 @@ namespace UnitConverter.Quantities
             => _joules.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct Power<T> :
+    public readonly partial struct Power<T> :
         IEquatable<Power<T>>,
         IComparable<Power<T>>,
         IFormattable,
@@ -86,7 +86,7 @@ namespace UnitConverter.Quantities
             => _watts.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct Pressure<T> :
+    public readonly partial struct Pressure<T> :
         IEquatable<Pressure<T>>,
         IComparable<Pressure<T>>,
         IFormattable,
