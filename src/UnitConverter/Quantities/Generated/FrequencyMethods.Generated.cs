@@ -8,12 +8,23 @@ namespace UnitConverter.Quantities
 {
     public static class FrequencyMethods
     {
-        public static Frequency<T> FromHertz<T>(T value) where T : IFloatingPoint<T> => Frequency<T>.FromHertz(value);
-        public static T ToHertz<T>(this Frequency<T> quantity) where T : IFloatingPoint<T> => quantity.Hertz;
-        public static Frequency<T> FromKilohertz<T>(T value) where T : IFloatingPoint<T> => Frequency<T>.FromKilohertz(value);
-        public static T ToKilohertz<T>(this Frequency<T> quantity) where T : IFloatingPoint<T> => quantity.Kilohertz;
-        public static Frequency<T> FromMegahertz<T>(T value) where T : IFloatingPoint<T> => Frequency<T>.FromMegahertz(value);
-        public static T ToMegahertz<T>(this Frequency<T> quantity) where T : IFloatingPoint<T> => quantity.Megahertz;
+        public static Frequency<T> FromHertz<T>(T value) where T : IFloatingPoint<T>
+            => Frequency<T>.FromHertz(value);
+
+        public static T ToHertz<T>(this Frequency<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Hertz;
+
+        public static Frequency<T> FromKilohertz<T>(T value) where T : IFloatingPoint<T>
+            => Frequency<T>.FromKilohertz(value);
+
+        public static T ToKilohertz<T>(this Frequency<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Kilohertz;
+
+        public static Frequency<T> FromMegahertz<T>(T value) where T : IFloatingPoint<T>
+            => Frequency<T>.FromMegahertz(value);
+
+        public static T ToMegahertz<T>(this Frequency<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Megahertz;
 
         public static Frequency<T> From<T>(T value, UnitConverter.Frequency.UnitConverterFrequencyUnit unit) where T : IFloatingPoint<T>
             => unit switch
