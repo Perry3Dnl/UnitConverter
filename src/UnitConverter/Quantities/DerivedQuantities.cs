@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public readonly struct Mass<T> :
+    public readonly partial struct Mass<T> :
         IEquatable<Mass<T>>,
         IComparable<Mass<T>>,
         IFormattable,
@@ -49,7 +49,7 @@ namespace UnitConverter.Quantities
             => _kilograms.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct Acceleration<T> :
+    public readonly partial struct Acceleration<T> :
         IEquatable<Acceleration<T>>,
         IComparable<Acceleration<T>>,
         IFormattable,
@@ -94,7 +94,7 @@ namespace UnitConverter.Quantities
             => _metresPerSecondSquared.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct Force<T> :
+    public readonly partial struct Force<T> :
         IEquatable<Force<T>>,
         IComparable<Force<T>>,
         IFormattable,
@@ -141,7 +141,7 @@ namespace UnitConverter.Quantities
             => _newtons.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct Area<T> :
+    public readonly partial struct Area<T> :
         IEquatable<Area<T>>,
         IComparable<Area<T>>,
         IFormattable,
@@ -188,7 +188,7 @@ namespace UnitConverter.Quantities
             => _squareMetres.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct Volume<T> :
+    public readonly partial struct Volume<T> :
         IEquatable<Volume<T>>,
         IComparable<Volume<T>>,
         IFormattable,
