@@ -8,14 +8,29 @@ namespace UnitConverter.Quantities
 {
     public static class PressureMethods
     {
-        public static Pressure<T> FromPascals<T>(T value) where T : IFloatingPoint<T> => Pressure<T>.FromPascals(value);
-        public static T ToPascals<T>(this Pressure<T> quantity) where T : IFloatingPoint<T> => quantity.Pascals;
-        public static Pressure<T> FromKilopascals<T>(T value) where T : IFloatingPoint<T> => Pressure<T>.FromKilopascals(value);
-        public static T ToKilopascals<T>(this Pressure<T> quantity) where T : IFloatingPoint<T> => quantity.Kilopascals;
-        public static Pressure<T> FromMegapascals<T>(T value) where T : IFloatingPoint<T> => Pressure<T>.FromMegapascals(value);
-        public static T ToMegapascals<T>(this Pressure<T> quantity) where T : IFloatingPoint<T> => quantity.Megapascals;
-        public static Pressure<T> FromBars<T>(T value) where T : IFloatingPoint<T> => Pressure<T>.FromBars(value);
-        public static T ToBars<T>(this Pressure<T> quantity) where T : IFloatingPoint<T> => quantity.Bars;
+        public static Pressure<T> FromPascals<T>(T value) where T : IFloatingPoint<T>
+            => Pressure<T>.FromPascals(value);
+
+        public static T ToPascals<T>(this Pressure<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Pascals;
+
+        public static Pressure<T> FromKilopascals<T>(T value) where T : IFloatingPoint<T>
+            => Pressure<T>.FromKilopascals(value);
+
+        public static T ToKilopascals<T>(this Pressure<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Kilopascals;
+
+        public static Pressure<T> FromMegapascals<T>(T value) where T : IFloatingPoint<T>
+            => Pressure<T>.FromMegapascals(value);
+
+        public static T ToMegapascals<T>(this Pressure<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Megapascals;
+
+        public static Pressure<T> FromBars<T>(T value) where T : IFloatingPoint<T>
+            => Pressure<T>.FromBars(value);
+
+        public static T ToBars<T>(this Pressure<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Bars;
 
         public static Pressure<T> From<T>(T value, UnitConverter.Pressure.UnitConverterPressureUnit unit) where T : IFloatingPoint<T>
             => unit switch
