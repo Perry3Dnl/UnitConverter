@@ -8,11 +8,17 @@ namespace UnitConverter.Quantities
 {
     public static class ResistanceMethods
     {
-        public static Resistance<T> FromOhms<T>(T value) where T : IFloatingPoint<T> => Resistance<T>.FromOhms(value);
-        public static T ToOhms<T>(this Resistance<T> quantity) where T : IFloatingPoint<T> => quantity.Ohms;
+        public static Resistance<T> FromOhms<T>(T value) where T : IFloatingPoint<T>
+            => Resistance<T>.FromOhms(value);
 
-        public static Resistance<T> FromKiloohms<T>(T value) where T : IFloatingPoint<T> => Resistance<T>.FromKiloohms(value);
-        public static T ToKiloohms<T>(this Resistance<T> quantity) where T : IFloatingPoint<T> => quantity.Kiloohms;
+        public static T ToOhms<T>(this Resistance<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Ohms;
+
+        public static Resistance<T> FromKiloohms<T>(T value) where T : IFloatingPoint<T>
+            => Resistance<T>.FromKiloohms(value);
+
+        public static T ToKiloohms<T>(this Resistance<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Kiloohms;
 
         public static Resistance<T> From<T>(T value, UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit unit) where T : IFloatingPoint<T>
             => unit switch
