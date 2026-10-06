@@ -45,10 +45,13 @@ namespace UnitConverter.Tests.Quantities
         }
 
         [Test]
-        public void UnsupportedRuntimeUnitIsRejectedInsteadOfSilentlyChangingSemantics()
+        public void PreviouslyUnsupportedLengthUnitsNowHaveDirectAndIndirectParity()
         {
-            Assert.Throws<System.ArgumentOutOfRangeException>(() =>
-                LengthMethods.From(1m, UnitConverter.Length.UnitConverterLengthUnit.Parsec));
+            Length<decimal> direct = LengthMethods.FromParsec(1m);
+            Length<decimal> indirect = LengthMethods.From(1m, UnitConverter.Length.UnitConverterLengthUnit.Parsec);
+
+            Assert.That(indirect.Metres, Is.EqualTo(direct.Metres));
+            Assert.That(indirect.In(UnitConverter.Length.UnitConverterLengthUnit.Parsec), Is.EqualTo(1m));
         }
     }
 }
