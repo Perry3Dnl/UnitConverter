@@ -1,0 +1,522 @@
+{
+  "version": 1,
+  "description": "Curated aliases that cannot be derived safely from canonical enum names. Generic human-readable aliases are generated at build time.",
+  "aliases": {
+    "Speed": {
+      "MeterPerSecond": [
+        "mps",
+        "meter per second",
+        "meters per second",
+        "metre per second",
+        "metres per second"
+      ],
+      "KilometerPerHour": [
+        "kph",
+        "kmh",
+        "km/hr",
+        "kilometers per hour",
+        "kilometre per hour",
+        "kilometres per hour"
+      ],
+      "FootPerSecond": [
+        "feet per second"
+      ],
+      "MilePerHour": [
+        "miles per hour"
+      ],
+      "Knot": [
+        "knots",
+        "kt",
+        "kts"
+      ],
+      "MicrometerPerSecond": [
+        "micrometre per second",
+        "micrometers per second",
+        "micrometres per second"
+      ],
+      "CentimeterPerSecond": [
+        "centimetre per second",
+        "centimeters per second",
+        "centimetres per second"
+      ],
+      "MillimeterPerSecond": [
+        "millimetre per second",
+        "millimeters per second",
+        "millimetres per second"
+      ]
+    },
+    "AngularVelocity": {
+      "RadianPerSecond": [
+        "rad/sec",
+        "radians per second"
+      ],
+      "RevolutionPerSecond": [
+        "rps",
+        "rev/sec",
+        "revolutions per second",
+        "rotations per second"
+      ],
+      "RevolutionPerMinute": [
+        "rev/min",
+        "r/min",
+        "revolutions per minute",
+        "rotations per minute"
+      ],
+      "RevolutionPerHour": [
+        "rev/hr",
+        "revolutions per hour"
+      ],
+      "MilliradianPerSecond": [
+        "mrad/sec",
+        "milliradians per second"
+      ]
+    },
+    "Area": {
+      "SquareMillimeter": [
+        "square millimeter",
+        "square millimeters",
+        "square millimetre",
+        "square millimetres",
+        "sq mm"
+      ],
+      "SquareCentimeter": [
+        "square centimeter",
+        "square centimeters",
+        "square centimetre",
+        "square centimetres",
+        "sq cm"
+      ],
+      "SquareMeter": [
+        "square meter",
+        "square meters",
+        "square metre",
+        "square metres",
+        "sq m",
+        "sqm"
+      ],
+      "SquareKilometer": [
+        "square kilometer",
+        "square kilometers",
+        "square kilometre",
+        "square kilometres",
+        "sq km"
+      ],
+      "SquareFoot": [
+        "square feet",
+        "sq ft"
+      ],
+      "SquareInch": [
+        "square inches",
+        "sq in"
+      ],
+      "SquareYard": [
+        "square yards",
+        "sq yd"
+      ],
+      "SquareMile": [
+        "square miles",
+        "sq mi"
+      ],
+      "Hectare": [
+        "hectares"
+      ],
+      "Acre": [
+        "acres"
+      ]
+    },
+    "Volume": {
+      "Milliliter": [
+        "millilitre",
+        "milliliters",
+        "millilitres"
+      ],
+      "Centiliter": [
+        "centilitre",
+        "centiliters",
+        "centilitres"
+      ],
+      "Deciliter": [
+        "decilitre",
+        "deciliters",
+        "decilitres"
+      ],
+      "Liter": [
+        "litre",
+        "liters",
+        "litres"
+      ],
+      "Decaliter": [
+        "decalitre",
+        "decaliters",
+        "decalitres"
+      ],
+      "Hectoliter": [
+        "hectolitre",
+        "hectoliters",
+        "hectolitres"
+      ],
+      "Kiloliter": [
+        "kilolitre",
+        "kiloliters",
+        "kilolitres"
+      ],
+      "Microliter": [
+        "microlitre",
+        "microliters",
+        "microlitres"
+      ],
+      "Nanoliter": [
+        "nanolitre",
+        "nanoliters",
+        "nanolitres"
+      ],
+      "CubicMeter": [
+        "cubic meter",
+        "cubic meters",
+        "cubic metre",
+        "cubic metres"
+      ],
+      "CubicFoot": [
+        "cubic feet"
+      ],
+      "USGallon": [
+        "US gallon",
+        "US gallons",
+        "gallon US",
+        "gallons US"
+      ],
+      "ImperialGallon": [
+        "imperial gallon",
+        "imperial gallons",
+        "UK gallon",
+        "UK gallons"
+      ]
+    },
+    "Time": {
+      "Nanosecond": [
+        "nanoseconds",
+        "nsec",
+        "nsecs"
+      ],
+      "Microsecond": [
+        "microseconds",
+        "usec",
+        "usecs"
+      ],
+      "Millisecond": [
+        "milliseconds",
+        "msec",
+        "msecs"
+      ],
+      "Second": [
+        "seconds",
+        "sec",
+        "secs"
+      ],
+      "Minute": [
+        "minutes",
+        "min",
+        "mins"
+      ],
+      "Hour": [
+        "hours",
+        "hr",
+        "hrs"
+      ],
+      "Day": [
+        "days"
+      ],
+      "Week": [
+        "weeks",
+        "wk",
+        "wks"
+      ],
+      "Fortnight": [
+        "fortnights"
+      ],
+      "CommonYear": [
+        "year",
+        "years",
+        "yr",
+        "yrs"
+      ],
+      "Decade": [
+        "decades"
+      ],
+      "Century": [
+        "centuries"
+      ],
+      "Millennium": [
+        "millennia",
+        "millenniums"
+      ]
+    },
+    "Mass": {
+      "Microgram": [
+        "micrograms"
+      ],
+      "Milligram": [
+        "milligrams"
+      ],
+      "Gram": [
+        "grams"
+      ],
+      "Kilogram": [
+        "kilograms",
+        "kilo",
+        "kilos"
+      ],
+      "MetricTon": [
+        "metric ton",
+        "metric tons",
+        "tonne",
+        "tonnes"
+      ],
+      "Ounce": [
+        "ounces",
+        "ozs"
+      ],
+      "Pound": [
+        "pounds",
+        "lb",
+        "lbs"
+      ],
+      "Stone": [
+        "stones"
+      ],
+      "ShortTon": [
+        "short ton",
+        "short tons",
+        "US ton",
+        "US tons"
+      ],
+      "LongTon": [
+        "long ton",
+        "long tons",
+        "imperial ton",
+        "imperial tons"
+      ],
+      "TroyOunce": [
+        "troy ounces"
+      ],
+      "TroyPound": [
+        "troy pounds"
+      ],
+      "Carat": [
+        "carats"
+      ]
+    },
+    "Pressure": {
+      "Pascal": [
+        "pascals"
+      ],
+      "Hectopascal": [
+        "hectopascals"
+      ],
+      "Kilopascal": [
+        "kilopascals"
+      ],
+      "Megapascal": [
+        "megapascals"
+      ],
+      "Bar": [
+        "bars"
+      ],
+      "Millibar": [
+        "millibars"
+      ],
+      "Atmosphere": [
+        "atmospheres",
+        "standard atmosphere",
+        "standard atmospheres"
+      ],
+      "Torr": [
+        "torrs"
+      ],
+      "MillimeterMercury": [
+        "millimeters of mercury",
+        "millimetres of mercury"
+      ],
+      "InchMercury": [
+        "inches of mercury"
+      ],
+      "Psi": [
+        "pounds per square inch",
+        "pound-force per square inch"
+      ],
+      "Psf": [
+        "pounds per square foot",
+        "pound-force per square foot"
+      ]
+    },
+    "Length": {
+      "Micrometer": [
+        "micrometre",
+        "micrometers",
+        "micrometres"
+      ],
+      "Millimeter": [
+        "millimetre",
+        "millimeters",
+        "millimetres"
+      ],
+      "Centimeter": [
+        "centimetre",
+        "centimeters",
+        "centimetres"
+      ],
+      "Decimeter": [
+        "decimetre",
+        "decimeters",
+        "decimetres"
+      ],
+      "Meter": [
+        "metre",
+        "meters",
+        "metres"
+      ],
+      "Decameter": [
+        "decametre",
+        "decameters",
+        "decametres"
+      ],
+      "Hectometer": [
+        "hectometre",
+        "hectometers",
+        "hectometres"
+      ],
+      "Kilometer": [
+        "kilometre",
+        "kilometers",
+        "kilometres"
+      ],
+      "Megameter": [
+        "megametre",
+        "megameters",
+        "megametres"
+      ],
+      "Gigameter": [
+        "gigametre",
+        "gigameters",
+        "gigametres"
+      ],
+      "Inch": [
+        "inches"
+      ],
+      "Foot": [
+        "feet"
+      ],
+      "Yard": [
+        "yards"
+      ],
+      "Mile": [
+        "miles"
+      ],
+      "NauticalMile": [
+        "nautical miles"
+      ],
+      "LightYear": [
+        "light years",
+        "light-year",
+        "light-years"
+      ],
+      "Parsec": [
+        "parsecs"
+      ],
+      "Angstrom": [
+        "angstrom",
+        "angstroms",
+        "ångströms"
+      ]
+    },
+    "TemperatureDelta": {
+      "Kelvin": [
+        "delta k",
+        "kelvin delta",
+        "kelvin difference"
+      ],
+      "Celsius": [
+        "delta c",
+        "delta °c",
+        "celsius delta",
+        "celsius difference",
+        "degree celsius difference"
+      ],
+      "Fahrenheit": [
+        "delta f",
+        "delta °f",
+        "fahrenheit delta",
+        "fahrenheit difference",
+        "degree fahrenheit difference"
+      ],
+      "Rankine": [
+        "delta r",
+        "delta °r",
+        "rankine delta",
+        "rankine difference"
+      ],
+      "Delisle": [
+        "delisle delta",
+        "delisle difference"
+      ],
+      "Newton": [
+        "newton delta",
+        "newton difference"
+      ],
+      "Reaumur": [
+        "reaumur delta",
+        "réaumur delta",
+        "reaumur difference",
+        "réaumur difference"
+      ],
+      "Romer": [
+        "romer delta",
+        "rømer delta",
+        "romer difference",
+        "rømer difference"
+      ]
+    },
+    "Temperature": {
+      "Kelvin": [
+        "kelvins",
+        "deg k",
+        "degree kelvin",
+        "degrees kelvin"
+      ],
+      "Celsius": [
+        "c",
+        "deg c",
+        "degree celsius",
+        "degrees celsius"
+      ],
+      "Fahrenheit": [
+        "f",
+        "deg f",
+        "degree fahrenheit",
+        "degrees fahrenheit"
+      ],
+      "Rankine": [
+        "r",
+        "deg r",
+        "degree rankine",
+        "degrees rankine"
+      ],
+      "Delisle": [
+        "degrees delisle"
+      ],
+      "Newton": [
+        "degrees newton"
+      ],
+      "Reaumur": [
+        "réaumur",
+        "degrees reaumur",
+        "degrees réaumur"
+      ],
+      "Romer": [
+        "rømer",
+        "degrees romer",
+        "degrees rømer"
+      ]
+    }
+  }
+}

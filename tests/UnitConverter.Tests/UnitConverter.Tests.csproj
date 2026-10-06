@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../../src/UnitConverter/UnitConverter.csproj" />
+    <ProjectReference Include="../../src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj" />
   </ItemGroup>
 </Project>

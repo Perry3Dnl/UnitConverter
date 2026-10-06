@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
+      - name: Verify generated aliases
+        run: python scripts/generate_aliases.py --check
       - name: Restore
         run: dotnet restore UnitConverter.sln
       - name: Build
@@ -26,9 +28,19 @@ jobs:
       - name: Test
         run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitConverter.trx" --results-directory artifacts/test-results
       - name: Pack
-        run: dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
+        run: |
+          dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
       - name: Verify package and consume it in a clean project
         run: python scripts/verify_package.py artifacts/packages
+      - name: Publish NativeAOT smoke consumer
+        run: dotnet publish samples/UnitConverter.NativeAotSmoke/UnitConverter.NativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/nativeaot
+      - name: Run NativeAOT smoke consumer
+        run: ./artifacts/nativeaot/UnitConverter.NativeAotSmoke
+      - name: Publish JSON NativeAOT smoke consumer
+        run: dotnet publish samples/UnitConverter.JsonNativeAotSmoke/UnitConverter.JsonNativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/json-nativeaot
+      - name: Run JSON NativeAOT smoke consumer
+        run: ./artifacts/json-nativeaot/UnitConverter.JsonNativeAotSmoke
       - name: Upload NuGet packages
         uses: actions/upload-artifact@v7
         with:

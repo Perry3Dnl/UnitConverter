@@ -1,0 +1,178 @@
+namespace UnitConverter.SystemTextJson
+{
+    using System;
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
+    using UnitConverter.Catalog;
+
+    public static class UnitConverterJson
+    {
+        public static JsonSerializerOptions AddUnitConverter<TUnit>(
+            this JsonSerializerOptions options)
+            where TUnit : struct
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            foreach (JsonConverter converter in options.Converters)
+            {
+                if (converter is UnitValueJsonConverter<TUnit>)
+                {
+                    return options;
+                }
+            }
+
+            options.Converters.Add(new UnitValueJsonConverter<TUnit>());
+            return options;
+        }
+
+        public static JsonSerializerOptions AddUnitConverter(
+            this JsonSerializerOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            foreach (JsonConverter converter in options.Converters)
+            {
+                if (converter is UnitValueJsonConverterFactory)
+                {
+                    return options;
+                }
+            }
+
+            options.Converters.Add(new UnitValueJsonConverterFactory());
+            return options;
+        }
+    }
+
+    public sealed class UnitValueJsonConverterFactory : JsonConverterFactory
+    {
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeToConvert.IsGenericType &&
+                typeToConvert.GetGenericTypeDefinition() == typeof(UnitValue<>);
+        }
+
+        public override JsonConverter CreateConverter(
+            Type typeToConvert,
+            JsonSerializerOptions options)
+        {
+            Type unitType = typeToConvert.GetGenericArguments()[0];
+            Type converterType =
+                typeof(UnitValueJsonConverter<>).MakeGenericType(unitType);
+
+            return (JsonConverter)Activator.CreateInstance(converterType);
+        }
+    }
+
+    public sealed class UnitValueJsonConverter<TUnit>
+        : JsonConverter<UnitValue<TUnit>>
+        where TUnit : struct
+    {
+        public override UnitValue<TUnit> Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
+        {
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected an object for a UnitValue.");
+            }
+
+            double value = 0d;
+            bool hasValue = false;
+            string unitText = null;
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                {
+                    break;
+                }
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                {
+                    throw new JsonException("Expected a property name.");
+                }
+
+                string propertyName = reader.GetString();
+                if (!reader.Read())
+                {
+                    throw new JsonException("Unexpected end of JSON.");
+                }
+
+                if (string.Equals(
+                    propertyName,
+                    "value",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    value = reader.GetDouble();
+                    hasValue = true;
+                }
+                else if (string.Equals(
+                    propertyName,
+                    "unit",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    unitText = reader.GetString();
+                }
+                else
+                {
+                    reader.Skip();
+                }
+            }
+
+            if (!hasValue)
+            {
+                throw new JsonException("The 'value' property is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(unitText))
+            {
+                throw new JsonException("The 'unit' property is required.");
+            }
+
+            UnitConverterFamilyDescriptor<TUnit> descriptor;
+            if (!UnitConverterCatalog.TryGetFamily(out descriptor))
+            {
+                throw new JsonException(
+                    "No unit family descriptor is registered for " +
+                    typeof(TUnit).FullName + ".");
+            }
+
+            TUnit unit;
+            UnitConverterUnitResolution resolution =
+                descriptor.ResolveUnit(unitText, out unit);
+
+            if (resolution == UnitConverterUnitResolution.Ambiguous)
+            {
+                throw new JsonException(
+                    "The unit '" + unitText + "' is ambiguous.");
+            }
+
+            if (resolution != UnitConverterUnitResolution.Resolved)
+            {
+                throw new JsonException(
+                    "The unit '" + unitText + "' is not recognized for " +
+                    descriptor.Name + ".");
+            }
+
+            return new UnitValue<TUnit>(value, unit);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UnitValue<TUnit> value,
+            JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WriteNumber("value", value.Value);
+            writer.WriteString("unit", value.Unit.ToString());
+            writer.WriteEndObject();
+        }
+    }
+}

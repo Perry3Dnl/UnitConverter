@@ -1,6 +1,6 @@
 # UnitConverter
 
-A standalone .NET unit conversion library with **97 conversion families** and **1,632 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
+A standalone .NET unit conversion library with **98 conversion families** and **1,650 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
 
 The package candidate is **`UnitConverter` `2.0.0-preview.1`**, targeting **.NET Standard 2.0**. This repository prepares the package; it has not been published to nuget.org.
 
@@ -23,7 +23,7 @@ Install the candidate into an existing application using the absolute path to th
 dotnet add package UnitConverter --version 2.0.0-preview.1 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
-GitHub Actions also builds the solution, runs the NUnit suite, creates the packages, and tests installation into a clean console application. Successful runs expose a `nuget-packages` artifact.
+GitHub Actions also builds the solution, runs the NUnit suite, creates the packages, and tests installation into a clean console application. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors.
 
 ## Use the existing API
 
@@ -47,7 +47,198 @@ double alsoMillimeters = centimeters.Convert(
 double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
 ```
 
-The root namespace is now `UnitConverter`. Converter class names, enum values, conversion factors, overloads, and the base-unit conversion flow are preserved from version 1.1.3. Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
+The root namespace is now `UnitConverter`. Converter class names, existing enum values, conversion factors, overloads, and the base-unit conversion flow are preserved from version 1.1.3. Higher-level APIs are additive: strings can be parsed and formatted through the shared catalog, and `UnitValue<TUnit>` can retain a unit when that is useful without replacing the numeric API.
+
+```csharp
+double miles = UnitConverterParser.Convert("1.8 km", UnitConverterLengthUnit.Mile);
+
+var distance = new UnitValue<UnitConverterLengthUnit>(1.8, UnitConverterLengthUnit.Kilometer);
+string text = distance.ToString(); // "1.8 km"
+```
+
+`TemperatureDelta` is a separate family from absolute `Temperature`, so temperature differences use scale factors without absolute-temperature offsets.
+
+Runtime family detection is also available when the caller does not know the family in advance:
+
+```csharp
+UnitConverterDetectionResult detected = UnitConverterDetector.Detect("2 light-year");
+
+// Or convert directly when the detected family is unambiguous.
+double meters = UnitConverterDynamic.Convert("2 light-year", "m");
+```
+
+Global detection returns explicit candidates for ambiguous symbols instead of guessing. Family and unit descriptors also expose physical dimensions, including a separate information dimension for digital storage/data rate. Dimensions can be multiplied, divided, and raised to integer powers for future dimensional-analysis APIs. Fuel economy is modeled with unit-specific reciprocal dimensions because `km/L` and `L/100 km` are physically reciprocal representations.
+
+Aliases are definition-driven. Curated vocabulary lives in `definitions/unit-aliases.json`; `scripts/generate_aliases.py` combines those overrides with safe generated human forms for all 98 families and 1,650 unit entries, then emits checked-in static C#. CI verifies the generated files are current, so consumers do not need Python and the runtime remains dependency-free.
+
+Composite unit expressions are supported through the dimensional metadata:
+
+```csharp
+double metersPerSecond = UnitConverterComposite.Convert(
+    36,
+    "km/h",
+    "m/s"); // 10
+
+double joules = UnitConverterComposite.Convert(
+    1,
+    "N*m",
+    "J"); // 1
+
+UnitConverterUnitExpression expression =
+    UnitConverterExpressionParser.Parse("kg*m/s^2");
+```
+
+The expression parser supports multiplication, division, parentheses, integer powers, superscript `²`/`³`, and middle-dot notation. Ambiguous symbols remain explicit when parsed alone. When a complete conversion provides enough dimensional context, ambiguity can be resolved safely; for example `h` can mean hour or Planck constant, but `km/h -> m/s` has only one dimensionally compatible interpretation.
+
+### Custom units
+
+Runtime custom units can be registered without modifying the built-in enums or generated catalogue:
+
+```csharp
+UnitConverterCustomUnit perryLength =
+    UnitConverterCustomUnits.RegisterLinear(
+        UnitConverterFamily.Length,
+        "PerryLength",
+        "perryLength",
+        "Meter",
+        1.7018);
+
+double meters = UnitConverterDynamic.Convert(
+    "2 perryLength",
+    "Meter");
+```
+
+Affine units are also supported when a scale and offset are required:
+
+```csharp
+UnitConverterCustomUnit customTemperature =
+    UnitConverterCustomUnits.RegisterAffine(
+        UnitConverterFamily.Temperature,
+        "CustomTemperature",
+        "°X",
+        "Custom temperature",
+        "Celsius",
+        2.0,
+        10.0);
+```
+
+Custom aliases cannot shadow built-in aliases in the same family. Registered units participate in family-specific dynamic conversion and global detection. Linear custom units can also participate in composite expressions; affine custom units are rejected as multiplicative expression factors because offsets are not representable by a pure scale expression.
+
+### Arbitrary-scale number conversion
+
+UnitConverter now also includes the former Ginor number-conversion engine under `UnitConverter.Numbers`. It handles exact sparse base-10 values whose exponents can be far beyond conventional CLR numeric ranges:
+
+```csharp
+using UnitConverter.Numbers;
+
+ArbitraryScaleNumber huge =
+    ArbitraryScaleNumber.Parse("1e100000000000000000000");
+
+Console.WriteLine(huge.ToScientific());
+// 1e100000000000000000000
+```
+
+Named-scale conversion uses the same straightforward conversion style:
+
+```csharp
+ArbitraryScaleNumber billions =
+    NumberScaleConverter.Convert(
+        "500 million",
+        "billion");
+
+Console.WriteLine(billions.ToScientific());
+// 5e-1
+
+ArbitraryScaleNumber micros =
+    NumberScaleConverter.Convert(
+        "1 milli",
+        "micro");
+
+Console.WriteLine(micros.ToScientific());
+// 1e3
+```
+
+The scale catalogue is symmetric around `10^0`. In addition to conventional large names, it includes SI prefixes from `deci` through `quecto` for small values and `deca` through `quetta` for large values.
+
+The integrated generated-name grammar retains Ginor's deterministic naming model and now works in both exponent directions. `ginozillion` is the large generated scale at layer 2, magnitude 4 and coefficient 1, corresponding to `10^10000`. Its tiny counterpart uses the same reversible address with the tiny direction and deterministically becomes `ginuzillion`, corresponding to `10^-10000`:
+
+```csharp
+ArbitraryScaleNumber ginozillion =
+    ArbitraryScaleNumber.Parse("1 ginozillion");
+
+ArbitraryScaleNumber ginuzillion =
+    ArbitraryScaleNumber.Parse("1 ginuzillion");
+
+GeneratedNumberScalePosition large =
+    GeneratedNumberNames.Parse("ginozillion");
+
+GeneratedNumberScalePosition tiny =
+    GeneratedNumberNames.Parse("ginuzillion");
+
+// large.Direction == GeneratedNumberScaleDirection.Large
+// tiny.Direction  == GeneratedNumberScaleDirection.Tiny
+```
+
+Generated names are reversible addresses:
+
+```csharp
+var position = new GeneratedNumberScalePosition(
+    layer: 3,
+    magnitude: 27,
+    coefficient: 7);
+
+string name = GeneratedNumberNames.GetName(position);
+GeneratedNumberScalePosition restored =
+    GeneratedNumberNames.Parse(name);
+```
+
+The folded Ginor naming model is preserved as well:
+
+```csharp
+var address = new GeneratedNumberNameAddress(
+    new GeneratedNumberScalePosition(2, 4, 1),
+    foldDepth: 1);
+
+string foldedName = GeneratedNumberNames.GetName(address);
+GeneratedNumberNameAddress restoredAddress =
+    GeneratedNumberNames.ParseAddress(foldedName);
+
+string symbolic = restoredAddress.ToSymbolicExpression();
+// 10^(10^(10^4))
+```
+
+The number subsystem also exposes `ArbitraryScaleMath`, exact sparse addition/subtraction/multiplication, non-negative integer powers, checked conversion to `double`, `decimal`, and `BigInteger`, and the registered conventional scale catalogue from one through googol plus generated scales.
+
+This functionality is part of the dependency-free core package; existing unit-conversion APIs remain unchanged.
+
+### System.Text.Json serialization
+
+Serialization support is kept out of the dependency-free core package. Install the companion package `UnitConverter.SystemTextJson` and register its converter factory:
+
+```csharp
+using System.Text.Json;
+using UnitConverter.SystemTextJson;
+
+var options = new JsonSerializerOptions()
+    .AddUnitConverter();
+
+var distance = new UnitValue<UnitConverterLengthUnit>(
+    1.8,
+    UnitConverterLengthUnit.Kilometer);
+
+string json = JsonSerializer.Serialize(distance, options);
+// {"value":1.8,"unit":"Kilometer"}
+
+UnitValue<UnitConverterLengthUnit> restored =
+    JsonSerializer.Deserialize<UnitValue<UnitConverterLengthUnit>>(
+        json,
+        options);
+```
+
+Deserialization accepts the catalogue's aliases as unit values, while serialization writes the stable enum name. The companion package depends on `System.Text.Json`; the `UnitConverter` core package remains free of third-party runtime dependencies.
+
+
+ Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 ## Repository layout
 
@@ -72,6 +263,7 @@ dotnet run --project samples/UnitConverter.Demo --configuration Release
 - [Supported families and units](docs/API/SupportedFamiliesAndUnits.md)
 - [Migration from the Unity package](docs/Migration.md)
 - [Testing](docs/Developer/Testing.md)
+- [Conversion provenance](docs/Provenance.md)
 - [Packaging](docs/Developer/Packaging.md)
 
 Unity inspectors, settings assets, scenes, assembly definitions, metadata files, and the shared Unity Core layer have been removed. The original Unity package remains available in [the 1.1.3 import commit](https://github.com/Perry3Dnl/UnitConverter/tree/332369313b1a428a66432e811c542562efa24e40).

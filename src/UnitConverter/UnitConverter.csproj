@@ -6,8 +6,8 @@
     <IsPackable>true</IsPackable>
     <PackageId>UnitConverter</PackageId>
     <Authors>Perry3Dnl</Authors>
-    <Description>Standalone unit conversion library with 97 conversion families, static converters, direct methods, numeric extensions, and unit metadata.</Description>
-    <PackageTags>units;conversion;physics;engineering</PackageTags>
+    <Description>Dependency-free .NET conversion library with 98 physical unit families, parsing, composite and custom units, metadata, and arbitrary-scale number conversion.</Description>
+    <PackageTags>units;conversion;physics;engineering;numbers;big-numbers;arbitrary-scale</PackageTags>
     <PackageProjectUrl>https://github.com/Perry3Dnl/UnitConverter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
