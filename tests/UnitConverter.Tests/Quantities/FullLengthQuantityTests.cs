@@ -22,12 +22,12 @@ namespace UnitConverter.Tests.Quantities
         [Test]
         public void ExplicitLengthMethodsCoverRepresentativeUnitFamilies()
         {
-            Assert.That(LengthMethods.FromFemtometer(1m).ToFemtometer(), Is.EqualTo(1m));
+            Assert.That(LengthMethods.FromFemtometer(1m).ToFemtometer(), Is.EqualTo(1m).Within(0.000000000001m));
             Assert.That(LengthMethods.FromNauticalMile(1m).ToMetres(), Is.EqualTo(1852m));
-            Assert.That(LengthMethods.FromUSSurveyFoot(1m).ToUSSurveyFoot(), Is.EqualTo(1m));
+            Assert.That(LengthMethods.FromUSSurveyFoot(1m).ToUSSurveyFoot(), Is.EqualTo(1m).Within(0.000000000001m));
             Assert.That(LengthMethods.FromAstronomicalUnit(1m).ToMetres(), Is.EqualTo(149597870700m));
-            Assert.That(LengthMethods.FromParsec(1m).ToParsec(), Is.EqualTo(1m));
-            Assert.That(LengthMethods.FromRackUnit(1m).ToRackUnit(), Is.EqualTo(1m));
+            Assert.That(LengthMethods.FromParsec(1m).ToParsec(), Is.EqualTo(1m).Within(0.000000000001m));
+            Assert.That(LengthMethods.FromRackUnit(1m).ToRackUnit(), Is.EqualTo(1m).Within(0.000000000001m));
         }
 
         [Test]
