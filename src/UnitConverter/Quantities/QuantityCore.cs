@@ -67,6 +67,7 @@ namespace UnitConverter.Quantities
         public static Length<T> operator /(Length<T> quantity, T scalar) => FromMetres(quantity._metres / scalar);
         public static T operator /(Length<T> left, Length<T> right) => left._metres / right._metres;
         public static Speed<T> operator /(Length<T> length, Time<T> time) => Speed<T>.FromMetresPerSecond(length._metres / time.Seconds);
+        public static Area<T> operator *(Length<T> left, Length<T> right) => Area<T>.FromSquareMetres(left._metres * right._metres);
 
         public static bool operator ==(Length<T> left, Length<T> right) => left.Equals(right);
         public static bool operator !=(Length<T> left, Length<T> right) => !left.Equals(right);
@@ -185,6 +186,7 @@ namespace UnitConverter.Quantities
         public static Speed<T> operator *(Speed<T> quantity, T scalar) => FromMetresPerSecond(quantity._metresPerSecond * scalar);
         public static Speed<T> operator *(T scalar, Speed<T> quantity) => quantity * scalar;
         public static Length<T> operator *(Speed<T> speed, Time<T> time) => Length<T>.FromMetres(speed._metresPerSecond * time.Seconds);
+        public static Acceleration<T> operator /(Speed<T> speed, Time<T> time) => Acceleration<T>.FromMetresPerSecondSquared(speed._metresPerSecond / time.Seconds);
         public static Speed<T> operator /(Speed<T> quantity, T scalar) => FromMetresPerSecond(quantity._metresPerSecond / scalar);
         public static T operator /(Speed<T> left, Speed<T> right) => left._metresPerSecond / right._metresPerSecond;
 
