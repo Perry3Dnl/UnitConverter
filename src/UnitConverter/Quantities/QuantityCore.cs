@@ -19,10 +19,20 @@ namespace UnitConverter.Quantities
         public BigInteger Denominator { get; }
 
         public T Apply<T>(T value) where T : IFloatingPoint<T>
-            => ApplyInteger(ApplyInteger(value, Numerator, multiply: true), Denominator, multiply: false);
+        {
+            if (Numerator <= Denominator)
+                return ApplyInteger(ApplyInteger(value, Numerator, multiply: true), Denominator, multiply: false);
+
+            return ApplyInteger(ApplyInteger(value, Denominator, multiply: false), Numerator, multiply: true);
+        }
 
         public T ApplyInverse<T>(T value) where T : IFloatingPoint<T>
-            => ApplyInteger(ApplyInteger(value, Numerator, multiply: false), Denominator, multiply: true);
+        {
+            if (Numerator <= Denominator)
+                return ApplyInteger(ApplyInteger(value, Denominator, multiply: true), Numerator, multiply: false);
+
+            return ApplyInteger(ApplyInteger(value, Numerator, multiply: false), Denominator, multiply: true);
+        }
 
         private static T ApplyInteger<T>(T value, BigInteger factor, bool multiply)
             where T : IFloatingPoint<T>
