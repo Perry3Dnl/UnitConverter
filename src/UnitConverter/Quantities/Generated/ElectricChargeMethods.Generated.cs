@@ -8,8 +8,11 @@ namespace UnitConverter.Quantities
 {
     public static class ElectricChargeMethods
     {
-        public static ElectricCharge<T> FromCoulombs<T>(T value) where T : IFloatingPoint<T> => ElectricCharge<T>.FromCoulombs(value);
-        public static T ToCoulombs<T>(this ElectricCharge<T> quantity) where T : IFloatingPoint<T> => quantity.Coulombs;
+        public static ElectricCharge<T> FromCoulombs<T>(T value) where T : IFloatingPoint<T>
+            => ElectricCharge<T>.FromCoulombs(value);
+
+        public static T ToCoulombs<T>(this ElectricCharge<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Coulombs;
 
         public static ElectricCharge<T> From<T>(T value, UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit unit) where T : IFloatingPoint<T>
             => unit switch
