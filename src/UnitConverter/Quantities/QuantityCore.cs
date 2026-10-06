@@ -29,7 +29,9 @@ namespace UnitConverter.Quantities
         IEquatable<Length<T>>,
         IComparable<Length<T>>,
         IFormattable,
-        ISpanFormattable
+        ISpanFormattable,
+        IParsable<Length<T>>,
+        ISpanParsable<Length<T>>
         where T : IFloatingPoint<T>
     {
         private static readonly RationalFactor InchToMetre = new RationalFactor(127, 5000);
@@ -58,6 +60,39 @@ namespace UnitConverter.Quantities
         public static Length<T> FromFeet(T value) => new Length<T>(FootToMetre.Apply(value));
         public static Length<T> FromYards(T value) => new Length<T>(YardToMetre.Apply(value));
         public static Length<T> FromMiles(T value) => new Length<T>(MileToMetre.Apply(value));
+
+        public static Length<T> Parse(string s, IFormatProvider provider)
+            => Parse(s.AsSpan(), provider);
+
+        public static Length<T> Parse(ReadOnlySpan<char> s, IFormatProvider provider)
+        {
+            if (!TryParse(s, provider, out Length<T> result))
+                throw new FormatException("Input was not a valid length quantity.");
+            return result;
+        }
+
+        public static bool TryParse(string s, IFormatProvider provider, out Length<T> result)
+            => TryParse(s.AsSpan(), provider, out result);
+
+        public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider provider, out Length<T> result)
+        {
+            result = default;
+            if (!QuantityParser.TrySplit(s, out ReadOnlySpan<char> number, out ReadOnlySpan<char> unit)
+                || !T.TryParse(number, provider, out T value))
+                return false;
+
+            if (unit.Equals("m".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromMetres(value);
+            else if (unit.Equals("km".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromKilometres(value);
+            else if (unit.Equals("cm".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromCentimetres(value);
+            else if (unit.Equals("mm".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromMillimetres(value);
+            else if (unit.Equals("in".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromInches(value);
+            else if (unit.Equals("ft".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromFeet(value);
+            else if (unit.Equals("yd".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromYards(value);
+            else if (unit.Equals("mi".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromMiles(value);
+            else return false;
+
+            return true;
+        }
 
         public static Length<T> operator +(Length<T> left, Length<T> right) => FromMetres(left._metres + right._metres);
         public static Length<T> operator -(Length<T> left, Length<T> right) => FromMetres(left._metres - right._metres);
@@ -102,7 +137,9 @@ namespace UnitConverter.Quantities
         IEquatable<Time<T>>,
         IComparable<Time<T>>,
         IFormattable,
-        ISpanFormattable
+        ISpanFormattable,
+        IParsable<Time<T>>,
+        ISpanParsable<Time<T>>
         where T : IFloatingPoint<T>
     {
         private readonly T _seconds;
@@ -120,6 +157,36 @@ namespace UnitConverter.Quantities
         public static Time<T> FromMinutes(T value) => new Time<T>(value * T.CreateChecked(60));
         public static Time<T> FromHours(T value) => new Time<T>(value * T.CreateChecked(3600));
         public static Time<T> FromDays(T value) => new Time<T>(value * T.CreateChecked(86400));
+
+        public static Time<T> Parse(string s, IFormatProvider provider)
+            => Parse(s.AsSpan(), provider);
+
+        public static Time<T> Parse(ReadOnlySpan<char> s, IFormatProvider provider)
+        {
+            if (!TryParse(s, provider, out Time<T> result))
+                throw new FormatException("Input was not a valid time quantity.");
+            return result;
+        }
+
+        public static bool TryParse(string s, IFormatProvider provider, out Time<T> result)
+            => TryParse(s.AsSpan(), provider, out result);
+
+        public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider provider, out Time<T> result)
+        {
+            result = default;
+            if (!QuantityParser.TrySplit(s, out ReadOnlySpan<char> number, out ReadOnlySpan<char> unit)
+                || !T.TryParse(number, provider, out T value))
+                return false;
+
+            if (unit.Equals("s".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromSeconds(value);
+            else if (unit.Equals("ms".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromMilliseconds(value);
+            else if (unit.Equals("min".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromMinutes(value);
+            else if (unit.Equals("h".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromHours(value);
+            else if (unit.Equals("d".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromDays(value);
+            else return false;
+
+            return true;
+        }
 
         public static Time<T> operator +(Time<T> left, Time<T> right) => FromSeconds(left._seconds + right._seconds);
         public static Time<T> operator -(Time<T> left, Time<T> right) => FromSeconds(left._seconds - right._seconds);
@@ -160,7 +227,9 @@ namespace UnitConverter.Quantities
         IEquatable<Speed<T>>,
         IComparable<Speed<T>>,
         IFormattable,
-        ISpanFormattable
+        ISpanFormattable,
+        IParsable<Speed<T>>,
+        ISpanParsable<Speed<T>>
         where T : IFloatingPoint<T>
     {
         private static readonly RationalFactor MilePerHourToMetresPerSecond = new RationalFactor(1397, 3125);
@@ -179,6 +248,35 @@ namespace UnitConverter.Quantities
         public static Speed<T> FromKilometresPerHour(T value) => new Speed<T>(value * T.CreateChecked(5) / T.CreateChecked(18));
         public static Speed<T> FromMilesPerHour(T value) => new Speed<T>(MilePerHourToMetresPerSecond.Apply(value));
         public static Speed<T> FromKnots(T value) => new Speed<T>(KnotToMetresPerSecond.Apply(value));
+
+        public static Speed<T> Parse(string s, IFormatProvider provider)
+            => Parse(s.AsSpan(), provider);
+
+        public static Speed<T> Parse(ReadOnlySpan<char> s, IFormatProvider provider)
+        {
+            if (!TryParse(s, provider, out Speed<T> result))
+                throw new FormatException("Input was not a valid speed quantity.");
+            return result;
+        }
+
+        public static bool TryParse(string s, IFormatProvider provider, out Speed<T> result)
+            => TryParse(s.AsSpan(), provider, out result);
+
+        public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider provider, out Speed<T> result)
+        {
+            result = default;
+            if (!QuantityParser.TrySplit(s, out ReadOnlySpan<char> number, out ReadOnlySpan<char> unit)
+                || !T.TryParse(number, provider, out T value))
+                return false;
+
+            if (unit.Equals("m/s".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromMetresPerSecond(value);
+            else if (unit.Equals("km/h".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromKilometresPerHour(value);
+            else if (unit.Equals("mph".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromMilesPerHour(value);
+            else if (unit.Equals("kn".AsSpan(), StringComparison.OrdinalIgnoreCase)) result = FromKnots(value);
+            else return false;
+
+            return true;
+        }
 
         public static Speed<T> operator +(Speed<T> left, Speed<T> right) => FromMetresPerSecond(left._metresPerSecond + right._metresPerSecond);
         public static Speed<T> operator -(Speed<T> left, Speed<T> right) => FromMetresPerSecond(left._metresPerSecond - right._metresPerSecond);
@@ -213,6 +311,25 @@ namespace UnitConverter.Quantities
         public static Speed<T> FromKilometresPerHour<T>(T value) where T : IFloatingPoint<T> => Speed<T>.FromKilometresPerHour(value);
         public static Speed<T> FromMilesPerHour<T>(T value) where T : IFloatingPoint<T> => Speed<T>.FromMilesPerHour(value);
         public static Speed<T> FromKnots<T>(T value) where T : IFloatingPoint<T> => Speed<T>.FromKnots(value);
+    }
+
+    internal static class QuantityParser
+    {
+        public static bool TrySplit(ReadOnlySpan<char> input, out ReadOnlySpan<char> number, out ReadOnlySpan<char> unit)
+        {
+            input = input.Trim();
+            int separator = input.LastIndexOf(' ');
+            if (separator <= 0 || separator == input.Length - 1)
+            {
+                number = default;
+                unit = default;
+                return false;
+            }
+
+            number = input.Slice(0, separator).Trim();
+            unit = input.Slice(separator + 1).Trim();
+            return !number.IsEmpty && !unit.IsEmpty;
+        }
     }
 }
 #endif
