@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "description": "Declarative source for explicit strongly typed quantity methods. Public API remains per-family and per-unit; generation only removes maintenance boilerplate.",
+  "families": {
+    "Length": {
+      "type": "Length",
+      "units": [
+        { "name": "Metres", "factory": "FromMetres", "symbol": "m" },
+        { "name": "Kilometres", "factory": "FromKilometres", "symbol": "km" },
+        { "name": "Centimetres", "factory": "FromCentimetres", "symbol": "cm" },
+        { "name": "Millimetres", "factory": "FromMillimetres", "symbol": "mm" },
+        { "name": "Inches", "factory": "FromInches", "symbol": "in" },
+        { "name": "Feet", "factory": "FromFeet", "symbol": "ft" },
+        { "name": "Yards", "factory": "FromYards", "symbol": "yd" },
+        { "name": "Miles", "factory": "FromMiles", "symbol": "mi" }
+      ]
+    },
+    "Time": {
+      "type": "Time",
+      "units": [
+        { "name": "Seconds", "factory": "FromSeconds", "symbol": "s" },
+        { "name": "Milliseconds", "factory": "FromMilliseconds", "symbol": "ms" },
+        { "name": "Minutes", "factory": "FromMinutes", "symbol": "min" },
+        { "name": "Hours", "factory": "FromHours", "symbol": "h" },
+        { "name": "Days", "factory": "FromDays", "symbol": "d" }
+      ]
+    },
+    "Speed": {
+      "type": "Speed",
+      "units": [
+        { "name": "MetresPerSecond", "factory": "FromMetresPerSecond", "symbol": "m/s" },
+        { "name": "KilometresPerHour", "factory": "FromKilometresPerHour", "symbol": "km/h" },
+        { "name": "MilesPerHour", "factory": "FromMilesPerHour", "symbol": "mph" },
+        { "name": "Knots", "factory": "FromKnots", "symbol": "kn" }
+      ]
+    },
+    "Mass": {
+      "type": "Mass",
+      "units": [
+        { "name": "Kilograms", "factory": "FromKilograms", "symbol": "kg" },
+        { "name": "Grams", "factory": "FromGrams", "symbol": "g" },
+        { "name": "Milligrams", "factory": "FromMilligrams", "symbol": "mg" }
+      ]
+    },
+    "Area": {
+      "type": "Area",
+      "units": [
+        { "name": "SquareMetres", "factory": "FromSquareMetres", "symbol": "m²" },
+        { "name": "SquareKilometres", "factory": "FromSquareKilometres", "symbol": "km²" },
+        { "name": "Hectares", "factory": "FromHectares", "symbol": "ha" }
+      ]
+    },
+    "Volume": {
+      "type": "Volume",
+      "units": [
+        { "name": "CubicMetres", "factory": "FromCubicMetres", "symbol": "m³" },
+        { "name": "Litres", "factory": "FromLitres", "symbol": "L" },
+        { "name": "Millilitres", "factory": "FromMillilitres", "symbol": "mL" }
+      ]
+    },
+    "Acceleration": {
+      "type": "Acceleration",
+      "units": [
+        { "name": "MetresPerSecondSquared", "factory": "FromMetresPerSecondSquared", "symbol": "m/s²" }
+      ]
+    },
+    "Force": {
+      "type": "Force",
+      "units": [
+        { "name": "Newtons", "factory": "FromNewtons", "symbol": "N" },
+        { "name": "Kilonewtons", "factory": "FromKilonewtons", "symbol": "kN" }
+      ]
+    },
+    "Energy": {
+      "type": "Energy",
+      "units": [
+        { "name": "Joules", "factory": "FromJoules", "symbol": "J" },
+        { "name": "Kilojoules", "factory": "FromKilojoules", "symbol": "kJ" }
+      ]
+    },
+    "Power": {
+      "type": "Power",
+      "units": [
+        { "name": "Watts", "factory": "FromWatts", "symbol": "W" },
+        { "name": "Kilowatts", "factory": "FromKilowatts", "symbol": "kW" }
+      ]
+    },
+    "Pressure": {
+      "type": "Pressure",
+      "units": [
+        { "name": "Pascals", "factory": "FromPascals", "symbol": "Pa" },
+        { "name": "Kilopascals", "factory": "FromKilopascals", "symbol": "kPa" },
+        { "name": "Megapascals", "factory": "FromMegapascals", "symbol": "MPa" },
+        { "name": "Bars", "factory": "FromBars", "symbol": "bar" }
+      ]
+    },
+    "Density": {
+      "type": "Density",
+      "units": [
+        { "name": "KilogramsPerCubicMetre", "factory": "FromKilogramsPerCubicMetre", "symbol": "kg/m³" },
+        { "name": "GramsPerCubicCentimetre", "factory": "FromGramsPerCubicCentimetre", "symbol": "g/cm³" }
+      ]
+    },
+    "Frequency": {
+      "type": "Frequency",
+      "units": [
+        { "name": "Hertz", "factory": "FromHertz", "symbol": "Hz" },
+        { "name": "Kilohertz", "factory": "FromKilohertz", "symbol": "kHz" },
+        { "name": "Megahertz", "factory": "FromMegahertz", "symbol": "MHz" }
+      ]
+    },
+    "ElectricCurrent": {
+      "type": "ElectricCurrent",
+      "units": [
+        { "name": "Amperes", "factory": "FromAmperes", "symbol": "A" },
+        { "name": "Milliamperes", "factory": "FromMilliamperes", "symbol": "mA" }
+      ]
+    },
+    "ElectricCharge": {
+      "type": "ElectricCharge",
+      "units": [
+        { "name": "Coulombs", "factory": "FromCoulombs", "symbol": "C" }
+      ]
+    },
+    "Voltage": {
+      "type": "Voltage",
+      "units": [
+        { "name": "Volts", "factory": "FromVolts", "symbol": "V" },
+        { "name": "Millivolts", "factory": "FromMillivolts", "symbol": "mV" }
+      ]
+    },
+    "Resistance": {
+      "type": "Resistance",
+      "units": [
+        { "name": "Ohms", "factory": "FromOhms", "symbol": "Ω" },
+        { "name": "Kiloohms", "factory": "FromKiloohms", "symbol": "kΩ" }
+      ]
+    }
+  }
+}
