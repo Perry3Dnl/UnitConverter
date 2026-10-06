@@ -117,6 +117,10 @@ namespace UnitConverter.Quantities
             => Acceleration<T>.FromMetresPerSecondSquared(force._newtons / mass.Kilograms);
         public static Mass<T> operator /(Force<T> force, Acceleration<T> acceleration)
             => Mass<T>.FromKilograms(force._newtons / acceleration.MetresPerSecondSquared);
+        public static Energy<T> operator *(Force<T> force, Length<T> length)
+            => Energy<T>.FromJoules(force._newtons * length.Metres);
+        public static Pressure<T> operator /(Force<T> force, Area<T> area)
+            => Pressure<T>.FromPascals(force._newtons / area.SquareMetres);
 
         public static bool operator ==(Force<T> left, Force<T> right) => left.Equals(right);
         public static bool operator !=(Force<T> left, Force<T> right) => !left.Equals(right);
