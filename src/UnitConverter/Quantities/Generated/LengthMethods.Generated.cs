@@ -8,6 +8,552 @@ namespace UnitConverter.Quantities
 {
     public static class LengthMethods
     {
+        public static Length<T> FromFemtometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromFemtometer(value);
+
+        public static T ToFemtometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Femtometer;
+
+        public static Length<T> FromPicometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPicometer(value);
+
+        public static T ToPicometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Picometer;
+
+        public static Length<T> FromNanometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromNanometer(value);
+
+        public static T ToNanometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Nanometer;
+
+        public static Length<T> FromMicrometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromMicrometer(value);
+
+        public static T ToMicrometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Micrometer;
+
+        public static Length<T> FromMillimeter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromMillimeter(value);
+
+        public static T ToMillimeter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Millimeter;
+
+        public static Length<T> FromCentimeter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromCentimeter(value);
+
+        public static T ToCentimeter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Centimeter;
+
+        public static Length<T> FromDecimeter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromDecimeter(value);
+
+        public static T ToDecimeter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Decimeter;
+
+        public static Length<T> FromMeter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromMeter(value);
+
+        public static T ToMeter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Meter;
+
+        public static Length<T> FromDecameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromDecameter(value);
+
+        public static T ToDecameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Decameter;
+
+        public static Length<T> FromHectometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromHectometer(value);
+
+        public static T ToHectometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Hectometer;
+
+        public static Length<T> FromKilometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromKilometer(value);
+
+        public static T ToKilometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Kilometer;
+
+        public static Length<T> FromMegameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromMegameter(value);
+
+        public static T ToMegameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Megameter;
+
+        public static Length<T> FromGigameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromGigameter(value);
+
+        public static T ToGigameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Gigameter;
+
+        public static Length<T> FromAngstrom<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromAngstrom(value);
+
+        public static T ToAngstrom<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Angstrom;
+
+        public static Length<T> FromThou<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromThou(value);
+
+        public static T ToThou<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Thou;
+
+        public static Length<T> FromInch<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromInch(value);
+
+        public static T ToInch<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Inch;
+
+        public static Length<T> FromFoot<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromFoot(value);
+
+        public static T ToFoot<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Foot;
+
+        public static Length<T> FromYard<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromYard(value);
+
+        public static T ToYard<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Yard;
+
+        public static Length<T> FromMile<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromMile(value);
+
+        public static T ToMile<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Mile;
+
+        public static Length<T> FromLeague<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLeague(value);
+
+        public static T ToLeague<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.League;
+
+        public static Length<T> FromHand<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromHand(value);
+
+        public static T ToHand<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Hand;
+
+        public static Length<T> FromUSSurveyInch<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromUSSurveyInch(value);
+
+        public static T ToUSSurveyInch<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.USSurveyInch;
+
+        public static Length<T> FromUSSurveyFoot<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromUSSurveyFoot(value);
+
+        public static T ToUSSurveyFoot<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.USSurveyFoot;
+
+        public static Length<T> FromUSSurveyYard<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromUSSurveyYard(value);
+
+        public static T ToUSSurveyYard<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.USSurveyYard;
+
+        public static Length<T> FromUSSurveyMile<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromUSSurveyMile(value);
+
+        public static T ToUSSurveyMile<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.USSurveyMile;
+
+        public static Length<T> FromLink<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLink(value);
+
+        public static T ToLink<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Link;
+
+        public static Length<T> FromRod<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromRod(value);
+
+        public static T ToRod<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Rod;
+
+        public static Length<T> FromChain<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromChain(value);
+
+        public static T ToChain<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Chain;
+
+        public static Length<T> FromFurlong<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromFurlong(value);
+
+        public static T ToFurlong<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Furlong;
+
+        public static Length<T> FromFathom<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromFathom(value);
+
+        public static T ToFathom<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Fathom;
+
+        public static Length<T> FromCable<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromCable(value);
+
+        public static T ToCable<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Cable;
+
+        public static Length<T> FromNauticalMile<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromNauticalMile(value);
+
+        public static T ToNauticalMile<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.NauticalMile;
+
+        public static Length<T> FromAstronomicalUnit<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromAstronomicalUnit(value);
+
+        public static T ToAstronomicalUnit<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.AstronomicalUnit;
+
+        public static Length<T> FromLightYear<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLightYear(value);
+
+        public static T ToLightYear<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LightYear;
+
+        public static Length<T> FromParsec<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromParsec(value);
+
+        public static T ToParsec<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Parsec;
+
+        public static Length<T> FromCubit<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromCubit(value);
+
+        public static T ToCubit<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Cubit;
+
+        public static Length<T> FromSpan<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromSpan(value);
+
+        public static T ToSpan<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Span;
+
+        public static Length<T> FromPace<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPace(value);
+
+        public static T ToPace<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Pace;
+
+        public static Length<T> FromEll<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromEll(value);
+
+        public static T ToEll<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Ell;
+
+        public static Length<T> FromQuectometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromQuectometer(value);
+
+        public static T ToQuectometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Quectometer;
+
+        public static Length<T> FromRontometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromRontometer(value);
+
+        public static T ToRontometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Rontometer;
+
+        public static Length<T> FromYoctometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromYoctometer(value);
+
+        public static T ToYoctometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Yoctometer;
+
+        public static Length<T> FromZeptometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromZeptometer(value);
+
+        public static T ToZeptometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Zeptometer;
+
+        public static Length<T> FromAttometer<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromAttometer(value);
+
+        public static T ToAttometer<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Attometer;
+
+        public static Length<T> FromPetameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPetameter(value);
+
+        public static T ToPetameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Petameter;
+
+        public static Length<T> FromExameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromExameter(value);
+
+        public static T ToExameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Exameter;
+
+        public static Length<T> FromZettameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromZettameter(value);
+
+        public static T ToZettameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Zettameter;
+
+        public static Length<T> FromYottameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromYottameter(value);
+
+        public static T ToYottameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Yottameter;
+
+        public static Length<T> FromRonnameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromRonnameter(value);
+
+        public static T ToRonnameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Ronnameter;
+
+        public static Length<T> FromQuettameter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromQuettameter(value);
+
+        public static T ToQuettameter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Quettameter;
+
+        public static Length<T> FromFermi<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromFermi(value);
+
+        public static T ToFermi<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Fermi;
+
+        public static Length<T> FromBohrRadius<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromBohrRadius(value);
+
+        public static T ToBohrRadius<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.BohrRadius;
+
+        public static Length<T> FromPlanckLength<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPlanckLength(value);
+
+        public static T ToPlanckLength<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.PlanckLength;
+
+        public static Length<T> FromClassicalElectronRadius<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromClassicalElectronRadius(value);
+
+        public static T ToClassicalElectronRadius<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.ClassicalElectronRadius;
+
+        public static Length<T> FromEarthEquatorialRadius<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromEarthEquatorialRadius(value);
+
+        public static T ToEarthEquatorialRadius<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.EarthEquatorialRadius;
+
+        public static Length<T> FromEarthMeanRadius<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromEarthMeanRadius(value);
+
+        public static T ToEarthMeanRadius<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.EarthMeanRadius;
+
+        public static Length<T> FromSolarRadius<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromSolarRadius(value);
+
+        public static T ToSolarRadius<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.SolarRadius;
+
+        public static Length<T> FromLunarDistance<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLunarDistance(value);
+
+        public static T ToLunarDistance<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LunarDistance;
+
+        public static Length<T> FromPointPostScript<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPointPostScript(value);
+
+        public static T ToPointPostScript<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.PointPostScript;
+
+        public static Length<T> FromPicaPostScript<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPicaPostScript(value);
+
+        public static T ToPicaPostScript<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.PicaPostScript;
+
+        public static Length<T> FromDidotPoint<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromDidotPoint(value);
+
+        public static T ToDidotPoint<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.DidotPoint;
+
+        public static Length<T> FromCicero<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromCicero(value);
+
+        public static T ToCicero<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Cicero;
+
+        public static Length<T> FromBarleycorn<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromBarleycorn(value);
+
+        public static T ToBarleycorn<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Barleycorn;
+
+        public static Length<T> FromNail<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromNail(value);
+
+        public static T ToNail<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Nail;
+
+        public static Length<T> FromPalm<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPalm(value);
+
+        public static T ToPalm<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Palm;
+
+        public static Length<T> FromRomanFoot<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromRomanFoot(value);
+
+        public static T ToRomanFoot<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.RomanFoot;
+
+        public static Length<T> FromArshin<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromArshin(value);
+
+        public static T ToArshin<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Arshin;
+
+        public static Length<T> FromVara<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromVara(value);
+
+        public static T ToVara<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Vara;
+
+        public static Length<T> FromSmoot<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromSmoot(value);
+
+        public static T ToSmoot<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Smoot;
+
+        public static Length<T> FromNauticalLeague<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromNauticalLeague(value);
+
+        public static T ToNauticalLeague<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.NauticalLeague;
+
+        public static Length<T> FromTwip<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromTwip(value);
+
+        public static T ToTwip<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Twip;
+
+        public static Length<T> FromPrinterPoint<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPrinterPoint(value);
+
+        public static T ToPrinterPoint<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.PrinterPoint;
+
+        public static Length<T> FromPrinterPica<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromPrinterPica(value);
+
+        public static T ToPrinterPica<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.PrinterPica;
+
+        public static Length<T> FromKen<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromKen(value);
+
+        public static T ToKen<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Ken;
+
+        public static Length<T> FromShaku<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromShaku(value);
+
+        public static T ToShaku<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Shaku;
+
+        public static Length<T> FromRi<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromRi(value);
+
+        public static T ToRi<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Ri;
+
+        public static Length<T> FromLiChinese<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLiChinese(value);
+
+        public static T ToLiChinese<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LiChinese;
+
+        public static Length<T> FromChiChinese<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromChiChinese(value);
+
+        public static T ToChiChinese<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.ChiChinese;
+
+        public static Length<T> FromKiloparsec<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromKiloparsec(value);
+
+        public static T ToKiloparsec<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Kiloparsec;
+
+        public static Length<T> FromMegaparsec<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromMegaparsec(value);
+
+        public static T ToMegaparsec<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Megaparsec;
+
+        public static Length<T> FromGigaparsec<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromGigaparsec(value);
+
+        public static T ToGigaparsec<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Gigaparsec;
+
+        public static Length<T> FromLightSecond<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLightSecond(value);
+
+        public static T ToLightSecond<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LightSecond;
+
+        public static Length<T> FromLightMinute<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLightMinute(value);
+
+        public static T ToLightMinute<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LightMinute;
+
+        public static Length<T> FromLightHour<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLightHour(value);
+
+        public static T ToLightHour<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LightHour;
+
+        public static Length<T> FromLightDay<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLightDay(value);
+
+        public static T ToLightDay<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LightDay;
+
+        public static Length<T> FromLightWeek<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromLightWeek(value);
+
+        public static T ToLightWeek<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.LightWeek;
+
+        public static Length<T> FromMicroinch<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromMicroinch(value);
+
+        public static T ToMicroinch<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Microinch;
+
+        public static Length<T> FromNanoinch<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromNanoinch(value);
+
+        public static T ToNanoinch<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Nanoinch;
+
+        public static Length<T> FromCaliber<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromCaliber(value);
+
+        public static T ToCaliber<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Caliber;
+
+        public static Length<T> FromRackUnit<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromRackUnit(value);
+
+        public static T ToRackUnit<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.RackUnit;
+
+        public static Length<T> FromQuarter<T>(T value) where T : IFloatingPoint<T>
+            => Length<T>.FromQuarter(value);
+
+        public static T ToQuarter<T>(this Length<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Quarter;
+
         public static Length<T> FromMetres<T>(T value) where T : IFloatingPoint<T>
             => Length<T>.FromMetres(value);
 
@@ -59,28 +605,194 @@ namespace UnitConverter.Quantities
         public static Length<T> From<T>(T value, UnitConverter.Length.UnitConverterLengthUnit unit) where T : IFloatingPoint<T>
             => unit switch
             {
-                UnitConverter.Length.UnitConverterLengthUnit.Meter => Length<T>.FromMetres(value),
-                UnitConverter.Length.UnitConverterLengthUnit.Kilometer => Length<T>.FromKilometres(value),
-                UnitConverter.Length.UnitConverterLengthUnit.Centimeter => Length<T>.FromCentimetres(value),
-                UnitConverter.Length.UnitConverterLengthUnit.Millimeter => Length<T>.FromMillimetres(value),
-                UnitConverter.Length.UnitConverterLengthUnit.Inch => Length<T>.FromInches(value),
-                UnitConverter.Length.UnitConverterLengthUnit.Foot => Length<T>.FromFeet(value),
-                UnitConverter.Length.UnitConverterLengthUnit.Yard => Length<T>.FromYards(value),
-                UnitConverter.Length.UnitConverterLengthUnit.Mile => Length<T>.FromMiles(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Femtometer => Length<T>.FromFemtometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Picometer => Length<T>.FromPicometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Nanometer => Length<T>.FromNanometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Micrometer => Length<T>.FromMicrometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Millimeter => Length<T>.FromMillimeter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Centimeter => Length<T>.FromCentimeter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Decimeter => Length<T>.FromDecimeter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Meter => Length<T>.FromMeter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Decameter => Length<T>.FromDecameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Hectometer => Length<T>.FromHectometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Kilometer => Length<T>.FromKilometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Megameter => Length<T>.FromMegameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Gigameter => Length<T>.FromGigameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Angstrom => Length<T>.FromAngstrom(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Thou => Length<T>.FromThou(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Inch => Length<T>.FromInch(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Foot => Length<T>.FromFoot(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Yard => Length<T>.FromYard(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Mile => Length<T>.FromMile(value),
+                UnitConverter.Length.UnitConverterLengthUnit.League => Length<T>.FromLeague(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Hand => Length<T>.FromHand(value),
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyInch => Length<T>.FromUSSurveyInch(value),
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyFoot => Length<T>.FromUSSurveyFoot(value),
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyYard => Length<T>.FromUSSurveyYard(value),
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyMile => Length<T>.FromUSSurveyMile(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Link => Length<T>.FromLink(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Rod => Length<T>.FromRod(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Chain => Length<T>.FromChain(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Furlong => Length<T>.FromFurlong(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Fathom => Length<T>.FromFathom(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Cable => Length<T>.FromCable(value),
+                UnitConverter.Length.UnitConverterLengthUnit.NauticalMile => Length<T>.FromNauticalMile(value),
+                UnitConverter.Length.UnitConverterLengthUnit.AstronomicalUnit => Length<T>.FromAstronomicalUnit(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LightYear => Length<T>.FromLightYear(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Parsec => Length<T>.FromParsec(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Cubit => Length<T>.FromCubit(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Span => Length<T>.FromSpan(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Pace => Length<T>.FromPace(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Ell => Length<T>.FromEll(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Quectometer => Length<T>.FromQuectometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Rontometer => Length<T>.FromRontometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Yoctometer => Length<T>.FromYoctometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Zeptometer => Length<T>.FromZeptometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Attometer => Length<T>.FromAttometer(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Petameter => Length<T>.FromPetameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Exameter => Length<T>.FromExameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Zettameter => Length<T>.FromZettameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Yottameter => Length<T>.FromYottameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Ronnameter => Length<T>.FromRonnameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Quettameter => Length<T>.FromQuettameter(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Fermi => Length<T>.FromFermi(value),
+                UnitConverter.Length.UnitConverterLengthUnit.BohrRadius => Length<T>.FromBohrRadius(value),
+                UnitConverter.Length.UnitConverterLengthUnit.PlanckLength => Length<T>.FromPlanckLength(value),
+                UnitConverter.Length.UnitConverterLengthUnit.ClassicalElectronRadius => Length<T>.FromClassicalElectronRadius(value),
+                UnitConverter.Length.UnitConverterLengthUnit.EarthEquatorialRadius => Length<T>.FromEarthEquatorialRadius(value),
+                UnitConverter.Length.UnitConverterLengthUnit.EarthMeanRadius => Length<T>.FromEarthMeanRadius(value),
+                UnitConverter.Length.UnitConverterLengthUnit.SolarRadius => Length<T>.FromSolarRadius(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LunarDistance => Length<T>.FromLunarDistance(value),
+                UnitConverter.Length.UnitConverterLengthUnit.PointPostScript => Length<T>.FromPointPostScript(value),
+                UnitConverter.Length.UnitConverterLengthUnit.PicaPostScript => Length<T>.FromPicaPostScript(value),
+                UnitConverter.Length.UnitConverterLengthUnit.DidotPoint => Length<T>.FromDidotPoint(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Cicero => Length<T>.FromCicero(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Barleycorn => Length<T>.FromBarleycorn(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Nail => Length<T>.FromNail(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Palm => Length<T>.FromPalm(value),
+                UnitConverter.Length.UnitConverterLengthUnit.RomanFoot => Length<T>.FromRomanFoot(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Arshin => Length<T>.FromArshin(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Vara => Length<T>.FromVara(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Smoot => Length<T>.FromSmoot(value),
+                UnitConverter.Length.UnitConverterLengthUnit.NauticalLeague => Length<T>.FromNauticalLeague(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Twip => Length<T>.FromTwip(value),
+                UnitConverter.Length.UnitConverterLengthUnit.PrinterPoint => Length<T>.FromPrinterPoint(value),
+                UnitConverter.Length.UnitConverterLengthUnit.PrinterPica => Length<T>.FromPrinterPica(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Ken => Length<T>.FromKen(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Shaku => Length<T>.FromShaku(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Ri => Length<T>.FromRi(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LiChinese => Length<T>.FromLiChinese(value),
+                UnitConverter.Length.UnitConverterLengthUnit.ChiChinese => Length<T>.FromChiChinese(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Kiloparsec => Length<T>.FromKiloparsec(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Megaparsec => Length<T>.FromMegaparsec(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Gigaparsec => Length<T>.FromGigaparsec(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LightSecond => Length<T>.FromLightSecond(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LightMinute => Length<T>.FromLightMinute(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LightHour => Length<T>.FromLightHour(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LightDay => Length<T>.FromLightDay(value),
+                UnitConverter.Length.UnitConverterLengthUnit.LightWeek => Length<T>.FromLightWeek(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Microinch => Length<T>.FromMicroinch(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Nanoinch => Length<T>.FromNanoinch(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Caliber => Length<T>.FromCaliber(value),
+                UnitConverter.Length.UnitConverterLengthUnit.RackUnit => Length<T>.FromRackUnit(value),
+                UnitConverter.Length.UnitConverterLengthUnit.Quarter => Length<T>.FromQuarter(value),
                 _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
             };
 
         public static T In<T>(this Length<T> quantity, UnitConverter.Length.UnitConverterLengthUnit unit) where T : IFloatingPoint<T>
             => unit switch
             {
-                UnitConverter.Length.UnitConverterLengthUnit.Meter => quantity.Metres,
-                UnitConverter.Length.UnitConverterLengthUnit.Kilometer => quantity.Kilometres,
-                UnitConverter.Length.UnitConverterLengthUnit.Centimeter => quantity.Centimetres,
-                UnitConverter.Length.UnitConverterLengthUnit.Millimeter => quantity.Millimetres,
-                UnitConverter.Length.UnitConverterLengthUnit.Inch => quantity.Inches,
-                UnitConverter.Length.UnitConverterLengthUnit.Foot => quantity.Feet,
-                UnitConverter.Length.UnitConverterLengthUnit.Yard => quantity.Yards,
-                UnitConverter.Length.UnitConverterLengthUnit.Mile => quantity.Miles,
+                UnitConverter.Length.UnitConverterLengthUnit.Femtometer => quantity.Femtometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Picometer => quantity.Picometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Nanometer => quantity.Nanometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Micrometer => quantity.Micrometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Millimeter => quantity.Millimeter,
+                UnitConverter.Length.UnitConverterLengthUnit.Centimeter => quantity.Centimeter,
+                UnitConverter.Length.UnitConverterLengthUnit.Decimeter => quantity.Decimeter,
+                UnitConverter.Length.UnitConverterLengthUnit.Meter => quantity.Meter,
+                UnitConverter.Length.UnitConverterLengthUnit.Decameter => quantity.Decameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Hectometer => quantity.Hectometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Kilometer => quantity.Kilometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Megameter => quantity.Megameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Gigameter => quantity.Gigameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Angstrom => quantity.Angstrom,
+                UnitConverter.Length.UnitConverterLengthUnit.Thou => quantity.Thou,
+                UnitConverter.Length.UnitConverterLengthUnit.Inch => quantity.Inch,
+                UnitConverter.Length.UnitConverterLengthUnit.Foot => quantity.Foot,
+                UnitConverter.Length.UnitConverterLengthUnit.Yard => quantity.Yard,
+                UnitConverter.Length.UnitConverterLengthUnit.Mile => quantity.Mile,
+                UnitConverter.Length.UnitConverterLengthUnit.League => quantity.League,
+                UnitConverter.Length.UnitConverterLengthUnit.Hand => quantity.Hand,
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyInch => quantity.USSurveyInch,
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyFoot => quantity.USSurveyFoot,
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyYard => quantity.USSurveyYard,
+                UnitConverter.Length.UnitConverterLengthUnit.USSurveyMile => quantity.USSurveyMile,
+                UnitConverter.Length.UnitConverterLengthUnit.Link => quantity.Link,
+                UnitConverter.Length.UnitConverterLengthUnit.Rod => quantity.Rod,
+                UnitConverter.Length.UnitConverterLengthUnit.Chain => quantity.Chain,
+                UnitConverter.Length.UnitConverterLengthUnit.Furlong => quantity.Furlong,
+                UnitConverter.Length.UnitConverterLengthUnit.Fathom => quantity.Fathom,
+                UnitConverter.Length.UnitConverterLengthUnit.Cable => quantity.Cable,
+                UnitConverter.Length.UnitConverterLengthUnit.NauticalMile => quantity.NauticalMile,
+                UnitConverter.Length.UnitConverterLengthUnit.AstronomicalUnit => quantity.AstronomicalUnit,
+                UnitConverter.Length.UnitConverterLengthUnit.LightYear => quantity.LightYear,
+                UnitConverter.Length.UnitConverterLengthUnit.Parsec => quantity.Parsec,
+                UnitConverter.Length.UnitConverterLengthUnit.Cubit => quantity.Cubit,
+                UnitConverter.Length.UnitConverterLengthUnit.Span => quantity.Span,
+                UnitConverter.Length.UnitConverterLengthUnit.Pace => quantity.Pace,
+                UnitConverter.Length.UnitConverterLengthUnit.Ell => quantity.Ell,
+                UnitConverter.Length.UnitConverterLengthUnit.Quectometer => quantity.Quectometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Rontometer => quantity.Rontometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Yoctometer => quantity.Yoctometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Zeptometer => quantity.Zeptometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Attometer => quantity.Attometer,
+                UnitConverter.Length.UnitConverterLengthUnit.Petameter => quantity.Petameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Exameter => quantity.Exameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Zettameter => quantity.Zettameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Yottameter => quantity.Yottameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Ronnameter => quantity.Ronnameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Quettameter => quantity.Quettameter,
+                UnitConverter.Length.UnitConverterLengthUnit.Fermi => quantity.Fermi,
+                UnitConverter.Length.UnitConverterLengthUnit.BohrRadius => quantity.BohrRadius,
+                UnitConverter.Length.UnitConverterLengthUnit.PlanckLength => quantity.PlanckLength,
+                UnitConverter.Length.UnitConverterLengthUnit.ClassicalElectronRadius => quantity.ClassicalElectronRadius,
+                UnitConverter.Length.UnitConverterLengthUnit.EarthEquatorialRadius => quantity.EarthEquatorialRadius,
+                UnitConverter.Length.UnitConverterLengthUnit.EarthMeanRadius => quantity.EarthMeanRadius,
+                UnitConverter.Length.UnitConverterLengthUnit.SolarRadius => quantity.SolarRadius,
+                UnitConverter.Length.UnitConverterLengthUnit.LunarDistance => quantity.LunarDistance,
+                UnitConverter.Length.UnitConverterLengthUnit.PointPostScript => quantity.PointPostScript,
+                UnitConverter.Length.UnitConverterLengthUnit.PicaPostScript => quantity.PicaPostScript,
+                UnitConverter.Length.UnitConverterLengthUnit.DidotPoint => quantity.DidotPoint,
+                UnitConverter.Length.UnitConverterLengthUnit.Cicero => quantity.Cicero,
+                UnitConverter.Length.UnitConverterLengthUnit.Barleycorn => quantity.Barleycorn,
+                UnitConverter.Length.UnitConverterLengthUnit.Nail => quantity.Nail,
+                UnitConverter.Length.UnitConverterLengthUnit.Palm => quantity.Palm,
+                UnitConverter.Length.UnitConverterLengthUnit.RomanFoot => quantity.RomanFoot,
+                UnitConverter.Length.UnitConverterLengthUnit.Arshin => quantity.Arshin,
+                UnitConverter.Length.UnitConverterLengthUnit.Vara => quantity.Vara,
+                UnitConverter.Length.UnitConverterLengthUnit.Smoot => quantity.Smoot,
+                UnitConverter.Length.UnitConverterLengthUnit.NauticalLeague => quantity.NauticalLeague,
+                UnitConverter.Length.UnitConverterLengthUnit.Twip => quantity.Twip,
+                UnitConverter.Length.UnitConverterLengthUnit.PrinterPoint => quantity.PrinterPoint,
+                UnitConverter.Length.UnitConverterLengthUnit.PrinterPica => quantity.PrinterPica,
+                UnitConverter.Length.UnitConverterLengthUnit.Ken => quantity.Ken,
+                UnitConverter.Length.UnitConverterLengthUnit.Shaku => quantity.Shaku,
+                UnitConverter.Length.UnitConverterLengthUnit.Ri => quantity.Ri,
+                UnitConverter.Length.UnitConverterLengthUnit.LiChinese => quantity.LiChinese,
+                UnitConverter.Length.UnitConverterLengthUnit.ChiChinese => quantity.ChiChinese,
+                UnitConverter.Length.UnitConverterLengthUnit.Kiloparsec => quantity.Kiloparsec,
+                UnitConverter.Length.UnitConverterLengthUnit.Megaparsec => quantity.Megaparsec,
+                UnitConverter.Length.UnitConverterLengthUnit.Gigaparsec => quantity.Gigaparsec,
+                UnitConverter.Length.UnitConverterLengthUnit.LightSecond => quantity.LightSecond,
+                UnitConverter.Length.UnitConverterLengthUnit.LightMinute => quantity.LightMinute,
+                UnitConverter.Length.UnitConverterLengthUnit.LightHour => quantity.LightHour,
+                UnitConverter.Length.UnitConverterLengthUnit.LightDay => quantity.LightDay,
+                UnitConverter.Length.UnitConverterLengthUnit.LightWeek => quantity.LightWeek,
+                UnitConverter.Length.UnitConverterLengthUnit.Microinch => quantity.Microinch,
+                UnitConverter.Length.UnitConverterLengthUnit.Nanoinch => quantity.Nanoinch,
+                UnitConverter.Length.UnitConverterLengthUnit.Caliber => quantity.Caliber,
+                UnitConverter.Length.UnitConverterLengthUnit.RackUnit => quantity.RackUnit,
+                UnitConverter.Length.UnitConverterLengthUnit.Quarter => quantity.Quarter,
                 _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
             };
 
