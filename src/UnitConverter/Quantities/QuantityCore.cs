@@ -19,10 +19,43 @@ namespace UnitConverter.Quantities
         public BigInteger Denominator { get; }
 
         public T Apply<T>(T value) where T : IFloatingPoint<T>
-            => value * T.CreateChecked(Numerator) / T.CreateChecked(Denominator);
+            => ApplyInteger(ApplyInteger(value, Numerator, multiply: true), Denominator, multiply: false);
 
         public T ApplyInverse<T>(T value) where T : IFloatingPoint<T>
-            => value * T.CreateChecked(Denominator) / T.CreateChecked(Numerator);
+            => ApplyInteger(ApplyInteger(value, Numerator, multiply: false), Denominator, multiply: true);
+
+        private static T ApplyInteger<T>(T value, BigInteger factor, bool multiply)
+            where T : IFloatingPoint<T>
+        {
+            if (factor.Sign < 0)
+            {
+                value = -value;
+                factor = BigInteger.Abs(factor);
+            }
+
+            if (factor.IsOne)
+                return value;
+
+            BigInteger chunkBase = new BigInteger(1_000_000_000_000_000_000L);
+            while (factor > long.MaxValue)
+            {
+                BigInteger chunk = BigInteger.GreatestCommonDivisor(factor, chunkBase);
+                if (chunk.IsOne)
+                    throw new OverflowException("Rational factor contains an integer component too large for generic numeric conversion.");
+
+                T converted = T.CreateChecked((long)chunk);
+                value = multiply ? value * converted : value / converted;
+                factor /= chunk;
+            }
+
+            if (!factor.IsOne)
+            {
+                T converted = T.CreateChecked((long)factor);
+                value = multiply ? value * converted : value / converted;
+            }
+
+            return value;
+        }
     }
 
     public readonly partial struct Length<T> :
