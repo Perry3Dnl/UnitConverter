@@ -6,56 +6,506 @@
       "type": "Length",
       "units": [
         {
+          "name": "Femtometer",
+          "factory": "FromFemtometer",
+          "enumMember": "Femtometer"
+        },
+        {
+          "name": "Picometer",
+          "factory": "FromPicometer",
+          "enumMember": "Picometer"
+        },
+        {
+          "name": "Nanometer",
+          "factory": "FromNanometer",
+          "enumMember": "Nanometer"
+        },
+        {
+          "name": "Micrometer",
+          "factory": "FromMicrometer",
+          "enumMember": "Micrometer"
+        },
+        {
+          "name": "Millimeter",
+          "factory": "FromMillimeter",
+          "enumMember": "Millimeter"
+        },
+        {
+          "name": "Centimeter",
+          "factory": "FromCentimeter",
+          "enumMember": "Centimeter"
+        },
+        {
+          "name": "Decimeter",
+          "factory": "FromDecimeter",
+          "enumMember": "Decimeter"
+        },
+        {
+          "name": "Meter",
+          "factory": "FromMeter",
+          "enumMember": "Meter"
+        },
+        {
+          "name": "Decameter",
+          "factory": "FromDecameter",
+          "enumMember": "Decameter"
+        },
+        {
+          "name": "Hectometer",
+          "factory": "FromHectometer",
+          "enumMember": "Hectometer"
+        },
+        {
+          "name": "Kilometer",
+          "factory": "FromKilometer",
+          "enumMember": "Kilometer"
+        },
+        {
+          "name": "Megameter",
+          "factory": "FromMegameter",
+          "enumMember": "Megameter"
+        },
+        {
+          "name": "Gigameter",
+          "factory": "FromGigameter",
+          "enumMember": "Gigameter"
+        },
+        {
+          "name": "Angstrom",
+          "factory": "FromAngstrom",
+          "enumMember": "Angstrom"
+        },
+        {
+          "name": "Thou",
+          "factory": "FromThou",
+          "enumMember": "Thou"
+        },
+        {
+          "name": "Inch",
+          "factory": "FromInch",
+          "enumMember": "Inch"
+        },
+        {
+          "name": "Foot",
+          "factory": "FromFoot",
+          "enumMember": "Foot"
+        },
+        {
+          "name": "Yard",
+          "factory": "FromYard",
+          "enumMember": "Yard"
+        },
+        {
+          "name": "Mile",
+          "factory": "FromMile",
+          "enumMember": "Mile"
+        },
+        {
+          "name": "League",
+          "factory": "FromLeague",
+          "enumMember": "League"
+        },
+        {
+          "name": "Hand",
+          "factory": "FromHand",
+          "enumMember": "Hand"
+        },
+        {
+          "name": "USSurveyInch",
+          "factory": "FromUSSurveyInch",
+          "enumMember": "USSurveyInch"
+        },
+        {
+          "name": "USSurveyFoot",
+          "factory": "FromUSSurveyFoot",
+          "enumMember": "USSurveyFoot"
+        },
+        {
+          "name": "USSurveyYard",
+          "factory": "FromUSSurveyYard",
+          "enumMember": "USSurveyYard"
+        },
+        {
+          "name": "USSurveyMile",
+          "factory": "FromUSSurveyMile",
+          "enumMember": "USSurveyMile"
+        },
+        {
+          "name": "Link",
+          "factory": "FromLink",
+          "enumMember": "Link"
+        },
+        {
+          "name": "Rod",
+          "factory": "FromRod",
+          "enumMember": "Rod"
+        },
+        {
+          "name": "Chain",
+          "factory": "FromChain",
+          "enumMember": "Chain"
+        },
+        {
+          "name": "Furlong",
+          "factory": "FromFurlong",
+          "enumMember": "Furlong"
+        },
+        {
+          "name": "Fathom",
+          "factory": "FromFathom",
+          "enumMember": "Fathom"
+        },
+        {
+          "name": "Cable",
+          "factory": "FromCable",
+          "enumMember": "Cable"
+        },
+        {
+          "name": "NauticalMile",
+          "factory": "FromNauticalMile",
+          "enumMember": "NauticalMile"
+        },
+        {
+          "name": "AstronomicalUnit",
+          "factory": "FromAstronomicalUnit",
+          "enumMember": "AstronomicalUnit"
+        },
+        {
+          "name": "LightYear",
+          "factory": "FromLightYear",
+          "enumMember": "LightYear"
+        },
+        {
+          "name": "Parsec",
+          "factory": "FromParsec",
+          "enumMember": "Parsec"
+        },
+        {
+          "name": "Cubit",
+          "factory": "FromCubit",
+          "enumMember": "Cubit"
+        },
+        {
+          "name": "Span",
+          "factory": "FromSpan",
+          "enumMember": "Span"
+        },
+        {
+          "name": "Pace",
+          "factory": "FromPace",
+          "enumMember": "Pace"
+        },
+        {
+          "name": "Ell",
+          "factory": "FromEll",
+          "enumMember": "Ell"
+        },
+        {
+          "name": "Quectometer",
+          "factory": "FromQuectometer",
+          "enumMember": "Quectometer"
+        },
+        {
+          "name": "Rontometer",
+          "factory": "FromRontometer",
+          "enumMember": "Rontometer"
+        },
+        {
+          "name": "Yoctometer",
+          "factory": "FromYoctometer",
+          "enumMember": "Yoctometer"
+        },
+        {
+          "name": "Zeptometer",
+          "factory": "FromZeptometer",
+          "enumMember": "Zeptometer"
+        },
+        {
+          "name": "Attometer",
+          "factory": "FromAttometer",
+          "enumMember": "Attometer"
+        },
+        {
+          "name": "Petameter",
+          "factory": "FromPetameter",
+          "enumMember": "Petameter"
+        },
+        {
+          "name": "Exameter",
+          "factory": "FromExameter",
+          "enumMember": "Exameter"
+        },
+        {
+          "name": "Zettameter",
+          "factory": "FromZettameter",
+          "enumMember": "Zettameter"
+        },
+        {
+          "name": "Yottameter",
+          "factory": "FromYottameter",
+          "enumMember": "Yottameter"
+        },
+        {
+          "name": "Ronnameter",
+          "factory": "FromRonnameter",
+          "enumMember": "Ronnameter"
+        },
+        {
+          "name": "Quettameter",
+          "factory": "FromQuettameter",
+          "enumMember": "Quettameter"
+        },
+        {
+          "name": "Fermi",
+          "factory": "FromFermi",
+          "enumMember": "Fermi"
+        },
+        {
+          "name": "BohrRadius",
+          "factory": "FromBohrRadius",
+          "enumMember": "BohrRadius"
+        },
+        {
+          "name": "PlanckLength",
+          "factory": "FromPlanckLength",
+          "enumMember": "PlanckLength"
+        },
+        {
+          "name": "ClassicalElectronRadius",
+          "factory": "FromClassicalElectronRadius",
+          "enumMember": "ClassicalElectronRadius"
+        },
+        {
+          "name": "EarthEquatorialRadius",
+          "factory": "FromEarthEquatorialRadius",
+          "enumMember": "EarthEquatorialRadius"
+        },
+        {
+          "name": "EarthMeanRadius",
+          "factory": "FromEarthMeanRadius",
+          "enumMember": "EarthMeanRadius"
+        },
+        {
+          "name": "SolarRadius",
+          "factory": "FromSolarRadius",
+          "enumMember": "SolarRadius"
+        },
+        {
+          "name": "LunarDistance",
+          "factory": "FromLunarDistance",
+          "enumMember": "LunarDistance"
+        },
+        {
+          "name": "PointPostScript",
+          "factory": "FromPointPostScript",
+          "enumMember": "PointPostScript"
+        },
+        {
+          "name": "PicaPostScript",
+          "factory": "FromPicaPostScript",
+          "enumMember": "PicaPostScript"
+        },
+        {
+          "name": "DidotPoint",
+          "factory": "FromDidotPoint",
+          "enumMember": "DidotPoint"
+        },
+        {
+          "name": "Cicero",
+          "factory": "FromCicero",
+          "enumMember": "Cicero"
+        },
+        {
+          "name": "Barleycorn",
+          "factory": "FromBarleycorn",
+          "enumMember": "Barleycorn"
+        },
+        {
+          "name": "Nail",
+          "factory": "FromNail",
+          "enumMember": "Nail"
+        },
+        {
+          "name": "Palm",
+          "factory": "FromPalm",
+          "enumMember": "Palm"
+        },
+        {
+          "name": "RomanFoot",
+          "factory": "FromRomanFoot",
+          "enumMember": "RomanFoot"
+        },
+        {
+          "name": "Arshin",
+          "factory": "FromArshin",
+          "enumMember": "Arshin"
+        },
+        {
+          "name": "Vara",
+          "factory": "FromVara",
+          "enumMember": "Vara"
+        },
+        {
+          "name": "Smoot",
+          "factory": "FromSmoot",
+          "enumMember": "Smoot"
+        },
+        {
+          "name": "NauticalLeague",
+          "factory": "FromNauticalLeague",
+          "enumMember": "NauticalLeague"
+        },
+        {
+          "name": "Twip",
+          "factory": "FromTwip",
+          "enumMember": "Twip"
+        },
+        {
+          "name": "PrinterPoint",
+          "factory": "FromPrinterPoint",
+          "enumMember": "PrinterPoint"
+        },
+        {
+          "name": "PrinterPica",
+          "factory": "FromPrinterPica",
+          "enumMember": "PrinterPica"
+        },
+        {
+          "name": "Ken",
+          "factory": "FromKen",
+          "enumMember": "Ken"
+        },
+        {
+          "name": "Shaku",
+          "factory": "FromShaku",
+          "enumMember": "Shaku"
+        },
+        {
+          "name": "Ri",
+          "factory": "FromRi",
+          "enumMember": "Ri"
+        },
+        {
+          "name": "LiChinese",
+          "factory": "FromLiChinese",
+          "enumMember": "LiChinese"
+        },
+        {
+          "name": "ChiChinese",
+          "factory": "FromChiChinese",
+          "enumMember": "ChiChinese"
+        },
+        {
+          "name": "Kiloparsec",
+          "factory": "FromKiloparsec",
+          "enumMember": "Kiloparsec"
+        },
+        {
+          "name": "Megaparsec",
+          "factory": "FromMegaparsec",
+          "enumMember": "Megaparsec"
+        },
+        {
+          "name": "Gigaparsec",
+          "factory": "FromGigaparsec",
+          "enumMember": "Gigaparsec"
+        },
+        {
+          "name": "LightSecond",
+          "factory": "FromLightSecond",
+          "enumMember": "LightSecond"
+        },
+        {
+          "name": "LightMinute",
+          "factory": "FromLightMinute",
+          "enumMember": "LightMinute"
+        },
+        {
+          "name": "LightHour",
+          "factory": "FromLightHour",
+          "enumMember": "LightHour"
+        },
+        {
+          "name": "LightDay",
+          "factory": "FromLightDay",
+          "enumMember": "LightDay"
+        },
+        {
+          "name": "LightWeek",
+          "factory": "FromLightWeek",
+          "enumMember": "LightWeek"
+        },
+        {
+          "name": "Microinch",
+          "factory": "FromMicroinch",
+          "enumMember": "Microinch"
+        },
+        {
+          "name": "Nanoinch",
+          "factory": "FromNanoinch",
+          "enumMember": "Nanoinch"
+        },
+        {
+          "name": "Caliber",
+          "factory": "FromCaliber",
+          "enumMember": "Caliber"
+        },
+        {
+          "name": "RackUnit",
+          "factory": "FromRackUnit",
+          "enumMember": "RackUnit"
+        },
+        {
+          "name": "Quarter",
+          "factory": "FromQuarter",
+          "enumMember": "Quarter"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Length",
+      "enumType": "UnitConverterLengthUnit",
+      "aliases": [
+        {
           "name": "Metres",
           "factory": "FromMetres",
-          "symbol": "m",
-          "enumMember": "Meter"
+          "property": "Metres"
         },
         {
           "name": "Kilometres",
           "factory": "FromKilometres",
-          "symbol": "km",
-          "enumMember": "Kilometer"
+          "property": "Kilometres"
         },
         {
           "name": "Centimetres",
           "factory": "FromCentimetres",
-          "symbol": "cm",
-          "enumMember": "Centimeter"
+          "property": "Centimetres"
         },
         {
           "name": "Millimetres",
           "factory": "FromMillimetres",
-          "symbol": "mm",
-          "enumMember": "Millimeter"
+          "property": "Millimetres"
         },
         {
           "name": "Inches",
           "factory": "FromInches",
-          "symbol": "in",
-          "enumMember": "Inch"
+          "property": "Inches"
         },
         {
           "name": "Feet",
           "factory": "FromFeet",
-          "symbol": "ft",
-          "enumMember": "Foot"
+          "property": "Feet"
         },
         {
           "name": "Yards",
           "factory": "FromYards",
-          "symbol": "yd",
-          "enumMember": "Yard"
+          "property": "Yards"
         },
         {
           "name": "Miles",
           "factory": "FromMiles",
-          "symbol": "mi",
-          "enumMember": "Mile"
+          "property": "Miles"
         }
       ],
-      "enumNamespace": "UnitConverter.Length",
-      "enumType": "UnitConverterLengthUnit"
+      "derivedScaleSource": "existing-length-converters"
     },
     "Time": {
       "type": "Time",
