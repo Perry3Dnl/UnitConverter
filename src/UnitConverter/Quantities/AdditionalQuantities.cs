@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public readonly struct Density<T> :
+    public readonly partial struct Density<T> :
         IEquatable<Density<T>>,
         IComparable<Density<T>>,
         IFormattable,
@@ -49,7 +49,7 @@ namespace UnitConverter.Quantities
             => _kilogramsPerCubicMetre.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct Frequency<T> :
+    public readonly partial struct Frequency<T> :
         IEquatable<Frequency<T>>,
         IComparable<Frequency<T>>,
         IFormattable,
@@ -94,7 +94,7 @@ namespace UnitConverter.Quantities
             => _hertz.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct ElectricCurrent<T> :
+    public readonly partial struct ElectricCurrent<T> :
         IEquatable<ElectricCurrent<T>>,
         IComparable<ElectricCurrent<T>>,
         IFormattable,
@@ -133,7 +133,7 @@ namespace UnitConverter.Quantities
             => _amperes.TryFormat(destination, out charsWritten, format, provider);
     }
 
-    public readonly struct ElectricCharge<T> where T : IFloatingPoint<T>
+    public readonly partial struct ElectricCharge<T> where T : IFloatingPoint<T>
     {
         private readonly T _coulombs;
         private ElectricCharge(T value) => _coulombs = value;
@@ -143,7 +143,7 @@ namespace UnitConverter.Quantities
             => ElectricCurrent<T>.FromAmperes(charge._coulombs / time.Seconds);
     }
 
-    public readonly struct Voltage<T> where T : IFloatingPoint<T>
+    public readonly partial struct Voltage<T> where T : IFloatingPoint<T>
     {
         private readonly T _volts;
         private Voltage(T volts) => _volts = volts;
@@ -159,7 +159,7 @@ namespace UnitConverter.Quantities
             => ElectricCurrent<T>.FromAmperes(voltage._volts / resistance.Ohms);
     }
 
-    public readonly struct Resistance<T> where T : IFloatingPoint<T>
+    public readonly partial struct Resistance<T> where T : IFloatingPoint<T>
     {
         private readonly T _ohms;
         private Resistance(T ohms) => _ohms = ohms;
