@@ -8,10 +8,17 @@ namespace UnitConverter.Quantities
 {
     public static class DensityMethods
     {
-        public static Density<T> FromKilogramsPerCubicMetre<T>(T value) where T : IFloatingPoint<T> => Density<T>.FromKilogramsPerCubicMetre(value);
-        public static T ToKilogramsPerCubicMetre<T>(this Density<T> quantity) where T : IFloatingPoint<T> => quantity.KilogramsPerCubicMetre;
-        public static Density<T> FromGramsPerCubicCentimetre<T>(T value) where T : IFloatingPoint<T> => Density<T>.FromGramsPerCubicCentimetre(value);
-        public static T ToGramsPerCubicCentimetre<T>(this Density<T> quantity) where T : IFloatingPoint<T> => quantity.GramsPerCubicCentimetre;
+        public static Density<T> FromKilogramsPerCubicMetre<T>(T value) where T : IFloatingPoint<T>
+            => Density<T>.FromKilogramsPerCubicMetre(value);
+
+        public static T ToKilogramsPerCubicMetre<T>(this Density<T> quantity) where T : IFloatingPoint<T>
+            => quantity.KilogramsPerCubicMetre;
+
+        public static Density<T> FromGramsPerCubicCentimetre<T>(T value) where T : IFloatingPoint<T>
+            => Density<T>.FromGramsPerCubicCentimetre(value);
+
+        public static T ToGramsPerCubicCentimetre<T>(this Density<T> quantity) where T : IFloatingPoint<T>
+            => quantity.GramsPerCubicCentimetre;
 
         public static Density<T> From<T>(T value, UnitConverter.Density.UnitConverterDensityUnit unit) where T : IFloatingPoint<T>
             => unit switch
