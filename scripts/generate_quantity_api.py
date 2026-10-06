@@ -41,6 +41,19 @@ def render_family(family_name, family):
             "",
         ])
 
+    for alias in family.get("aliases", []):
+        property_name = alias["name"]
+        factory_name = alias["factory"]
+        target_property = alias.get("property", property_name)
+        lines.extend([
+            f"        public static {quantity_type}<T> {factory_name}<T>(T value) where T : IFloatingPoint<T>",
+            f"            => {quantity_type}<T>.{factory_name}(value);",
+            "",
+            f"        public static T To{property_name}<T>(this {quantity_type}<T> quantity) where T : IFloatingPoint<T>",
+            f"            => quantity.{target_property};",
+            "",
+        ])
+
     lines.extend([
         f"        public static {quantity_type}<T> From<T>(T value, {enum_type} unit) where T : IFloatingPoint<T>",
         "            => unit switch",
