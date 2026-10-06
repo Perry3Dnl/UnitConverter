@@ -8,11 +8,17 @@ namespace UnitConverter.Quantities
 {
     public static class ElectricCurrentMethods
     {
-        public static ElectricCurrent<T> FromAmperes<T>(T value) where T : IFloatingPoint<T> => ElectricCurrent<T>.FromAmperes(value);
-        public static T ToAmperes<T>(this ElectricCurrent<T> quantity) where T : IFloatingPoint<T> => quantity.Amperes;
+        public static ElectricCurrent<T> FromAmperes<T>(T value) where T : IFloatingPoint<T>
+            => ElectricCurrent<T>.FromAmperes(value);
 
-        public static ElectricCurrent<T> FromMilliamperes<T>(T value) where T : IFloatingPoint<T> => ElectricCurrent<T>.FromMilliamperes(value);
-        public static T ToMilliamperes<T>(this ElectricCurrent<T> quantity) where T : IFloatingPoint<T> => quantity.Milliamperes;
+        public static T ToAmperes<T>(this ElectricCurrent<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Amperes;
+
+        public static ElectricCurrent<T> FromMilliamperes<T>(T value) where T : IFloatingPoint<T>
+            => ElectricCurrent<T>.FromMilliamperes(value);
+
+        public static T ToMilliamperes<T>(this ElectricCurrent<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Milliamperes;
 
         public static ElectricCurrent<T> From<T>(T value, UnitConverter.Current.UnitConverterCurrentUnit unit) where T : IFloatingPoint<T>
             => unit switch
