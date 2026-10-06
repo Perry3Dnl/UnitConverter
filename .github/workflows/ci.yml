@@ -21,6 +21,10 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Verify generated aliases
         run: python scripts/generate_aliases.py --check
+      - name: Verify generated quantity API
+        run: python scripts/generate_quantity_api.py --check
+      - name: Verify generated Length quantity surface
+        run: python scripts/generate_length_quantity.py --check
       - name: Restore
         run: dotnet restore UnitConverter.sln
       - name: Build
