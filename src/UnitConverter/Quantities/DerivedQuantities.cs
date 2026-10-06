@@ -29,6 +29,8 @@ namespace UnitConverter.Quantities
         public static Mass<T> operator /(Mass<T> quantity, T scalar) => FromKilograms(quantity._kilograms / scalar);
         public static Force<T> operator *(Mass<T> mass, Acceleration<T> acceleration)
             => Force<T>.FromNewtons(mass._kilograms * acceleration.MetresPerSecondSquared);
+        public static Density<T> operator /(Mass<T> mass, Volume<T> volume)
+            => Density<T>.FromKilogramsPerCubicMetre(mass._kilograms / volume.CubicMetres);
 
         public static bool operator ==(Mass<T> left, Mass<T> right) => left.Equals(right);
         public static bool operator !=(Mass<T> left, Mass<T> right) => !left.Equals(right);
@@ -213,6 +215,8 @@ namespace UnitConverter.Quantities
             => Length<T>.FromMetres(volume._cubicMetres / area.SquareMetres);
         public static Area<T> operator /(Volume<T> volume, Length<T> length)
             => Area<T>.FromSquareMetres(volume._cubicMetres / length.Metres);
+        public static Mass<T> operator *(Volume<T> volume, Density<T> density)
+            => Mass<T>.FromKilograms(volume._cubicMetres * density.KilogramsPerCubicMetre);
 
         public static bool operator ==(Volume<T> left, Volume<T> right) => left.Equals(right);
         public static bool operator !=(Volume<T> left, Volume<T> right) => !left.Equals(right);
