@@ -119,6 +119,29 @@ namespace UnitConverter.Quantities
         public string ToString(string format, IFormatProvider formatProvider) => _metres.ToString(format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
             => _metres.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider, ReadOnlySpan<char> unit)
+        {
+            if (unit.Equals("m".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(_metres, "m".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("km".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Kilometres, "km".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("cm".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Centimetres, "cm".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("mm".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Millimetres, "mm".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("in".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Inches, "in".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("ft".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Feet, "ft".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("yd".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Yards, "yd".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("mi".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Miles, "mi".AsSpan(), destination, out charsWritten, format, provider);
+
+            charsWritten = 0;
+            return false;
+        }
     }
 
     public static class Length
@@ -212,6 +235,23 @@ namespace UnitConverter.Quantities
         public string ToString(string format, IFormatProvider formatProvider) => _seconds.ToString(format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
             => _seconds.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider, ReadOnlySpan<char> unit)
+        {
+            if (unit.Equals("s".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(_seconds, "s".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("ms".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Milliseconds, "ms".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("min".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Minutes, "min".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("h".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Hours, "h".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("d".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Days, "d".AsSpan(), destination, out charsWritten, format, provider);
+
+            charsWritten = 0;
+            return false;
+        }
     }
 
     public static class Time
@@ -303,6 +343,21 @@ namespace UnitConverter.Quantities
         public string ToString(string format, IFormatProvider formatProvider) => _metresPerSecond.ToString(format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
             => _metresPerSecond.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider, ReadOnlySpan<char> unit)
+        {
+            if (unit.Equals("m/s".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(_metresPerSecond, "m/s".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("km/h".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(KilometresPerHour, "km/h".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("mph".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(MilesPerHour, "mph".AsSpan(), destination, out charsWritten, format, provider);
+            if (unit.Equals("kn".AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return QuantityText.TryFormat(Knots, "kn".AsSpan(), destination, out charsWritten, format, provider);
+
+            charsWritten = 0;
+            return false;
+        }
     }
 
     public static class Speed
