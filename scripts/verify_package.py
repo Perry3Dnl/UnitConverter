@@ -49,9 +49,10 @@ with zipfile.ZipFile(core_package) as archive:
     names = archive.namelist()
     assert "lib/netstandard2.0/UnitConverter.dll" in names
     assert "README.md" in names
-    assert [name for name in names if name.endswith(".dll")] == [
-        "lib/netstandard2.0/UnitConverter.dll"
-    ], "Only the conversion assembly belongs in the core package"
+    assert sorted(name for name in names if name.endswith(".dll")) == [
+        "lib/net8.0/UnitConverter.dll",
+        "lib/netstandard2.0/UnitConverter.dll",
+    ], "Only the conversion assembly and supported target-framework assets belong in the core package"
     forbidden = ("UnityEngine", "UnityEditor", "RealisticPhysics.Core", "NUnit", "nunit")
     assert not any(part in name for name in names for part in forbidden)
     assert not any(name.endswith((".unity", ".unitypackage", ".meta", ".asmdef", ".cs")) for name in names)
