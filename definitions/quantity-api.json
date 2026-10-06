@@ -5,136 +5,415 @@
     "Length": {
       "type": "Length",
       "units": [
-        { "name": "Metres", "factory": "FromMetres", "symbol": "m" },
-        { "name": "Kilometres", "factory": "FromKilometres", "symbol": "km" },
-        { "name": "Centimetres", "factory": "FromCentimetres", "symbol": "cm" },
-        { "name": "Millimetres", "factory": "FromMillimetres", "symbol": "mm" },
-        { "name": "Inches", "factory": "FromInches", "symbol": "in" },
-        { "name": "Feet", "factory": "FromFeet", "symbol": "ft" },
-        { "name": "Yards", "factory": "FromYards", "symbol": "yd" },
-        { "name": "Miles", "factory": "FromMiles", "symbol": "mi" }
-      ]
+        {
+          "name": "Metres",
+          "factory": "FromMetres",
+          "symbol": "m",
+          "enumMember": "Meter"
+        },
+        {
+          "name": "Kilometres",
+          "factory": "FromKilometres",
+          "symbol": "km",
+          "enumMember": "Kilometer"
+        },
+        {
+          "name": "Centimetres",
+          "factory": "FromCentimetres",
+          "symbol": "cm",
+          "enumMember": "Centimeter"
+        },
+        {
+          "name": "Millimetres",
+          "factory": "FromMillimetres",
+          "symbol": "mm",
+          "enumMember": "Millimeter"
+        },
+        {
+          "name": "Inches",
+          "factory": "FromInches",
+          "symbol": "in",
+          "enumMember": "Inch"
+        },
+        {
+          "name": "Feet",
+          "factory": "FromFeet",
+          "symbol": "ft",
+          "enumMember": "Foot"
+        },
+        {
+          "name": "Yards",
+          "factory": "FromYards",
+          "symbol": "yd",
+          "enumMember": "Yard"
+        },
+        {
+          "name": "Miles",
+          "factory": "FromMiles",
+          "symbol": "mi",
+          "enumMember": "Mile"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Length",
+      "enumType": "UnitConverterLengthUnit"
     },
     "Time": {
       "type": "Time",
       "units": [
-        { "name": "Seconds", "factory": "FromSeconds", "symbol": "s" },
-        { "name": "Milliseconds", "factory": "FromMilliseconds", "symbol": "ms" },
-        { "name": "Minutes", "factory": "FromMinutes", "symbol": "min" },
-        { "name": "Hours", "factory": "FromHours", "symbol": "h" },
-        { "name": "Days", "factory": "FromDays", "symbol": "d" }
-      ]
+        {
+          "name": "Seconds",
+          "factory": "FromSeconds",
+          "symbol": "s",
+          "enumMember": "Second"
+        },
+        {
+          "name": "Milliseconds",
+          "factory": "FromMilliseconds",
+          "symbol": "ms",
+          "enumMember": "Millisecond"
+        },
+        {
+          "name": "Minutes",
+          "factory": "FromMinutes",
+          "symbol": "min",
+          "enumMember": "Minute"
+        },
+        {
+          "name": "Hours",
+          "factory": "FromHours",
+          "symbol": "h",
+          "enumMember": "Hour"
+        },
+        {
+          "name": "Days",
+          "factory": "FromDays",
+          "symbol": "d",
+          "enumMember": "Day"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Time",
+      "enumType": "UnitConverterTimeUnit"
     },
     "Speed": {
       "type": "Speed",
       "units": [
-        { "name": "MetresPerSecond", "factory": "FromMetresPerSecond", "symbol": "m/s" },
-        { "name": "KilometresPerHour", "factory": "FromKilometresPerHour", "symbol": "km/h" },
-        { "name": "MilesPerHour", "factory": "FromMilesPerHour", "symbol": "mph" },
-        { "name": "Knots", "factory": "FromKnots", "symbol": "kn" }
-      ]
+        {
+          "name": "MetresPerSecond",
+          "factory": "FromMetresPerSecond",
+          "symbol": "m/s",
+          "enumMember": "MeterPerSecond"
+        },
+        {
+          "name": "KilometresPerHour",
+          "factory": "FromKilometresPerHour",
+          "symbol": "km/h",
+          "enumMember": "KilometerPerHour"
+        },
+        {
+          "name": "MilesPerHour",
+          "factory": "FromMilesPerHour",
+          "symbol": "mph",
+          "enumMember": "MilePerHour"
+        },
+        {
+          "name": "Knots",
+          "factory": "FromKnots",
+          "symbol": "kn",
+          "enumMember": "Knot"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Speed",
+      "enumType": "UnitConverterSpeedUnit"
     },
     "Mass": {
       "type": "Mass",
       "units": [
-        { "name": "Kilograms", "factory": "FromKilograms", "symbol": "kg" },
-        { "name": "Grams", "factory": "FromGrams", "symbol": "g" },
-        { "name": "Milligrams", "factory": "FromMilligrams", "symbol": "mg" }
-      ]
+        {
+          "name": "Kilograms",
+          "factory": "FromKilograms",
+          "symbol": "kg",
+          "enumMember": "Kilogram"
+        },
+        {
+          "name": "Grams",
+          "factory": "FromGrams",
+          "symbol": "g",
+          "enumMember": "Gram"
+        },
+        {
+          "name": "Milligrams",
+          "factory": "FromMilligrams",
+          "symbol": "mg",
+          "enumMember": "Milligram"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Mass",
+      "enumType": "UnitConverterMassUnit"
     },
     "Area": {
       "type": "Area",
       "units": [
-        { "name": "SquareMetres", "factory": "FromSquareMetres", "symbol": "m²" },
-        { "name": "SquareKilometres", "factory": "FromSquareKilometres", "symbol": "km²" },
-        { "name": "Hectares", "factory": "FromHectares", "symbol": "ha" }
-      ]
+        {
+          "name": "SquareMetres",
+          "factory": "FromSquareMetres",
+          "symbol": "m²",
+          "enumMember": "SquareMeter"
+        },
+        {
+          "name": "SquareKilometres",
+          "factory": "FromSquareKilometres",
+          "symbol": "km²",
+          "enumMember": "SquareKilometer"
+        },
+        {
+          "name": "Hectares",
+          "factory": "FromHectares",
+          "symbol": "ha",
+          "enumMember": "Hectare"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Area",
+      "enumType": "UnitConverterAreaUnit"
     },
     "Volume": {
       "type": "Volume",
       "units": [
-        { "name": "CubicMetres", "factory": "FromCubicMetres", "symbol": "m³" },
-        { "name": "Litres", "factory": "FromLitres", "symbol": "L" },
-        { "name": "Millilitres", "factory": "FromMillilitres", "symbol": "mL" }
-      ]
+        {
+          "name": "CubicMetres",
+          "factory": "FromCubicMetres",
+          "symbol": "m³",
+          "enumMember": "CubicMeter"
+        },
+        {
+          "name": "Litres",
+          "factory": "FromLitres",
+          "symbol": "L",
+          "enumMember": "Liter"
+        },
+        {
+          "name": "Millilitres",
+          "factory": "FromMillilitres",
+          "symbol": "mL",
+          "enumMember": "Milliliter"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Volume",
+      "enumType": "UnitConverterVolumeUnit"
     },
     "Acceleration": {
       "type": "Acceleration",
       "units": [
-        { "name": "MetresPerSecondSquared", "factory": "FromMetresPerSecondSquared", "symbol": "m/s²" }
-      ]
+        {
+          "name": "MetresPerSecondSquared",
+          "factory": "FromMetresPerSecondSquared",
+          "symbol": "m/s²",
+          "enumMember": "MeterPerSecondSquared"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Acceleration",
+      "enumType": "UnitConverterAccelerationUnit"
     },
     "Force": {
       "type": "Force",
       "units": [
-        { "name": "Newtons", "factory": "FromNewtons", "symbol": "N" },
-        { "name": "Kilonewtons", "factory": "FromKilonewtons", "symbol": "kN" }
-      ]
+        {
+          "name": "Newtons",
+          "factory": "FromNewtons",
+          "symbol": "N",
+          "enumMember": "Newton"
+        },
+        {
+          "name": "Kilonewtons",
+          "factory": "FromKilonewtons",
+          "symbol": "kN",
+          "enumMember": "Kilonewton"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Force",
+      "enumType": "UnitConverterForceUnit"
     },
     "Energy": {
       "type": "Energy",
       "units": [
-        { "name": "Joules", "factory": "FromJoules", "symbol": "J" },
-        { "name": "Kilojoules", "factory": "FromKilojoules", "symbol": "kJ" }
-      ]
+        {
+          "name": "Joules",
+          "factory": "FromJoules",
+          "symbol": "J",
+          "enumMember": "Joule"
+        },
+        {
+          "name": "Kilojoules",
+          "factory": "FromKilojoules",
+          "symbol": "kJ",
+          "enumMember": "Kilojoule"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Energy",
+      "enumType": "UnitConverterEnergyUnit"
     },
     "Power": {
       "type": "Power",
       "units": [
-        { "name": "Watts", "factory": "FromWatts", "symbol": "W" },
-        { "name": "Kilowatts", "factory": "FromKilowatts", "symbol": "kW" }
-      ]
+        {
+          "name": "Watts",
+          "factory": "FromWatts",
+          "symbol": "W",
+          "enumMember": "Watt"
+        },
+        {
+          "name": "Kilowatts",
+          "factory": "FromKilowatts",
+          "symbol": "kW",
+          "enumMember": "Kilowatt"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Power",
+      "enumType": "UnitConverterPowerUnit"
     },
     "Pressure": {
       "type": "Pressure",
       "units": [
-        { "name": "Pascals", "factory": "FromPascals", "symbol": "Pa" },
-        { "name": "Kilopascals", "factory": "FromKilopascals", "symbol": "kPa" },
-        { "name": "Megapascals", "factory": "FromMegapascals", "symbol": "MPa" },
-        { "name": "Bars", "factory": "FromBars", "symbol": "bar" }
-      ]
+        {
+          "name": "Pascals",
+          "factory": "FromPascals",
+          "symbol": "Pa",
+          "enumMember": "Pascal"
+        },
+        {
+          "name": "Kilopascals",
+          "factory": "FromKilopascals",
+          "symbol": "kPa",
+          "enumMember": "Kilopascal"
+        },
+        {
+          "name": "Megapascals",
+          "factory": "FromMegapascals",
+          "symbol": "MPa",
+          "enumMember": "Megapascal"
+        },
+        {
+          "name": "Bars",
+          "factory": "FromBars",
+          "symbol": "bar",
+          "enumMember": "Bar"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Pressure",
+      "enumType": "UnitConverterPressureUnit"
     },
     "Density": {
       "type": "Density",
       "units": [
-        { "name": "KilogramsPerCubicMetre", "factory": "FromKilogramsPerCubicMetre", "symbol": "kg/m³" },
-        { "name": "GramsPerCubicCentimetre", "factory": "FromGramsPerCubicCentimetre", "symbol": "g/cm³" }
-      ]
+        {
+          "name": "KilogramsPerCubicMetre",
+          "factory": "FromKilogramsPerCubicMetre",
+          "symbol": "kg/m³",
+          "enumMember": "KilogramPerCubicMeter"
+        },
+        {
+          "name": "GramsPerCubicCentimetre",
+          "factory": "FromGramsPerCubicCentimetre",
+          "symbol": "g/cm³",
+          "enumMember": "GramPerCubicCentimeter"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Density",
+      "enumType": "UnitConverterDensityUnit"
     },
     "Frequency": {
       "type": "Frequency",
       "units": [
-        { "name": "Hertz", "factory": "FromHertz", "symbol": "Hz" },
-        { "name": "Kilohertz", "factory": "FromKilohertz", "symbol": "kHz" },
-        { "name": "Megahertz", "factory": "FromMegahertz", "symbol": "MHz" }
-      ]
+        {
+          "name": "Hertz",
+          "factory": "FromHertz",
+          "symbol": "Hz",
+          "enumMember": "Hertz"
+        },
+        {
+          "name": "Kilohertz",
+          "factory": "FromKilohertz",
+          "symbol": "kHz",
+          "enumMember": "Kilohertz"
+        },
+        {
+          "name": "Megahertz",
+          "factory": "FromMegahertz",
+          "symbol": "MHz",
+          "enumMember": "Megahertz"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Frequency",
+      "enumType": "UnitConverterFrequencyUnit"
     },
     "ElectricCurrent": {
       "type": "ElectricCurrent",
       "units": [
-        { "name": "Amperes", "factory": "FromAmperes", "symbol": "A" },
-        { "name": "Milliamperes", "factory": "FromMilliamperes", "symbol": "mA" }
-      ]
+        {
+          "name": "Amperes",
+          "factory": "FromAmperes",
+          "symbol": "A",
+          "enumMember": "Ampere"
+        },
+        {
+          "name": "Milliamperes",
+          "factory": "FromMilliamperes",
+          "symbol": "mA",
+          "enumMember": "Milliampere"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Current",
+      "enumType": "UnitConverterCurrentUnit"
     },
     "ElectricCharge": {
       "type": "ElectricCharge",
       "units": [
-        { "name": "Coulombs", "factory": "FromCoulombs", "symbol": "C" }
-      ]
+        {
+          "name": "Coulombs",
+          "factory": "FromCoulombs",
+          "symbol": "C",
+          "enumMember": "Coulomb"
+        }
+      ],
+      "enumNamespace": "UnitConverter.ElectricCharge",
+      "enumType": "UnitConverterElectricChargeUnit"
     },
     "Voltage": {
       "type": "Voltage",
       "units": [
-        { "name": "Volts", "factory": "FromVolts", "symbol": "V" },
-        { "name": "Millivolts", "factory": "FromMillivolts", "symbol": "mV" }
-      ]
+        {
+          "name": "Volts",
+          "factory": "FromVolts",
+          "symbol": "V",
+          "enumMember": "Volt"
+        },
+        {
+          "name": "Millivolts",
+          "factory": "FromMillivolts",
+          "symbol": "mV",
+          "enumMember": "Millivolt"
+        }
+      ],
+      "enumNamespace": "UnitConverter.Voltage",
+      "enumType": "UnitConverterVoltageUnit"
     },
     "Resistance": {
       "type": "Resistance",
       "units": [
-        { "name": "Ohms", "factory": "FromOhms", "symbol": "Ω" },
-        { "name": "Kiloohms", "factory": "FromKiloohms", "symbol": "kΩ" }
-      ]
+        {
+          "name": "Ohms",
+          "factory": "FromOhms",
+          "symbol": "Ω",
+          "enumMember": "Ohm"
+        },
+        {
+          "name": "Kiloohms",
+          "factory": "FromKiloohms",
+          "symbol": "kΩ",
+          "enumMember": "Kiloohm"
+        }
+      ],
+      "enumNamespace": "UnitConverter.ElectricResistance",
+      "enumType": "UnitConverterElectricResistanceUnit"
     }
   }
 }
