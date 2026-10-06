@@ -8,11 +8,17 @@ namespace UnitConverter.Quantities
 {
     public static class VoltageMethods
     {
-        public static Voltage<T> FromVolts<T>(T value) where T : IFloatingPoint<T> => Voltage<T>.FromVolts(value);
-        public static T ToVolts<T>(this Voltage<T> quantity) where T : IFloatingPoint<T> => quantity.Volts;
+        public static Voltage<T> FromVolts<T>(T value) where T : IFloatingPoint<T>
+            => Voltage<T>.FromVolts(value);
 
-        public static Voltage<T> FromMillivolts<T>(T value) where T : IFloatingPoint<T> => Voltage<T>.FromMillivolts(value);
-        public static T ToMillivolts<T>(this Voltage<T> quantity) where T : IFloatingPoint<T> => quantity.Millivolts;
+        public static T ToVolts<T>(this Voltage<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Volts;
+
+        public static Voltage<T> FromMillivolts<T>(T value) where T : IFloatingPoint<T>
+            => Voltage<T>.FromMillivolts(value);
+
+        public static T ToMillivolts<T>(this Voltage<T> quantity) where T : IFloatingPoint<T>
+            => quantity.Millivolts;
 
         public static Voltage<T> From<T>(T value, UnitConverter.Voltage.UnitConverterVoltageUnit unit) where T : IFloatingPoint<T>
             => unit switch
