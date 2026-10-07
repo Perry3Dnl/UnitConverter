@@ -163,6 +163,24 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void GlobalDetection_CustomUnitCanMakeBuiltInAliasAmbiguousAcrossFamilies()
+        {
+            UnitConverterCustomUnits.RegisterLinear(
+                UnitConverterFamily.Time,
+                "CustomLightYear",
+                "light-year",
+                "Second",
+                2d);
+
+            UnitConverterDetectionResult result =
+                UnitConverterDetector.Detect("2 light-year");
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Status, Is.EqualTo(UnitConverterDetectionStatus.Ambiguous));
+            Assert.That(result.Candidates.Count, Is.EqualTo(2));
+        }
+
+        [Test]
         public void GlobalDynamicConversion_UsesCustomUnit()
         {
             UnitConverterCustomUnits.RegisterLinear(

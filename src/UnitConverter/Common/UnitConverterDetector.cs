@@ -42,18 +42,21 @@ namespace UnitConverter
 
     public readonly struct UnitConverterDetectionResult
     {
+        private static readonly UnitConverterUnitCandidate[] EmptyCandidates =
+            Array.Empty<UnitConverterUnitCandidate>();
+
         private UnitConverterDetectionResult(
             UnitConverterDetectionStatus status,
             double value,
             string unitText,
-            UnitConverterUnitCandidate[] candidates,
+            IReadOnlyList<UnitConverterUnitCandidate> candidates,
             UnitConverterError error,
             string errorMessage)
         {
             Status = status;
             Value = value;
             UnitText = unitText;
-            Candidates = candidates ?? new UnitConverterUnitCandidate[0];
+            Candidates = candidates ?? EmptyCandidates;
             Error = error;
             ErrorMessage = errorMessage;
         }
@@ -72,13 +75,13 @@ namespace UnitConverter
         internal static UnitConverterDetectionResult Resolved(
             double value,
             string unitText,
-            UnitConverterUnitCandidate candidate)
+            IReadOnlyList<UnitConverterUnitCandidate> candidates)
         {
             return new UnitConverterDetectionResult(
                 UnitConverterDetectionStatus.Resolved,
                 value,
                 unitText,
-                new[] { candidate },
+                candidates,
                 UnitConverterError.None,
                 null);
         }
@@ -86,7 +89,7 @@ namespace UnitConverter
         internal static UnitConverterDetectionResult Ambiguous(
             double value,
             string unitText,
-            UnitConverterUnitCandidate[] candidates)
+            IReadOnlyList<UnitConverterUnitCandidate> candidates)
         {
             return new UnitConverterDetectionResult(
                 UnitConverterDetectionStatus.Ambiguous,
@@ -105,7 +108,7 @@ namespace UnitConverter
                 UnitConverterDetectionStatus.Unknown,
                 0d,
                 null,
-                null,
+                EmptyCandidates,
                 error,
                 errorMessage);
         }
@@ -113,6 +116,20 @@ namespace UnitConverter
 
     public static class UnitConverterDetector
     {
+        private static readonly UnitConverterUnitCandidate[] EmptyCandidates =
+            Array.Empty<UnitConverterUnitCandidate>();
+        private static readonly Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> ExactBuiltInCandidates;
+        private static readonly Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> IgnoreCaseBuiltInCandidates;
+
+        static UnitConverterDetector()
+        {
+            Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> exact;
+            Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> ignoreCase;
+            BuildBuiltInCandidateIndexes(out exact, out ignoreCase);
+            ExactBuiltInCandidates = exact;
+            IgnoreCaseBuiltInCandidates = ignoreCase;
+        }
+
         public static UnitConverterDetectionResult Detect(string input)
         {
             return Detect(input, CultureInfo.InvariantCulture);
@@ -161,19 +178,21 @@ namespace UnitConverter
 
             string candidateText = unitText.Trim();
 
-            UnitConverterUnitCandidate[] exact = FindCandidates(
-                candidateText,
-                StringComparison.Ordinal);
+            IReadOnlyList<UnitConverterUnitCandidate> exact =
+                GetCandidates(
+                    ExactBuiltInCandidates,
+                    candidateText,
+                    StringComparison.Ordinal);
 
-            if (exact.Length == 1)
+            if (exact.Count == 1)
             {
                 return UnitConverterDetectionResult.Resolved(
                     value,
                     candidateText,
-                    exact[0]);
+                    exact);
             }
 
-            if (exact.Length > 1)
+            if (exact.Count > 1)
             {
                 return UnitConverterDetectionResult.Ambiguous(
                     value,
@@ -181,19 +200,21 @@ namespace UnitConverter
                     exact);
             }
 
-            UnitConverterUnitCandidate[] ignoreCase = FindCandidates(
-                candidateText,
-                StringComparison.OrdinalIgnoreCase);
+            IReadOnlyList<UnitConverterUnitCandidate> ignoreCase =
+                GetCandidates(
+                    IgnoreCaseBuiltInCandidates,
+                    candidateText,
+                    StringComparison.OrdinalIgnoreCase);
 
-            if (ignoreCase.Length == 1)
+            if (ignoreCase.Count == 1)
             {
                 return UnitConverterDetectionResult.Resolved(
                     value,
                     candidateText,
-                    ignoreCase[0]);
+                    ignoreCase);
             }
 
-            if (ignoreCase.Length > 1)
+            if (ignoreCase.Count > 1)
             {
                 return UnitConverterDetectionResult.Ambiguous(
                     value,
@@ -206,64 +227,105 @@ namespace UnitConverter
                 "The unit '" + candidateText + "' is not recognized.");
         }
 
-        private static UnitConverterUnitCandidate[] FindCandidates(
+        private static IReadOnlyList<UnitConverterUnitCandidate> GetCandidates(
+            Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> builtInIndex,
             string text,
-            StringComparison comparison)
+            StringComparison customComparison)
         {
-            var matches = new List<UnitConverterUnitCandidate>();
+            IReadOnlyList<UnitConverterUnitCandidate> builtIn;
+            if (!builtInIndex.TryGetValue(text, out builtIn))
+            {
+                builtIn = EmptyCandidates;
+            }
+
+            if (!UnitConverterCustomUnits.HasUnits)
+            {
+                return builtIn;
+            }
+
+            var matches = new List<UnitConverterUnitCandidate>(
+                builtIn.Count + 1);
+            foreach (UnitConverterUnitCandidate candidate in builtIn)
+            {
+                matches.Add(candidate);
+            }
+            UnitConverterCustomUnits.AppendMatchingCandidates(
+                text,
+                customComparison,
+                matches);
+
+            return matches.Count == 0
+                ? EmptyCandidates
+                : matches.AsReadOnly();
+        }
+
+        private static void BuildBuiltInCandidateIndexes(
+            out Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> exact,
+            out Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> ignoreCase)
+        {
+            var exactBuilders =
+                new Dictionary<string, List<UnitConverterUnitCandidate>>(
+                    StringComparer.Ordinal);
+            var ignoreCaseBuilders =
+                new Dictionary<string, List<UnitConverterUnitCandidate>>(
+                    StringComparer.OrdinalIgnoreCase);
 
             foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
             {
                 foreach (UnitConverterUnitDescriptor unit in family.Units)
                 {
-                    if (MatchesAlias(unit, text, comparison))
+                    var candidate =
+                        new UnitConverterUnitCandidate(family, unit);
+
+                    foreach (string alias in unit.Aliases)
                     {
-                        matches.Add(new UnitConverterUnitCandidate(family, unit));
+                        if (string.IsNullOrWhiteSpace(alias))
+                        {
+                            continue;
+                        }
+
+                        AddCandidate(exactBuilders, alias, candidate);
+                        AddCandidate(ignoreCaseBuilders, alias, candidate);
                     }
                 }
             }
 
-            foreach (UnitConverterCustomUnit custom in UnitConverterCustomUnits.GetUnits())
-            {
-                if (MatchesAlias(custom, text, comparison))
-                {
-                    matches.Add(new UnitConverterUnitCandidate(custom));
-                }
-            }
-
-            return matches.ToArray();
+            exact = FreezeIndex(exactBuilders);
+            ignoreCase = FreezeIndex(ignoreCaseBuilders);
         }
 
-        private static bool MatchesAlias(
-            UnitConverterCustomUnit unit,
-            string text,
-            StringComparison comparison)
+        private static void AddCandidate(
+            Dictionary<string, List<UnitConverterUnitCandidate>> index,
+            string alias,
+            UnitConverterUnitCandidate candidate)
         {
-            foreach (string alias in unit.Aliases)
+            List<UnitConverterUnitCandidate> candidates;
+            if (!index.TryGetValue(alias, out candidates))
             {
-                if (string.Equals(alias, text, comparison))
-                {
-                    return true;
-                }
+                candidates = new List<UnitConverterUnitCandidate>();
+                index.Add(alias, candidates);
             }
 
-            return false;
+            if (!candidates.Contains(candidate))
+            {
+                candidates.Add(candidate);
+            }
         }
 
-        private static bool MatchesAlias(
-            UnitConverterUnitDescriptor unit,
-            string text,
-            StringComparison comparison)
+        private static Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> FreezeIndex(
+            Dictionary<string, List<UnitConverterUnitCandidate>> builders)
         {
-            foreach (string alias in unit.Aliases)
+            var result =
+                new Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>>(
+                    builders.Count,
+                    builders.Comparer);
+
+            foreach (KeyValuePair<string, List<UnitConverterUnitCandidate>> pair in builders)
             {
-                if (string.Equals(alias, text, comparison))
-                {
-                    return true;
-                }
+                result.Add(pair.Key, pair.Value.AsReadOnly());
             }
 
-            return false;
+            return result;
         }
     }
 }

@@ -59,6 +59,9 @@ namespace UnitConverter
         private static readonly object Sync = new object();
         private static readonly Dictionary<UnitConverterFamily, List<UnitConverterCustomUnit>> UnitsByFamily =
             new Dictionary<UnitConverterFamily, List<UnitConverterCustomUnit>>();
+        private static volatile int UnitCount;
+
+        internal static bool HasUnits => UnitCount != 0;
 
         public static UnitConverterCustomUnit RegisterLinear(
             UnitConverterFamily family,
@@ -174,6 +177,7 @@ namespace UnitConverter
                 }
 
                 list.Add(custom);
+                UnitCount++;
                 return custom;
             }
         }
@@ -188,8 +192,19 @@ namespace UnitConverter
             lock (Sync)
             {
                 List<UnitConverterCustomUnit> list;
-                return UnitsByFamily.TryGetValue(unit.Family.Family, out list) &&
-                    list.Remove(unit);
+                if (!UnitsByFamily.TryGetValue(unit.Family.Family, out list) ||
+                    !list.Remove(unit))
+                {
+                    return false;
+                }
+
+                UnitCount--;
+                if (list.Count == 0)
+                {
+                    UnitsByFamily.Remove(unit.Family.Family);
+                }
+
+                return true;
             }
         }
 
@@ -198,6 +213,7 @@ namespace UnitConverter
             lock (Sync)
             {
                 UnitsByFamily.Clear();
+                UnitCount = 0;
             }
         }
 
@@ -225,6 +241,35 @@ namespace UnitConverter
                 return UnitsByFamily.TryGetValue(family, out units)
                     ? units.ToArray()
                     : new UnitConverterCustomUnit[0];
+            }
+        }
+
+        internal static void AppendMatchingCandidates(
+            string text,
+            StringComparison comparison,
+            List<UnitConverterUnitCandidate> matches)
+        {
+            if (matches == null)
+            {
+                throw new ArgumentNullException(nameof(matches));
+            }
+
+            lock (Sync)
+            {
+                foreach (List<UnitConverterCustomUnit> units in UnitsByFamily.Values)
+                {
+                    foreach (UnitConverterCustomUnit custom in units)
+                    {
+                        foreach (string alias in custom.Aliases)
+                        {
+                            if (string.Equals(alias, text, comparison))
+                            {
+                                matches.Add(new UnitConverterUnitCandidate(custom));
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
 
