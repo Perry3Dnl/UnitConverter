@@ -133,9 +133,10 @@ namespace UnitConverter.Tests
                 UnitConverterCustomUnits.RegisterLinear(
                     UnitConverterFamily.Time,
                     "CustomLightYear",
-                    "light-year",
+                    "custom-light-year",
                     "Second",
-                    2d);
+                    2d,
+                    "light-year");
 
                 UnitConverterExpressionParseResult withCustom =
                     UnitConverterExpressionParser.TryParse("light-year");
