@@ -19,7 +19,7 @@ namespace UnitConverter.ForcePerLength
 
         public static decimal Convert(this decimal value, UnitConverterForcePerLengthUnit from, UnitConverterForcePerLengthUnit to)
         {
-            return (decimal)UnitConverterForcePerLength.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterForcePerLengthUnit from, UnitConverterForcePerLengthUnit to)

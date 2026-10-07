@@ -19,7 +19,7 @@ namespace UnitConverter.Illuminance
 
         public static decimal Convert(this decimal value, UnitConverterIlluminanceUnit from, UnitConverterIlluminanceUnit to)
         {
-            return (decimal)UnitConverterIlluminance.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterIlluminanceUnit from, UnitConverterIlluminanceUnit to)

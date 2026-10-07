@@ -19,7 +19,7 @@ namespace UnitConverter.HydraulicPermeability
 
         public static decimal Convert(this decimal value, UnitConverterHydraulicPermeabilityUnit from, UnitConverterHydraulicPermeabilityUnit to)
         {
-            return (decimal)UnitConverterHydraulicPermeability.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterHydraulicPermeabilityUnit from, UnitConverterHydraulicPermeabilityUnit to)
