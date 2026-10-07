@@ -243,11 +243,12 @@ Deserialization accepts the catalogue's aliases as unit values, while serializat
 Decimal extension conversions now stay on a decimal-native path. Linear conversion factors are composed as reduced rational numbers before they are applied, so conversions such as inch-to-foot and extreme SI-prefix ratios do not need a `decimal -> double -> decimal` round trip or an underflow-prone intermediate base value.
 
 ```csharp
+using UnitConverter;
 using UnitConverter.Length;
 
 decimal feet = 1m.Convert(
     UnitConverterLengthUnit.Inch,
-    UnitConverterLengthUnit.Foot); // exact decimal representation of 1/12
+    UnitConverterLengthUnit.Foot); // rational factor is exactly 1/12 before decimal rounding
 
 decimal tinyRatio = UnitConverterExact.Convert(
     1m,
