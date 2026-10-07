@@ -13,6 +13,11 @@ import zipfile
 root = Path(__file__).resolve().parents[1]
 feed = Path(sys.argv[1] if len(sys.argv) > 1 else root / "artifacts/packages").resolve()
 
+build_properties = ET.parse(root / "Directory.Build.props").getroot()
+expected_version = build_properties.findtext(".//Version")
+if not expected_version:
+    raise SystemExit("Directory.Build.props must define a package Version")
+
 packages = {
     path.name: path
     for path in feed.glob("*.nupkg")
@@ -65,6 +70,10 @@ with zipfile.ZipFile(core_package) as archive:
     core_id = metadata.findtext("n:id", namespaces=namespace)
     core_version = metadata.findtext("n:version", namespaces=namespace)
     assert core_id == "UnitConverter"
+    assert core_version == expected_version
+    assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter"
+    assert metadata.findtext("n:releaseNotes", namespaces=namespace)
+    assert metadata.findtext("n:copyright", namespaces=namespace) == "Copyright © 2026 Perry3Dnl"
     dependencies = metadata.findall(".//n:dependency", namespace)
     assert all(dependency.attrib["id"] == "NETStandard.Library" for dependency in dependencies)
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
@@ -86,6 +95,10 @@ with zipfile.ZipFile(json_package) as archive:
     json_id = metadata.findtext("n:id", namespaces=namespace)
     json_version = metadata.findtext("n:version", namespaces=namespace)
     assert json_id == "UnitConverter.SystemTextJson"
+    assert json_version == expected_version
+    assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter.SystemTextJson"
+    assert metadata.findtext("n:releaseNotes", namespaces=namespace)
+    assert metadata.findtext("n:copyright", namespaces=namespace) == "Copyright © 2026 Perry3Dnl"
     dependency_ids = {
         dependency.attrib["id"]
         for dependency in metadata.findall(".//n:dependency", namespace)
