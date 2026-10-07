@@ -124,6 +124,7 @@ namespace UnitConverter
     public static class UnitConverterExpressionParser
     {
         private const int MaxCandidates = 128;
+        private const int MaxCachedBuiltInExpressions = 256;
         private static readonly ConcurrentDictionary<string, UnitConverterUnitExpression[]> BuiltInCandidateCache =
             new ConcurrentDictionary<string, UnitConverterUnitExpression[]>(StringComparer.Ordinal);
 
@@ -210,7 +211,9 @@ namespace UnitConverter
 
             candidates = parsed.ToArray();
 
-            if (cacheEligible && !UnitConverterCustomUnits.HasUnits)
+            if (cacheEligible &&
+                !UnitConverterCustomUnits.HasUnits &&
+                BuiltInCandidateCache.Count < MaxCachedBuiltInExpressions)
             {
                 candidates = BuiltInCandidateCache.GetOrAdd(
                     expression,
