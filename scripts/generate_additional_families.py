@@ -249,7 +249,7 @@ def render_quantity(family):
         "namespace UnitConverter.Quantities",
         "{",
         f"    /// <summary>Strongly typed {humanize(name)} quantity backed by the family base unit.</summary>",
-        f"    public readonly struct {name}<T> :",
+        f"    public readonly partial struct {name}<T> :",
         f"        IEquatable<{name}<T>>,",
         f"        IComparable<{name}<T>>,",
         "        IFormattable,",
