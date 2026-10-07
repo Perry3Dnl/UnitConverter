@@ -49,7 +49,7 @@ namespace UnitConverter
             UnitConverterDetectionStatus status,
             double value,
             string unitText,
-            UnitConverterUnitCandidate[] candidates,
+            IReadOnlyList<UnitConverterUnitCandidate> candidates,
             UnitConverterError error,
             string errorMessage)
         {
@@ -75,7 +75,7 @@ namespace UnitConverter
         internal static UnitConverterDetectionResult Resolved(
             double value,
             string unitText,
-            UnitConverterUnitCandidate[] candidates)
+            IReadOnlyList<UnitConverterUnitCandidate> candidates)
         {
             return new UnitConverterDetectionResult(
                 UnitConverterDetectionStatus.Resolved,
@@ -118,14 +118,16 @@ namespace UnitConverter
     {
         private static readonly UnitConverterUnitCandidate[] EmptyCandidates =
             Array.Empty<UnitConverterUnitCandidate>();
-        private static readonly Dictionary<string, UnitConverterUnitCandidate[]> ExactBuiltInCandidates;
-        private static readonly Dictionary<string, UnitConverterUnitCandidate[]> IgnoreCaseBuiltInCandidates;
+        private static readonly Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> ExactBuiltInCandidates;
+        private static readonly Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> IgnoreCaseBuiltInCandidates;
 
         static UnitConverterDetector()
         {
-            BuildBuiltInCandidateIndexes(
-                out ExactBuiltInCandidates,
-                out IgnoreCaseBuiltInCandidates);
+            Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> exact;
+            Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> ignoreCase;
+            BuildBuiltInCandidateIndexes(out exact, out ignoreCase);
+            ExactBuiltInCandidates = exact;
+            IgnoreCaseBuiltInCandidates = ignoreCase;
         }
 
         public static UnitConverterDetectionResult Detect(string input)
@@ -176,13 +178,13 @@ namespace UnitConverter
 
             string candidateText = unitText.Trim();
 
-            UnitConverterUnitCandidate[] exact =
+            IReadOnlyList<UnitConverterUnitCandidate> exact =
                 GetCandidates(
                     ExactBuiltInCandidates,
                     candidateText,
                     StringComparison.Ordinal);
 
-            if (exact.Length == 1)
+            if (exact.Count == 1)
             {
                 return UnitConverterDetectionResult.Resolved(
                     value,
@@ -190,7 +192,7 @@ namespace UnitConverter
                     exact);
             }
 
-            if (exact.Length > 1)
+            if (exact.Count > 1)
             {
                 return UnitConverterDetectionResult.Ambiguous(
                     value,
@@ -198,13 +200,13 @@ namespace UnitConverter
                     exact);
             }
 
-            UnitConverterUnitCandidate[] ignoreCase =
+            IReadOnlyList<UnitConverterUnitCandidate> ignoreCase =
                 GetCandidates(
                     IgnoreCaseBuiltInCandidates,
                     candidateText,
                     StringComparison.OrdinalIgnoreCase);
 
-            if (ignoreCase.Length == 1)
+            if (ignoreCase.Count == 1)
             {
                 return UnitConverterDetectionResult.Resolved(
                     value,
@@ -212,7 +214,7 @@ namespace UnitConverter
                     ignoreCase);
             }
 
-            if (ignoreCase.Length > 1)
+            if (ignoreCase.Count > 1)
             {
                 return UnitConverterDetectionResult.Ambiguous(
                     value,
@@ -225,12 +227,12 @@ namespace UnitConverter
                 "The unit '" + candidateText + "' is not recognized.");
         }
 
-        private static UnitConverterUnitCandidate[] GetCandidates(
-            Dictionary<string, UnitConverterUnitCandidate[]> builtInIndex,
+        private static IReadOnlyList<UnitConverterUnitCandidate> GetCandidates(
+            Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> builtInIndex,
             string text,
             StringComparison customComparison)
         {
-            UnitConverterUnitCandidate[] builtIn;
+            IReadOnlyList<UnitConverterUnitCandidate> builtIn;
             if (!builtInIndex.TryGetValue(text, out builtIn))
             {
                 builtIn = EmptyCandidates;
@@ -242,8 +244,11 @@ namespace UnitConverter
             }
 
             var matches = new List<UnitConverterUnitCandidate>(
-                builtIn.Length + 1);
-            matches.AddRange(builtIn);
+                builtIn.Count + 1);
+            foreach (UnitConverterUnitCandidate candidate in builtIn)
+            {
+                matches.Add(candidate);
+            }
             UnitConverterCustomUnits.AppendMatchingCandidates(
                 text,
                 customComparison,
@@ -251,12 +256,12 @@ namespace UnitConverter
 
             return matches.Count == 0
                 ? EmptyCandidates
-                : matches.ToArray();
+                : matches.AsReadOnly();
         }
 
         private static void BuildBuiltInCandidateIndexes(
-            out Dictionary<string, UnitConverterUnitCandidate[]> exact,
-            out Dictionary<string, UnitConverterUnitCandidate[]> ignoreCase)
+            out Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> exact,
+            out Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> ignoreCase)
         {
             var exactBuilders =
                 new Dictionary<string, List<UnitConverterUnitCandidate>>(
@@ -307,17 +312,17 @@ namespace UnitConverter
             }
         }
 
-        private static Dictionary<string, UnitConverterUnitCandidate[]> FreezeIndex(
+        private static Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>> FreezeIndex(
             Dictionary<string, List<UnitConverterUnitCandidate>> builders)
         {
             var result =
-                new Dictionary<string, UnitConverterUnitCandidate[]>(
+                new Dictionary<string, IReadOnlyList<UnitConverterUnitCandidate>>(
                     builders.Count,
                     builders.Comparer);
 
             foreach (KeyValuePair<string, List<UnitConverterUnitCandidate>> pair in builders)
             {
-                result.Add(pair.Key, pair.Value.ToArray());
+                result.Add(pair.Key, pair.Value.AsReadOnly());
             }
 
             return result;
