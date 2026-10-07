@@ -55,7 +55,7 @@ All benchmark classes use BenchmarkDotNet's `MemoryDiagnoser`, so allocated byte
 
 ## Publishing results and badges
 
-The `Performance Benchmarks` workflow uploads the raw BenchmarkDotNet CSV, Markdown and HTML reports together with a compact JSON/Markdown summary.
+The `Performance Benchmarks` workflow uploads the raw BenchmarkDotNet CSV, Markdown and HTML reports together with a compact JSON/Markdown summary and a regression comparison against the previously checked-in successful `main` result.
 
 On a successful push to `main`, the workflow also regenerates:
 
@@ -68,7 +68,33 @@ On a successful push to `main`, the workflow also regenerates:
 
 Only those generated result assets are committed by the workflow. The commit uses `[skip ci]`, and changes under `docs/benchmarks` do not retrigger the benchmark workflow.
 
-The README badges therefore show the latest successful `main` measurement rather than a manually copied value.
+The README badges therefore show the latest successful `main` measurement rather than a manually copied value. If the regression check fails, the previous successful badge set remains in place.
+
+## Regression comparison
+
+Before a new run overwrites `docs/benchmarks/latest.json`, the workflow copies the existing file as its reference baseline. `scripts/compare_benchmarks.py` then compares every benchmark method in the current run with that reference.
+
+The CI policy deliberately distinguishes deterministic allocation changes from noisy hosted-runner timing:
+
+- an allocation increase is a blocking regression;
+- a benchmark that disappears from the current full run is blocking;
+- a timing increase of **15% or more** is reported as a warning in the GitHub job summary, but does **not** fail CI;
+- timing improvements of **15% or more** are highlighted as improvements;
+- new benchmarks are reported without failing the run.
+
+The comparison produces `artifacts/benchmarks/comparison.md` and `comparison.json`, both of which are included in the benchmark artifact even when the strict allocation check fails.
+
+You can run the same comparison locally after generating a current summary:
+
+```sh
+python scripts/compare_benchmarks.py \
+  docs/benchmarks/latest.json \
+  artifacts/benchmarks/summary.json \
+  artifacts/benchmarks/comparison \
+  --timing-warning-percent 15 \
+  --fail-on-allocation-regression \
+  --fail-on-missing
+```
 
 ## Interpreting regressions
 
@@ -76,8 +102,8 @@ GitHub-hosted runner latency varies. A small timing change on one run is not a r
 
 Use these signals in order:
 
-1. **Allocations.** A change from 0 B to an allocation is usually meaningful and should be investigated.
-2. **Large timing changes.** Repeated double-digit percentage changes deserve investigation.
+1. **Allocations.** A change from 0 B to an allocation, or any increase in a previously allocating hot path, is treated as a concrete regression by CI.
+2. **Large timing changes.** A 15% or larger increase is surfaced immediately for investigation, but remains non-blocking until it is reproduced.
 3. **Repeated trends.** Prefer several measurements over reacting to one noisy hosted-runner result.
 4. **Release baselines.** Record important release measurements in [BASELINE.md](BASELINE.md) with runner/runtime details.
 
