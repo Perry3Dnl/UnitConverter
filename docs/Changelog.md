@@ -9,13 +9,15 @@
 - Remove Unity settings, editor integration, shared Core, scenes, metadata, and import archives.
 - Add NuGet metadata, a console sample, build/test/pack automation, and updated documentation.
 - See [Migration](Migration.md) for retained behavior and legacy aliases.
-- Add a shared reduced-rational conversion engine and route all 98 family `decimal` extension surfaces through decimal-native conversion without converting the input through `double`.
+- Add a shared reduced-rational conversion engine and route all 150 family `decimal` extension surfaces through decimal-native conversion without converting the input through `double`.
 - Add exact affine decimal transforms for absolute temperature and exact reciprocal decimal transforms for fuel economy.
 - Add `UnitQuantity<T, TUnit>` for compile-time family isolation across every uniform-dimension catalog family while preserving the existing named derived-quantity arithmetic.
 - Split typed fuel economy into `FuelEfficiency<T>` and `FuelConsumption<T>` so reciprocal dimensions remain distinct at compile time.
 - Add CI verification that rejects future decimal-extension regressions back to `double`.
 - Expand the catalog from 98 to 150 families with 52 generated mechanical/materials, thermal, electrical/magnetic/wave, and chemistry/process families (208 additional units).
 - Add explicit reduced-rational scale metadata for generated families so decimal conversion does not infer their scale through `double`.
+- Add first-class named generic quantity structs for all 52 families introduced by the 150-family expansion, with per-unit factories/properties, enum-based conversion, arithmetic, comparisons, `IParsable`/`ISpanParsable`, and `ISpanFormattable`.
+- Add reviewed derived operators for mechanical, electrical, thermal-flux, charge-density, and specific-property quantities while keeping generated unit surfaces separate from hand-reviewed physical relations.
 
 ## Historical Unity releases
 
