@@ -1,6 +1,7 @@
 namespace UnitConverter
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using UnitConverter.Catalog;
 
@@ -123,6 +124,8 @@ namespace UnitConverter
     public static class UnitConverterExpressionParser
     {
         private const int MaxCandidates = 128;
+        private static readonly ConcurrentDictionary<string, UnitConverterUnitExpression[]> BuiltInCandidateCache =
+            new ConcurrentDictionary<string, UnitConverterUnitExpression[]>(StringComparer.Ordinal);
 
         public static UnitConverterUnitExpression Parse(string expression)
         {
@@ -184,6 +187,16 @@ namespace UnitConverter
                 return false;
             }
 
+            bool cacheEligible = !UnitConverterCustomUnits.HasUnits;
+            UnitConverterUnitExpression[] cached;
+            if (cacheEligible &&
+                BuiltInCandidateCache.TryGetValue(expression, out cached))
+            {
+                candidates = cached;
+                error = UnitConverterError.None;
+                return true;
+            }
+
             string normalized = Normalize(expression);
             var parser = new Parser(normalized);
             List<UnitConverterUnitExpression> parsed;
@@ -196,6 +209,14 @@ namespace UnitConverter
             }
 
             candidates = parsed.ToArray();
+
+            if (cacheEligible && !UnitConverterCustomUnits.HasUnits)
+            {
+                candidates = BuiltInCandidateCache.GetOrAdd(
+                    expression,
+                    candidates);
+            }
+
             error = UnitConverterError.None;
             return true;
         }
