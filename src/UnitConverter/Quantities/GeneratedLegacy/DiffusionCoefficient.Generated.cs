@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static DiffusionCoefficient<T> operator +(DiffusionCoefficient<T> left, DiffusionCoefficient<T> right) => new DiffusionCoefficient<T>(left._baseValue + right._baseValue);
         public static DiffusionCoefficient<T> operator -(DiffusionCoefficient<T> left, DiffusionCoefficient<T> right) => new DiffusionCoefficient<T>(left._baseValue - right._baseValue);

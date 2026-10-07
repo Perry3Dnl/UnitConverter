@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Compressibility<T> operator +(Compressibility<T> left, Compressibility<T> right) => new Compressibility<T>(left._baseValue + right._baseValue);
         public static Compressibility<T> operator -(Compressibility<T> left, Compressibility<T> right) => new Compressibility<T>(left._baseValue - right._baseValue);

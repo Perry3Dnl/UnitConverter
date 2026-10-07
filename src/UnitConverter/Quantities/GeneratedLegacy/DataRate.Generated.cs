@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static DataRate<T> operator +(DataRate<T> left, DataRate<T> right) => new DataRate<T>(left._baseValue + right._baseValue);
         public static DataRate<T> operator -(DataRate<T> left, DataRate<T> right) => new DataRate<T>(left._baseValue - right._baseValue);

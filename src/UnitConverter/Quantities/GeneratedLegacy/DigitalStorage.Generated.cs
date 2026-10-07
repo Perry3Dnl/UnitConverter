@@ -381,7 +381,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static DigitalStorage<T> operator +(DigitalStorage<T> left, DigitalStorage<T> right) => new DigitalStorage<T>(left._baseValue + right._baseValue);
         public static DigitalStorage<T> operator -(DigitalStorage<T> left, DigitalStorage<T> right) => new DigitalStorage<T>(left._baseValue - right._baseValue);

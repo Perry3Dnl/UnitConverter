@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ChargeDensity<T> operator +(ChargeDensity<T> left, ChargeDensity<T> right) => new ChargeDensity<T>(left._baseValue + right._baseValue);
         public static ChargeDensity<T> operator -(ChargeDensity<T> left, ChargeDensity<T> right) => new ChargeDensity<T>(left._baseValue - right._baseValue);

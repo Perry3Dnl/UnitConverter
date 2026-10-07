@@ -313,7 +313,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Conductance<T> operator +(Conductance<T> left, Conductance<T> right) => new Conductance<T>(left._baseValue + right._baseValue);
         public static Conductance<T> operator -(Conductance<T> left, Conductance<T> right) => new Conductance<T>(left._baseValue - right._baseValue);

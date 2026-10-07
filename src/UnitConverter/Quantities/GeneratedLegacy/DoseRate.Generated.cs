@@ -347,7 +347,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static DoseRate<T> operator +(DoseRate<T> left, DoseRate<T> right) => new DoseRate<T>(left._baseValue + right._baseValue);
         public static DoseRate<T> operator -(DoseRate<T> left, DoseRate<T> right) => new DoseRate<T>(left._baseValue - right._baseValue);

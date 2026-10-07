@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static CurrentDensity<T> operator +(CurrentDensity<T> left, CurrentDensity<T> right) => new CurrentDensity<T>(left._baseValue + right._baseValue);
         public static CurrentDensity<T> operator -(CurrentDensity<T> left, CurrentDensity<T> right) => new CurrentDensity<T>(left._baseValue - right._baseValue);
