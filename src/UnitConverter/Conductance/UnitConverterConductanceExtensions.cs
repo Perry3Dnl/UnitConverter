@@ -19,7 +19,7 @@ namespace UnitConverter.Conductance
 
         public static decimal Convert(this decimal value, UnitConverterConductanceUnit from, UnitConverterConductanceUnit to)
         {
-            return (decimal)UnitConverterConductance.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterConductanceUnit from, UnitConverterConductanceUnit to)

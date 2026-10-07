@@ -19,7 +19,7 @@ namespace UnitConverter.Capacitance
 
         public static decimal Convert(this decimal value, UnitConverterCapacitanceUnit from, UnitConverterCapacitanceUnit to)
         {
-            return (decimal)UnitConverterCapacitance.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterCapacitanceUnit from, UnitConverterCapacitanceUnit to)

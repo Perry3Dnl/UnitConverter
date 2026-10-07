@@ -19,7 +19,7 @@ namespace UnitConverter.AreaDensity
 
         public static decimal Convert(this decimal value, UnitConverterAreaDensityUnit from, UnitConverterAreaDensityUnit to)
         {
-            return (decimal)UnitConverterAreaDensity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterAreaDensityUnit from, UnitConverterAreaDensityUnit to)

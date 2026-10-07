@@ -19,7 +19,7 @@ namespace UnitConverter.Compressibility
 
         public static decimal Convert(this decimal value, UnitConverterCompressibilityUnit from, UnitConverterCompressibilityUnit to)
         {
-            return (decimal)UnitConverterCompressibility.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterCompressibilityUnit from, UnitConverterCompressibilityUnit to)
