@@ -71,9 +71,14 @@ namespace UnitConverter.Tests.Quantities
                 {
                     string context = family.Name + "." + unit.Name;
 
+                    string propertyName =
+                        unit.Name == quantityName
+                            ? unit.Name + "Value"
+                            : unit.Name;
+
                     Assert.That(
                         quantity.GetProperty(
-                            unit.Name,
+                            propertyName,
                             BindingFlags.Public | BindingFlags.Instance),
                         Is.Not.Null,
                         context + " property");

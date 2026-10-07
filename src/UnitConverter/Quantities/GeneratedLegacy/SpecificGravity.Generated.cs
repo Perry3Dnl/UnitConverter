@@ -347,7 +347,7 @@ namespace UnitConverter.Quantities
         public static T ToRatio<T>(this SpecificGravity<T> quantity) where T : IFloatingPoint<T> => quantity.Ratio;
 
         public static SpecificGravity<T> FromSpecificGravity<T>(T value) where T : IFloatingPoint<T> => SpecificGravity<T>.FromSpecificGravity(value);
-        public static T ToSpecificGravity<T>(this SpecificGravity<T> quantity) where T : IFloatingPoint<T> => quantity.SpecificGravity;
+        public static T ToSpecificGravity<T>(this SpecificGravity<T> quantity) where T : IFloatingPoint<T> => quantity.SpecificGravityValue;
 
         public static SpecificGravity<T> FromRelativeDensity<T>(T value) where T : IFloatingPoint<T> => SpecificGravity<T>.FromRelativeDensity(value);
         public static T ToRelativeDensity<T>(this SpecificGravity<T> quantity) where T : IFloatingPoint<T> => quantity.RelativeDensity;

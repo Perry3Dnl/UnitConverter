@@ -86,6 +86,9 @@ def enum_type(family):
 def converter_type(family):
     return f"global::UnitConverter.{family['folder']}.{family['converter']}"
 
+def unit_property_name(family, unit):
+    return unit + "Value" if unit == family["type"] else unit
+
 def render_resolver(family, indent="        "):
     e = enum_type(family)
     c = converter_type(family)
@@ -162,10 +165,11 @@ def render_full(family):
         "",
     ]
     for unit in family["units"]:
+        property_name = unit_property_name(family, unit)
         if unit == base:
-            lines.append(f"        public T {unit} => _baseValue;")
+            lines.append(f"        public T {property_name} => _baseValue;")
         else:
-            lines.append(f"        public T {unit} => UnitConverterNumeric.Convert(_baseValue, BaseUnit, {e}.{unit});")
+            lines.append(f"        public T {property_name} => UnitConverterNumeric.Convert(_baseValue, BaseUnit, {e}.{unit});")
 
     lines.append("")
     for unit in family["units"]:
@@ -255,7 +259,7 @@ def render_full(family):
     for unit in family["units"]:
         lines.extend([
             f"        public static {name}<T> From{unit}<T>(T value) where T : IFloatingPoint<T> => {name}<T>.From{unit}(value);",
-            f"        public static T To{unit}<T>(this {name}<T> quantity) where T : IFloatingPoint<T> => quantity.{unit};",
+            f"        public static T To{unit}<T>(this {name}<T> quantity) where T : IFloatingPoint<T> => quantity.{unit_property_name(family, unit)};",
             "",
         ])
     lines.extend([
