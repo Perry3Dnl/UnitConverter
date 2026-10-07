@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ForcePerLength<T> operator +(ForcePerLength<T> left, ForcePerLength<T> right) => new ForcePerLength<T>(left._baseValue + right._baseValue);
         public static ForcePerLength<T> operator -(ForcePerLength<T> left, ForcePerLength<T> right) => new ForcePerLength<T>(left._baseValue - right._baseValue);

@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static HeatTransferCoefficient<T> operator +(HeatTransferCoefficient<T> left, HeatTransferCoefficient<T> right) => new HeatTransferCoefficient<T>(left._baseValue + right._baseValue);
         public static HeatTransferCoefficient<T> operator -(HeatTransferCoefficient<T> left, HeatTransferCoefficient<T> right) => new HeatTransferCoefficient<T>(left._baseValue - right._baseValue);

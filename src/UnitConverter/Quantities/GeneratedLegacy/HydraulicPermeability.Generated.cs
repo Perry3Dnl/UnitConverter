@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static HydraulicPermeability<T> operator +(HydraulicPermeability<T> left, HydraulicPermeability<T> right) => new HydraulicPermeability<T>(left._baseValue + right._baseValue);
         public static HydraulicPermeability<T> operator -(HydraulicPermeability<T> left, HydraulicPermeability<T> right) => new HydraulicPermeability<T>(left._baseValue - right._baseValue);

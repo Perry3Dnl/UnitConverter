@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static FrameRate<T> operator +(FrameRate<T> left, FrameRate<T> right) => new FrameRate<T>(left._baseValue + right._baseValue);
         public static FrameRate<T> operator -(FrameRate<T> left, FrameRate<T> right) => new FrameRate<T>(left._baseValue - right._baseValue);

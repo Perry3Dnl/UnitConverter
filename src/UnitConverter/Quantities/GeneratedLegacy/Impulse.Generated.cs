@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Impulse<T> operator +(Impulse<T> left, Impulse<T> right) => new Impulse<T>(left._baseValue + right._baseValue);
         public static Impulse<T> operator -(Impulse<T> left, Impulse<T> right) => new Impulse<T>(left._baseValue - right._baseValue);

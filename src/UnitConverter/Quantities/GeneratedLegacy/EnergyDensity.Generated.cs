@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static EnergyDensity<T> operator +(EnergyDensity<T> left, EnergyDensity<T> right) => new EnergyDensity<T>(left._baseValue + right._baseValue);
         public static EnergyDensity<T> operator -(EnergyDensity<T> left, EnergyDensity<T> right) => new EnergyDensity<T>(left._baseValue - right._baseValue);

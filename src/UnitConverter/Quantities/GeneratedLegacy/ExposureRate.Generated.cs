@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ExposureRate<T> operator +(ExposureRate<T> left, ExposureRate<T> right) => new ExposureRate<T>(left._baseValue + right._baseValue);
         public static ExposureRate<T> operator -(ExposureRate<T> left, ExposureRate<T> right) => new ExposureRate<T>(left._baseValue - right._baseValue);
