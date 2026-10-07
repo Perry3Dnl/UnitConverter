@@ -16,13 +16,15 @@ python scripts/verify_package.py artifacts/packages
 
 Use a clean `artifacts/packages` directory when changing versions; verification requires exactly one candidate package.
 
-Output includes the `.nupkg` for installation and `.snupkg` for debug symbols. The installable package contains the conversion DLL and README, with no Unity assemblies, editor tools, test dependencies, or scenes. Only the library project is packable.
+Output includes the `.nupkg` for installation and `.snupkg` for debug symbols. The installable packages contain their assemblies, README, `LICENSE.md`, and `NOTICE`, with no Unity assemblies, editor tools, test dependencies, or scenes.
 
 ## Candidate versus publication
 
 The workflow builds downloadable package artifacts. It does not push to nuget.org or a package registry.
 
-Before a public release, choose the project license and add matching package license metadata; the original source did not include a license. Also confirm ownership or availability of the intended NuGet package ID. No license has been assigned automatically during migration.
+The packages use a custom license file because the project is licensed under Apache License 2.0 subject to the Commons Clause License Condition v1.0. NuGet package metadata points to `LICENSE.md`, and both `LICENSE.md` and `NOTICE` are included at the package root. This is a source-available license, not an OSI-approved open-source license.
+
+Before publication, confirm ownership or availability of the intended NuGet package IDs.
 
 ## References
 

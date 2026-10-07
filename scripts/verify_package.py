@@ -49,6 +49,8 @@ with zipfile.ZipFile(core_package) as archive:
     names = archive.namelist()
     assert "lib/netstandard2.0/UnitConverter.dll" in names
     assert "README.md" in names
+    assert "LICENSE.md" in names
+    assert "NOTICE" in names
     assert sorted(name for name in names if name.endswith(".dll")) == [
         "lib/net8.0/UnitConverter.dll",
         "lib/netstandard2.0/UnitConverter.dll",
@@ -66,11 +68,17 @@ with zipfile.ZipFile(core_package) as archive:
     dependencies = metadata.findall(".//n:dependency", namespace)
     assert all(dependency.attrib["id"] == "NETStandard.Library" for dependency in dependencies)
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    license_element = metadata.find("n:license", namespace)
+    assert license_element is not None
+    assert license_element.attrib.get("type") == "file"
+    assert license_element.text == "LICENSE.md"
 
 with zipfile.ZipFile(json_package) as archive:
     names = archive.namelist()
     assert "lib/netstandard2.0/UnitConverter.SystemTextJson.dll" in names
     assert "README.md" in names
+    assert "LICENSE.md" in names
+    assert "NOTICE" in names
     specification = ET.fromstring(
         archive.read(next(name for name in names if name.endswith(".nuspec"))))
     namespace = {"n": specification.tag.split("}")[0][1:]}
@@ -85,6 +93,10 @@ with zipfile.ZipFile(json_package) as archive:
     assert "UnitConverter" in dependency_ids
     assert "System.Text.Json" in dependency_ids
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    license_element = metadata.find("n:license", namespace)
+    assert license_element is not None
+    assert license_element.attrib.get("type") == "file"
+    assert license_element.text == "LICENSE.md"
 
 with tempfile.TemporaryDirectory(prefix="unitconverter-package-") as temporary:
     consumer = Path(temporary)
