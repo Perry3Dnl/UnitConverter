@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class ElectricChargeMethods
+    public static partial class ElectricChargeMethods
     {
         public static ElectricCharge<T> FromCoulombs<T>(T value) where T : IFloatingPoint<T>
             => ElectricCharge<T>.FromCoulombs(value);
@@ -15,18 +15,10 @@ namespace UnitConverter.Quantities
             => quantity.Coulombs;
 
         public static ElectricCharge<T> From<T>(T value, UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Coulomb => ElectricCharge<T>.FromCoulombs(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => ElectricCharge<T>.From(value, unit);
 
         public static T In<T>(this ElectricCharge<T> quantity, UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Coulomb => quantity.Coulombs,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit from, UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

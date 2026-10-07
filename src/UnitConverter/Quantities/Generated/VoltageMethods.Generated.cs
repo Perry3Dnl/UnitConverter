@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class VoltageMethods
+    public static partial class VoltageMethods
     {
         public static Voltage<T> FromVolts<T>(T value) where T : IFloatingPoint<T>
             => Voltage<T>.FromVolts(value);
@@ -21,20 +21,10 @@ namespace UnitConverter.Quantities
             => quantity.Millivolts;
 
         public static Voltage<T> From<T>(T value, UnitConverter.Voltage.UnitConverterVoltageUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Voltage.UnitConverterVoltageUnit.Volt => Voltage<T>.FromVolts(value),
-                UnitConverter.Voltage.UnitConverterVoltageUnit.Millivolt => Voltage<T>.FromMillivolts(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Voltage<T>.From(value, unit);
 
         public static T In<T>(this Voltage<T> quantity, UnitConverter.Voltage.UnitConverterVoltageUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Voltage.UnitConverterVoltageUnit.Volt => quantity.Volts,
-                UnitConverter.Voltage.UnitConverterVoltageUnit.Millivolt => quantity.Millivolts,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Voltage.UnitConverterVoltageUnit from, UnitConverter.Voltage.UnitConverterVoltageUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

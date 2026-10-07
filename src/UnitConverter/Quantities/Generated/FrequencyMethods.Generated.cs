@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class FrequencyMethods
+    public static partial class FrequencyMethods
     {
         public static Frequency<T> FromHertz<T>(T value) where T : IFloatingPoint<T>
             => Frequency<T>.FromHertz(value);
@@ -27,22 +27,10 @@ namespace UnitConverter.Quantities
             => quantity.Megahertz;
 
         public static Frequency<T> From<T>(T value, UnitConverter.Frequency.UnitConverterFrequencyUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Frequency.UnitConverterFrequencyUnit.Hertz => Frequency<T>.FromHertz(value),
-                UnitConverter.Frequency.UnitConverterFrequencyUnit.Kilohertz => Frequency<T>.FromKilohertz(value),
-                UnitConverter.Frequency.UnitConverterFrequencyUnit.Megahertz => Frequency<T>.FromMegahertz(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Frequency<T>.From(value, unit);
 
         public static T In<T>(this Frequency<T> quantity, UnitConverter.Frequency.UnitConverterFrequencyUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Frequency.UnitConverterFrequencyUnit.Hertz => quantity.Hertz,
-                UnitConverter.Frequency.UnitConverterFrequencyUnit.Kilohertz => quantity.Kilohertz,
-                UnitConverter.Frequency.UnitConverterFrequencyUnit.Megahertz => quantity.Megahertz,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Frequency.UnitConverterFrequencyUnit from, UnitConverter.Frequency.UnitConverterFrequencyUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

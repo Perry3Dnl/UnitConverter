@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class ElectricCurrentMethods
+    public static partial class ElectricCurrentMethods
     {
         public static ElectricCurrent<T> FromAmperes<T>(T value) where T : IFloatingPoint<T>
             => ElectricCurrent<T>.FromAmperes(value);
@@ -21,20 +21,10 @@ namespace UnitConverter.Quantities
             => quantity.Milliamperes;
 
         public static ElectricCurrent<T> From<T>(T value, UnitConverter.Current.UnitConverterCurrentUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Current.UnitConverterCurrentUnit.Ampere => ElectricCurrent<T>.FromAmperes(value),
-                UnitConverter.Current.UnitConverterCurrentUnit.Milliampere => ElectricCurrent<T>.FromMilliamperes(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => ElectricCurrent<T>.From(value, unit);
 
         public static T In<T>(this ElectricCurrent<T> quantity, UnitConverter.Current.UnitConverterCurrentUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Current.UnitConverterCurrentUnit.Ampere => quantity.Amperes,
-                UnitConverter.Current.UnitConverterCurrentUnit.Milliampere => quantity.Milliamperes,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Current.UnitConverterCurrentUnit from, UnitConverter.Current.UnitConverterCurrentUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class SpeedMethods
+    public static partial class SpeedMethods
     {
         public static Speed<T> FromMetresPerSecond<T>(T value) where T : IFloatingPoint<T>
             => Speed<T>.FromMetresPerSecond(value);
@@ -33,24 +33,10 @@ namespace UnitConverter.Quantities
             => quantity.Knots;
 
         public static Speed<T> From<T>(T value, UnitConverter.Speed.UnitConverterSpeedUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond => Speed<T>.FromMetresPerSecond(value),
-                UnitConverter.Speed.UnitConverterSpeedUnit.KilometerPerHour => Speed<T>.FromKilometresPerHour(value),
-                UnitConverter.Speed.UnitConverterSpeedUnit.MilePerHour => Speed<T>.FromMilesPerHour(value),
-                UnitConverter.Speed.UnitConverterSpeedUnit.Knot => Speed<T>.FromKnots(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Speed<T>.From(value, unit);
 
         public static T In<T>(this Speed<T> quantity, UnitConverter.Speed.UnitConverterSpeedUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond => quantity.MetresPerSecond,
-                UnitConverter.Speed.UnitConverterSpeedUnit.KilometerPerHour => quantity.KilometresPerHour,
-                UnitConverter.Speed.UnitConverterSpeedUnit.MilePerHour => quantity.MilesPerHour,
-                UnitConverter.Speed.UnitConverterSpeedUnit.Knot => quantity.Knots,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Speed.UnitConverterSpeedUnit from, UnitConverter.Speed.UnitConverterSpeedUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

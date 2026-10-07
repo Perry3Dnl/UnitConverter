@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class TimeMethods
+    public static partial class TimeMethods
     {
         public static Time<T> FromSeconds<T>(T value) where T : IFloatingPoint<T>
             => Time<T>.FromSeconds(value);
@@ -39,26 +39,10 @@ namespace UnitConverter.Quantities
             => quantity.Days;
 
         public static Time<T> From<T>(T value, UnitConverter.Time.UnitConverterTimeUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Time.UnitConverterTimeUnit.Second => Time<T>.FromSeconds(value),
-                UnitConverter.Time.UnitConverterTimeUnit.Millisecond => Time<T>.FromMilliseconds(value),
-                UnitConverter.Time.UnitConverterTimeUnit.Minute => Time<T>.FromMinutes(value),
-                UnitConverter.Time.UnitConverterTimeUnit.Hour => Time<T>.FromHours(value),
-                UnitConverter.Time.UnitConverterTimeUnit.Day => Time<T>.FromDays(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Time<T>.From(value, unit);
 
         public static T In<T>(this Time<T> quantity, UnitConverter.Time.UnitConverterTimeUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Time.UnitConverterTimeUnit.Second => quantity.Seconds,
-                UnitConverter.Time.UnitConverterTimeUnit.Millisecond => quantity.Milliseconds,
-                UnitConverter.Time.UnitConverterTimeUnit.Minute => quantity.Minutes,
-                UnitConverter.Time.UnitConverterTimeUnit.Hour => quantity.Hours,
-                UnitConverter.Time.UnitConverterTimeUnit.Day => quantity.Days,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Time.UnitConverterTimeUnit from, UnitConverter.Time.UnitConverterTimeUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class ResistanceMethods
+    public static partial class ResistanceMethods
     {
         public static Resistance<T> FromOhms<T>(T value) where T : IFloatingPoint<T>
             => Resistance<T>.FromOhms(value);
@@ -21,20 +21,10 @@ namespace UnitConverter.Quantities
             => quantity.Kiloohms;
 
         public static Resistance<T> From<T>(T value, UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Ohm => Resistance<T>.FromOhms(value),
-                UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Kiloohm => Resistance<T>.FromKiloohms(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Resistance<T>.From(value, unit);
 
         public static T In<T>(this Resistance<T> quantity, UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Ohm => quantity.Ohms,
-                UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Kiloohm => quantity.Kiloohms,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit from, UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);
