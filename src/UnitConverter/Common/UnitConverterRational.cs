@@ -157,7 +157,10 @@ namespace UnitConverter
             if (typeof(T) == typeof(decimal))
                 return (T)(object)Apply((decimal)(object)value);
 
-            return value * T.CreateChecked(ToDouble());
+            if (Numerator <= Denominator)
+                return ApplyInteger(ApplyInteger(value, Numerator, true), Denominator, false);
+
+            return ApplyInteger(ApplyInteger(value, Denominator, false), Numerator, true);
         }
 
         public T ApplyInverse<T>(T value) where T : IFloatingPoint<T>
@@ -165,7 +168,46 @@ namespace UnitConverter
             if (typeof(T) == typeof(decimal))
                 return (T)(object)ApplyInverse((decimal)(object)value);
 
-            return value / T.CreateChecked(ToDouble());
+            if (Numerator <= Denominator)
+                return ApplyInteger(ApplyInteger(value, Denominator, true), Numerator, false);
+
+            return ApplyInteger(ApplyInteger(value, Numerator, false), Denominator, true);
+        }
+
+        private static T ApplyInteger<T>(T value, BigInteger factor, bool multiply)
+            where T : IFloatingPoint<T>
+        {
+            if (factor.Sign < 0)
+            {
+                value = -value;
+                factor = BigInteger.Abs(factor);
+            }
+
+            if (factor.IsOne)
+                return value;
+
+            BigInteger chunkBase = new BigInteger(1_000_000_000_000_000_000L);
+            while (factor > long.MaxValue)
+            {
+                BigInteger chunk = BigInteger.GreatestCommonDivisor(factor, chunkBase);
+                if (chunk.IsOne)
+                {
+                    T converted = T.CreateChecked((double)factor);
+                    return multiply ? value * converted : value / converted;
+                }
+
+                T convertedChunk = T.CreateChecked((long)chunk);
+                value = multiply ? value * convertedChunk : value / convertedChunk;
+                factor /= chunk;
+            }
+
+            if (!factor.IsOne)
+            {
+                T converted = T.CreateChecked((long)factor);
+                value = multiply ? value * converted : value / converted;
+            }
+
+            return value;
         }
 #endif
 
