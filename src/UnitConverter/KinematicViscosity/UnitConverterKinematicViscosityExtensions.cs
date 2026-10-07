@@ -19,7 +19,7 @@ namespace UnitConverter.KinematicViscosity
 
         public static decimal Convert(this decimal value, UnitConverterKinematicViscosityUnit from, UnitConverterKinematicViscosityUnit to)
         {
-            return (decimal)UnitConverterKinematicViscosity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterKinematicViscosityUnit from, UnitConverterKinematicViscosityUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.Impulse
 
         public static decimal Convert(this decimal value, UnitConverterImpulseUnit from, UnitConverterImpulseUnit to)
         {
-            return (decimal)UnitConverterImpulse.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterImpulseUnit from, UnitConverterImpulseUnit to)

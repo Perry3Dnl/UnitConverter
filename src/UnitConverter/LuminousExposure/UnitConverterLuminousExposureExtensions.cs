@@ -19,7 +19,7 @@ namespace UnitConverter.LuminousExposure
 
         public static decimal Convert(this decimal value, UnitConverterLuminousExposureUnit from, UnitConverterLuminousExposureUnit to)
         {
-            return (decimal)UnitConverterLuminousExposure.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterLuminousExposureUnit from, UnitConverterLuminousExposureUnit to)

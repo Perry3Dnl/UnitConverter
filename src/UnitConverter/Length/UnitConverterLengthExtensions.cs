@@ -19,7 +19,7 @@ namespace UnitConverter.Length
 
         public static decimal Convert(this decimal value, UnitConverterLengthUnit from, UnitConverterLengthUnit to)
         {
-            return (decimal)UnitConverterLength.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterLengthUnit from, UnitConverterLengthUnit to) { return UnitConverterLength.Convert(value, from, to); }
