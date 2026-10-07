@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static PixelDensity<T> operator +(PixelDensity<T> left, PixelDensity<T> right) => new PixelDensity<T>(left._baseValue + right._baseValue);
         public static PixelDensity<T> operator -(PixelDensity<T> left, PixelDensity<T> right) => new PixelDensity<T>(left._baseValue - right._baseValue);

@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Momentum<T> operator +(Momentum<T> left, Momentum<T> right) => new Momentum<T>(left._baseValue + right._baseValue);
         public static Momentum<T> operator -(Momentum<T> left, Momentum<T> right) => new Momentum<T>(left._baseValue - right._baseValue);

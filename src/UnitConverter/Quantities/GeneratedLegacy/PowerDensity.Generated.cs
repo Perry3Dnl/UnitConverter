@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static PowerDensity<T> operator +(PowerDensity<T> left, PowerDensity<T> right) => new PowerDensity<T>(left._baseValue + right._baseValue);
         public static PowerDensity<T> operator -(PowerDensity<T> left, PowerDensity<T> right) => new PowerDensity<T>(left._baseValue - right._baseValue);

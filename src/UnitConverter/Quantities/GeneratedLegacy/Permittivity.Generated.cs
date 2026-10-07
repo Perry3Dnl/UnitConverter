@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Permittivity<T> operator +(Permittivity<T> left, Permittivity<T> right) => new Permittivity<T>(left._baseValue + right._baseValue);
         public static Permittivity<T> operator -(Permittivity<T> left, Permittivity<T> right) => new Permittivity<T>(left._baseValue - right._baseValue);

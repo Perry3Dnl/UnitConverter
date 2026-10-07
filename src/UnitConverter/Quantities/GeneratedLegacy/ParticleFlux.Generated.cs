@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ParticleFlux<T> operator +(ParticleFlux<T> left, ParticleFlux<T> right) => new ParticleFlux<T>(left._baseValue + right._baseValue);
         public static ParticleFlux<T> operator -(ParticleFlux<T> left, ParticleFlux<T> right) => new ParticleFlux<T>(left._baseValue - right._baseValue);

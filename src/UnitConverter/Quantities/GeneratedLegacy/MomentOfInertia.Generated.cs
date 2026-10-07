@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MomentOfInertia<T> operator +(MomentOfInertia<T> left, MomentOfInertia<T> right) => new MomentOfInertia<T>(left._baseValue + right._baseValue);
         public static MomentOfInertia<T> operator -(MomentOfInertia<T> left, MomentOfInertia<T> right) => new MomentOfInertia<T>(left._baseValue - right._baseValue);

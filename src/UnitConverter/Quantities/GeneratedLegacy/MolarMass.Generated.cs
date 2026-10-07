@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MolarMass<T> operator +(MolarMass<T> left, MolarMass<T> right) => new MolarMass<T>(left._baseValue + right._baseValue);
         public static MolarMass<T> operator -(MolarMass<T> left, MolarMass<T> right) => new MolarMass<T>(left._baseValue - right._baseValue);

@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MolarConcentration<T> operator +(MolarConcentration<T> left, MolarConcentration<T> right) => new MolarConcentration<T>(left._baseValue + right._baseValue);
         public static MolarConcentration<T> operator -(MolarConcentration<T> left, MolarConcentration<T> right) => new MolarConcentration<T>(left._baseValue - right._baseValue);
