@@ -19,7 +19,7 @@ namespace UnitConverter.TorquePerAngle
 
         public static decimal Convert(this decimal value, UnitConverterTorquePerAngleUnit from, UnitConverterTorquePerAngleUnit to)
         {
-            return (decimal)UnitConverterTorquePerAngle.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterTorquePerAngleUnit from, UnitConverterTorquePerAngleUnit to)

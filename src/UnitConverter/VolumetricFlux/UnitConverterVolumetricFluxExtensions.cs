@@ -19,7 +19,7 @@ namespace UnitConverter.VolumetricFlux
 
         public static decimal Convert(this decimal value, UnitConverterVolumetricFluxUnit from, UnitConverterVolumetricFluxUnit to)
         {
-            return (decimal)UnitConverterVolumetricFlux.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterVolumetricFluxUnit from, UnitConverterVolumetricFluxUnit to)

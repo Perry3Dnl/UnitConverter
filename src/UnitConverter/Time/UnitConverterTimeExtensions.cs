@@ -19,7 +19,7 @@ namespace UnitConverter.Time
 
         public static decimal Convert(this decimal value, UnitConverterTimeUnit from, UnitConverterTimeUnit to)
         {
-            return (decimal)UnitConverterTime.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterTimeUnit from, UnitConverterTimeUnit to)

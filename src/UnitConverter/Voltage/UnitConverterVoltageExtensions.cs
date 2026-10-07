@@ -19,7 +19,7 @@ namespace UnitConverter.Voltage
 
         public static decimal Convert(this decimal value, UnitConverterVoltageUnit from, UnitConverterVoltageUnit to)
         {
-            return (decimal)UnitConverterVoltage.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterVoltageUnit from, UnitConverterVoltageUnit to)

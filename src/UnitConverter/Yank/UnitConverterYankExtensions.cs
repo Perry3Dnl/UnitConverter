@@ -19,7 +19,7 @@ namespace UnitConverter.Yank
 
         public static decimal Convert(this decimal value, UnitConverterYankUnit from, UnitConverterYankUnit to)
         {
-            return (decimal)UnitConverterYank.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterYankUnit from, UnitConverterYankUnit to)
