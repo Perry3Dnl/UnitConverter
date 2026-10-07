@@ -26,6 +26,16 @@ namespace UnitConverter.Catalog
             {
                 return result;
             }
+            result = GetAliasesPart5(family, unitName);
+            if (result != null)
+            {
+                return result;
+            }
+            result = GetAliasesPart6(family, unitName);
+            if (result != null)
+            {
+                return result;
+            }
             return null;
         }
     }

@@ -2,10 +2,10 @@
 
 This page is generated from the runtime converter enums in the package.
 
-- Conversion families: 98
-- Supported units: 1650
-- Compatible paths including same-unit conversions: 40,484
-- Compatible paths excluding same-unit conversions: 38,834
+- Conversion families: 150
+- Supported units: 1858
+- Compatible paths including same-unit conversions: 41,316
+- Compatible paths excluding same-unit conversions: 39,458
 
 ## Acceleration
 
@@ -2150,3 +2150,476 @@ This page is generated from the runtime converter enums in the package.
 ## Legacy pixel-density alias
 
 `PixelPerUnityUnit` is retained for source compatibility. It is a numeric alias with the original convention that one unit equals one metre; it has no engine dependency or configurable project scale.
+
+
+# Additional 2.0 families
+
+The 52 families below are generated from `definitions/additional-families.json` and bring the standalone package to 150 conversion families.
+
+## Stress
+
+4 units.
+
+- `Pascal`
+- `Kilopascal`
+- `Megapascal`
+- `Gigapascal`
+
+## Young Modulus
+
+4 units.
+
+- `Pascal`
+- `Kilopascal`
+- `Megapascal`
+- `Gigapascal`
+
+## Shear Modulus
+
+4 units.
+
+- `Pascal`
+- `Kilopascal`
+- `Megapascal`
+- `Gigapascal`
+
+## Bulk Modulus
+
+4 units.
+
+- `Pascal`
+- `Kilopascal`
+- `Megapascal`
+- `Gigapascal`
+
+## Strain
+
+4 units.
+
+- `Ratio`
+- `Percent`
+- `PerMille`
+- `Microstrain`
+
+## Strain Rate
+
+4 units.
+
+- `PerSecond`
+- `PerMinute`
+- `PerHour`
+- `PercentPerSecond`
+
+## Compliance
+
+4 units.
+
+- `PerPascal`
+- `PerKilopascal`
+- `PerMegapascal`
+- `PerGigapascal`
+
+## Spring Constant
+
+4 units.
+
+- `NewtonPerMeter`
+- `KilonewtonPerMeter`
+- `NewtonPerMillimeter`
+- `KilonewtonPerMillimeter`
+
+## Flexural Rigidity
+
+4 units.
+
+- `NewtonSquareMeter`
+- `KilonewtonSquareMeter`
+- `NewtonSquareMillimeter`
+- `KilonewtonSquareMillimeter`
+
+## Damping Coefficient
+
+4 units.
+
+- `NewtonSecondPerMeter`
+- `KilonewtonSecondPerMeter`
+- `NewtonSecondPerMillimeter`
+- `KilonewtonSecondPerMillimeter`
+
+## Mechanical Mobility
+
+4 units.
+
+- `MeterPerNewtonSecond`
+- `MillimeterPerNewtonSecond`
+- `MeterPerKilonewtonSecond`
+- `MillimeterPerKilonewtonSecond`
+
+## Section Modulus
+
+4 units.
+
+- `CubicMeter`
+- `CubicDecimeter`
+- `CubicCentimeter`
+- `CubicMillimeter`
+
+## Area Moment Of Inertia
+
+4 units.
+
+- `MeterFourth`
+- `DecimeterFourth`
+- `CentimeterFourth`
+- `MillimeterFourth`
+
+## Heat Capacity
+
+4 units.
+
+- `JoulePerKelvin`
+- `KilojoulePerKelvin`
+- `MegajoulePerKelvin`
+- `MillijoulePerKelvin`
+
+## Entropy
+
+4 units.
+
+- `JoulePerKelvin`
+- `KilojoulePerKelvin`
+- `MegajoulePerKelvin`
+- `MillijoulePerKelvin`
+
+## Thermal Resistance
+
+4 units.
+
+- `KelvinPerWatt`
+- `KelvinPerKilowatt`
+- `MillikelvinPerWatt`
+- `KelvinPerMilliwatt`
+
+## Thermal Conductance
+
+4 units.
+
+- `WattPerKelvin`
+- `KilowattPerKelvin`
+- `MilliwattPerKelvin`
+- `MegawattPerKelvin`
+
+## Thermal Resistivity
+
+4 units.
+
+- `KelvinMeterPerWatt`
+- `KelvinCentimeterPerWatt`
+- `KelvinMillimeterPerWatt`
+- `KelvinMeterPerKilowatt`
+
+## Specific Entropy
+
+4 units.
+
+- `JoulePerKilogramKelvin`
+- `KilojoulePerKilogramKelvin`
+- `JoulePerGramKelvin`
+- `KilojoulePerGramKelvin`
+
+## Molar Entropy
+
+4 units.
+
+- `JoulePerMoleKelvin`
+- `KilojoulePerMoleKelvin`
+- `JoulePerKilomoleKelvin`
+- `KilojoulePerKilomoleKelvin`
+
+## Molar Heat Capacity
+
+4 units.
+
+- `JoulePerMoleKelvin`
+- `KilojoulePerMoleKelvin`
+- `JoulePerKilomoleKelvin`
+- `KilojoulePerKilomoleKelvin`
+
+## Specific Energy
+
+4 units.
+
+- `JoulePerKilogram`
+- `KilojoulePerKilogram`
+- `MegajoulePerKilogram`
+- `WattHourPerKilogram`
+
+## Specific Enthalpy
+
+4 units.
+
+- `JoulePerKilogram`
+- `KilojoulePerKilogram`
+- `MegajoulePerKilogram`
+- `WattHourPerKilogram`
+
+## Molar Energy
+
+4 units.
+
+- `JoulePerMole`
+- `KilojoulePerMole`
+- `MegajoulePerMole`
+- `JoulePerKilomole`
+
+## Volumetric Heat Capacity
+
+4 units.
+
+- `JoulePerCubicMeterKelvin`
+- `KilojoulePerCubicMeterKelvin`
+- `MegajoulePerCubicMeterKelvin`
+- `JoulePerLiterKelvin`
+
+## Heat Flux Density
+
+4 units.
+
+- `WattPerSquareMeter`
+- `KilowattPerSquareMeter`
+- `WattPerSquareCentimeter`
+- `MilliwattPerSquareCentimeter`
+
+## Angular Frequency
+
+4 units.
+
+- `RadianPerSecond`
+- `KiloradianPerSecond`
+- `MilliradianPerSecond`
+- `RadianPerMinute`
+
+## Wavenumber
+
+4 units.
+
+- `PerMeter`
+- `PerCentimeter`
+- `PerMillimeter`
+- `PerKilometer`
+
+## Linear Charge Density
+
+4 units.
+
+- `CoulombPerMeter`
+- `MillicoulombPerMeter`
+- `MicrocoulombPerMeter`
+- `CoulombPerKilometer`
+
+## Surface Charge Density
+
+4 units.
+
+- `CoulombPerSquareMeter`
+- `MillicoulombPerSquareMeter`
+- `MicrocoulombPerSquareMeter`
+- `CoulombPerSquareCentimeter`
+
+## Electric Dipole Moment
+
+4 units.
+
+- `CoulombMeter`
+- `MillicoulombMeter`
+- `MicrocoulombMeter`
+- `Debye`
+
+## Magnetic Dipole Moment
+
+4 units.
+
+- `AmpereSquareMeter`
+- `MilliampereSquareMeter`
+- `AmpereSquareCentimeter`
+- `ElectromagneticUnit`
+
+## Magnetic Reluctance
+
+4 units.
+
+- `AmperePerWeber`
+- `KiloamperePerWeber`
+- `AmperePerMilliweber`
+- `KiloamperePerMilliweber`
+
+## Elastance
+
+4 units.
+
+- `PerFarad`
+- `PerMillifarad`
+- `PerMicrofarad`
+- `PerNanofarad`
+
+## Impedance
+
+4 units.
+
+- `Ohm`
+- `Milliohm`
+- `Kiloohm`
+- `Megaohm`
+
+## Reactance
+
+4 units.
+
+- `Ohm`
+- `Milliohm`
+- `Kiloohm`
+- `Megaohm`
+
+## Electric Susceptibility
+
+4 units.
+
+- `Ratio`
+- `Percent`
+- `Ppm`
+- `Ppb`
+
+## Magnetic Susceptibility
+
+4 units.
+
+- `Ratio`
+- `Percent`
+- `Ppm`
+- `Ppb`
+
+## Magnetic Vector Potential
+
+4 units.
+
+- `WeberPerMeter`
+- `MilliweberPerMeter`
+- `MicroweberPerMeter`
+- `WeberPerKilometer`
+
+## Catalytic Activity
+
+4 units.
+
+- `Katal`
+- `Millikatal`
+- `Microkatal`
+- `Nanokatal`
+
+## Catalytic Activity Concentration
+
+4 units.
+
+- `KatalPerCubicMeter`
+- `MillikatalPerCubicMeter`
+- `MicrokatalPerCubicMeter`
+- `KatalPerLiter`
+
+## Molality
+
+4 units.
+
+- `MolePerKilogram`
+- `MillimolePerKilogram`
+- `MolePerGram`
+- `MillimolePerGram`
+
+## Mole Fraction
+
+4 units.
+
+- `Ratio`
+- `Percent`
+- `PerMille`
+- `Ppm`
+
+## Mass Fraction
+
+4 units.
+
+- `Ratio`
+- `Percent`
+- `PerMille`
+- `Ppm`
+
+## Volume Fraction
+
+4 units.
+
+- `Ratio`
+- `Percent`
+- `PerMille`
+- `Ppm`
+
+## Osmolarity
+
+4 units.
+
+- `OsmolePerCubicMeter`
+- `OsmolePerLiter`
+- `MilliosmolePerLiter`
+- `MilliosmolePerCubicMeter`
+
+## Osmolality
+
+4 units.
+
+- `OsmolePerKilogram`
+- `MilliosmolePerKilogram`
+- `MicroosmolePerKilogram`
+- `OsmolePerGram`
+
+## Amount Flow Rate
+
+4 units.
+
+- `MolePerSecond`
+- `MillimolePerSecond`
+- `MolePerMinute`
+- `KilomolePerHour`
+
+## Molar Volume
+
+4 units.
+
+- `CubicMeterPerMole`
+- `LiterPerMole`
+- `CubicCentimeterPerMole`
+- `CubicMeterPerKilomole`
+
+## Permeability
+
+4 units.
+
+- `SquareMeter`
+- `MicrometerSquared`
+- `Darcy`
+- `Millidarcy`
+
+## Porosity
+
+4 units.
+
+- `Ratio`
+- `Percent`
+- `PerMille`
+- `Ppm`
+
+## Specific Surface Area
+
+4 units.
+
+- `SquareMeterPerKilogram`
+- `SquareMeterPerGram`
+- `SquareCentimeterPerGram`
+- `SquareMillimeterPerGram`

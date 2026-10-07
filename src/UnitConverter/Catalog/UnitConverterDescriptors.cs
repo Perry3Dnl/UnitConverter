@@ -67,6 +67,7 @@ namespace UnitConverter.Catalog
         where TUnit : struct
     {
         private readonly Func<double, TUnit, TUnit, double> _convert;
+        private readonly Func<TUnit, global::UnitConverter.UnitConverterRational> _getExactScale;
         private readonly UnitConverterUnitDescriptor[] _units;
         private readonly Dictionary<string, TUnit> _exactAliases;
         private readonly Dictionary<string, TUnit> _ignoreCaseAliases;
@@ -83,7 +84,8 @@ namespace UnitConverter.Catalog
             Func<TUnit, string> getDisplayName,
             Func<double, TUnit, TUnit, double> convert,
             Func<TUnit, string[]> getAliases,
-            Func<TUnit, UnitConverterDimensions> getDimensions)
+            Func<TUnit, UnitConverterDimensions> getDimensions,
+            Func<TUnit, global::UnitConverter.UnitConverterRational> getExactScale)
             : base(family, name, baseUnitName)
         {
             if (!typeof(TUnit).IsEnum)
@@ -92,6 +94,7 @@ namespace UnitConverter.Catalog
             }
 
             _convert = convert ?? throw new ArgumentNullException(nameof(convert));
+            _getExactScale = getExactScale;
             _exactAliases = new Dictionary<string, TUnit>(StringComparer.Ordinal);
             _ignoreCaseAliases = new Dictionary<string, TUnit>(StringComparer.OrdinalIgnoreCase);
             _ambiguousExactAliases = new HashSet<string>(StringComparer.Ordinal);
@@ -208,6 +211,21 @@ namespace UnitConverter.Catalog
         public double Convert(double value, TUnit from, TUnit to)
         {
             return _convert(value, from, to);
+        }
+
+        internal bool TryGetExactScale(
+            TUnit unit,
+            out global::UnitConverter.UnitConverterRational scale)
+        {
+            if (_getExactScale == null)
+            {
+                scale = global::UnitConverter.UnitConverterRational.Zero;
+                return false;
+            }
+
+            GetUnit(unit);
+            scale = _getExactScale(unit);
+            return true;
         }
 
         public UnitConverterUnitDescriptor GetUnit(TUnit unit)
@@ -360,7 +378,7 @@ namespace UnitConverter.Catalog
 
     public static partial class UnitConverterCatalog
     {
-        private static readonly UnitConverterFamilyDescriptor[] FamilyDescriptors =
+        private static readonly UnitConverterFamilyDescriptor[] CoreFamilyDescriptors =
         {
                 Create<UnitConverter.Acceleration.UnitConverterAccelerationUnit>(UnitConverterFamily.Acceleration, "Acceleration", "MeterPerSecondSquared", UnitConverter.Acceleration.UnitConverterAcceleration.GetSymbol, UnitConverter.Acceleration.UnitConverterAcceleration.GetDisplayName, UnitConverter.Acceleration.UnitConverterAcceleration.Convert),
                 Create<UnitConverter.ActivityConcentration.UnitConverterActivityConcentrationUnit>(UnitConverterFamily.ActivityConcentration, "ActivityConcentration", "BecquerelPerCubicMeter", UnitConverter.ActivityConcentration.UnitConverterActivityConcentration.GetSymbol, UnitConverter.ActivityConcentration.UnitConverterActivityConcentration.GetDisplayName, UnitConverter.ActivityConcentration.UnitConverterActivityConcentration.Convert),
@@ -462,6 +480,18 @@ namespace UnitConverter.Catalog
                 Create<UnitConverter.Yank.UnitConverterYankUnit>(UnitConverterFamily.Yank, "Yank", "NewtonPerSecond", UnitConverter.Yank.UnitConverterYank.GetSymbol, UnitConverter.Yank.UnitConverterYank.GetDisplayName, UnitConverter.Yank.UnitConverterYank.Convert),
         };
 
+        private static readonly UnitConverterFamilyDescriptor[] FamilyDescriptors =
+            BuildAllFamilyDescriptors();
+
+        private static UnitConverterFamilyDescriptor[] BuildAllFamilyDescriptors()
+        {
+            UnitConverterFamilyDescriptor[] additional = GetAdditionalFamilyDescriptors();
+            var result = new UnitConverterFamilyDescriptor[CoreFamilyDescriptors.Length + additional.Length];
+            Array.Copy(CoreFamilyDescriptors, 0, result, 0, CoreFamilyDescriptors.Length);
+            Array.Copy(additional, 0, result, CoreFamilyDescriptors.Length, additional.Length);
+            return result;
+        }
+
         private static readonly Dictionary<UnitConverterFamily, UnitConverterFamilyDescriptor> FamiliesById =
             BuildFamiliesById();
 
@@ -531,7 +561,8 @@ namespace UnitConverter.Catalog
             Func<TUnit, string> getDisplayName,
             Func<double, TUnit, TUnit, double> convert,
             Func<TUnit, string[]> getAliases = null,
-            Func<TUnit, UnitConverterDimensions> getDimensions = null)
+            Func<TUnit, UnitConverterDimensions> getDimensions = null,
+            Func<TUnit, global::UnitConverter.UnitConverterRational> getExactScale = null)
             where TUnit : struct
         {
             return new UnitConverterFamilyDescriptor<TUnit>(
@@ -542,7 +573,8 @@ namespace UnitConverter.Catalog
                 getDisplayName,
                 convert,
                 getAliases,
-                getDimensions);
+                getDimensions,
+                getExactScale);
         }
 
         private static Dictionary<UnitConverterFamily, UnitConverterFamilyDescriptor> BuildFamiliesById()

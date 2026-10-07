@@ -27,8 +27,8 @@ namespace UnitConverter.Tests
                 units += family.Units.Count;
             }
 
-            Assert.That(families.Length, Is.EqualTo(98));
-            Assert.That(units, Is.EqualTo(1650));
+            Assert.That(families.Length, Is.EqualTo(150));
+            Assert.That(units, Is.EqualTo(1858));
         }
 
         [Test]

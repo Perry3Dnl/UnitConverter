@@ -1,0 +1,1514 @@
+{
+  "version": 1,
+  "description": "Additional generated conversion families expanding the catalog from 98 to 150 families.",
+  "families": [
+    {
+      "name": "Stress",
+      "units": [
+        {
+          "name": "Pascal",
+          "symbol": "Pa",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Kilopascal",
+          "symbol": "kPa",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Megapascal",
+          "symbol": "MPa",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Gigapascal",
+          "symbol": "GPa",
+          "factor": "1000000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "Strain",
+      "units": [
+        {
+          "name": "Ratio",
+          "symbol": "1",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Percent",
+          "symbol": "%",
+          "factor": "0.01",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerMille",
+          "symbol": "‰",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "Microstrain",
+          "symbol": "µε",
+          "factor": "0.000001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "StrainRate",
+      "units": [
+        {
+          "name": "PerSecond",
+          "symbol": "1/s",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerMinute",
+          "symbol": "1/min",
+          "factor": "1/60",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerHour",
+          "symbol": "1/h",
+          "factor": "1/3600",
+          "system": "Engineering"
+        },
+        {
+          "name": "PercentPerSecond",
+          "symbol": "%/s",
+          "factor": "0.01",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "YoungModulus",
+      "units": [
+        {
+          "name": "Pascal",
+          "symbol": "Pa",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Kilopascal",
+          "symbol": "kPa",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Megapascal",
+          "symbol": "MPa",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Gigapascal",
+          "symbol": "GPa",
+          "factor": "1000000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "ShearModulus",
+      "units": [
+        {
+          "name": "Pascal",
+          "symbol": "Pa",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Kilopascal",
+          "symbol": "kPa",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Megapascal",
+          "symbol": "MPa",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Gigapascal",
+          "symbol": "GPa",
+          "factor": "1000000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "BulkModulus",
+      "units": [
+        {
+          "name": "Pascal",
+          "symbol": "Pa",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Kilopascal",
+          "symbol": "kPa",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Megapascal",
+          "symbol": "MPa",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Gigapascal",
+          "symbol": "GPa",
+          "factor": "1000000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "Compliance",
+      "units": [
+        {
+          "name": "PerPascal",
+          "symbol": "1/Pa",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerKilopascal",
+          "symbol": "1/kPa",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerMegapascal",
+          "symbol": "1/MPa",
+          "factor": "0.000001",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerGigapascal",
+          "symbol": "1/GPa",
+          "factor": "0.000000001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "SpringConstant",
+      "units": [
+        {
+          "name": "NewtonPerMeter",
+          "symbol": "N/m",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilonewtonPerMeter",
+          "symbol": "kN/m",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "NewtonPerMillimeter",
+          "symbol": "N/mm",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilonewtonPerMillimeter",
+          "symbol": "kN/mm",
+          "factor": "1000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "FlexuralRigidity",
+      "units": [
+        {
+          "name": "NewtonSquareMeter",
+          "symbol": "N·m²",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilonewtonSquareMeter",
+          "symbol": "kN·m²",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "NewtonSquareMillimeter",
+          "symbol": "N·mm²",
+          "factor": "0.000001",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilonewtonSquareMillimeter",
+          "symbol": "kN·mm²",
+          "factor": "0.001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "DampingCoefficient",
+      "units": [
+        {
+          "name": "NewtonSecondPerMeter",
+          "symbol": "N·s/m",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilonewtonSecondPerMeter",
+          "symbol": "kN·s/m",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "NewtonSecondPerMillimeter",
+          "symbol": "N·s/mm",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilonewtonSecondPerMillimeter",
+          "symbol": "kN·s/mm",
+          "factor": "1000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "MechanicalMobility",
+      "units": [
+        {
+          "name": "MeterPerNewtonSecond",
+          "symbol": "m/(N·s)",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "MillimeterPerNewtonSecond",
+          "symbol": "mm/(N·s)",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "MeterPerKilonewtonSecond",
+          "symbol": "m/(kN·s)",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "MillimeterPerKilonewtonSecond",
+          "symbol": "mm/(kN·s)",
+          "factor": "0.000001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "SectionModulus",
+      "units": [
+        {
+          "name": "CubicMeter",
+          "symbol": "m³",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "CubicDecimeter",
+          "symbol": "dm³",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "CubicCentimeter",
+          "symbol": "cm³",
+          "factor": "0.000001",
+          "system": "Engineering"
+        },
+        {
+          "name": "CubicMillimeter",
+          "symbol": "mm³",
+          "factor": "0.000000001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "AreaMomentOfInertia",
+      "units": [
+        {
+          "name": "MeterFourth",
+          "symbol": "m⁴",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "DecimeterFourth",
+          "symbol": "dm⁴",
+          "factor": "0.0001",
+          "system": "Engineering"
+        },
+        {
+          "name": "CentimeterFourth",
+          "symbol": "cm⁴",
+          "factor": "0.00000001",
+          "system": "Engineering"
+        },
+        {
+          "name": "MillimeterFourth",
+          "symbol": "mm⁴",
+          "factor": "0.000000000001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "HeatCapacity",
+      "units": [
+        {
+          "name": "JoulePerKelvin",
+          "symbol": "J/K",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilojoulePerKelvin",
+          "symbol": "kJ/K",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "MegajoulePerKelvin",
+          "symbol": "MJ/K",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "MillijoulePerKelvin",
+          "symbol": "mJ/K",
+          "factor": "0.001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "ThermalResistance",
+      "units": [
+        {
+          "name": "KelvinPerWatt",
+          "symbol": "K/W",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KelvinPerKilowatt",
+          "symbol": "K/kW",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "MillikelvinPerWatt",
+          "symbol": "mK/W",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "KelvinPerMilliwatt",
+          "symbol": "K/mW",
+          "factor": "1000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "ThermalConductance",
+      "units": [
+        {
+          "name": "WattPerKelvin",
+          "symbol": "W/K",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilowattPerKelvin",
+          "symbol": "kW/K",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "MilliwattPerKelvin",
+          "symbol": "mW/K",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "MegawattPerKelvin",
+          "symbol": "MW/K",
+          "factor": "1000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "ThermalResistivity",
+      "units": [
+        {
+          "name": "KelvinMeterPerWatt",
+          "symbol": "K·m/W",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KelvinCentimeterPerWatt",
+          "symbol": "K·cm/W",
+          "factor": "0.01",
+          "system": "Engineering"
+        },
+        {
+          "name": "KelvinMillimeterPerWatt",
+          "symbol": "K·mm/W",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "KelvinMeterPerKilowatt",
+          "symbol": "K·m/kW",
+          "factor": "0.001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "Entropy",
+      "units": [
+        {
+          "name": "JoulePerKelvin",
+          "symbol": "J/K",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerKelvin",
+          "symbol": "kJ/K",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "MegajoulePerKelvin",
+          "symbol": "MJ/K",
+          "factor": "1000000",
+          "system": "Scientific"
+        },
+        {
+          "name": "MillijoulePerKelvin",
+          "symbol": "mJ/K",
+          "factor": "0.001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "SpecificEntropy",
+      "units": [
+        {
+          "name": "JoulePerKilogramKelvin",
+          "symbol": "J/(kg·K)",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerKilogramKelvin",
+          "symbol": "kJ/(kg·K)",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "JoulePerGramKelvin",
+          "symbol": "J/(g·K)",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerGramKelvin",
+          "symbol": "kJ/(g·K)",
+          "factor": "1000000",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MolarEntropy",
+      "units": [
+        {
+          "name": "JoulePerMoleKelvin",
+          "symbol": "J/(mol·K)",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerMoleKelvin",
+          "symbol": "kJ/(mol·K)",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "JoulePerKilomoleKelvin",
+          "symbol": "J/(kmol·K)",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerKilomoleKelvin",
+          "symbol": "kJ/(kmol·K)",
+          "factor": "1",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "SpecificEnergy",
+      "units": [
+        {
+          "name": "JoulePerKilogram",
+          "symbol": "J/kg",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilojoulePerKilogram",
+          "symbol": "kJ/kg",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "MegajoulePerKilogram",
+          "symbol": "MJ/kg",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "WattHourPerKilogram",
+          "symbol": "Wh/kg",
+          "factor": "3600",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "SpecificEnthalpy",
+      "units": [
+        {
+          "name": "JoulePerKilogram",
+          "symbol": "J/kg",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilojoulePerKilogram",
+          "symbol": "kJ/kg",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "MegajoulePerKilogram",
+          "symbol": "MJ/kg",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "WattHourPerKilogram",
+          "symbol": "Wh/kg",
+          "factor": "3600",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "MolarEnergy",
+      "units": [
+        {
+          "name": "JoulePerMole",
+          "symbol": "J/mol",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerMole",
+          "symbol": "kJ/mol",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "MegajoulePerMole",
+          "symbol": "MJ/mol",
+          "factor": "1000000",
+          "system": "Scientific"
+        },
+        {
+          "name": "JoulePerKilomole",
+          "symbol": "J/kmol",
+          "factor": "0.001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MolarHeatCapacity",
+      "units": [
+        {
+          "name": "JoulePerMoleKelvin",
+          "symbol": "J/(mol·K)",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerMoleKelvin",
+          "symbol": "kJ/(mol·K)",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "JoulePerKilomoleKelvin",
+          "symbol": "J/(kmol·K)",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilojoulePerKilomoleKelvin",
+          "symbol": "kJ/(kmol·K)",
+          "factor": "1",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "VolumetricHeatCapacity",
+      "units": [
+        {
+          "name": "JoulePerCubicMeterKelvin",
+          "symbol": "J/(m³·K)",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilojoulePerCubicMeterKelvin",
+          "symbol": "kJ/(m³·K)",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "MegajoulePerCubicMeterKelvin",
+          "symbol": "MJ/(m³·K)",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "JoulePerLiterKelvin",
+          "symbol": "J/(L·K)",
+          "factor": "1000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "HeatFluxDensity",
+      "units": [
+        {
+          "name": "WattPerSquareMeter",
+          "symbol": "W/m²",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KilowattPerSquareMeter",
+          "symbol": "kW/m²",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "WattPerSquareCentimeter",
+          "symbol": "W/cm²",
+          "factor": "10000",
+          "system": "Engineering"
+        },
+        {
+          "name": "MilliwattPerSquareCentimeter",
+          "symbol": "mW/cm²",
+          "factor": "10",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "AngularFrequency",
+      "units": [
+        {
+          "name": "RadianPerSecond",
+          "symbol": "rad/s",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "KiloradianPerSecond",
+          "symbol": "krad/s",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "MilliradianPerSecond",
+          "symbol": "mrad/s",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "RadianPerMinute",
+          "symbol": "rad/min",
+          "factor": "1/60",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "Wavenumber",
+      "units": [
+        {
+          "name": "PerMeter",
+          "symbol": "1/m",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "PerCentimeter",
+          "symbol": "1/cm",
+          "factor": "100",
+          "system": "Scientific"
+        },
+        {
+          "name": "PerMillimeter",
+          "symbol": "1/mm",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "PerKilometer",
+          "symbol": "1/km",
+          "factor": "0.001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "LinearChargeDensity",
+      "units": [
+        {
+          "name": "CoulombPerMeter",
+          "symbol": "C/m",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "MillicoulombPerMeter",
+          "symbol": "mC/m",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "MicrocoulombPerMeter",
+          "symbol": "µC/m",
+          "factor": "0.000001",
+          "system": "Engineering"
+        },
+        {
+          "name": "CoulombPerKilometer",
+          "symbol": "C/km",
+          "factor": "0.001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "SurfaceChargeDensity",
+      "units": [
+        {
+          "name": "CoulombPerSquareMeter",
+          "symbol": "C/m²",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "MillicoulombPerSquareMeter",
+          "symbol": "mC/m²",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "MicrocoulombPerSquareMeter",
+          "symbol": "µC/m²",
+          "factor": "0.000001",
+          "system": "Engineering"
+        },
+        {
+          "name": "CoulombPerSquareCentimeter",
+          "symbol": "C/cm²",
+          "factor": "10000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "ElectricDipoleMoment",
+      "units": [
+        {
+          "name": "CoulombMeter",
+          "symbol": "C·m",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MillicoulombMeter",
+          "symbol": "mC·m",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "MicrocoulombMeter",
+          "symbol": "µC·m",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Debye",
+          "symbol": "D",
+          "factor": "3.33564e-30",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MagneticDipoleMoment",
+      "units": [
+        {
+          "name": "AmpereSquareMeter",
+          "symbol": "A·m²",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MilliampereSquareMeter",
+          "symbol": "mA·m²",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "AmpereSquareCentimeter",
+          "symbol": "A·cm²",
+          "factor": "0.0001",
+          "system": "Scientific"
+        },
+        {
+          "name": "ElectromagneticUnit",
+          "symbol": "emu",
+          "factor": "0.001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MagneticReluctance",
+      "units": [
+        {
+          "name": "AmperePerWeber",
+          "symbol": "A/Wb",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "KiloamperePerWeber",
+          "symbol": "kA/Wb",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "AmperePerMilliweber",
+          "symbol": "A/mWb",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "KiloamperePerMilliweber",
+          "symbol": "kA/mWb",
+          "factor": "1000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "Elastance",
+      "units": [
+        {
+          "name": "PerFarad",
+          "symbol": "1/F",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerMillifarad",
+          "symbol": "1/mF",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerMicrofarad",
+          "symbol": "1/µF",
+          "factor": "1000000",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerNanofarad",
+          "symbol": "1/nF",
+          "factor": "1000000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "Impedance",
+      "units": [
+        {
+          "name": "Ohm",
+          "symbol": "Ω",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Milliohm",
+          "symbol": "mΩ",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "Kiloohm",
+          "symbol": "kΩ",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Megaohm",
+          "symbol": "MΩ",
+          "factor": "1000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "Reactance",
+      "units": [
+        {
+          "name": "Ohm",
+          "symbol": "Ω",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Milliohm",
+          "symbol": "mΩ",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "Kiloohm",
+          "symbol": "kΩ",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "Megaohm",
+          "symbol": "MΩ",
+          "factor": "1000000",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "ElectricSusceptibility",
+      "units": [
+        {
+          "name": "Ratio",
+          "symbol": "1",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "Percent",
+          "symbol": "%",
+          "factor": "0.01",
+          "system": "Scientific"
+        },
+        {
+          "name": "Ppm",
+          "symbol": "ppm",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Ppb",
+          "symbol": "ppb",
+          "factor": "0.000000001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MagneticSusceptibility",
+      "units": [
+        {
+          "name": "Ratio",
+          "symbol": "1",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "Percent",
+          "symbol": "%",
+          "factor": "0.01",
+          "system": "Scientific"
+        },
+        {
+          "name": "Ppm",
+          "symbol": "ppm",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Ppb",
+          "symbol": "ppb",
+          "factor": "0.000000001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MagneticVectorPotential",
+      "units": [
+        {
+          "name": "WeberPerMeter",
+          "symbol": "Wb/m",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MilliweberPerMeter",
+          "symbol": "mWb/m",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "MicroweberPerMeter",
+          "symbol": "µWb/m",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "WeberPerKilometer",
+          "symbol": "Wb/km",
+          "factor": "0.001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "CatalyticActivity",
+      "units": [
+        {
+          "name": "Katal",
+          "symbol": "kat",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "Millikatal",
+          "symbol": "mkat",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Microkatal",
+          "symbol": "µkat",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Nanokatal",
+          "symbol": "nkat",
+          "factor": "0.000000001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "CatalyticActivityConcentration",
+      "units": [
+        {
+          "name": "KatalPerCubicMeter",
+          "symbol": "kat/m³",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MillikatalPerCubicMeter",
+          "symbol": "mkat/m³",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "MicrokatalPerCubicMeter",
+          "symbol": "µkat/m³",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "KatalPerLiter",
+          "symbol": "kat/L",
+          "factor": "1000",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "Molality",
+      "units": [
+        {
+          "name": "MolePerKilogram",
+          "symbol": "mol/kg",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MillimolePerKilogram",
+          "symbol": "mmol/kg",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "MolePerGram",
+          "symbol": "mol/g",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "MillimolePerGram",
+          "symbol": "mmol/g",
+          "factor": "1",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MoleFraction",
+      "units": [
+        {
+          "name": "Ratio",
+          "symbol": "1",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "Percent",
+          "symbol": "%",
+          "factor": "0.01",
+          "system": "Scientific"
+        },
+        {
+          "name": "PerMille",
+          "symbol": "‰",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Ppm",
+          "symbol": "ppm",
+          "factor": "0.000001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MassFraction",
+      "units": [
+        {
+          "name": "Ratio",
+          "symbol": "1",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "Percent",
+          "symbol": "%",
+          "factor": "0.01",
+          "system": "Scientific"
+        },
+        {
+          "name": "PerMille",
+          "symbol": "‰",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Ppm",
+          "symbol": "ppm",
+          "factor": "0.000001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "VolumeFraction",
+      "units": [
+        {
+          "name": "Ratio",
+          "symbol": "1",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "Percent",
+          "symbol": "%",
+          "factor": "0.01",
+          "system": "Scientific"
+        },
+        {
+          "name": "PerMille",
+          "symbol": "‰",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "Ppm",
+          "symbol": "ppm",
+          "factor": "0.000001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "Osmolarity",
+      "units": [
+        {
+          "name": "OsmolePerCubicMeter",
+          "symbol": "Osm/m³",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "OsmolePerLiter",
+          "symbol": "Osm/L",
+          "factor": "1000",
+          "system": "Scientific"
+        },
+        {
+          "name": "MilliosmolePerLiter",
+          "symbol": "mOsm/L",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MilliosmolePerCubicMeter",
+          "symbol": "mOsm/m³",
+          "factor": "0.001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "Osmolality",
+      "units": [
+        {
+          "name": "OsmolePerKilogram",
+          "symbol": "Osm/kg",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MilliosmolePerKilogram",
+          "symbol": "mOsm/kg",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "MicroosmolePerKilogram",
+          "symbol": "µOsm/kg",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "OsmolePerGram",
+          "symbol": "Osm/g",
+          "factor": "1000",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "AmountFlowRate",
+      "units": [
+        {
+          "name": "MolePerSecond",
+          "symbol": "mol/s",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "MillimolePerSecond",
+          "symbol": "mmol/s",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "MolePerMinute",
+          "symbol": "mol/min",
+          "factor": "1/60",
+          "system": "Scientific"
+        },
+        {
+          "name": "KilomolePerHour",
+          "symbol": "kmol/h",
+          "factor": "5/18",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "MolarVolume",
+      "units": [
+        {
+          "name": "CubicMeterPerMole",
+          "symbol": "m³/mol",
+          "factor": "1",
+          "system": "Scientific"
+        },
+        {
+          "name": "LiterPerMole",
+          "symbol": "L/mol",
+          "factor": "0.001",
+          "system": "Scientific"
+        },
+        {
+          "name": "CubicCentimeterPerMole",
+          "symbol": "cm³/mol",
+          "factor": "0.000001",
+          "system": "Scientific"
+        },
+        {
+          "name": "CubicMeterPerKilomole",
+          "symbol": "m³/kmol",
+          "factor": "0.001",
+          "system": "Scientific"
+        }
+      ]
+    },
+    {
+      "name": "Permeability",
+      "units": [
+        {
+          "name": "SquareMeter",
+          "symbol": "m²",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "MicrometerSquared",
+          "symbol": "µm²",
+          "factor": "0.000000000001",
+          "system": "Engineering"
+        },
+        {
+          "name": "Darcy",
+          "symbol": "D",
+          "factor": "9.869233e-13",
+          "system": "Engineering"
+        },
+        {
+          "name": "Millidarcy",
+          "symbol": "mD",
+          "factor": "9.869233e-16",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "Porosity",
+      "units": [
+        {
+          "name": "Ratio",
+          "symbol": "1",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "Percent",
+          "symbol": "%",
+          "factor": "0.01",
+          "system": "Engineering"
+        },
+        {
+          "name": "PerMille",
+          "symbol": "‰",
+          "factor": "0.001",
+          "system": "Engineering"
+        },
+        {
+          "name": "Ppm",
+          "symbol": "ppm",
+          "factor": "0.000001",
+          "system": "Engineering"
+        }
+      ]
+    },
+    {
+      "name": "SpecificSurfaceArea",
+      "units": [
+        {
+          "name": "SquareMeterPerKilogram",
+          "symbol": "m²/kg",
+          "factor": "1",
+          "system": "Engineering"
+        },
+        {
+          "name": "SquareMeterPerGram",
+          "symbol": "m²/g",
+          "factor": "1000",
+          "system": "Engineering"
+        },
+        {
+          "name": "SquareCentimeterPerGram",
+          "symbol": "cm²/g",
+          "factor": "0.1",
+          "system": "Engineering"
+        },
+        {
+          "name": "SquareMillimeterPerGram",
+          "symbol": "mm²/g",
+          "factor": "0.001",
+          "system": "Engineering"
+        }
+      ]
+    }
+  ]
+}
