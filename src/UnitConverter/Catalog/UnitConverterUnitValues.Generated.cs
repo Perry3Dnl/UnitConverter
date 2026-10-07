@@ -2918,6 +2918,7 @@ namespace UnitConverter.Catalog
                     UnitConverter.SpecificSurfaceArea.UnitConverterSpecificSurfaceAreaUnit.SquareMillimeterPerGram,
                 };
             }
+
             throw new NotSupportedException(
                 "No generated unit values are registered for " + type.FullName + ".");
         }
