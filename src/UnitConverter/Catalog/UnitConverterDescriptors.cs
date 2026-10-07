@@ -61,6 +61,7 @@ namespace UnitConverter.Catalog
 
         public abstract UnitConverterUnitResolution ResolveUnit(string text, out object unit);
         public abstract double Convert(double value, object from, object to);
+        public abstract decimal Convert(decimal value, object from, object to);
     }
 
     public sealed class UnitConverterFamilyDescriptor<TUnit> : UnitConverterFamilyDescriptor
@@ -210,6 +211,11 @@ namespace UnitConverter.Catalog
             return _convert(value, from, to);
         }
 
+        public decimal Convert(decimal value, TUnit from, TUnit to)
+        {
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
+        }
+
         public UnitConverterUnitDescriptor GetUnit(TUnit unit)
         {
             UnitConverterUnitDescriptor descriptor;
@@ -247,6 +253,11 @@ namespace UnitConverter.Catalog
         public override double Convert(double value, object from, object to)
         {
             return _convert(value, (TUnit)from, (TUnit)to);
+        }
+
+        public override decimal Convert(decimal value, object from, object to)
+        {
+            return global::UnitConverter.UnitConverterExact.Convert(value, (TUnit)from, (TUnit)to);
         }
 
         private static string[] BuildAcceptedAliases(
