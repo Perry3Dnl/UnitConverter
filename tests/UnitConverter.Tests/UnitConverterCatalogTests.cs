@@ -25,7 +25,7 @@ namespace UnitConverter.Tests
             UnitConverterFamilyDescriptor[] descriptors = UnitConverterCatalog.GetFamilies();
             Array enumValues = Enum.GetValues(typeof(UnitConverterFamily));
 
-            Assert.That(descriptors.Length, Is.EqualTo(98));
+            Assert.That(descriptors.Length, Is.EqualTo(150));
             Assert.That(descriptors.Length, Is.EqualTo(enumValues.Length));
 
             foreach (UnitConverterFamily family in enumValues)
