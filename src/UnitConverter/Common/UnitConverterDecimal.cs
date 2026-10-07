@@ -120,6 +120,12 @@ namespace UnitConverter
                     if (Scales.TryGetValue(unit, out scale))
                         return scale;
 
+                    if (Descriptor.TryGetExactScale(unit, out scale))
+                    {
+                        Scales.Add(unit, scale);
+                        return scale;
+                    }
+
                     double zero = Descriptor.Convert(0d, unit, BaseUnit);
                     double one = Descriptor.Convert(1d, unit, BaseUnit);
 
