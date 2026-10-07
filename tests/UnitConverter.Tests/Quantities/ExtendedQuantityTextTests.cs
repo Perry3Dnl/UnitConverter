@@ -79,6 +79,24 @@ namespace UnitConverter.Tests.Quantities
         }
 
         [Test]
+        public void NewlyTypedFrequencyUnitCanBeFormatted()
+        {
+            Frequency<decimal> frequency =
+                Frequency<decimal>.FromRevolutionPerMinute(120m);
+            Span<char> buffer = stackalloc char[32];
+
+            bool success = frequency.TryFormatWithUnit(
+                buffer,
+                out int written,
+                "0".AsSpan(),
+                CultureInfo.InvariantCulture,
+                "rpm".AsSpan());
+
+            Assert.That(success, Is.True);
+            Assert.That(new string(buffer.Slice(0, written)), Is.EqualTo("120 rpm"));
+        }
+
+        [Test]
         public void UnknownFormattingUnitIsRejected()
         {
             Frequency<decimal> frequency = Frequency<decimal>.FromHertz(50m);
@@ -89,7 +107,7 @@ namespace UnitConverter.Tests.Quantities
                 out int written,
                 "0".AsSpan(),
                 CultureInfo.InvariantCulture,
-                "rpm".AsSpan());
+                "not-a-frequency-unit".AsSpan());
 
             Assert.That(success, Is.False);
             Assert.That(written, Is.EqualTo(0));
