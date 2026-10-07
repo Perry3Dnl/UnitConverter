@@ -11,10 +11,34 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Frequency.UnitConverterFrequencyUnit FullCatalogBaseUnit = global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Hertz;
 
         public static Frequency<T> From(T value, global::UnitConverter.Frequency.UnitConverterFrequencyUnit unit)
-            => FromHertz(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Hertz:
+                    return FromHertz(value);
+                case global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Kilohertz:
+                    return FromKilohertz(value);
+                case global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Megahertz:
+                    return FromMegahertz(value);
+                default:
+                    return FromHertz(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Frequency.UnitConverterFrequencyUnit unit)
-            => UnitConverterNumeric.Convert(Hertz, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Hertz:
+                    return Hertz;
+                case global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Kilohertz:
+                    return Kilohertz;
+                case global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Megahertz:
+                    return Megahertz;
+                default:
+                    return UnitConverterNumeric.Convert(Hertz, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Millihertz => In(global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Millihertz);
         public T Gigahertz => In(global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Gigahertz);
@@ -211,6 +235,21 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("Hz".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Hertz;
+                return true;
+            }
+            if (text.Equals("kHz".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Kilohertz;
+                return true;
+            }
+            if (text.Equals("MHz".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Frequency.UnitConverterFrequencyUnit.Megahertz;
                 return true;
             }
             if (text.Equals("Millihertz".AsSpan(), StringComparison.OrdinalIgnoreCase))

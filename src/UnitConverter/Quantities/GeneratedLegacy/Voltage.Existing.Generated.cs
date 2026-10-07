@@ -6,15 +6,35 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public readonly partial struct Voltage<T> where T : IFloatingPoint<T>
+    public readonly partial struct Voltage<T> : IEquatable<Voltage<T>>, IComparable<Voltage<T>>, IFormattable, ISpanFormattable where T : IFloatingPoint<T>
     {
         private static readonly global::UnitConverter.Voltage.UnitConverterVoltageUnit FullCatalogBaseUnit = global::UnitConverter.Voltage.UnitConverterVoltageUnit.Volt;
 
         public static Voltage<T> From(T value, global::UnitConverter.Voltage.UnitConverterVoltageUnit unit)
-            => FromVolts(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Voltage.UnitConverterVoltageUnit.Volt:
+                    return FromVolts(value);
+                case global::UnitConverter.Voltage.UnitConverterVoltageUnit.Millivolt:
+                    return FromMillivolts(value);
+                default:
+                    return FromVolts(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Voltage.UnitConverterVoltageUnit unit)
-            => UnitConverterNumeric.Convert(Volts, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Voltage.UnitConverterVoltageUnit.Volt:
+                    return Volts;
+                case global::UnitConverter.Voltage.UnitConverterVoltageUnit.Millivolt:
+                    return Millivolts;
+                default:
+                    return UnitConverterNumeric.Convert(Volts, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Nanovolt => In(global::UnitConverter.Voltage.UnitConverterVoltageUnit.Nanovolt);
         public T Microvolt => In(global::UnitConverter.Voltage.UnitConverterVoltageUnit.Microvolt);
@@ -183,6 +203,16 @@ namespace UnitConverter.Quantities
                 unit = candidate;
                 return true;
             }
+            if (text.Equals("V".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Voltage.UnitConverterVoltageUnit.Volt;
+                return true;
+            }
+            if (text.Equals("mV".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Voltage.UnitConverterVoltageUnit.Millivolt;
+                return true;
+            }
             if (text.Equals("Nanovolt".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 unit = global::UnitConverter.Voltage.UnitConverterVoltageUnit.Nanovolt;
@@ -251,6 +281,30 @@ namespace UnitConverter.Quantities
             unit = default;
             return false;
         }
+
+        public static Voltage<T> operator +(Voltage<T> left, Voltage<T> right) => FromVolts(left.Volts + right.Volts);
+        public static Voltage<T> operator -(Voltage<T> left, Voltage<T> right) => FromVolts(left.Volts - right.Volts);
+        public static Voltage<T> operator -(Voltage<T> value) => FromVolts(-value.Volts);
+        public static Voltage<T> operator *(Voltage<T> quantity, T scalar) => FromVolts(quantity.Volts * scalar);
+        public static Voltage<T> operator *(T scalar, Voltage<T> quantity) => quantity * scalar;
+        public static Voltage<T> operator /(Voltage<T> quantity, T scalar) => FromVolts(quantity.Volts / scalar);
+        public static T operator /(Voltage<T> left, Voltage<T> right) => left.Volts / right.Volts;
+
+        public static bool operator ==(Voltage<T> left, Voltage<T> right) => left.Equals(right);
+        public static bool operator !=(Voltage<T> left, Voltage<T> right) => !left.Equals(right);
+        public static bool operator <(Voltage<T> left, Voltage<T> right) => left.Volts < right.Volts;
+        public static bool operator >(Voltage<T> left, Voltage<T> right) => left.Volts > right.Volts;
+        public static bool operator <=(Voltage<T> left, Voltage<T> right) => left.Volts <= right.Volts;
+        public static bool operator >=(Voltage<T> left, Voltage<T> right) => left.Volts >= right.Volts;
+
+        public bool Equals(Voltage<T> other) => Volts == other.Volts;
+        public override bool Equals(object obj) => obj is Voltage<T> other && Equals(other);
+        public override int GetHashCode() => Volts.GetHashCode();
+        public int CompareTo(Voltage<T> other) => Volts.CompareTo(other.Volts);
+        public override string ToString() => Volts.ToString();
+        public string ToString(string format, IFormatProvider formatProvider) => Volts.ToString(format, formatProvider);
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
+            => Volts.TryFormat(destination, out charsWritten, format, provider);
     }
 
     public static partial class VoltageMethods

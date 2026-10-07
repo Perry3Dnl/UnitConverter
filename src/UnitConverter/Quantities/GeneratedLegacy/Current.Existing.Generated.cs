@@ -11,10 +11,30 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Current.UnitConverterCurrentUnit FullCatalogBaseUnit = global::UnitConverter.Current.UnitConverterCurrentUnit.Ampere;
 
         public static ElectricCurrent<T> From(T value, global::UnitConverter.Current.UnitConverterCurrentUnit unit)
-            => FromAmperes(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Current.UnitConverterCurrentUnit.Ampere:
+                    return FromAmperes(value);
+                case global::UnitConverter.Current.UnitConverterCurrentUnit.Milliampere:
+                    return FromMilliamperes(value);
+                default:
+                    return FromAmperes(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Current.UnitConverterCurrentUnit unit)
-            => UnitConverterNumeric.Convert(Amperes, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Current.UnitConverterCurrentUnit.Ampere:
+                    return Amperes;
+                case global::UnitConverter.Current.UnitConverterCurrentUnit.Milliampere:
+                    return Milliamperes;
+                default:
+                    return UnitConverterNumeric.Convert(Amperes, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Nanoampere => In(global::UnitConverter.Current.UnitConverterCurrentUnit.Nanoampere);
         public T Microampere => In(global::UnitConverter.Current.UnitConverterCurrentUnit.Microampere);
@@ -181,6 +201,16 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("A".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Current.UnitConverterCurrentUnit.Ampere;
+                return true;
+            }
+            if (text.Equals("mA".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Current.UnitConverterCurrentUnit.Milliampere;
                 return true;
             }
             if (text.Equals("Nanoampere".AsSpan(), StringComparison.OrdinalIgnoreCase))

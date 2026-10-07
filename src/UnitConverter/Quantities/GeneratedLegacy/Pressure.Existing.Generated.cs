@@ -11,10 +11,38 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Pressure.UnitConverterPressureUnit FullCatalogBaseUnit = global::UnitConverter.Pressure.UnitConverterPressureUnit.Pascal;
 
         public static Pressure<T> From(T value, global::UnitConverter.Pressure.UnitConverterPressureUnit unit)
-            => FromPascals(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Pascal:
+                    return FromPascals(value);
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Kilopascal:
+                    return FromKilopascals(value);
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Megapascal:
+                    return FromMegapascals(value);
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Bar:
+                    return FromBars(value);
+                default:
+                    return FromPascals(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Pressure.UnitConverterPressureUnit unit)
-            => UnitConverterNumeric.Convert(Pascals, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Pascal:
+                    return Pascals;
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Kilopascal:
+                    return Kilopascals;
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Megapascal:
+                    return Megapascals;
+                case global::UnitConverter.Pressure.UnitConverterPressureUnit.Bar:
+                    return Bars;
+                default:
+                    return UnitConverterNumeric.Convert(Pascals, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Pascal => In(global::UnitConverter.Pressure.UnitConverterPressureUnit.Pascal);
         public T Hectopascal => In(global::UnitConverter.Pressure.UnitConverterPressureUnit.Hectopascal);
@@ -397,6 +425,26 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("Pa".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Pressure.UnitConverterPressureUnit.Pascal;
+                return true;
+            }
+            if (text.Equals("kPa".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Pressure.UnitConverterPressureUnit.Kilopascal;
+                return true;
+            }
+            if (text.Equals("MPa".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Pressure.UnitConverterPressureUnit.Megapascal;
+                return true;
+            }
+            if (text.Equals("bar".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Pressure.UnitConverterPressureUnit.Bar;
                 return true;
             }
             if (text.Equals("Pascal".AsSpan(), StringComparison.OrdinalIgnoreCase))

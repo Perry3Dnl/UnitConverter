@@ -11,10 +11,34 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Mass.UnitConverterMassUnit FullCatalogBaseUnit = global::UnitConverter.Mass.UnitConverterMassUnit.Kilogram;
 
         public static Mass<T> From(T value, global::UnitConverter.Mass.UnitConverterMassUnit unit)
-            => FromKilograms(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Mass.UnitConverterMassUnit.Kilogram:
+                    return FromKilograms(value);
+                case global::UnitConverter.Mass.UnitConverterMassUnit.Gram:
+                    return FromGrams(value);
+                case global::UnitConverter.Mass.UnitConverterMassUnit.Milligram:
+                    return FromMilligrams(value);
+                default:
+                    return FromKilograms(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Mass.UnitConverterMassUnit unit)
-            => UnitConverterNumeric.Convert(Kilograms, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Mass.UnitConverterMassUnit.Kilogram:
+                    return Kilograms;
+                case global::UnitConverter.Mass.UnitConverterMassUnit.Gram:
+                    return Grams;
+                case global::UnitConverter.Mass.UnitConverterMassUnit.Milligram:
+                    return Milligrams;
+                default:
+                    return UnitConverterNumeric.Convert(Kilograms, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Microgram => In(global::UnitConverter.Mass.UnitConverterMassUnit.Microgram);
         public T Milligram => In(global::UnitConverter.Mass.UnitConverterMassUnit.Milligram);
@@ -685,6 +709,21 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("kg".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Mass.UnitConverterMassUnit.Kilogram;
+                return true;
+            }
+            if (text.Equals("g".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Mass.UnitConverterMassUnit.Gram;
+                return true;
+            }
+            if (text.Equals("mg".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Mass.UnitConverterMassUnit.Milligram;
                 return true;
             }
             if (text.Equals("Microgram".AsSpan(), StringComparison.OrdinalIgnoreCase))

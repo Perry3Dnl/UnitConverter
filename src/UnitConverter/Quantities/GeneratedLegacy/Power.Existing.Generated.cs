@@ -11,10 +11,30 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Power.UnitConverterPowerUnit FullCatalogBaseUnit = global::UnitConverter.Power.UnitConverterPowerUnit.Watt;
 
         public static Power<T> From(T value, global::UnitConverter.Power.UnitConverterPowerUnit unit)
-            => FromWatts(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Power.UnitConverterPowerUnit.Watt:
+                    return FromWatts(value);
+                case global::UnitConverter.Power.UnitConverterPowerUnit.Kilowatt:
+                    return FromKilowatts(value);
+                default:
+                    return FromWatts(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Power.UnitConverterPowerUnit unit)
-            => UnitConverterNumeric.Convert(Watts, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Power.UnitConverterPowerUnit.Watt:
+                    return Watts;
+                case global::UnitConverter.Power.UnitConverterPowerUnit.Kilowatt:
+                    return Kilowatts;
+                default:
+                    return UnitConverterNumeric.Convert(Watts, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Microwatt => In(global::UnitConverter.Power.UnitConverterPowerUnit.Microwatt);
         public T Milliwatt => In(global::UnitConverter.Power.UnitConverterPowerUnit.Milliwatt);
@@ -289,6 +309,16 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("W".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Power.UnitConverterPowerUnit.Watt;
+                return true;
+            }
+            if (text.Equals("kW".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Power.UnitConverterPowerUnit.Kilowatt;
                 return true;
             }
             if (text.Equals("Microwatt".AsSpan(), StringComparison.OrdinalIgnoreCase))

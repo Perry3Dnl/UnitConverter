@@ -11,10 +11,30 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Density.UnitConverterDensityUnit FullCatalogBaseUnit = global::UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter;
 
         public static Density<T> From(T value, global::UnitConverter.Density.UnitConverterDensityUnit unit)
-            => FromKilogramsPerCubicMetre(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter:
+                    return FromKilogramsPerCubicMetre(value);
+                case global::UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicCentimeter:
+                    return FromGramsPerCubicCentimetre(value);
+                default:
+                    return FromKilogramsPerCubicMetre(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Density.UnitConverterDensityUnit unit)
-            => UnitConverterNumeric.Convert(KilogramsPerCubicMetre, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter:
+                    return KilogramsPerCubicMetre;
+                case global::UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicCentimeter:
+                    return GramsPerCubicCentimetre;
+                default:
+                    return UnitConverterNumeric.Convert(KilogramsPerCubicMetre, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T KilogramPerCubicMeter => In(global::UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter);
         public T GramPerCubicMeter => In(global::UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicMeter);
@@ -373,6 +393,36 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("kg/m³".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter;
+                return true;
+            }
+            if (text.Equals("kg/m3".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter;
+                return true;
+            }
+            if (text.Equals("kg/m^3".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter;
+                return true;
+            }
+            if (text.Equals("g/cm³".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicCentimeter;
+                return true;
+            }
+            if (text.Equals("g/cm3".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicCentimeter;
+                return true;
+            }
+            if (text.Equals("g/cm^3".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicCentimeter;
                 return true;
             }
             if (text.Equals("KilogramPerCubicMeter".AsSpan(), StringComparison.OrdinalIgnoreCase))

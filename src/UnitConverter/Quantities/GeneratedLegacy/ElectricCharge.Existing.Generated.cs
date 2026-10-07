@@ -6,15 +6,31 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public readonly partial struct ElectricCharge<T> where T : IFloatingPoint<T>
+    public readonly partial struct ElectricCharge<T> : IEquatable<ElectricCharge<T>>, IComparable<ElectricCharge<T>>, IFormattable, ISpanFormattable where T : IFloatingPoint<T>
     {
         private static readonly global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit FullCatalogBaseUnit = global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Coulomb;
 
         public static ElectricCharge<T> From(T value, global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit unit)
-            => FromCoulombs(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Coulomb:
+                    return FromCoulombs(value);
+                default:
+                    return FromCoulombs(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit unit)
-            => UnitConverterNumeric.Convert(Coulombs, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Coulomb:
+                    return Coulombs;
+                default:
+                    return UnitConverterNumeric.Convert(Coulombs, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Nanocoulomb => In(global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Nanocoulomb);
         public T Microcoulomb => In(global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Microcoulomb);
@@ -219,6 +235,11 @@ namespace UnitConverter.Quantities
                 unit = candidate;
                 return true;
             }
+            if (text.Equals("C".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Coulomb;
+                return true;
+            }
             if (text.Equals("Nanocoulomb".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 unit = global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit.Nanocoulomb;
@@ -302,6 +323,30 @@ namespace UnitConverter.Quantities
             unit = default;
             return false;
         }
+
+        public static ElectricCharge<T> operator +(ElectricCharge<T> left, ElectricCharge<T> right) => FromCoulombs(left.Coulombs + right.Coulombs);
+        public static ElectricCharge<T> operator -(ElectricCharge<T> left, ElectricCharge<T> right) => FromCoulombs(left.Coulombs - right.Coulombs);
+        public static ElectricCharge<T> operator -(ElectricCharge<T> value) => FromCoulombs(-value.Coulombs);
+        public static ElectricCharge<T> operator *(ElectricCharge<T> quantity, T scalar) => FromCoulombs(quantity.Coulombs * scalar);
+        public static ElectricCharge<T> operator *(T scalar, ElectricCharge<T> quantity) => quantity * scalar;
+        public static ElectricCharge<T> operator /(ElectricCharge<T> quantity, T scalar) => FromCoulombs(quantity.Coulombs / scalar);
+        public static T operator /(ElectricCharge<T> left, ElectricCharge<T> right) => left.Coulombs / right.Coulombs;
+
+        public static bool operator ==(ElectricCharge<T> left, ElectricCharge<T> right) => left.Equals(right);
+        public static bool operator !=(ElectricCharge<T> left, ElectricCharge<T> right) => !left.Equals(right);
+        public static bool operator <(ElectricCharge<T> left, ElectricCharge<T> right) => left.Coulombs < right.Coulombs;
+        public static bool operator >(ElectricCharge<T> left, ElectricCharge<T> right) => left.Coulombs > right.Coulombs;
+        public static bool operator <=(ElectricCharge<T> left, ElectricCharge<T> right) => left.Coulombs <= right.Coulombs;
+        public static bool operator >=(ElectricCharge<T> left, ElectricCharge<T> right) => left.Coulombs >= right.Coulombs;
+
+        public bool Equals(ElectricCharge<T> other) => Coulombs == other.Coulombs;
+        public override bool Equals(object obj) => obj is ElectricCharge<T> other && Equals(other);
+        public override int GetHashCode() => Coulombs.GetHashCode();
+        public int CompareTo(ElectricCharge<T> other) => Coulombs.CompareTo(other.Coulombs);
+        public override string ToString() => Coulombs.ToString();
+        public string ToString(string format, IFormatProvider formatProvider) => Coulombs.ToString(format, formatProvider);
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
+            => Coulombs.TryFormat(destination, out charsWritten, format, provider);
     }
 
     public static partial class ElectricChargeMethods

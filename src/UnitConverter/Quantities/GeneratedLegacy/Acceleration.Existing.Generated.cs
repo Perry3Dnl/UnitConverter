@@ -11,10 +11,26 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Acceleration.UnitConverterAccelerationUnit FullCatalogBaseUnit = global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared;
 
         public static Acceleration<T> From(T value, global::UnitConverter.Acceleration.UnitConverterAccelerationUnit unit)
-            => FromMetresPerSecondSquared(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared:
+                    return FromMetresPerSecondSquared(value);
+                default:
+                    return FromMetresPerSecondSquared(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Acceleration.UnitConverterAccelerationUnit unit)
-            => UnitConverterNumeric.Convert(MetresPerSecondSquared, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared:
+                    return MetresPerSecondSquared;
+                default:
+                    return UnitConverterNumeric.Convert(MetresPerSecondSquared, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T MeterPerSecondSquared => In(global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared);
         public T FootPerSecondSquared => In(global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.FootPerSecondSquared);
@@ -229,6 +245,21 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("m/s²".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared;
+                return true;
+            }
+            if (text.Equals("m/s2".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared;
+                return true;
+            }
+            if (text.Equals("m/s^2".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared;
                 return true;
             }
             if (text.Equals("MeterPerSecondSquared".AsSpan(), StringComparison.OrdinalIgnoreCase))

@@ -11,10 +11,38 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Speed.UnitConverterSpeedUnit FullCatalogBaseUnit = global::UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond;
 
         public static Speed<T> From(T value, global::UnitConverter.Speed.UnitConverterSpeedUnit unit)
-            => FromMetresPerSecond(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond:
+                    return FromMetresPerSecond(value);
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.KilometerPerHour:
+                    return FromKilometresPerHour(value);
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.MilePerHour:
+                    return FromMilesPerHour(value);
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.Knot:
+                    return FromKnots(value);
+                default:
+                    return FromMetresPerSecond(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Speed.UnitConverterSpeedUnit unit)
-            => UnitConverterNumeric.Convert(MetresPerSecond, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond:
+                    return MetresPerSecond;
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.KilometerPerHour:
+                    return KilometresPerHour;
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.MilePerHour:
+                    return MilesPerHour;
+                case global::UnitConverter.Speed.UnitConverterSpeedUnit.Knot:
+                    return Knots;
+                default:
+                    return UnitConverterNumeric.Convert(MetresPerSecond, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T MeterPerSecond => In(global::UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond);
         public T KilometerPerHour => In(global::UnitConverter.Speed.UnitConverterSpeedUnit.KilometerPerHour);
@@ -253,6 +281,26 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("m/s".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond;
+                return true;
+            }
+            if (text.Equals("km/h".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Speed.UnitConverterSpeedUnit.KilometerPerHour;
+                return true;
+            }
+            if (text.Equals("mph".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Speed.UnitConverterSpeedUnit.MilePerHour;
+                return true;
+            }
+            if (text.Equals("kn".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Speed.UnitConverterSpeedUnit.Knot;
                 return true;
             }
             if (text.Equals("MeterPerSecond".AsSpan(), StringComparison.OrdinalIgnoreCase))

@@ -6,15 +6,35 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public readonly partial struct Resistance<T> where T : IFloatingPoint<T>
+    public readonly partial struct Resistance<T> : IEquatable<Resistance<T>>, IComparable<Resistance<T>>, IFormattable, ISpanFormattable where T : IFloatingPoint<T>
     {
         private static readonly global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit FullCatalogBaseUnit = global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Ohm;
 
         public static Resistance<T> From(T value, global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit unit)
-            => FromOhms(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Ohm:
+                    return FromOhms(value);
+                case global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Kiloohm:
+                    return FromKiloohms(value);
+                default:
+                    return FromOhms(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit unit)
-            => UnitConverterNumeric.Convert(Ohms, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Ohm:
+                    return Ohms;
+                case global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Kiloohm:
+                    return Kiloohms;
+                default:
+                    return UnitConverterNumeric.Convert(Ohms, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Microohm => In(global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Microohm);
         public T Milliohm => In(global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Milliohm);
@@ -183,6 +203,16 @@ namespace UnitConverter.Quantities
                 unit = candidate;
                 return true;
             }
+            if (text.Equals("Ω".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Ohm;
+                return true;
+            }
+            if (text.Equals("kΩ".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Kiloohm;
+                return true;
+            }
             if (text.Equals("Microohm".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 unit = global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit.Microohm;
@@ -251,6 +281,30 @@ namespace UnitConverter.Quantities
             unit = default;
             return false;
         }
+
+        public static Resistance<T> operator +(Resistance<T> left, Resistance<T> right) => FromOhms(left.Ohms + right.Ohms);
+        public static Resistance<T> operator -(Resistance<T> left, Resistance<T> right) => FromOhms(left.Ohms - right.Ohms);
+        public static Resistance<T> operator -(Resistance<T> value) => FromOhms(-value.Ohms);
+        public static Resistance<T> operator *(Resistance<T> quantity, T scalar) => FromOhms(quantity.Ohms * scalar);
+        public static Resistance<T> operator *(T scalar, Resistance<T> quantity) => quantity * scalar;
+        public static Resistance<T> operator /(Resistance<T> quantity, T scalar) => FromOhms(quantity.Ohms / scalar);
+        public static T operator /(Resistance<T> left, Resistance<T> right) => left.Ohms / right.Ohms;
+
+        public static bool operator ==(Resistance<T> left, Resistance<T> right) => left.Equals(right);
+        public static bool operator !=(Resistance<T> left, Resistance<T> right) => !left.Equals(right);
+        public static bool operator <(Resistance<T> left, Resistance<T> right) => left.Ohms < right.Ohms;
+        public static bool operator >(Resistance<T> left, Resistance<T> right) => left.Ohms > right.Ohms;
+        public static bool operator <=(Resistance<T> left, Resistance<T> right) => left.Ohms <= right.Ohms;
+        public static bool operator >=(Resistance<T> left, Resistance<T> right) => left.Ohms >= right.Ohms;
+
+        public bool Equals(Resistance<T> other) => Ohms == other.Ohms;
+        public override bool Equals(object obj) => obj is Resistance<T> other && Equals(other);
+        public override int GetHashCode() => Ohms.GetHashCode();
+        public int CompareTo(Resistance<T> other) => Ohms.CompareTo(other.Ohms);
+        public override string ToString() => Ohms.ToString();
+        public string ToString(string format, IFormatProvider formatProvider) => Ohms.ToString(format, formatProvider);
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
+            => Ohms.TryFormat(destination, out charsWritten, format, provider);
     }
 
     public static partial class ResistanceMethods

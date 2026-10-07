@@ -11,10 +11,34 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Area.UnitConverterAreaUnit FullCatalogBaseUnit = global::UnitConverter.Area.UnitConverterAreaUnit.SquareMeter;
 
         public static Area<T> From(T value, global::UnitConverter.Area.UnitConverterAreaUnit unit)
-            => FromSquareMetres(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Area.UnitConverterAreaUnit.SquareMeter:
+                    return FromSquareMetres(value);
+                case global::UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer:
+                    return FromSquareKilometres(value);
+                case global::UnitConverter.Area.UnitConverterAreaUnit.Hectare:
+                    return FromHectares(value);
+                default:
+                    return FromSquareMetres(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Area.UnitConverterAreaUnit unit)
-            => UnitConverterNumeric.Convert(SquareMetres, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Area.UnitConverterAreaUnit.SquareMeter:
+                    return SquareMetres;
+                case global::UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer:
+                    return SquareKilometres;
+                case global::UnitConverter.Area.UnitConverterAreaUnit.Hectare:
+                    return Hectares;
+                default:
+                    return UnitConverterNumeric.Convert(SquareMetres, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T SquareMillimeter => In(global::UnitConverter.Area.UnitConverterAreaUnit.SquareMillimeter);
         public T SquareCentimeter => In(global::UnitConverter.Area.UnitConverterAreaUnit.SquareCentimeter);
@@ -409,6 +433,41 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("m²".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Area.UnitConverterAreaUnit.SquareMeter;
+                return true;
+            }
+            if (text.Equals("m2".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Area.UnitConverterAreaUnit.SquareMeter;
+                return true;
+            }
+            if (text.Equals("m^2".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Area.UnitConverterAreaUnit.SquareMeter;
+                return true;
+            }
+            if (text.Equals("km²".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer;
+                return true;
+            }
+            if (text.Equals("km2".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer;
+                return true;
+            }
+            if (text.Equals("km^2".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer;
+                return true;
+            }
+            if (text.Equals("ha".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Area.UnitConverterAreaUnit.Hectare;
                 return true;
             }
             if (text.Equals("SquareMillimeter".AsSpan(), StringComparison.OrdinalIgnoreCase))

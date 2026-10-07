@@ -11,10 +11,42 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Time.UnitConverterTimeUnit FullCatalogBaseUnit = global::UnitConverter.Time.UnitConverterTimeUnit.Second;
 
         public static Time<T> From(T value, global::UnitConverter.Time.UnitConverterTimeUnit unit)
-            => FromSeconds(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Second:
+                    return FromSeconds(value);
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Millisecond:
+                    return FromMilliseconds(value);
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Minute:
+                    return FromMinutes(value);
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Hour:
+                    return FromHours(value);
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Day:
+                    return FromDays(value);
+                default:
+                    return FromSeconds(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Time.UnitConverterTimeUnit unit)
-            => UnitConverterNumeric.Convert(Seconds, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Second:
+                    return Seconds;
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Millisecond:
+                    return Milliseconds;
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Minute:
+                    return Minutes;
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Hour:
+                    return Hours;
+                case global::UnitConverter.Time.UnitConverterTimeUnit.Day:
+                    return Days;
+                default:
+                    return UnitConverterNumeric.Convert(Seconds, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Nanosecond => In(global::UnitConverter.Time.UnitConverterTimeUnit.Nanosecond);
         public T Microsecond => In(global::UnitConverter.Time.UnitConverterTimeUnit.Microsecond);
@@ -325,6 +357,31 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("s".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Time.UnitConverterTimeUnit.Second;
+                return true;
+            }
+            if (text.Equals("ms".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Time.UnitConverterTimeUnit.Millisecond;
+                return true;
+            }
+            if (text.Equals("min".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Time.UnitConverterTimeUnit.Minute;
+                return true;
+            }
+            if (text.Equals("h".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Time.UnitConverterTimeUnit.Hour;
+                return true;
+            }
+            if (text.Equals("d".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Time.UnitConverterTimeUnit.Day;
                 return true;
             }
             if (text.Equals("Nanosecond".AsSpan(), StringComparison.OrdinalIgnoreCase))

@@ -11,10 +11,34 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Volume.UnitConverterVolumeUnit FullCatalogBaseUnit = global::UnitConverter.Volume.UnitConverterVolumeUnit.Liter;
 
         public static Volume<T> From(T value, global::UnitConverter.Volume.UnitConverterVolumeUnit unit)
-            => FromLitres(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Volume.UnitConverterVolumeUnit.CubicMeter:
+                    return FromCubicMetres(value);
+                case global::UnitConverter.Volume.UnitConverterVolumeUnit.Liter:
+                    return FromLitres(value);
+                case global::UnitConverter.Volume.UnitConverterVolumeUnit.Milliliter:
+                    return FromMillilitres(value);
+                default:
+                    return FromLitres(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Volume.UnitConverterVolumeUnit unit)
-            => UnitConverterNumeric.Convert(Litres, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Volume.UnitConverterVolumeUnit.CubicMeter:
+                    return CubicMetres;
+                case global::UnitConverter.Volume.UnitConverterVolumeUnit.Liter:
+                    return Litres;
+                case global::UnitConverter.Volume.UnitConverterVolumeUnit.Milliliter:
+                    return Millilitres;
+                default:
+                    return UnitConverterNumeric.Convert(Litres, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T CubicMillimeter => In(global::UnitConverter.Volume.UnitConverterVolumeUnit.CubicMillimeter);
         public T Milliliter => In(global::UnitConverter.Volume.UnitConverterVolumeUnit.Milliliter);
@@ -829,6 +853,31 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("m³".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Volume.UnitConverterVolumeUnit.CubicMeter;
+                return true;
+            }
+            if (text.Equals("m3".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Volume.UnitConverterVolumeUnit.CubicMeter;
+                return true;
+            }
+            if (text.Equals("m^3".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Volume.UnitConverterVolumeUnit.CubicMeter;
+                return true;
+            }
+            if (text.Equals("L".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Volume.UnitConverterVolumeUnit.Liter;
+                return true;
+            }
+            if (text.Equals("mL".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Volume.UnitConverterVolumeUnit.Milliliter;
                 return true;
             }
             if (text.Equals("CubicMillimeter".AsSpan(), StringComparison.OrdinalIgnoreCase))

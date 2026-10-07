@@ -11,10 +11,30 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Force.UnitConverterForceUnit FullCatalogBaseUnit = global::UnitConverter.Force.UnitConverterForceUnit.Newton;
 
         public static Force<T> From(T value, global::UnitConverter.Force.UnitConverterForceUnit unit)
-            => FromNewtons(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Force.UnitConverterForceUnit.Newton:
+                    return FromNewtons(value);
+                case global::UnitConverter.Force.UnitConverterForceUnit.Kilonewton:
+                    return FromKilonewtons(value);
+                default:
+                    return FromNewtons(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Force.UnitConverterForceUnit unit)
-            => UnitConverterNumeric.Convert(Newtons, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Force.UnitConverterForceUnit.Newton:
+                    return Newtons;
+                case global::UnitConverter.Force.UnitConverterForceUnit.Kilonewton:
+                    return Kilonewtons;
+                default:
+                    return UnitConverterNumeric.Convert(Newtons, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T Micronewton => In(global::UnitConverter.Force.UnitConverterForceUnit.Micronewton);
         public T Millinewton => In(global::UnitConverter.Force.UnitConverterForceUnit.Millinewton);
@@ -277,6 +297,16 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("N".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Force.UnitConverterForceUnit.Newton;
+                return true;
+            }
+            if (text.Equals("kN".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Force.UnitConverterForceUnit.Kilonewton;
                 return true;
             }
             if (text.Equals("Micronewton".AsSpan(), StringComparison.OrdinalIgnoreCase))

@@ -11,10 +11,30 @@ namespace UnitConverter.Quantities
         private static readonly global::UnitConverter.Energy.UnitConverterEnergyUnit FullCatalogBaseUnit = global::UnitConverter.Energy.UnitConverterEnergyUnit.Joule;
 
         public static Energy<T> From(T value, global::UnitConverter.Energy.UnitConverterEnergyUnit unit)
-            => FromJoules(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Energy.UnitConverterEnergyUnit.Joule:
+                    return FromJoules(value);
+                case global::UnitConverter.Energy.UnitConverterEnergyUnit.Kilojoule:
+                    return FromKilojoules(value);
+                default:
+                    return FromJoules(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));
+            }
+        }
 
         public T In(global::UnitConverter.Energy.UnitConverterEnergyUnit unit)
-            => UnitConverterNumeric.Convert(Joules, FullCatalogBaseUnit, unit);
+        {
+            switch (unit)
+            {
+                case global::UnitConverter.Energy.UnitConverterEnergyUnit.Joule:
+                    return Joules;
+                case global::UnitConverter.Energy.UnitConverterEnergyUnit.Kilojoule:
+                    return Kilojoules;
+                default:
+                    return UnitConverterNumeric.Convert(Joules, FullCatalogBaseUnit, unit);
+            }
+        }
 
         public T ElectronVolt => In(global::UnitConverter.Energy.UnitConverterEnergyUnit.ElectronVolt);
         public T Joule => In(global::UnitConverter.Energy.UnitConverterEnergyUnit.Joule);
@@ -361,6 +381,16 @@ namespace UnitConverter.Quantities
             if (found)
             {
                 unit = candidate;
+                return true;
+            }
+            if (text.Equals("J".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Energy.UnitConverterEnergyUnit.Joule;
+                return true;
+            }
+            if (text.Equals("kJ".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            {
+                unit = global::UnitConverter.Energy.UnitConverterEnergyUnit.Kilojoule;
                 return true;
             }
             if (text.Equals("ElectronVolt".AsSpan(), StringComparison.OrdinalIgnoreCase))
