@@ -89,7 +89,7 @@ namespace UnitConverter
         internal static UnitConverterDetectionResult Ambiguous(
             double value,
             string unitText,
-            UnitConverterUnitCandidate[] candidates)
+            IReadOnlyList<UnitConverterUnitCandidate> candidates)
         {
             return new UnitConverterDetectionResult(
                 UnitConverterDetectionStatus.Ambiguous,
