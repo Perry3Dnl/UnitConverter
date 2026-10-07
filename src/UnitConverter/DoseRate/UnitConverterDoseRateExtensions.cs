@@ -19,7 +19,7 @@ namespace UnitConverter.DoseRate
 
         public static decimal Convert(this decimal value, UnitConverterDoseRateUnit from, UnitConverterDoseRateUnit to)
         {
-            return (decimal)UnitConverterDoseRate.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterDoseRateUnit from, UnitConverterDoseRateUnit to)

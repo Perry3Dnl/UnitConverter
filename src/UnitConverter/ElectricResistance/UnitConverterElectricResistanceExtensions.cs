@@ -19,7 +19,7 @@ namespace UnitConverter.ElectricResistance
 
         public static decimal Convert(this decimal value, UnitConverterElectricResistanceUnit from, UnitConverterElectricResistanceUnit to)
         {
-            return (decimal)UnitConverterElectricResistance.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterElectricResistanceUnit from, UnitConverterElectricResistanceUnit to)

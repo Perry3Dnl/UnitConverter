@@ -19,7 +19,7 @@ namespace UnitConverter.ElectricFieldStrength
 
         public static decimal Convert(this decimal value, UnitConverterElectricFieldStrengthUnit from, UnitConverterElectricFieldStrengthUnit to)
         {
-            return (decimal)UnitConverterElectricFieldStrength.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterElectricFieldStrengthUnit from, UnitConverterElectricFieldStrengthUnit to)
