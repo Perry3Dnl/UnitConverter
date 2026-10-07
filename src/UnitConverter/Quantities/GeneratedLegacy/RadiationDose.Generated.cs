@@ -415,7 +415,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static RadiationDose<T> operator +(RadiationDose<T> left, RadiationDose<T> right) => new RadiationDose<T>(left._baseValue + right._baseValue);
         public static RadiationDose<T> operator -(RadiationDose<T> left, RadiationDose<T> right) => new RadiationDose<T>(left._baseValue - right._baseValue);

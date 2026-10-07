@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Radiance<T> operator +(Radiance<T> left, Radiance<T> right) => new Radiance<T>(left._baseValue + right._baseValue);
         public static Radiance<T> operator -(Radiance<T> left, Radiance<T> right) => new Radiance<T>(left._baseValue - right._baseValue);

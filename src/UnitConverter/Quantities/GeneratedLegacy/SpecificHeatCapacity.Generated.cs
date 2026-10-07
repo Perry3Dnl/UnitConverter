@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static SpecificHeatCapacity<T> operator +(SpecificHeatCapacity<T> left, SpecificHeatCapacity<T> right) => new SpecificHeatCapacity<T>(left._baseValue + right._baseValue);
         public static SpecificHeatCapacity<T> operator -(SpecificHeatCapacity<T> left, SpecificHeatCapacity<T> right) => new SpecificHeatCapacity<T>(left._baseValue - right._baseValue);

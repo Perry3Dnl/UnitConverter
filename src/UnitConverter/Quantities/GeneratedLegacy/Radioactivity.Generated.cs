@@ -398,7 +398,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Radioactivity<T> operator +(Radioactivity<T> left, Radioactivity<T> right) => new Radioactivity<T>(left._baseValue + right._baseValue);
         public static Radioactivity<T> operator -(Radioactivity<T> left, Radioactivity<T> right) => new Radioactivity<T>(left._baseValue - right._baseValue);

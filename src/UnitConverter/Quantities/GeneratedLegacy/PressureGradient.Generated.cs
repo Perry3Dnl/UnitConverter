@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static PressureGradient<T> operator +(PressureGradient<T> left, PressureGradient<T> right) => new PressureGradient<T>(left._baseValue + right._baseValue);
         public static PressureGradient<T> operator -(PressureGradient<T> left, PressureGradient<T> right) => new PressureGradient<T>(left._baseValue - right._baseValue);

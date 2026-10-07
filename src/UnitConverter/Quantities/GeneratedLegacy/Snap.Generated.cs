@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Snap<T> operator +(Snap<T> left, Snap<T> right) => new Snap<T>(left._baseValue + right._baseValue);
         public static Snap<T> operator -(Snap<T> left, Snap<T> right) => new Snap<T>(left._baseValue - right._baseValue);

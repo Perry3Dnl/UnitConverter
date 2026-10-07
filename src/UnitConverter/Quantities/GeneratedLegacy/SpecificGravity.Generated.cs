@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static SpecificGravity<T> operator +(SpecificGravity<T> left, SpecificGravity<T> right) => new SpecificGravity<T>(left._baseValue + right._baseValue);
         public static SpecificGravity<T> operator -(SpecificGravity<T> left, SpecificGravity<T> right) => new SpecificGravity<T>(left._baseValue - right._baseValue);

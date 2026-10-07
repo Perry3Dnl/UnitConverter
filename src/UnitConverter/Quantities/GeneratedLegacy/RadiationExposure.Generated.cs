@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static RadiationExposure<T> operator +(RadiationExposure<T> left, RadiationExposure<T> right) => new RadiationExposure<T>(left._baseValue + right._baseValue);
         public static RadiationExposure<T> operator -(RadiationExposure<T> left, RadiationExposure<T> right) => new RadiationExposure<T>(left._baseValue - right._baseValue);

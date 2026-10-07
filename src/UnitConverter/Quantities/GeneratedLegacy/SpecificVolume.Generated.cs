@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static SpecificVolume<T> operator +(SpecificVolume<T> left, SpecificVolume<T> right) => new SpecificVolume<T>(left._baseValue + right._baseValue);
         public static SpecificVolume<T> operator -(SpecificVolume<T> left, SpecificVolume<T> right) => new SpecificVolume<T>(left._baseValue - right._baseValue);

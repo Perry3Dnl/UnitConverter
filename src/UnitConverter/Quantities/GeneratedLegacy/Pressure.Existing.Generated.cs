@@ -556,7 +556,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
     }
 
     public static partial class PressureMethods
