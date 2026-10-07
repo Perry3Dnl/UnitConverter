@@ -258,7 +258,9 @@ namespace UnitConverter.Catalog
         {
             TUnit typedUnit;
             UnitConverterUnitResolution resolution = ResolveUnit(text, out typedUnit);
-            unit = resolution == UnitConverterUnitResolution.Resolved ? (object)typedUnit : null;
+            unit = resolution == UnitConverterUnitResolution.Resolved
+                ? GetUnit(typedUnit).Unit
+                : null;
             return resolution;
         }
 
