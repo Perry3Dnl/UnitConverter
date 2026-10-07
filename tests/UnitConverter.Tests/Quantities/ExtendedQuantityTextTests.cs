@@ -82,7 +82,7 @@ namespace UnitConverter.Tests.Quantities
         public void NewlyTypedFrequencyUnitCanBeFormatted()
         {
             Frequency<decimal> frequency =
-                Frequency<decimal>.FromRevolutionPerMinute(120m);
+                Frequency<decimal>.FromRevolutionsPerMinute(120m);
             Span<char> buffer = stackalloc char[32];
 
             bool success = frequency.TryFormatWithUnit(
