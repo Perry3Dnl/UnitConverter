@@ -19,7 +19,7 @@ namespace UnitConverter.Radiance
 
         public static decimal Convert(this decimal value, UnitConverterRadianceUnit from, UnitConverterRadianceUnit to)
         {
-            return (decimal)UnitConverterRadiance.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterRadianceUnit from, UnitConverterRadianceUnit to)

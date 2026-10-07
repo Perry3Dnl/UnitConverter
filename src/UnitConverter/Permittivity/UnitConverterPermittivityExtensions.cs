@@ -19,7 +19,7 @@ namespace UnitConverter.Permittivity
 
         public static decimal Convert(this decimal value, UnitConverterPermittivityUnit from, UnitConverterPermittivityUnit to)
         {
-            return (decimal)UnitConverterPermittivity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterPermittivityUnit from, UnitConverterPermittivityUnit to)

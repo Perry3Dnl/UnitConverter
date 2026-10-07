@@ -19,7 +19,7 @@ namespace UnitConverter.Power
 
         public static decimal Convert(this decimal value, UnitConverterPowerUnit from, UnitConverterPowerUnit to)
         {
-            return (decimal)UnitConverterPower.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterPowerUnit from, UnitConverterPowerUnit to)

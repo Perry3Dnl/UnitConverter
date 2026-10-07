@@ -19,7 +19,7 @@ namespace UnitConverter.PixelDensity
 
         public static decimal Convert(this decimal value, UnitConverterPixelDensityUnit from, UnitConverterPixelDensityUnit to)
         {
-            return (decimal)UnitConverterPixelDensity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterPixelDensityUnit from, UnitConverterPixelDensityUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.ParticleFluence
 
         public static decimal Convert(this decimal value, UnitConverterParticleFluenceUnit from, UnitConverterParticleFluenceUnit to)
         {
-            return (decimal)UnitConverterParticleFluence.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterParticleFluenceUnit from, UnitConverterParticleFluenceUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.Momentum
 
         public static decimal Convert(this decimal value, UnitConverterMomentumUnit from, UnitConverterMomentumUnit to)
         {
-            return (decimal)UnitConverterMomentum.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMomentumUnit from, UnitConverterMomentumUnit to)
