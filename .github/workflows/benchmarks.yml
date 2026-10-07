@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   benchmark:
@@ -40,12 +40,29 @@ jobs:
         run: dotnet restore benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj
 
       - name: Run BenchmarkDotNet
-        run: dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj --configuration Release --no-restore
+        run: dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj --configuration Release --no-restore -- --filter "*"
 
-      - name: Summarize benchmark results
+      - name: Summarize benchmark results and render badges
         run: |
-          python scripts/summarize_benchmarks.py BenchmarkDotNet.Artifacts/results artifacts/benchmarks
+          python scripts/summarize_benchmarks.py \
+            BenchmarkDotNet.Artifacts/results \
+            artifacts/benchmarks \
+            --badges docs/benchmarks/badges \
+            --latest-json docs/benchmarks/latest.json
           cat artifacts/benchmarks/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish latest benchmark badges
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if git diff --quiet -- docs/benchmarks/badges docs/benchmarks/latest.json; then
+            echo "Benchmark badges are already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/benchmarks/badges docs/benchmarks/latest.json
+          git commit -m "Update benchmark badges [skip ci]"
+          git push
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v7
@@ -54,5 +71,7 @@ jobs:
           path: |
             BenchmarkDotNet.Artifacts/results/*
             artifacts/benchmarks/*
+            docs/benchmarks/latest.json
+            docs/benchmarks/badges/*.svg
           if-no-files-found: error
           retention-days: 30

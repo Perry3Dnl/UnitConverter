@@ -2,11 +2,11 @@
 
 [![build](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/ci.yml)
 [![benchmarks](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/benchmarks.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/benchmarks.yml)
-[![routed double](https://img.shields.io/badge/routed%20double-2.43%20ns%2Fop-brightgreen.svg)](docs/benchmarks/BASELINE.md)
-[![named decimal](https://img.shields.io/badge/named%20decimal-36.3%20ns%2Fop-brightgreen.svg)](docs/benchmarks/BASELINE.md)
-[![span parse](https://img.shields.io/badge/span%20parse-863%20ns%20%7C%200%20B-blue.svg)](docs/benchmarks/BASELINE.md)
-[![span format](https://img.shields.io/badge/span%20format-824%20ns%20%7C%200%20B-blue.svg)](docs/benchmarks/BASELINE.md)
-[![exact decimal](https://img.shields.io/badge/exact%20decimal-605%20ns%20%7C%2096%20B-blue.svg)](docs/benchmarks/BASELINE.md)
+[![routed double](docs/benchmarks/badges/routed-double.svg)](docs/benchmarks/BASELINE.md)
+[![named decimal](docs/benchmarks/badges/named-decimal.svg)](docs/benchmarks/BASELINE.md)
+[![span parse](docs/benchmarks/badges/span-parse.svg)](docs/benchmarks/BASELINE.md)
+[![span format](docs/benchmarks/badges/span-format.svg)](docs/benchmarks/BASELINE.md)
+[![exact decimal](docs/benchmarks/badges/exact-decimal.svg)](docs/benchmarks/BASELINE.md)
 
 A standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
 
@@ -18,7 +18,14 @@ UnitConverter has a dedicated BenchmarkDotNet suite covering direct/routed conve
 
 The current GitHub-hosted baseline includes **2.43 ns / 0 B** for routed `double`, **36.3 ns / 0 B** for named `decimal`, **863 ns / 0 B** for span parsing, and **824 ns / 0 B** for span formatting. Exact decimal currently measures **605 ns / 96 B**, giving the optimization pass a concrete allocation target.
 
-See [the full benchmark baseline](docs/benchmarks/BASELINE.md) for all measurements and runner details. Hosted-runner timings vary; badges represent the checked-in baseline, not an absolute latency guarantee.
+See [the full benchmark baseline](docs/benchmarks/BASELINE.md) for all measurements and runner details. The badge SVGs are generated from the latest successful `main` benchmark run and committed by the benchmark workflow; hosted-runner timings vary, so they are trend indicators rather than absolute latency guarantees.
+
+Locally, BenchmarkDotNet filters can be used to focus a run, for example:
+
+```sh
+dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --filter "*ConversionBenchmarks*"
+dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --anyCategories Span
+```
 
 ## Build, test and create a package
 

@@ -13,12 +13,14 @@ public class TextAndDynamicBenchmarks
     private readonly Length<decimal> _length = Length<decimal>.FromMetres(123.456m);
 
     [Benchmark]
+    [BenchmarkCategory("Text", "Span", "Parsing")]
     public Length<decimal> SpanParseLength()
         => Length<decimal>.Parse(
             "123.456 cm".AsSpan(),
             Invariant);
 
     [Benchmark]
+    [BenchmarkCategory("Text", "Span", "Formatting")]
     public int SpanFormatLength()
     {
         Span<char> buffer = stackalloc char[64];
@@ -33,10 +35,12 @@ public class TextAndDynamicBenchmarks
     }
 
     [Benchmark]
+    [BenchmarkCategory("Catalog", "Lookup")]
     public UnitConverterFamilyDescriptor CatalogLookup()
         => UnitConverterCatalog.GetFamily(UnitConverterFamily.Length);
 
     [Benchmark]
+    [BenchmarkCategory("Dynamic", "FamilyScoped")]
     public double DynamicFamilyConvert()
         => global::UnitConverter.UnitConverterDynamic.Convert(
             36d,
@@ -45,12 +49,14 @@ public class TextAndDynamicBenchmarks
             "m/s");
 
     [Benchmark]
+    [BenchmarkCategory("Dynamic", "Detection")]
     public double DynamicDetectedConvert()
         => global::UnitConverter.UnitConverterDynamic.Convert(
             "36 km/h",
             "m/s");
 
     [Benchmark]
+    [BenchmarkCategory("Composite", "Conversion")]
     public double CompositeConvert()
         => global::UnitConverter.UnitConverterComposite.Convert(
             36d,
@@ -58,6 +64,7 @@ public class TextAndDynamicBenchmarks
             "m/s");
 
     [Benchmark]
+    [BenchmarkCategory("Composite", "Parsing")]
     public global::UnitConverter.UnitConverterUnitExpression CompositeParse()
         => global::UnitConverter.UnitConverterExpressionParser.Parse(
             "kg*m/s^2");
