@@ -9,36 +9,43 @@ namespace UnitConverter.Benchmarks;
 [SimpleJob(warmupCount: 3, iterationCount: 8)]
 public class ConversionBenchmarks
 {
-    private const double DoubleValue = 123.456d;
-    private const decimal DecimalValue = 123.456m;
+    private double _doubleValue;
+    private decimal _decimalValue;
+
+    [GlobalSetup]
+    public void Setup()
+    {
+        _doubleValue = 123.456d;
+        _decimalValue = 123.456m;
+    }
 
     [Benchmark(Baseline = true)]
     public double DirectDouble()
-        => UnitConverterMetricLength.CentimeterToMeter(DoubleValue);
+        => UnitConverterMetricLength.CentimeterToMeter(_doubleValue);
 
     [Benchmark]
     public double RoutedDouble()
         => UnitConverterLength.Convert(
-            DoubleValue,
+            _doubleValue,
             UnitConverterLengthUnit.Centimeter,
             UnitConverterLengthUnit.Meter);
 
     [Benchmark]
     public decimal ExactDecimal()
         => global::UnitConverter.UnitConverterExact.Convert(
-            DecimalValue,
+            _decimalValue,
             UnitConverterLengthUnit.Centimeter,
             UnitConverterLengthUnit.Meter);
 
     [Benchmark]
     public decimal NamedQuantityDecimal()
         => Length<decimal>
-            .FromCentimetres(DecimalValue)
+            .FromCentimetres(_decimalValue)
             .Metres;
 
     [Benchmark]
     public decimal UnitQuantityDecimal()
         => UnitQuantity
-            .From(DecimalValue, UnitConverterLengthUnit.Centimeter)
+            .From(_decimalValue, UnitConverterLengthUnit.Centimeter)
             .As(UnitConverterLengthUnit.Meter);
 }
