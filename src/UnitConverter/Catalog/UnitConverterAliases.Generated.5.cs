@@ -112,13 +112,13 @@ namespace UnitConverter.Catalog
                     switch (unitName)
                     {
                         case "NewtonSecondPerMeter":
-                            return new[] { "newton second per meter", "newton second per metre", "newtons second per meter", "newtons second per metre" };
+                            return new[] { "newton second per meter", "newton second per metre", "newton seconds per meter", "newton seconds per metre" };
                         case "KilonewtonSecondPerMeter":
-                            return new[] { "kilonewton second per meter", "kilonewton second per metre" };
+                            return new[] { "kilonewton second per meter", "kilonewton second per metre", "kilonewton seconds per meter", "kilonewton seconds per metre" };
                         case "NewtonSecondPerMillimeter":
-                            return new[] { "newton second per millimeter", "newton second per millimetre", "newtons second per millimeter", "newtons second per millimetre" };
+                            return new[] { "newton second per millimeter", "newton second per millimetre", "newton seconds per millimeter", "newton seconds per millimetre" };
                         case "KilonewtonSecondPerMillimeter":
-                            return new[] { "kilonewton second per millimeter", "kilonewton second per millimetre" };
+                            return new[] { "kilonewton second per millimeter", "kilonewton second per millimetre", "kilonewton seconds per millimeter", "kilonewton seconds per millimetre" };
                         default:
                             return null;
                     }
@@ -286,7 +286,7 @@ namespace UnitConverter.Catalog
                         case "MegajoulePerKilogram":
                             return new[] { "megajoule per kilogram" };
                         case "WattHourPerKilogram":
-                            return new[] { "watt hour per kilogram", "watts hour per kilogram" };
+                            return new[] { "watt hour per kilogram", "watt hours per kilogram" };
                         default:
                             return null;
                     }
@@ -300,7 +300,7 @@ namespace UnitConverter.Catalog
                         case "MegajoulePerKilogram":
                             return new[] { "megajoule per kilogram" };
                         case "WattHourPerKilogram":
-                            return new[] { "watt hour per kilogram", "watts hour per kilogram" };
+                            return new[] { "watt hour per kilogram", "watt hours per kilogram" };
                         default:
                             return null;
                     }
