@@ -316,6 +316,17 @@ The established named quantities such as `Length<T>`, `Time<T>`, `Speed<T>`, `Fo
 
 Integral extensions continue to return `double` to preserve fractional results. Decimal extensions use the shared exact/rational conversion engine. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
+
+## License
+
+UnitConverter and `UnitConverter.SystemTextJson` are **source-available** under the **Apache License 2.0 subject to the Commons Clause License Condition v1.0**.
+
+You may use UnitConverter free of charge in personal, open, internal, and commercial software. You may distribute and sell products that include or depend on UnitConverter. The Commons Clause restriction means you may not sell UnitConverter itself, or a product or service whose value derives entirely or substantially from UnitConverter, without a separate license from the licensor.
+
+This licensing model is intentionally **not OSI Open Source** because the Commons Clause adds a commercial-sale restriction to Apache 2.0.
+
+See [LICENSE.md](LICENSE.md) and [NOTICE](NOTICE) for the complete terms and attribution notice.
+
 ## Repository layout
 
 | Path | Contents |
