@@ -1,8 +1,24 @@
 # UnitConverter
 
+[![build](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/ci.yml)
+[![benchmarks](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/benchmarks.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/benchmarks.yml)
+[![routed double](https://img.shields.io/badge/routed%20double-2.43%20ns%2Fop-brightgreen.svg)](docs/benchmarks/BASELINE.md)
+[![named decimal](https://img.shields.io/badge/named%20decimal-36.3%20ns%2Fop-brightgreen.svg)](docs/benchmarks/BASELINE.md)
+[![span parse](https://img.shields.io/badge/span%20parse-863%20ns%20%7C%200%20B-blue.svg)](docs/benchmarks/BASELINE.md)
+[![span format](https://img.shields.io/badge/span%20format-824%20ns%20%7C%200%20B-blue.svg)](docs/benchmarks/BASELINE.md)
+[![exact decimal](https://img.shields.io/badge/exact%20decimal-605%20ns%20%7C%2096%20B-blue.svg)](docs/benchmarks/BASELINE.md)
+
 A standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
 
 The package candidate is **`UnitConverter` `2.0.0-preview.1`**, targeting **.NET Standard 2.0**. This repository prepares the package; it has not been published to nuget.org.
+
+## Performance baseline
+
+UnitConverter has a dedicated BenchmarkDotNet suite covering direct/routed conversion, exact decimal arithmetic, named and universal quantities, span parsing/formatting, catalog lookup, dynamic conversion, and composite expressions.
+
+The current GitHub-hosted baseline includes **2.43 ns / 0 B** for routed `double`, **36.3 ns / 0 B** for named `decimal`, **863 ns / 0 B** for span parsing, and **824 ns / 0 B** for span formatting. Exact decimal currently measures **605 ns / 96 B**, giving the optimization pass a concrete allocation target.
+
+See [the full benchmark baseline](docs/benchmarks/BASELINE.md) for all measurements and runner details. Hosted-runner timings vary; badges represent the checked-in baseline, not an absolute latency guarantee.
 
 ## Build, test and create a package
 

@@ -1,0 +1,58 @@
+name: Performance Benchmarks
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/UnitConverter/**"
+      - "benchmarks/**"
+      - "scripts/summarize_benchmarks.py"
+      - ".github/workflows/benchmarks.yml"
+  pull_request:
+    paths:
+      - "src/UnitConverter/**"
+      - "benchmarks/**"
+      - "scripts/summarize_benchmarks.py"
+      - ".github/workflows/benchmarks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore benchmark project
+        run: dotnet restore benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj
+
+      - name: Run BenchmarkDotNet
+        run: dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj --configuration Release --no-restore
+
+      - name: Summarize benchmark results
+        run: |
+          python scripts/summarize_benchmarks.py BenchmarkDotNet.Artifacts/results artifacts/benchmarks
+          cat artifacts/benchmarks/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v7
+        with:
+          name: unitconverter-benchmarks
+          path: |
+            BenchmarkDotNet.Artifacts/results/*
+            artifacts/benchmarks/*
+          if-no-files-found: error
+          retention-days: 30
