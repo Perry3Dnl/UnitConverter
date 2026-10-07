@@ -49,6 +49,12 @@ namespace UnitConverter
             return Parse(value.ToString("R", CultureInfo.InvariantCulture));
         }
 
+        public static UnitConverterRational FromDecimal(decimal value)
+        {
+            GetDecimalParts(value, out BigInteger numerator, out BigInteger denominator);
+            return new UnitConverterRational(numerator, denominator);
+        }
+
         public static UnitConverterRational Parse(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
