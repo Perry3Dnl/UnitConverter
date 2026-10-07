@@ -5,9 +5,10 @@
     <RootNamespace>UnitConverter.SystemTextJson</RootNamespace>
     <IsPackable>true</IsPackable>
     <PackageId>UnitConverter.SystemTextJson</PackageId>
+    <Title>UnitConverter.SystemTextJson</Title>
     <Authors>Perry3Dnl</Authors>
-    <Description>System.Text.Json serialization support for UnitConverter typed unit values.</Description>
-    <PackageTags>units;conversion;json;serialization;system.text.json</PackageTags>
+    <Description>System.Text.Json serialization companion for UnitConverter typed unit values, with stable enum-name output, catalog alias input, and NativeAOT validation.</Description>
+    <PackageTags>units;conversion;json;serialization;system.text.json;quantities;nativeaot</PackageTags>
     <PackageProjectUrl>https://github.com/Perry3Dnl/UnitConverter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -15,6 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
+    <PackageReleaseNotes>2.0.0-preview.2: System.Text.Json serialization support for UnitConverter typed unit values, catalog aliases on input, stable enum names on output, and NativeAOT smoke validation. Licensed under Apache-2.0 with Commons Clause v1.0.</PackageReleaseNotes>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>

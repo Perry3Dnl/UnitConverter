@@ -8,15 +8,15 @@
 [![span format](docs/benchmarks/badges/span-format.svg)](docs/benchmarks/BASELINE.md)
 [![exact decimal](docs/benchmarks/badges/exact-decimal.svg)](docs/benchmarks/BASELINE.md)
 
-A standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
+A high-performance standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It keeps the straightforward static/direct/numeric APIs while also providing strongly typed quantities, dimensional arithmetic, exact decimal/rational conversion, span parsing/formatting, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale number conversion.
 
-The package candidate is **`UnitConverter` `2.0.0-preview.1`**, targeting **.NET Standard 2.0**. This repository prepares the package; it has not been published to nuget.org.
+The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**, while `UnitConverter.SystemTextJson` targets **.NET Standard 2.0**. The packages are prepared and validated in CI but have not yet been published to nuget.org.
 
 ## Performance baseline
 
 UnitConverter has a dedicated BenchmarkDotNet suite covering direct/routed conversion, exact decimal arithmetic, named and universal quantities, span parsing/formatting, catalog lookup, dynamic conversion, and composite expressions.
 
-The current GitHub-hosted baseline includes **2.43 ns / 0 B** for routed `double`, **36.3 ns / 0 B** for named `decimal`, **863 ns / 0 B** for span parsing, and **824 ns / 0 B** for span formatting. Exact decimal currently measures **605 ns / 96 B**, giving the optimization pass a concrete allocation target.
+Recent GitHub-hosted runs keep routed `double` conversion in the low-single-digit nanosecond range with **0 B/op**, named `decimal` conversion in the tens-of-nanoseconds range with **0 B/op**, and span parsing/formatting around the ~100 ns range with **0 B/op**. Exact decimal conversion is also allocation-free on the benchmarked hot path. Cached composite parsing/conversion run in the tens-of-nanoseconds range with only **24 B/op** and **48 B/op** respectively. Hosted-runner timings vary between runs, so `docs/benchmarks/latest.json`, the generated badges, and the full baseline are the source of truth rather than hard-coded latency claims.
 
 See [the full benchmark baseline](docs/benchmarks/BASELINE.md) for all measurements and runner details. The badge SVGs are generated from the latest successful `main` benchmark run and committed by the benchmark workflow; hosted-runner timings vary, so they are trend indicators rather than absolute latency guarantees.
 
@@ -43,7 +43,7 @@ The `.nupkg` and `.snupkg` are written to `artifacts/packages`. The SDK is a bui
 Install the candidate into an existing application using the absolute path to that directory:
 
 ```sh
-dotnet add package UnitConverter --version 2.0.0-preview.1 --source /absolute/path/to/UnitConverter/artifacts/packages
+dotnet add package UnitConverter --version 2.0.0-preview.2 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
 GitHub Actions also builds the solution, runs the NUnit suite, creates the packages, and tests installation into a clean console application. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors.

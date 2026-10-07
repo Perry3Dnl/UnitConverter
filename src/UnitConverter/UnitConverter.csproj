@@ -5,9 +5,10 @@
     <RootNamespace>UnitConverter</RootNamespace>
     <IsPackable>true</IsPackable>
     <PackageId>UnitConverter</PackageId>
+    <Title>UnitConverter</Title>
     <Authors>Perry3Dnl</Authors>
-    <Description>Dependency-free .NET conversion library with 150 physical and engineering unit families, parsing, composite and custom units, metadata, and arbitrary-scale number conversion.</Description>
-    <PackageTags>units;conversion;physics;engineering;numbers;big-numbers;arbitrary-scale</PackageTags>
+    <Description>High-performance .NET unit conversion library with 150 physical and engineering families, strongly typed quantities, exact decimal/rational conversion, span parsing and formatting, composite and custom units, runtime metadata, and arbitrary-scale number conversion.</Description>
+    <PackageTags>units;conversion;physics;engineering;quantities;dimensional-analysis;decimal;parsing;formatting;big-numbers;arbitrary-scale</PackageTags>
     <PackageProjectUrl>https://github.com/Perry3Dnl/UnitConverter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -15,7 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
-    <PackageReleaseNotes>Standalone .NET migration of the 1.1.3 conversion core. Unity editor integration and assets have been removed; converter APIs and arithmetic are preserved.</PackageReleaseNotes>
+    <PackageReleaseNotes>2.0.0-preview.2: 150 conversion families and 1,858 unit entries; catalog-wide strongly typed quantities and dimensional arithmetic; exact decimal/rational conversion; allocation-free span parsing/formatting for typed quantities; optimized dynamic detection and composite expressions; runtime custom units; integrated arbitrary-scale number conversion; System.Text.Json companion support; NativeAOT validation; Apache-2.0 with Commons Clause v1.0 licensing.</PackageReleaseNotes>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>

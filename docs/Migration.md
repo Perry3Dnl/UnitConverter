@@ -1,6 +1,6 @@
 # Migration from the Unity package
 
-Version `2.0.0-preview.1` extracts the conversion core from Unity package `1.1.3` into a standalone NuGet project. The major preview version reflects removal of the Unity integration.
+The `2.0.0` preview line extracts the conversion core from Unity package `1.1.3` into a standalone NuGet project. The current candidate is `2.0.0-preview.2`; the major version change reflects removal of the Unity integration and the expanded standalone .NET API.
 
 ## Preserved
 
