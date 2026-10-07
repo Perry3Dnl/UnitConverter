@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
+      - name: Verify generated additional families
+        run: python scripts/generate_additional_families.py --check
       - name: Verify generated aliases
         run: python scripts/generate_aliases.py --check
       - name: Verify generated quantity API

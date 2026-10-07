@@ -1,6 +1,6 @@
 # UnitConverter
 
-A standalone .NET unit conversion library with **98 conversion families** and **1,650 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
+A standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It provides static converters, direct conversion methods, numeric extensions, and unit metadata without Unity dependencies.
 
 The package candidate is **`UnitConverter` `2.0.0-preview.1`**, targeting **.NET Standard 2.0**. This repository prepares the package; it has not been published to nuget.org.
 
@@ -69,7 +69,7 @@ double meters = UnitConverterDynamic.Convert("2 light-year", "m");
 
 Global detection returns explicit candidates for ambiguous symbols instead of guessing. Family and unit descriptors also expose physical dimensions, including a separate information dimension for digital storage/data rate. Dimensions can be multiplied, divided, and raised to integer powers for future dimensional-analysis APIs. Fuel economy is modeled with unit-specific reciprocal dimensions because `km/L` and `L/100 km` are physically reciprocal representations.
 
-Aliases are definition-driven. Curated vocabulary lives in `definitions/unit-aliases.json`; `scripts/generate_aliases.py` combines those overrides with safe generated human forms for all 98 families and 1,650 unit entries, then emits checked-in static C#. CI verifies the generated files are current, so consumers do not need Python and the runtime remains dependency-free.
+Aliases are definition-driven. Curated vocabulary lives in `definitions/unit-aliases.json`; `scripts/generate_aliases.py` combines those overrides with safe generated human forms for all 150 families and 1,858 unit entries, then emits checked-in static C#. CI verifies the generated files are current, so consumers do not need Python and the runtime remains dependency-free.
 
 Composite unit expressions are supported through the dimensional metadata:
 
