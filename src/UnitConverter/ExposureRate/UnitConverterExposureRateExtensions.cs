@@ -19,7 +19,7 @@ namespace UnitConverter.ExposureRate
 
         public static decimal Convert(this decimal value, UnitConverterExposureRateUnit from, UnitConverterExposureRateUnit to)
         {
-            return (decimal)UnitConverterExposureRate.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterExposureRateUnit from, UnitConverterExposureRateUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.MassFlux
 
         public static decimal Convert(this decimal value, UnitConverterMassFluxUnit from, UnitConverterMassFluxUnit to)
         {
-            return (decimal)UnitConverterMassFlux.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMassFluxUnit from, UnitConverterMassFluxUnit to)

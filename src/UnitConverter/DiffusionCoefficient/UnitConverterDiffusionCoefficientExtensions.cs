@@ -19,7 +19,7 @@ namespace UnitConverter.DiffusionCoefficient
 
         public static decimal Convert(this decimal value, UnitConverterDiffusionCoefficientUnit from, UnitConverterDiffusionCoefficientUnit to)
         {
-            return (decimal)UnitConverterDiffusionCoefficient.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterDiffusionCoefficientUnit from, UnitConverterDiffusionCoefficientUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.Jerk
 
         public static decimal Convert(this decimal value, UnitConverterJerkUnit from, UnitConverterJerkUnit to)
         {
-            return (decimal)UnitConverterJerk.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterJerkUnit from, UnitConverterJerkUnit to)

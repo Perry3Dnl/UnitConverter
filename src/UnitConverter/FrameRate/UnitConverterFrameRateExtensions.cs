@@ -19,7 +19,7 @@ namespace UnitConverter.FrameRate
 
         public static decimal Convert(this decimal value, UnitConverterFrameRateUnit from, UnitConverterFrameRateUnit to)
         {
-            return (decimal)UnitConverterFrameRate.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterFrameRateUnit from, UnitConverterFrameRateUnit to)

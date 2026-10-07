@@ -19,7 +19,7 @@ namespace UnitConverter.LinearDensity
 
         public static decimal Convert(this decimal value, UnitConverterLinearDensityUnit from, UnitConverterLinearDensityUnit to)
         {
-            return (decimal)UnitConverterLinearDensity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterLinearDensityUnit from, UnitConverterLinearDensityUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.DynamicPressure
 
         public static decimal Convert(this decimal value, UnitConverterDynamicPressureUnit from, UnitConverterDynamicPressureUnit to)
         {
-            return (decimal)UnitConverterDynamicPressure.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterDynamicPressureUnit from, UnitConverterDynamicPressureUnit to)

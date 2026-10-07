@@ -19,7 +19,7 @@ namespace UnitConverter.ThermalConductivity
 
         public static decimal Convert(this decimal value, UnitConverterThermalConductivityUnit from, UnitConverterThermalConductivityUnit to)
         {
-            return (decimal)UnitConverterThermalConductivity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterThermalConductivityUnit from, UnitConverterThermalConductivityUnit to)

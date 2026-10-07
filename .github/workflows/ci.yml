@@ -25,6 +25,8 @@ jobs:
         run: python scripts/generate_quantity_api.py --check
       - name: Verify generated Length quantity surface
         run: python scripts/generate_length_quantity.py --check
+      - name: Verify decimal precision routes
+        run: python scripts/verify_decimal_precision.py
       - name: Restore
         run: dotnet restore UnitConverter.sln
       - name: Build

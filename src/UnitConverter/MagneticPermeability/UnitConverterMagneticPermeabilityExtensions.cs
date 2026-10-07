@@ -19,7 +19,7 @@ namespace UnitConverter.MagneticPermeability
 
         public static decimal Convert(this decimal value, UnitConverterMagneticPermeabilityUnit from, UnitConverterMagneticPermeabilityUnit to)
         {
-            return (decimal)UnitConverterMagneticPermeability.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMagneticPermeabilityUnit from, UnitConverterMagneticPermeabilityUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.LuminousEnergy
 
         public static decimal Convert(this decimal value, UnitConverterLuminousEnergyUnit from, UnitConverterLuminousEnergyUnit to)
         {
-            return (decimal)UnitConverterLuminousEnergy.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterLuminousEnergyUnit from, UnitConverterLuminousEnergyUnit to)

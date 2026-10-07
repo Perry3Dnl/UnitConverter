@@ -19,7 +19,7 @@ namespace UnitConverter.ElectricFluxDensity
 
         public static decimal Convert(this decimal value, UnitConverterElectricFluxDensityUnit from, UnitConverterElectricFluxDensityUnit to)
         {
-            return (decimal)UnitConverterElectricFluxDensity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterElectricFluxDensityUnit from, UnitConverterElectricFluxDensityUnit to)

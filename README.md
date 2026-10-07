@@ -238,7 +238,41 @@ UnitValue<UnitConverterLengthUnit> restored =
 Deserialization accepts the catalogue's aliases as unit values, while serialization writes the stable enum name. The companion package depends on `System.Text.Json`; the `UnitConverter` core package remains free of third-party runtime dependencies.
 
 
- Integral extensions continue to return `double`; existing `decimal` overloads still calculate through `double`. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
+### Exact decimal and strongly typed quantities
+
+Decimal extension conversions now stay on a decimal-native path. Linear conversion factors are composed as reduced rational numbers before they are applied, so conversions such as inch-to-foot and extreme SI-prefix ratios do not need a `decimal -> double -> decimal` round trip or an underflow-prone intermediate base value.
+
+```csharp
+using UnitConverter;
+using UnitConverter.Length;
+
+decimal feet = 1m.Convert(
+    UnitConverterLengthUnit.Inch,
+    UnitConverterLengthUnit.Foot); // rational factor is exactly 1/12 before decimal rounding
+
+decimal tinyRatio = UnitConverterExact.Convert(
+    1m,
+    UnitConverterLengthUnit.Quectometer,
+    UnitConverterLengthUnit.Rontometer); // 0.001m
+```
+
+On .NET 8 or later, `UnitQuantity<T, TUnit>` provides a strongly typed wrapper for every catalog family with uniform physical dimensions. The unit enum is part of the CLR type, so unrelated families cannot be mixed by addition, subtraction, comparison, or assignment.
+
+```csharp
+using UnitConverter.Quantities;
+using UnitConverter.Torque;
+
+var torque = UnitQuantity.From(
+    12.5m,
+    UnitConverterTorqueUnit.NewtonMeter);
+
+var doubled = torque + torque;
+decimal value = doubled.As(UnitConverterTorqueUnit.NewtonMeter);
+```
+
+The existing named quantity types such as `Length<T>`, `Time<T>`, `Speed<T>`, `Force<T>`, and `Energy<T>` continue to provide compile-time derived arithmetic such as length/time -> speed and force*length -> energy. Fuel economy is deliberately split into `FuelEfficiency<T>` and `FuelConsumption<T>` because distance/volume and volume/distance are reciprocal dimensions and must not be treated as the same quantity type.
+
+Integral extensions continue to return `double` to preserve fractional results. Decimal extensions use the shared exact/rational conversion engine. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 ## Repository layout
 

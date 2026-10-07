@@ -19,7 +19,7 @@ namespace UnitConverter.AngularVelocity
 
         public static decimal Convert(this decimal value, UnitConverterAngularVelocityUnit from, UnitConverterAngularVelocityUnit to)
         {
-            return (decimal)UnitConverterAngularVelocity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterAngularVelocityUnit from, UnitConverterAngularVelocityUnit to)

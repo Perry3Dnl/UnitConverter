@@ -19,7 +19,7 @@ namespace UnitConverter.DataRate
 
         public static decimal Convert(this decimal value, UnitConverterDataRateUnit from, UnitConverterDataRateUnit to)
         {
-            return (decimal)UnitConverterDataRate.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterDataRateUnit from, UnitConverterDataRateUnit to)

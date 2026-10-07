@@ -19,7 +19,7 @@ namespace UnitConverter.RadiationExposure
 
         public static decimal Convert(this decimal value, UnitConverterRadiationExposureUnit from, UnitConverterRadiationExposureUnit to)
         {
-            return (decimal)UnitConverterRadiationExposure.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterRadiationExposureUnit from, UnitConverterRadiationExposureUnit to)

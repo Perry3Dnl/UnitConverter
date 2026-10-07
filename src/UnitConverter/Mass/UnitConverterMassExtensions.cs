@@ -19,7 +19,7 @@ namespace UnitConverter.Mass
 
         public static decimal Convert(this decimal value, UnitConverterMassUnit from, UnitConverterMassUnit to)
         {
-            return (decimal)UnitConverterMass.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMassUnit from, UnitConverterMassUnit to)

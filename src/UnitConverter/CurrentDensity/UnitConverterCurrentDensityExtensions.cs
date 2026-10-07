@@ -19,7 +19,7 @@ namespace UnitConverter.CurrentDensity
 
         public static decimal Convert(this decimal value, UnitConverterCurrentDensityUnit from, UnitConverterCurrentDensityUnit to)
         {
-            return (decimal)UnitConverterCurrentDensity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterCurrentDensityUnit from, UnitConverterCurrentDensityUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.Radioactivity
 
         public static decimal Convert(this decimal value, UnitConverterRadioactivityUnit from, UnitConverterRadioactivityUnit to)
         {
-            return (decimal)UnitConverterRadioactivity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterRadioactivityUnit from, UnitConverterRadioactivityUnit to)

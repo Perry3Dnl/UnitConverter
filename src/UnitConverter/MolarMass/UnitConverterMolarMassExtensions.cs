@@ -19,7 +19,7 @@ namespace UnitConverter.MolarMass
 
         public static decimal Convert(this decimal value, UnitConverterMolarMassUnit from, UnitConverterMolarMassUnit to)
         {
-            return (decimal)UnitConverterMolarMass.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMolarMassUnit from, UnitConverterMolarMassUnit to)

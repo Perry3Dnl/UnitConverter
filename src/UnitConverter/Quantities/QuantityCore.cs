@@ -4,70 +4,6 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    internal readonly struct RationalFactor
-    {
-        public RationalFactor(BigInteger numerator, BigInteger denominator)
-        {
-            if (denominator.IsZero)
-                throw new DivideByZeroException();
-
-            Numerator = numerator;
-            Denominator = denominator;
-        }
-
-        public BigInteger Numerator { get; }
-        public BigInteger Denominator { get; }
-
-        public T Apply<T>(T value) where T : IFloatingPoint<T>
-        {
-            if (Numerator <= Denominator)
-                return ApplyInteger(ApplyInteger(value, Numerator, multiply: true), Denominator, multiply: false);
-
-            return ApplyInteger(ApplyInteger(value, Denominator, multiply: false), Numerator, multiply: true);
-        }
-
-        public T ApplyInverse<T>(T value) where T : IFloatingPoint<T>
-        {
-            if (Numerator <= Denominator)
-                return ApplyInteger(ApplyInteger(value, Denominator, multiply: true), Numerator, multiply: false);
-
-            return ApplyInteger(ApplyInteger(value, Numerator, multiply: false), Denominator, multiply: true);
-        }
-
-        private static T ApplyInteger<T>(T value, BigInteger factor, bool multiply)
-            where T : IFloatingPoint<T>
-        {
-            if (factor.Sign < 0)
-            {
-                value = -value;
-                factor = BigInteger.Abs(factor);
-            }
-
-            if (factor.IsOne)
-                return value;
-
-            BigInteger chunkBase = new BigInteger(1_000_000_000_000_000_000L);
-            while (factor > long.MaxValue)
-            {
-                BigInteger chunk = BigInteger.GreatestCommonDivisor(factor, chunkBase);
-                if (chunk.IsOne)
-                    throw new OverflowException("Rational factor contains an integer component too large for generic numeric conversion.");
-
-                T converted = T.CreateChecked((long)chunk);
-                value = multiply ? value * converted : value / converted;
-                factor /= chunk;
-            }
-
-            if (!factor.IsOne)
-            {
-                T converted = T.CreateChecked((long)factor);
-                value = multiply ? value * converted : value / converted;
-            }
-
-            return value;
-        }
-    }
-
     public readonly partial struct Length<T> :
         IEquatable<Length<T>>,
         IComparable<Length<T>>,
@@ -77,10 +13,10 @@ namespace UnitConverter.Quantities
         ISpanParsable<Length<T>>
         where T : IFloatingPoint<T>
     {
-        private static readonly RationalFactor InchToMetre = new RationalFactor(127, 5000);
-        private static readonly RationalFactor FootToMetre = new RationalFactor(381, 1250);
-        private static readonly RationalFactor YardToMetre = new RationalFactor(1143, 1250);
-        private static readonly RationalFactor MileToMetre = new RationalFactor(201168, 125);
+        private static readonly global::UnitConverter.UnitConverterRational InchToMetre = new global::UnitConverter.UnitConverterRational(127, 5000);
+        private static readonly global::UnitConverter.UnitConverterRational FootToMetre = new global::UnitConverter.UnitConverterRational(381, 1250);
+        private static readonly global::UnitConverter.UnitConverterRational YardToMetre = new global::UnitConverter.UnitConverterRational(1143, 1250);
+        private static readonly global::UnitConverter.UnitConverterRational MileToMetre = new global::UnitConverter.UnitConverterRational(201168, 125);
 
         private readonly T _metres;
 
@@ -315,8 +251,8 @@ namespace UnitConverter.Quantities
         ISpanParsable<Speed<T>>
         where T : IFloatingPoint<T>
     {
-        private static readonly RationalFactor MilePerHourToMetresPerSecond = new RationalFactor(1397, 3125);
-        private static readonly RationalFactor KnotToMetresPerSecond = new RationalFactor(463, 900);
+        private static readonly global::UnitConverter.UnitConverterRational MilePerHourToMetresPerSecond = new global::UnitConverter.UnitConverterRational(1397, 3125);
+        private static readonly global::UnitConverter.UnitConverterRational KnotToMetresPerSecond = new global::UnitConverter.UnitConverterRational(463, 900);
 
         private readonly T _metresPerSecond;
 

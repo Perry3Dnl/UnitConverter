@@ -19,7 +19,7 @@ namespace UnitConverter.HeatTransferCoefficient
 
         public static decimal Convert(this decimal value, UnitConverterHeatTransferCoefficientUnit from, UnitConverterHeatTransferCoefficientUnit to)
         {
-            return (decimal)UnitConverterHeatTransferCoefficient.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterHeatTransferCoefficientUnit from, UnitConverterHeatTransferCoefficientUnit to)

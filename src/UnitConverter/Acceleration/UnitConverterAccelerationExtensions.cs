@@ -19,7 +19,7 @@ namespace UnitConverter.Acceleration
 
         public static decimal Convert(this decimal value, UnitConverterAccelerationUnit from, UnitConverterAccelerationUnit to)
         {
-            return (decimal)UnitConverterAcceleration.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterAccelerationUnit from, UnitConverterAccelerationUnit to)

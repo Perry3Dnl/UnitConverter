@@ -88,7 +88,7 @@ def render():
             ])
 
     lines.extend([
-        "        private static RationalFactor GetFactor(UnitConverterLengthUnit unit)",
+        "        private static global::UnitConverter.UnitConverterRational GetFactor(UnitConverterLengthUnit unit)",
         "            => unit switch",
         "            {",
     ])
@@ -97,7 +97,7 @@ def render():
             continue
         factor = factor_map[unit]
         lines.append(
-            f'                UnitConverterLengthUnit.{unit} => new RationalFactor(BigInteger.Parse("{factor.numerator}"), BigInteger.Parse("{factor.denominator}")),'
+            f'                UnitConverterLengthUnit.{unit} => new global::UnitConverter.UnitConverterRational(BigInteger.Parse("{factor.numerator}"), BigInteger.Parse("{factor.denominator}")),'
         )
     lines.extend([
         '                _ => throw new System.ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported Length unit.")',

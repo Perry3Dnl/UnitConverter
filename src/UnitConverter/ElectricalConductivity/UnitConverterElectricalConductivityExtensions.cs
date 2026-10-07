@@ -19,7 +19,7 @@ namespace UnitConverter.ElectricalConductivity
 
         public static decimal Convert(this decimal value, UnitConverterElectricalConductivityUnit from, UnitConverterElectricalConductivityUnit to)
         {
-            return (decimal)UnitConverterElectricalConductivity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterElectricalConductivityUnit from, UnitConverterElectricalConductivityUnit to)

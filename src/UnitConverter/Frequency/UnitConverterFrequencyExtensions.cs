@@ -19,7 +19,7 @@ namespace UnitConverter.Frequency
 
         public static decimal Convert(this decimal value, UnitConverterFrequencyUnit from, UnitConverterFrequencyUnit to)
         {
-            return (decimal)UnitConverterFrequency.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterFrequencyUnit from, UnitConverterFrequencyUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.Speed
 
         public static decimal Convert(this decimal value, UnitConverterSpeedUnit from, UnitConverterSpeedUnit to)
         {
-            return (decimal)UnitConverterSpeed.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterSpeedUnit from, UnitConverterSpeedUnit to)

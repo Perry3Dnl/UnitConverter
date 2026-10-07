@@ -19,7 +19,7 @@ namespace UnitConverter.FuelEconomy
 
         public static decimal Convert(this decimal value, UnitConverterFuelEconomyUnit from, UnitConverterFuelEconomyUnit to)
         {
-            return (decimal)UnitConverterFuelEconomy.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterFuelEconomyUnit from, UnitConverterFuelEconomyUnit to)

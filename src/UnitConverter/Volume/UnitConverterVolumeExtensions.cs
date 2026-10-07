@@ -19,7 +19,7 @@ namespace UnitConverter.Volume
 
         public static decimal Convert(this decimal value, UnitConverterVolumeUnit from, UnitConverterVolumeUnit to)
         {
-            return (decimal)UnitConverterVolume.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterVolumeUnit from, UnitConverterVolumeUnit to)

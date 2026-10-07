@@ -19,7 +19,7 @@ namespace UnitConverter.AmountOfSubstance
 
         public static decimal Convert(this decimal value, UnitConverterAmountOfSubstanceUnit from, UnitConverterAmountOfSubstanceUnit to)
         {
-            return (decimal)UnitConverterAmountOfSubstance.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterAmountOfSubstanceUnit from, UnitConverterAmountOfSubstanceUnit to)

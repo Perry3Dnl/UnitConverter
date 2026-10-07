@@ -19,7 +19,7 @@ namespace UnitConverter.Current
 
         public static decimal Convert(this decimal value, UnitConverterCurrentUnit from, UnitConverterCurrentUnit to)
         {
-            return (decimal)UnitConverterCurrent.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterCurrentUnit from, UnitConverterCurrentUnit to)

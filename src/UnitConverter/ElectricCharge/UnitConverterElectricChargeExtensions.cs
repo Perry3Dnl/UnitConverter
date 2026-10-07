@@ -19,7 +19,7 @@ namespace UnitConverter.ElectricCharge
 
         public static decimal Convert(this decimal value, UnitConverterElectricChargeUnit from, UnitConverterElectricChargeUnit to)
         {
-            return (decimal)UnitConverterElectricCharge.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterElectricChargeUnit from, UnitConverterElectricChargeUnit to)

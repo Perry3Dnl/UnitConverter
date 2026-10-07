@@ -19,7 +19,7 @@ namespace UnitConverter.DigitalStorage
 
         public static decimal Convert(this decimal value, UnitConverterDigitalStorageUnit from, UnitConverterDigitalStorageUnit to)
         {
-            return (decimal)UnitConverterDigitalStorage.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterDigitalStorageUnit from, UnitConverterDigitalStorageUnit to)

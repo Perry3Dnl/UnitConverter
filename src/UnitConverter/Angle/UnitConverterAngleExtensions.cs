@@ -19,7 +19,7 @@ namespace UnitConverter.Angle
 
         public static decimal Convert(this decimal value, UnitConverterAngleUnit from, UnitConverterAngleUnit to)
         {
-            return (decimal)UnitConverterAngle.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterAngleUnit from, UnitConverterAngleUnit to)
