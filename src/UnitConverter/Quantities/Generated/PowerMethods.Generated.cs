@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class PowerMethods
+    public static partial class PowerMethods
     {
         public static Power<T> FromWatts<T>(T value) where T : IFloatingPoint<T>
             => Power<T>.FromWatts(value);
@@ -21,20 +21,10 @@ namespace UnitConverter.Quantities
             => quantity.Kilowatts;
 
         public static Power<T> From<T>(T value, UnitConverter.Power.UnitConverterPowerUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Power.UnitConverterPowerUnit.Watt => Power<T>.FromWatts(value),
-                UnitConverter.Power.UnitConverterPowerUnit.Kilowatt => Power<T>.FromKilowatts(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Power<T>.From(value, unit);
 
         public static T In<T>(this Power<T> quantity, UnitConverter.Power.UnitConverterPowerUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Power.UnitConverterPowerUnit.Watt => quantity.Watts,
-                UnitConverter.Power.UnitConverterPowerUnit.Kilowatt => quantity.Kilowatts,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Power.UnitConverterPowerUnit from, UnitConverter.Power.UnitConverterPowerUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

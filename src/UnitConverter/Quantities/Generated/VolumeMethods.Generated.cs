@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class VolumeMethods
+    public static partial class VolumeMethods
     {
         public static Volume<T> FromCubicMetres<T>(T value) where T : IFloatingPoint<T>
             => Volume<T>.FromCubicMetres(value);
@@ -27,22 +27,10 @@ namespace UnitConverter.Quantities
             => quantity.Millilitres;
 
         public static Volume<T> From<T>(T value, UnitConverter.Volume.UnitConverterVolumeUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Volume.UnitConverterVolumeUnit.CubicMeter => Volume<T>.FromCubicMetres(value),
-                UnitConverter.Volume.UnitConverterVolumeUnit.Liter => Volume<T>.FromLitres(value),
-                UnitConverter.Volume.UnitConverterVolumeUnit.Milliliter => Volume<T>.FromMillilitres(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Volume<T>.From(value, unit);
 
         public static T In<T>(this Volume<T> quantity, UnitConverter.Volume.UnitConverterVolumeUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Volume.UnitConverterVolumeUnit.CubicMeter => quantity.CubicMetres,
-                UnitConverter.Volume.UnitConverterVolumeUnit.Liter => quantity.Litres,
-                UnitConverter.Volume.UnitConverterVolumeUnit.Milliliter => quantity.Millilitres,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Volume.UnitConverterVolumeUnit from, UnitConverter.Volume.UnitConverterVolumeUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class DensityMethods
+    public static partial class DensityMethods
     {
         public static Density<T> FromKilogramsPerCubicMetre<T>(T value) where T : IFloatingPoint<T>
             => Density<T>.FromKilogramsPerCubicMetre(value);
@@ -21,20 +21,10 @@ namespace UnitConverter.Quantities
             => quantity.GramsPerCubicCentimetre;
 
         public static Density<T> From<T>(T value, UnitConverter.Density.UnitConverterDensityUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter => Density<T>.FromKilogramsPerCubicMetre(value),
-                UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicCentimeter => Density<T>.FromGramsPerCubicCentimetre(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Density<T>.From(value, unit);
 
         public static T In<T>(this Density<T> quantity, UnitConverter.Density.UnitConverterDensityUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Density.UnitConverterDensityUnit.KilogramPerCubicMeter => quantity.KilogramsPerCubicMetre,
-                UnitConverter.Density.UnitConverterDensityUnit.GramPerCubicCentimeter => quantity.GramsPerCubicCentimetre,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Density.UnitConverterDensityUnit from, UnitConverter.Density.UnitConverterDensityUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

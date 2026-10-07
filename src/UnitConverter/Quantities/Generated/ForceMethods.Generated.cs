@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class ForceMethods
+    public static partial class ForceMethods
     {
         public static Force<T> FromNewtons<T>(T value) where T : IFloatingPoint<T>
             => Force<T>.FromNewtons(value);
@@ -21,20 +21,10 @@ namespace UnitConverter.Quantities
             => quantity.Kilonewtons;
 
         public static Force<T> From<T>(T value, UnitConverter.Force.UnitConverterForceUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Force.UnitConverterForceUnit.Newton => Force<T>.FromNewtons(value),
-                UnitConverter.Force.UnitConverterForceUnit.Kilonewton => Force<T>.FromKilonewtons(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Force<T>.From(value, unit);
 
         public static T In<T>(this Force<T> quantity, UnitConverter.Force.UnitConverterForceUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Force.UnitConverterForceUnit.Newton => quantity.Newtons,
-                UnitConverter.Force.UnitConverterForceUnit.Kilonewton => quantity.Kilonewtons,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Force.UnitConverterForceUnit from, UnitConverter.Force.UnitConverterForceUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

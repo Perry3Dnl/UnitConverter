@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class MassMethods
+    public static partial class MassMethods
     {
         public static Mass<T> FromKilograms<T>(T value) where T : IFloatingPoint<T>
             => Mass<T>.FromKilograms(value);
@@ -27,22 +27,10 @@ namespace UnitConverter.Quantities
             => quantity.Milligrams;
 
         public static Mass<T> From<T>(T value, UnitConverter.Mass.UnitConverterMassUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Mass.UnitConverterMassUnit.Kilogram => Mass<T>.FromKilograms(value),
-                UnitConverter.Mass.UnitConverterMassUnit.Gram => Mass<T>.FromGrams(value),
-                UnitConverter.Mass.UnitConverterMassUnit.Milligram => Mass<T>.FromMilligrams(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Mass<T>.From(value, unit);
 
         public static T In<T>(this Mass<T> quantity, UnitConverter.Mass.UnitConverterMassUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Mass.UnitConverterMassUnit.Kilogram => quantity.Kilograms,
-                UnitConverter.Mass.UnitConverterMassUnit.Gram => quantity.Grams,
-                UnitConverter.Mass.UnitConverterMassUnit.Milligram => quantity.Milligrams,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Mass.UnitConverterMassUnit from, UnitConverter.Mass.UnitConverterMassUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

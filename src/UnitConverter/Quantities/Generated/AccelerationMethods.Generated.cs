@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class AccelerationMethods
+    public static partial class AccelerationMethods
     {
         public static Acceleration<T> FromMetresPerSecondSquared<T>(T value) where T : IFloatingPoint<T>
             => Acceleration<T>.FromMetresPerSecondSquared(value);
@@ -15,18 +15,10 @@ namespace UnitConverter.Quantities
             => quantity.MetresPerSecondSquared;
 
         public static Acceleration<T> From<T>(T value, UnitConverter.Acceleration.UnitConverterAccelerationUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared => Acceleration<T>.FromMetresPerSecondSquared(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Acceleration<T>.From(value, unit);
 
         public static T In<T>(this Acceleration<T> quantity, UnitConverter.Acceleration.UnitConverterAccelerationUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Acceleration.UnitConverterAccelerationUnit.MeterPerSecondSquared => quantity.MetresPerSecondSquared,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Acceleration.UnitConverterAccelerationUnit from, UnitConverter.Acceleration.UnitConverterAccelerationUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

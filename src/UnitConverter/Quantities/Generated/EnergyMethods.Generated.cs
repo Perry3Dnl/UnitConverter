@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class EnergyMethods
+    public static partial class EnergyMethods
     {
         public static Energy<T> FromJoules<T>(T value) where T : IFloatingPoint<T>
             => Energy<T>.FromJoules(value);
@@ -21,20 +21,10 @@ namespace UnitConverter.Quantities
             => quantity.Kilojoules;
 
         public static Energy<T> From<T>(T value, UnitConverter.Energy.UnitConverterEnergyUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Energy.UnitConverterEnergyUnit.Joule => Energy<T>.FromJoules(value),
-                UnitConverter.Energy.UnitConverterEnergyUnit.Kilojoule => Energy<T>.FromKilojoules(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Energy<T>.From(value, unit);
 
         public static T In<T>(this Energy<T> quantity, UnitConverter.Energy.UnitConverterEnergyUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Energy.UnitConverterEnergyUnit.Joule => quantity.Joules,
-                UnitConverter.Energy.UnitConverterEnergyUnit.Kilojoule => quantity.Kilojoules,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Energy.UnitConverterEnergyUnit from, UnitConverter.Energy.UnitConverterEnergyUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

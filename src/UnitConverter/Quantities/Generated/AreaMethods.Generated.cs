@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class AreaMethods
+    public static partial class AreaMethods
     {
         public static Area<T> FromSquareMetres<T>(T value) where T : IFloatingPoint<T>
             => Area<T>.FromSquareMetres(value);
@@ -27,22 +27,10 @@ namespace UnitConverter.Quantities
             => quantity.Hectares;
 
         public static Area<T> From<T>(T value, UnitConverter.Area.UnitConverterAreaUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Area.UnitConverterAreaUnit.SquareMeter => Area<T>.FromSquareMetres(value),
-                UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer => Area<T>.FromSquareKilometres(value),
-                UnitConverter.Area.UnitConverterAreaUnit.Hectare => Area<T>.FromHectares(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Area<T>.From(value, unit);
 
         public static T In<T>(this Area<T> quantity, UnitConverter.Area.UnitConverterAreaUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Area.UnitConverterAreaUnit.SquareMeter => quantity.SquareMetres,
-                UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer => quantity.SquareKilometres,
-                UnitConverter.Area.UnitConverterAreaUnit.Hectare => quantity.Hectares,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Area.UnitConverterAreaUnit from, UnitConverter.Area.UnitConverterAreaUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

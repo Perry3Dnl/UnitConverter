@@ -16,8 +16,9 @@
 - Add CI verification that rejects future decimal-extension regressions back to `double`.
 - Expand the catalog from 98 to 150 families with 52 generated mechanical/materials, thermal, electrical/magnetic/wave, and chemistry/process families (208 additional units).
 - Add explicit reduced-rational scale metadata for generated families so decimal conversion does not infer their scale through `double`.
-- Add first-class named generic quantity structs for all 52 families introduced by the 150-family expansion, with per-unit factories/properties, enum-based conversion, arithmetic, comparisons, `IParsable`/`ISpanParsable`, and `ISpanFormattable`.
+- Add first-class named generic quantity structs across the complete 150-family catalog. The 80 previously unnamed legacy families receive generated structs, the 17 established named families gain catalog-complete unit properties/factories and parsing, and fuel economy remains split into reciprocal-safe `FuelEfficiency<T>` / `FuelConsumption<T>` types.
 - Add reviewed derived operators for mechanical, electrical, thermal-flux, charge-density, and specific-property quantities while keeping generated unit surfaces separate from hand-reviewed physical relations.
+- Add deterministic generation and CI coverage for the legacy named-quantity surface, including every registered unit, modern parsing/formatting interfaces, full enum-based indirect conversion, and backward-compatible friendly APIs.
 
 ## Historical Unity releases
 

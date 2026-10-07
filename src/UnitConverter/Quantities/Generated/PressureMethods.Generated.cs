@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace UnitConverter.Quantities
 {
-    public static class PressureMethods
+    public static partial class PressureMethods
     {
         public static Pressure<T> FromPascals<T>(T value) where T : IFloatingPoint<T>
             => Pressure<T>.FromPascals(value);
@@ -33,24 +33,10 @@ namespace UnitConverter.Quantities
             => quantity.Bars;
 
         public static Pressure<T> From<T>(T value, UnitConverter.Pressure.UnitConverterPressureUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Pressure.UnitConverterPressureUnit.Pascal => Pressure<T>.FromPascals(value),
-                UnitConverter.Pressure.UnitConverterPressureUnit.Kilopascal => Pressure<T>.FromKilopascals(value),
-                UnitConverter.Pressure.UnitConverterPressureUnit.Megapascal => Pressure<T>.FromMegapascals(value),
-                UnitConverter.Pressure.UnitConverterPressureUnit.Bar => Pressure<T>.FromBars(value),
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => Pressure<T>.From(value, unit);
 
         public static T In<T>(this Pressure<T> quantity, UnitConverter.Pressure.UnitConverterPressureUnit unit) where T : IFloatingPoint<T>
-            => unit switch
-            {
-                UnitConverter.Pressure.UnitConverterPressureUnit.Pascal => quantity.Pascals,
-                UnitConverter.Pressure.UnitConverterPressureUnit.Kilopascal => quantity.Kilopascals,
-                UnitConverter.Pressure.UnitConverterPressureUnit.Megapascal => quantity.Megapascals,
-                UnitConverter.Pressure.UnitConverterPressureUnit.Bar => quantity.Bars,
-                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")
-            };
+            => quantity.In(unit);
 
         public static T Convert<T>(T value, UnitConverter.Pressure.UnitConverterPressureUnit from, UnitConverter.Pressure.UnitConverterPressureUnit to) where T : IFloatingPoint<T>
             => From(value, from).In(to);

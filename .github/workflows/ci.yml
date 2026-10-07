@@ -25,6 +25,8 @@ jobs:
         run: python scripts/generate_aliases.py --check
       - name: Verify generated quantity API
         run: python scripts/generate_quantity_api.py --check
+      - name: Verify catalog-wide legacy named quantities
+        run: python scripts/generate_legacy_named_quantities.py --check
       - name: Verify generated Length quantity surface
         run: python scripts/generate_length_quantity.py --check
       - name: Verify decimal precision routes

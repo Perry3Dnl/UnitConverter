@@ -270,7 +270,7 @@ var doubled = torque + torque;
 decimal value = doubled.As(UnitConverterTorqueUnit.NewtonMeter);
 ```
 
-The named quantity layer now also covers all 52 families introduced by the 150-family expansion. Types such as `Stress<T>`, `Strain<T>`, `YoungModulus<T>`, `Entropy<T>`, `Impedance<T>`, `Molality<T>`, and `SpecificSurfaceArea<T>` expose per-unit factories and properties, enum-based `From/In/Convert`, generic arithmetic, span parsing, and span formatting.
+The named quantity layer now covers the complete 150-family catalog on .NET 8+. Every uniform family has a first-class named generic type with a property and `From<Unit>` factory for every registered unit, enum-based `From/In/Convert`, generic arithmetic, comparisons, span parsing, and span formatting. The original named types such as `Length<T>`, `Time<T>`, `Pressure<T>`, and `Voltage<T>` retain their existing friendly names while also exposing the rest of their catalog units. Fuel economy remains intentionally represented by the two reciprocal-safe types `FuelEfficiency<T>` and `FuelConsumption<T>`.
 
 ```csharp
 using UnitConverter.Quantities;
@@ -289,7 +289,7 @@ Voltage<decimal> voltage =
     impedance * ElectricCurrent<decimal>.FromAmperes(2m);
 ```
 
-The established named quantities such as `Length<T>`, `Time<T>`, `Speed<T>`, `Force<T>`, and `Energy<T>` continue to provide derived arithmetic such as length/time -> speed and force*length -> energy. The additional engineering types add reviewed relations including stress*area -> force, modulus*strain -> stress, spring-constant*length -> force, heat-flux-density*area -> power, and impedance*current -> voltage. Fuel economy remains deliberately split into `FuelEfficiency<T>` and `FuelConsumption<T>` because distance/volume and volume/distance are reciprocal dimensions and must not be treated as the same quantity type.
+The established named quantities such as `Length<T>`, `Time<T>`, `Speed<T>`, `Force<T>`, and `Energy<T>` continue to provide derived arithmetic such as length/time -> speed and force*length -> energy. The additional engineering types retain the reviewed relations including stress*area -> force, modulus*strain -> stress, spring-constant*length -> force, heat-flux-density*area -> power, and impedance*current -> voltage. Catalog-wide generation is guarded in CI so adding or changing a legacy unit cannot silently leave the named typed surface behind.
 
 Integral extensions continue to return `double` to preserve fractional results. Decimal extensions use the shared exact/rational conversion engine. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
