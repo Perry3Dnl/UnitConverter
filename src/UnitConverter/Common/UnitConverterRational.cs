@@ -134,7 +134,7 @@ namespace UnitConverter
         {
 #if NET8_0_OR_GREATER
             if (TryGetPowerOfTenDecimalRatio(Numerator, Denominator, out decimal factor))
-                return value * factor;
+                return NormalizeDecimal(value * factor);
 #endif
 
             GetDecimalParts(value, out BigInteger valueNumerator, out BigInteger valueDenominator);
@@ -148,7 +148,7 @@ namespace UnitConverter
 
 #if NET8_0_OR_GREATER
             if (TryGetPowerOfTenDecimalRatio(Denominator, Numerator, out decimal factor))
-                return value * factor;
+                return NormalizeDecimal(value * factor);
 #endif
 
             GetDecimalParts(value, out BigInteger valueNumerator, out BigInteger valueDenominator);
@@ -242,6 +242,53 @@ namespace UnitConverter
 #if NET8_0_OR_GREATER
         private static readonly BigInteger Int64MinValue = new BigInteger(long.MinValue);
         private static readonly BigInteger Int64MaxValue = new BigInteger(long.MaxValue);
+
+        private static decimal NormalizeDecimal(decimal value)
+        {
+            Span<int> bits = stackalloc int[4];
+            decimal.GetBits(value, bits);
+
+            uint low = unchecked((uint)bits[0]);
+            uint mid = unchecked((uint)bits[1]);
+            uint high = unchecked((uint)bits[2]);
+            int scale = (bits[3] >> 16) & 0x7F;
+            bool negative = (bits[3] & unchecked((int)0x80000000)) != 0;
+
+            if ((low | mid | high) == 0)
+                return decimal.Zero;
+
+            while (scale > 0)
+            {
+                ulong remainder = 0;
+
+                ulong segment = (remainder << 32) | high;
+                uint nextHigh = (uint)(segment / 10);
+                remainder = segment % 10;
+
+                segment = (remainder << 32) | mid;
+                uint nextMid = (uint)(segment / 10);
+                remainder = segment % 10;
+
+                segment = (remainder << 32) | low;
+                uint nextLow = (uint)(segment / 10);
+                remainder = segment % 10;
+
+                if (remainder != 0)
+                    break;
+
+                high = nextHigh;
+                mid = nextMid;
+                low = nextLow;
+                scale--;
+            }
+
+            return new decimal(
+                unchecked((int)low),
+                unchecked((int)mid),
+                unchecked((int)high),
+                negative,
+                (byte)scale);
+        }
 
         private static bool TryGetPowerOfTenDecimalRatio(
             BigInteger numerator,
