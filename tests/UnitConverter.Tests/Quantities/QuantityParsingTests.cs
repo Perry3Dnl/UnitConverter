@@ -28,6 +28,17 @@ namespace UnitConverter.Tests.Quantities
         }
 
         [Test]
+        public void LengthSpanParserKeepsAmbiguousSymbolsRejected()
+        {
+            Assert.That(
+                Length<decimal>.TryParse("1 pc".AsSpan(), CultureInfo.InvariantCulture, out _),
+                Is.False);
+            Assert.That(
+                Length<decimal>.TryParse("1 li".AsSpan(), CultureInfo.InvariantCulture, out _),
+                Is.False);
+        }
+
+        [Test]
         public void TimeParsesSupportedUnits()
         {
             Time<decimal> time = Time<decimal>.Parse("2.5 h", CultureInfo.InvariantCulture);
