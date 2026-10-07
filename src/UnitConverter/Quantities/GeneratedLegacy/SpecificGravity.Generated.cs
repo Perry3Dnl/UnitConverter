@@ -23,7 +23,7 @@ namespace UnitConverter.Quantities
         private SpecificGravity(T baseValue) => _baseValue = baseValue;
 
         public T Ratio => _baseValue;
-        public T SpecificGravity => UnitConverterNumeric.Convert(_baseValue, BaseUnit, global::UnitConverter.SpecificGravity.UnitConverterSpecificGravityUnit.SpecificGravity);
+        public T SpecificGravityValue => UnitConverterNumeric.Convert(_baseValue, BaseUnit, global::UnitConverter.SpecificGravity.UnitConverterSpecificGravityUnit.SpecificGravity);
         public T RelativeDensity => UnitConverterNumeric.Convert(_baseValue, BaseUnit, global::UnitConverter.SpecificGravity.UnitConverterSpecificGravityUnit.RelativeDensity);
         public T Percent => UnitConverterNumeric.Convert(_baseValue, BaseUnit, global::UnitConverter.SpecificGravity.UnitConverterSpecificGravityUnit.Percent);
         public T PerMille => UnitConverterNumeric.Convert(_baseValue, BaseUnit, global::UnitConverter.SpecificGravity.UnitConverterSpecificGravityUnit.PerMille);
