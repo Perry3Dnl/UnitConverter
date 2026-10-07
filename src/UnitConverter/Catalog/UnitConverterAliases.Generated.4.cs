@@ -810,17 +810,17 @@ namespace UnitConverter.Catalog
                         default:
                             return null;
                     }
-                case UnitConverterFamily.YoungModulus:
+                case UnitConverterFamily.Strain:
                     switch (unitName)
                     {
-                        case "Pascal":
-                            return new[] { "pascal", "pascals" };
-                        case "Kilopascal":
-                            return new[] { "kilopascal" };
-                        case "Megapascal":
-                            return new[] { "megapascal" };
-                        case "Gigapascal":
-                            return new[] { "gigapascal" };
+                        case "Ratio":
+                            return new[] { "ratio" };
+                        case "Percent":
+                            return new[] { "percent" };
+                        case "PerMille":
+                            return new[] { "per mille" };
+                        case "Microstrain":
+                            return new[] { "microstrain" };
                         default:
                             return null;
                     }

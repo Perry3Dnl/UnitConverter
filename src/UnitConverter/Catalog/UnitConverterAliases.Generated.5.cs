@@ -10,6 +10,34 @@ namespace UnitConverter.Catalog
         {
             switch (family)
             {
+                case UnitConverterFamily.StrainRate:
+                    switch (unitName)
+                    {
+                        case "PerSecond":
+                            return new[] { "per second" };
+                        case "PerMinute":
+                            return new[] { "per minute" };
+                        case "PerHour":
+                            return new[] { "per hour" };
+                        case "PercentPerSecond":
+                            return new[] { "percent per second" };
+                        default:
+                            return null;
+                    }
+                case UnitConverterFamily.YoungModulus:
+                    switch (unitName)
+                    {
+                        case "Pascal":
+                            return new[] { "pascal", "pascals" };
+                        case "Kilopascal":
+                            return new[] { "kilopascal" };
+                        case "Megapascal":
+                            return new[] { "megapascal" };
+                        case "Gigapascal":
+                            return new[] { "gigapascal" };
+                        default:
+                            return null;
+                    }
                 case UnitConverterFamily.ShearModulus:
                     switch (unitName)
                     {
@@ -35,34 +63,6 @@ namespace UnitConverter.Catalog
                             return new[] { "megapascal" };
                         case "Gigapascal":
                             return new[] { "gigapascal" };
-                        default:
-                            return null;
-                    }
-                case UnitConverterFamily.Strain:
-                    switch (unitName)
-                    {
-                        case "Ratio":
-                            return new[] { "ratio" };
-                        case "Percent":
-                            return new[] { "percent" };
-                        case "PerMille":
-                            return new[] { "per mille" };
-                        case "Microstrain":
-                            return new[] { "microstrain" };
-                        default:
-                            return null;
-                    }
-                case UnitConverterFamily.StrainRate:
-                    switch (unitName)
-                    {
-                        case "PerSecond":
-                            return new[] { "per second" };
-                        case "PerMinute":
-                            return new[] { "per minute" };
-                        case "PerHour":
-                            return new[] { "per hour" };
-                        case "PercentPerSecond":
-                            return new[] { "percent per second" };
                         default:
                             return null;
                     }
@@ -178,20 +178,6 @@ namespace UnitConverter.Catalog
                         default:
                             return null;
                     }
-                case UnitConverterFamily.Entropy:
-                    switch (unitName)
-                    {
-                        case "JoulePerKelvin":
-                            return new[] { "joule per kelvin", "joules per kelvin" };
-                        case "KilojoulePerKelvin":
-                            return new[] { "kilojoule per kelvin" };
-                        case "MegajoulePerKelvin":
-                            return new[] { "megajoule per kelvin" };
-                        case "MillijoulePerKelvin":
-                            return new[] { "millijoule per kelvin" };
-                        default:
-                            return null;
-                    }
                 case UnitConverterFamily.ThermalResistance:
                     switch (unitName)
                     {
@@ -234,6 +220,20 @@ namespace UnitConverter.Catalog
                         default:
                             return null;
                     }
+                case UnitConverterFamily.Entropy:
+                    switch (unitName)
+                    {
+                        case "JoulePerKelvin":
+                            return new[] { "joule per kelvin", "joules per kelvin" };
+                        case "KilojoulePerKelvin":
+                            return new[] { "kilojoule per kelvin" };
+                        case "MegajoulePerKelvin":
+                            return new[] { "megajoule per kelvin" };
+                        case "MillijoulePerKelvin":
+                            return new[] { "millijoule per kelvin" };
+                        default:
+                            return null;
+                    }
                 case UnitConverterFamily.SpecificEntropy:
                     switch (unitName)
                     {
@@ -249,20 +249,6 @@ namespace UnitConverter.Catalog
                             return null;
                     }
                 case UnitConverterFamily.MolarEntropy:
-                    switch (unitName)
-                    {
-                        case "JoulePerMoleKelvin":
-                            return new[] { "joule per mole kelvin", "joules per mole kelvin" };
-                        case "KilojoulePerMoleKelvin":
-                            return new[] { "kilojoule per mole kelvin" };
-                        case "JoulePerKilomoleKelvin":
-                            return new[] { "joule per kilomole kelvin", "joules per kilomole kelvin" };
-                        case "KilojoulePerKilomoleKelvin":
-                            return new[] { "kilojoule per kilomole kelvin" };
-                        default:
-                            return null;
-                    }
-                case UnitConverterFamily.MolarHeatCapacity:
                     switch (unitName)
                     {
                         case "JoulePerMoleKelvin":
@@ -315,6 +301,20 @@ namespace UnitConverter.Catalog
                             return new[] { "megajoule per mole" };
                         case "JoulePerKilomole":
                             return new[] { "joule per kilomole", "joules per kilomole" };
+                        default:
+                            return null;
+                    }
+                case UnitConverterFamily.MolarHeatCapacity:
+                    switch (unitName)
+                    {
+                        case "JoulePerMoleKelvin":
+                            return new[] { "joule per mole kelvin", "joules per mole kelvin" };
+                        case "KilojoulePerMoleKelvin":
+                            return new[] { "kilojoule per mole kelvin" };
+                        case "JoulePerKilomoleKelvin":
+                            return new[] { "joule per kilomole kelvin", "joules per kilomole kelvin" };
+                        case "KilojoulePerKilomoleKelvin":
+                            return new[] { "kilojoule per kilomole kelvin" };
                         default:
                             return null;
                     }

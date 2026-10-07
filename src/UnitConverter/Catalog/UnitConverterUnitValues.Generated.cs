@@ -2358,6 +2358,28 @@ namespace UnitConverter.Catalog
                 };
             }
 
+            if (type == typeof(UnitConverter.Strain.UnitConverterStrainUnit))
+            {
+                return (TUnit[])(object)new UnitConverter.Strain.UnitConverterStrainUnit[]
+                {
+                    UnitConverter.Strain.UnitConverterStrainUnit.Ratio,
+                    UnitConverter.Strain.UnitConverterStrainUnit.Percent,
+                    UnitConverter.Strain.UnitConverterStrainUnit.PerMille,
+                    UnitConverter.Strain.UnitConverterStrainUnit.Microstrain,
+                };
+            }
+
+            if (type == typeof(UnitConverter.StrainRate.UnitConverterStrainRateUnit))
+            {
+                return (TUnit[])(object)new UnitConverter.StrainRate.UnitConverterStrainRateUnit[]
+                {
+                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PerSecond,
+                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PerMinute,
+                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PerHour,
+                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PercentPerSecond,
+                };
+            }
+
             if (type == typeof(UnitConverter.YoungModulus.UnitConverterYoungModulusUnit))
             {
                 return (TUnit[])(object)new UnitConverter.YoungModulus.UnitConverterYoungModulusUnit[]
@@ -2388,28 +2410,6 @@ namespace UnitConverter.Catalog
                     UnitConverter.BulkModulus.UnitConverterBulkModulusUnit.Kilopascal,
                     UnitConverter.BulkModulus.UnitConverterBulkModulusUnit.Megapascal,
                     UnitConverter.BulkModulus.UnitConverterBulkModulusUnit.Gigapascal,
-                };
-            }
-
-            if (type == typeof(UnitConverter.Strain.UnitConverterStrainUnit))
-            {
-                return (TUnit[])(object)new UnitConverter.Strain.UnitConverterStrainUnit[]
-                {
-                    UnitConverter.Strain.UnitConverterStrainUnit.Ratio,
-                    UnitConverter.Strain.UnitConverterStrainUnit.Percent,
-                    UnitConverter.Strain.UnitConverterStrainUnit.PerMille,
-                    UnitConverter.Strain.UnitConverterStrainUnit.Microstrain,
-                };
-            }
-
-            if (type == typeof(UnitConverter.StrainRate.UnitConverterStrainRateUnit))
-            {
-                return (TUnit[])(object)new UnitConverter.StrainRate.UnitConverterStrainRateUnit[]
-                {
-                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PerSecond,
-                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PerMinute,
-                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PerHour,
-                    UnitConverter.StrainRate.UnitConverterStrainRateUnit.PercentPerSecond,
                 };
             }
 
@@ -2501,17 +2501,6 @@ namespace UnitConverter.Catalog
                 };
             }
 
-            if (type == typeof(UnitConverter.Entropy.UnitConverterEntropyUnit))
-            {
-                return (TUnit[])(object)new UnitConverter.Entropy.UnitConverterEntropyUnit[]
-                {
-                    UnitConverter.Entropy.UnitConverterEntropyUnit.JoulePerKelvin,
-                    UnitConverter.Entropy.UnitConverterEntropyUnit.KilojoulePerKelvin,
-                    UnitConverter.Entropy.UnitConverterEntropyUnit.MegajoulePerKelvin,
-                    UnitConverter.Entropy.UnitConverterEntropyUnit.MillijoulePerKelvin,
-                };
-            }
-
             if (type == typeof(UnitConverter.ThermalResistance.UnitConverterThermalResistanceUnit))
             {
                 return (TUnit[])(object)new UnitConverter.ThermalResistance.UnitConverterThermalResistanceUnit[]
@@ -2545,6 +2534,17 @@ namespace UnitConverter.Catalog
                 };
             }
 
+            if (type == typeof(UnitConverter.Entropy.UnitConverterEntropyUnit))
+            {
+                return (TUnit[])(object)new UnitConverter.Entropy.UnitConverterEntropyUnit[]
+                {
+                    UnitConverter.Entropy.UnitConverterEntropyUnit.JoulePerKelvin,
+                    UnitConverter.Entropy.UnitConverterEntropyUnit.KilojoulePerKelvin,
+                    UnitConverter.Entropy.UnitConverterEntropyUnit.MegajoulePerKelvin,
+                    UnitConverter.Entropy.UnitConverterEntropyUnit.MillijoulePerKelvin,
+                };
+            }
+
             if (type == typeof(UnitConverter.SpecificEntropy.UnitConverterSpecificEntropyUnit))
             {
                 return (TUnit[])(object)new UnitConverter.SpecificEntropy.UnitConverterSpecificEntropyUnit[]
@@ -2564,17 +2564,6 @@ namespace UnitConverter.Catalog
                     UnitConverter.MolarEntropy.UnitConverterMolarEntropyUnit.KilojoulePerMoleKelvin,
                     UnitConverter.MolarEntropy.UnitConverterMolarEntropyUnit.JoulePerKilomoleKelvin,
                     UnitConverter.MolarEntropy.UnitConverterMolarEntropyUnit.KilojoulePerKilomoleKelvin,
-                };
-            }
-
-            if (type == typeof(UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit))
-            {
-                return (TUnit[])(object)new UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit[]
-                {
-                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.JoulePerMoleKelvin,
-                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.KilojoulePerMoleKelvin,
-                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.JoulePerKilomoleKelvin,
-                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.KilojoulePerKilomoleKelvin,
                 };
             }
 
@@ -2608,6 +2597,17 @@ namespace UnitConverter.Catalog
                     UnitConverter.MolarEnergy.UnitConverterMolarEnergyUnit.KilojoulePerMole,
                     UnitConverter.MolarEnergy.UnitConverterMolarEnergyUnit.MegajoulePerMole,
                     UnitConverter.MolarEnergy.UnitConverterMolarEnergyUnit.JoulePerKilomole,
+                };
+            }
+
+            if (type == typeof(UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit))
+            {
+                return (TUnit[])(object)new UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit[]
+                {
+                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.JoulePerMoleKelvin,
+                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.KilojoulePerMoleKelvin,
+                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.JoulePerKilomoleKelvin,
+                    UnitConverter.MolarHeatCapacity.UnitConverterMolarHeatCapacityUnit.KilojoulePerKilomoleKelvin,
                 };
             }
 
