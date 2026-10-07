@@ -395,921 +395,449 @@ namespace UnitConverter.Quantities
 
         internal static bool TryResolveCatalogUnit(ReadOnlySpan<char> text, out global::UnitConverter.Length.UnitConverterLengthUnit unit)
         {
-            bool found = false;
-            global::UnitConverter.Length.UnitConverterLengthUnit candidate = default;
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Femtometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Femtometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Femtometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Picometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Picometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Picometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Nanometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Nanometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Nanometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Micrometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Micrometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Micrometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Millimeter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Millimeter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Millimeter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Centimeter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Centimeter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Centimeter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Decimeter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Decimeter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Decimeter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Meter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Meter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Meter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Decameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Decameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Decameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Hectometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Hectometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Hectometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Kilometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Kilometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Kilometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Megameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Megameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Megameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Gigameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Gigameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Gigameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Angstrom).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Angstrom)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Angstrom;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Thou).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Thou)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Thou;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Inch).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Inch)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Inch;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Foot).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Foot)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Foot;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Yard).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Yard)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Yard;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Mile).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Mile)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Mile;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.League).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.League)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.League;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Hand).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Hand)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Hand;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyInch).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyInch)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyInch;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyFoot).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyFoot)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyFoot;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyYard).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyYard)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyYard;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyMile).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyMile)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyMile;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Link).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Link)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Link;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Rod).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Rod)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Rod;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Chain).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Chain)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Chain;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Furlong).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Furlong)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Furlong;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Fathom).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Fathom)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Fathom;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Cable).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Cable)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Cable;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.NauticalMile).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.NauticalMile)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.NauticalMile;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.AstronomicalUnit).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.AstronomicalUnit)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.AstronomicalUnit;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LightYear).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LightYear)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LightYear;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Parsec).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Parsec)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Parsec;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Cubit).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Cubit)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Cubit;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Span).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Span)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Span;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Pace).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Pace)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Pace;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Ell).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Ell)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Ell;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Quectometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Quectometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Quectometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Rontometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Rontometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Rontometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Yoctometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Yoctometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Yoctometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Zeptometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Zeptometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Zeptometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Attometer).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Attometer)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Attometer;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Petameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Petameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Petameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Exameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Exameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Exameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Zettameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Zettameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Zettameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Yottameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Yottameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Yottameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Ronnameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Ronnameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Ronnameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Quettameter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Quettameter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Quettameter;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Fermi).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Fermi)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Fermi;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.BohrRadius).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.BohrRadius)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.BohrRadius;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.PlanckLength).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.PlanckLength)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.PlanckLength;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.ClassicalElectronRadius).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.ClassicalElectronRadius)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.ClassicalElectronRadius;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.EarthEquatorialRadius).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.EarthEquatorialRadius)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.EarthEquatorialRadius;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.EarthMeanRadius).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.EarthMeanRadius)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.EarthMeanRadius;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.SolarRadius).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.SolarRadius)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.SolarRadius;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LunarDistance).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LunarDistance)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LunarDistance;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.PointPostScript).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.PointPostScript)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.PointPostScript;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.PicaPostScript).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.PicaPostScript)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.PicaPostScript;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.DidotPoint).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.DidotPoint)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.DidotPoint;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Cicero).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Cicero)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Cicero;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Barleycorn).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Barleycorn)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Barleycorn;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Nail).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Nail)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Nail;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Palm).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Palm)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Palm;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.RomanFoot).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.RomanFoot)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.RomanFoot;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Arshin).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Arshin)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Arshin;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Vara).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Vara)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Vara;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Smoot).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Smoot)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Smoot;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.NauticalLeague).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.NauticalLeague)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.NauticalLeague;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Twip).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Twip)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Twip;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPoint).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPoint)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPoint;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPica).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPica)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPica;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Ken).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Ken)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Ken;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Shaku).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Shaku)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Shaku;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Ri).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Ri)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Ri;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LiChinese).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LiChinese)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LiChinese;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.ChiChinese).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.ChiChinese)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.ChiChinese;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Kiloparsec).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Kiloparsec)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Kiloparsec;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Megaparsec).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Megaparsec)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Megaparsec;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Gigaparsec).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Gigaparsec)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Gigaparsec;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LightSecond).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LightSecond)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LightSecond;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LightMinute).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LightMinute)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LightMinute;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LightHour).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LightHour)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LightHour;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LightDay).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LightDay)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LightDay;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.LightWeek).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.LightWeek)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.LightWeek;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Microinch).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Microinch)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Microinch;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Nanoinch).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Nanoinch)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Nanoinch;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Caliber).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Caliber)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Caliber;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.RackUnit).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.RackUnit)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.RackUnit;
-                found = true;
-            }
-            if (text.Equals(global::UnitConverter.Length.UnitConverterLength.GetSymbol(global::UnitConverter.Length.UnitConverterLengthUnit.Quarter).AsSpan(), StringComparison.Ordinal))
-            {
-                if (found && candidate != global::UnitConverter.Length.UnitConverterLengthUnit.Quarter)
-                {
-                    unit = default;
-                    return false;
-                }
-                candidate = global::UnitConverter.Length.UnitConverterLengthUnit.Quarter;
-                found = true;
-            }
-            if (found)
-            {
-                unit = candidate;
+            if (text.Equals("li".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = default;
+                return false;
+            }
+            if (text.Equals("pc".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = default;
+                return false;
+            }
+            if (text.Equals("fm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Femtometer;
+                return true;
+            }
+            if (text.Equals("pm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Picometer;
+                return true;
+            }
+            if (text.Equals("nm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Nanometer;
+                return true;
+            }
+            if (text.Equals("µm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Micrometer;
+                return true;
+            }
+            if (text.Equals("mm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Millimeter;
+                return true;
+            }
+            if (text.Equals("cm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Centimeter;
+                return true;
+            }
+            if (text.Equals("dm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Decimeter;
+                return true;
+            }
+            if (text.Equals("m".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Meter;
+                return true;
+            }
+            if (text.Equals("dam".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Decameter;
+                return true;
+            }
+            if (text.Equals("hm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Hectometer;
+                return true;
+            }
+            if (text.Equals("km".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Kilometer;
+                return true;
+            }
+            if (text.Equals("Mm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Megameter;
+                return true;
+            }
+            if (text.Equals("Gm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Gigameter;
+                return true;
+            }
+            if (text.Equals("Å".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Angstrom;
+                return true;
+            }
+            if (text.Equals("thou".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Thou;
+                return true;
+            }
+            if (text.Equals("in".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Inch;
+                return true;
+            }
+            if (text.Equals("ft".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Foot;
+                return true;
+            }
+            if (text.Equals("yd".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Yard;
+                return true;
+            }
+            if (text.Equals("mi".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Mile;
+                return true;
+            }
+            if (text.Equals("lea".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.League;
+                return true;
+            }
+            if (text.Equals("hh".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Hand;
+                return true;
+            }
+            if (text.Equals("in (survey)".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyInch;
+                return true;
+            }
+            if (text.Equals("ft (survey)".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyFoot;
+                return true;
+            }
+            if (text.Equals("yd (survey)".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyYard;
+                return true;
+            }
+            if (text.Equals("mi (survey)".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.USSurveyMile;
+                return true;
+            }
+            if (text.Equals("rd".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Rod;
+                return true;
+            }
+            if (text.Equals("ch".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Chain;
+                return true;
+            }
+            if (text.Equals("fur".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Furlong;
+                return true;
+            }
+            if (text.Equals("ftm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Fathom;
+                return true;
+            }
+            if (text.Equals("cable".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Cable;
+                return true;
+            }
+            if (text.Equals("nmi".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.NauticalMile;
+                return true;
+            }
+            if (text.Equals("au".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.AstronomicalUnit;
+                return true;
+            }
+            if (text.Equals("ly".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.LightYear;
+                return true;
+            }
+            if (text.Equals("cubit".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Cubit;
+                return true;
+            }
+            if (text.Equals("span".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Span;
+                return true;
+            }
+            if (text.Equals("pace".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Pace;
+                return true;
+            }
+            if (text.Equals("ell".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Ell;
+                return true;
+            }
+            if (text.Equals("qm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Quectometer;
+                return true;
+            }
+            if (text.Equals("rm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Rontometer;
+                return true;
+            }
+            if (text.Equals("ym".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Yoctometer;
+                return true;
+            }
+            if (text.Equals("zm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Zeptometer;
+                return true;
+            }
+            if (text.Equals("am".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Attometer;
+                return true;
+            }
+            if (text.Equals("Pm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Petameter;
+                return true;
+            }
+            if (text.Equals("Em".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Exameter;
+                return true;
+            }
+            if (text.Equals("Zm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Zettameter;
+                return true;
+            }
+            if (text.Equals("Ym".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Yottameter;
+                return true;
+            }
+            if (text.Equals("Rm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Ronnameter;
+                return true;
+            }
+            if (text.Equals("Qm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Quettameter;
+                return true;
+            }
+            if (text.Equals("fermi".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Fermi;
+                return true;
+            }
+            if (text.Equals("a₀".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.BohrRadius;
+                return true;
+            }
+            if (text.Equals("ℓP".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.PlanckLength;
+                return true;
+            }
+            if (text.Equals("re".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.ClassicalElectronRadius;
+                return true;
+            }
+            if (text.Equals("Rₑ".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.EarthEquatorialRadius;
+                return true;
+            }
+            if (text.Equals("Rₘ".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.EarthMeanRadius;
+                return true;
+            }
+            if (text.Equals("R☉".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.SolarRadius;
+                return true;
+            }
+            if (text.Equals("LD".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.LunarDistance;
+                return true;
+            }
+            if (text.Equals("pt".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.PointPostScript;
+                return true;
+            }
+            if (text.Equals("dd".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.DidotPoint;
+                return true;
+            }
+            if (text.Equals("cicero".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Cicero;
+                return true;
+            }
+            if (text.Equals("barleycorn".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Barleycorn;
+                return true;
+            }
+            if (text.Equals("nail".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Nail;
+                return true;
+            }
+            if (text.Equals("palm".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Palm;
+                return true;
+            }
+            if (text.Equals("pes".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.RomanFoot;
+                return true;
+            }
+            if (text.Equals("arshin".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Arshin;
+                return true;
+            }
+            if (text.Equals("vara".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Vara;
+                return true;
+            }
+            if (text.Equals("smoot".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Smoot;
+                return true;
+            }
+            if (text.Equals("nlea".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.NauticalLeague;
+                return true;
+            }
+            if (text.Equals("twip".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Twip;
+                return true;
+            }
+            if (text.Equals("pt printer".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPoint;
+                return true;
+            }
+            if (text.Equals("pc printer".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.PrinterPica;
+                return true;
+            }
+            if (text.Equals("ken".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Ken;
+                return true;
+            }
+            if (text.Equals("shaku".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Shaku;
+                return true;
+            }
+            if (text.Equals("ri".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Ri;
+                return true;
+            }
+            if (text.Equals("chi".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.ChiChinese;
+                return true;
+            }
+            if (text.Equals("kpc".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Kiloparsec;
+                return true;
+            }
+            if (text.Equals("Mpc".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Megaparsec;
+                return true;
+            }
+            if (text.Equals("Gpc".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Gigaparsec;
+                return true;
+            }
+            if (text.Equals("light-second".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.LightSecond;
+                return true;
+            }
+            if (text.Equals("light-minute".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.LightMinute;
+                return true;
+            }
+            if (text.Equals("light-hour".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.LightHour;
+                return true;
+            }
+            if (text.Equals("light-day".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.LightDay;
+                return true;
+            }
+            if (text.Equals("light-week".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.LightWeek;
+                return true;
+            }
+            if (text.Equals("µin".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Microinch;
+                return true;
+            }
+            if (text.Equals("nin".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Nanoinch;
+                return true;
+            }
+            if (text.Equals("cal".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Caliber;
+                return true;
+            }
+            if (text.Equals("U".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.RackUnit;
+                return true;
+            }
+            if (text.Equals("qr".AsSpan(), StringComparison.Ordinal))
+            {
+                unit = global::UnitConverter.Length.UnitConverterLengthUnit.Quarter;
                 return true;
             }
             if (text.Equals("Femtometer".AsSpan(), StringComparison.OrdinalIgnoreCase))
