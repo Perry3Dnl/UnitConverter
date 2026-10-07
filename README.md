@@ -270,7 +270,26 @@ var doubled = torque + torque;
 decimal value = doubled.As(UnitConverterTorqueUnit.NewtonMeter);
 ```
 
-The existing named quantity types such as `Length<T>`, `Time<T>`, `Speed<T>`, `Force<T>`, and `Energy<T>` continue to provide compile-time derived arithmetic such as length/time -> speed and force*length -> energy. Fuel economy is deliberately split into `FuelEfficiency<T>` and `FuelConsumption<T>` because distance/volume and volume/distance are reciprocal dimensions and must not be treated as the same quantity type.
+The named quantity layer now also covers all 52 families introduced by the 150-family expansion. Types such as `Stress<T>`, `Strain<T>`, `YoungModulus<T>`, `Entropy<T>`, `Impedance<T>`, `Molality<T>`, and `SpecificSurfaceArea<T>` expose per-unit factories and properties, enum-based `From/In/Convert`, generic arithmetic, span parsing, and span formatting.
+
+```csharp
+using UnitConverter.Quantities;
+
+Stress<decimal> stress =
+    YoungModulus<decimal>.FromGigapascal(200m) *
+    Strain<decimal>.FromMicrostrain(500m);
+
+decimal megapascals = stress.Megapascal; // 100m
+
+Impedance<decimal> impedance = Impedance<decimal>.Parse(
+    "50 Ω",
+    CultureInfo.InvariantCulture);
+
+Voltage<decimal> voltage =
+    impedance * ElectricCurrent<decimal>.FromAmperes(2m);
+```
+
+The established named quantities such as `Length<T>`, `Time<T>`, `Speed<T>`, `Force<T>`, and `Energy<T>` continue to provide derived arithmetic such as length/time -> speed and force*length -> energy. The additional engineering types add reviewed relations including stress*area -> force, modulus*strain -> stress, spring-constant*length -> force, heat-flux-density*area -> power, and impedance*current -> voltage. Fuel economy remains deliberately split into `FuelEfficiency<T>` and `FuelConsumption<T>` because distance/volume and volume/distance are reciprocal dimensions and must not be treated as the same quantity type.
 
 Integral extensions continue to return `double` to preserve fractional results. Decimal extensions use the shared exact/rational conversion engine. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
