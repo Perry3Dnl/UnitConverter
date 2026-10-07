@@ -162,6 +162,14 @@ namespace UnitConverter
             out string unitText,
             out UnitConverterError error)
         {
+#if NET8_0_OR_GREATER
+            return TrySplitValueAndUnitSpan(
+                text,
+                formatProvider,
+                out value,
+                out unitText,
+                out error);
+#else
             value = 0d;
             unitText = null;
             error = UnitConverterError.InvalidNumber;
@@ -209,7 +217,68 @@ namespace UnitConverter
             }
 
             return false;
+#endif
         }
+
+#if NET8_0_OR_GREATER
+        private static bool TrySplitValueAndUnitSpan(
+            string text,
+            IFormatProvider formatProvider,
+            out double value,
+            out string unitText,
+            out UnitConverterError error)
+        {
+            value = 0d;
+            unitText = null;
+            error = UnitConverterError.InvalidNumber;
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return false;
+            }
+
+            ReadOnlySpan<char> trimmed = text.AsSpan().Trim();
+            double numericOnly;
+
+            if (double.TryParse(
+                trimmed,
+                NumberStyles.Float,
+                formatProvider,
+                out numericOnly))
+            {
+                error = UnitConverterError.MissingUnit;
+                return false;
+            }
+
+            for (int splitIndex = trimmed.Length - 1; splitIndex > 0; splitIndex--)
+            {
+                ReadOnlySpan<char> numberPart =
+                    trimmed.Slice(0, splitIndex).TrimEnd();
+                ReadOnlySpan<char> candidateUnit =
+                    trimmed.Slice(splitIndex).Trim();
+
+                if (candidateUnit.IsEmpty)
+                {
+                    continue;
+                }
+
+                double candidateValue;
+                if (double.TryParse(
+                    numberPart,
+                    NumberStyles.Float,
+                    formatProvider,
+                    out candidateValue))
+                {
+                    value = candidateValue;
+                    unitText = candidateUnit.ToString();
+                    error = UnitConverterError.None;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+#endif
     }
 
     /// <summary>
