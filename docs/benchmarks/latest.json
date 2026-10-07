@@ -1,112 +1,112 @@
 {
   "benchmarks": [
     {
-      "type": "ConversionBenchmarks",
-      "method": "DirectDouble",
-      "mean": "0.0000 ns",
-      "allocated": "0 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
-    },
-    {
-      "type": "ConversionBenchmarks",
-      "method": "RoutedDouble",
-      "mean": "2.4289 ns",
-      "allocated": "0 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
-    },
-    {
-      "type": "ConversionBenchmarks",
+      "type": "",
       "method": "ExactDecimal",
-      "mean": "605.3082 ns",
+      "mean": "619.9460 ns",
+      "error": "3.8970 ns",
+      "stddev": "1.7303 ns",
       "allocated": "96 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
-      "type": "ConversionBenchmarks",
+      "type": "",
       "method": "NamedQuantityDecimal",
-      "mean": "36.3218 ns",
+      "mean": "36.5976 ns",
+      "error": "0.2260 ns",
+      "stddev": "0.1003 ns",
       "allocated": "0 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
-      "type": "ConversionBenchmarks",
+      "type": "",
       "method": "UnitQuantityDecimal",
-      "mean": "663.6867 ns",
+      "mean": "690.8266 ns",
+      "error": "9.0643 ns",
+      "stddev": "4.0246 ns",
       "allocated": "96 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
-      "type": "TextAndDynamicBenchmarks",
-      "method": "SpanParseLength",
-      "mean": "863.064 ns",
+      "type": "",
+      "method": "DirectDouble",
+      "mean": "0.0393 ns",
+      "error": "0.0048 ns",
+      "stddev": "0.0021 ns",
       "allocated": "0 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
-      "type": "TextAndDynamicBenchmarks",
-      "method": "SpanFormatLength",
-      "mean": "823.742 ns",
+      "type": "",
+      "method": "RoutedDouble",
+      "mean": "2.4396 ns",
+      "error": "0.0776 ns",
+      "stddev": "0.0344 ns",
       "allocated": "0 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
-      "type": "TextAndDynamicBenchmarks",
+      "type": "",
       "method": "CatalogLookup",
-      "mean": "2.807 ns",
+      "mean": "2.731 ns",
+      "error": "0.0139 ns",
+      "stddev": "0.0073 ns",
       "allocated": "0 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
-      "type": "TextAndDynamicBenchmarks",
-      "method": "DynamicFamilyConvert",
-      "mean": "105.986 ns",
-      "allocated": "48 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
-    },
-    {
-      "type": "TextAndDynamicBenchmarks",
-      "method": "DynamicDetectedConvert",
-      "mean": "44.974918 µs",
-      "allocated": "6560 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
-    },
-    {
-      "type": "TextAndDynamicBenchmarks",
+      "type": "",
       "method": "CompositeConvert",
-      "mean": "174.029233 µs",
-      "allocated": "27648 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "mean": "176,414.444 ns",
+      "error": "943.1959 ns",
+      "stddev": "493.3097 ns",
+      "allocated": "27520 B",
+      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
-      "type": "TextAndDynamicBenchmarks",
+      "type": "",
       "method": "CompositeParse",
-      "mean": "132.391465 µs",
+      "mean": "130,030.001 ns",
+      "error": "797.2037 ns",
+      "stddev": "353.9634 ns",
       "allocated": "20840 B",
-      "error": "",
-      "stddev": "",
-      "report": "baseline"
+      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+    },
+    {
+      "type": "",
+      "method": "DynamicDetectedConvert",
+      "mean": "44,645.495 ns",
+      "error": "288.8431 ns",
+      "stddev": "151.0705 ns",
+      "allocated": "6560 B",
+      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+    },
+    {
+      "type": "",
+      "method": "DynamicFamilyConvert",
+      "mean": "103.823 ns",
+      "error": "1.4758 ns",
+      "stddev": "0.7719 ns",
+      "allocated": "48 B",
+      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+    },
+    {
+      "type": "",
+      "method": "SpanFormatLength",
+      "mean": "885.609 ns",
+      "error": "13.8795 ns",
+      "stddev": "7.2593 ns",
+      "allocated": "0 B",
+      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+    },
+    {
+      "type": "",
+      "method": "SpanParseLength",
+      "mean": "864.115 ns",
+      "error": "10.3829 ns",
+      "stddev": "4.6101 ns",
+      "allocated": "0 B",
+      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     }
   ]
 }
