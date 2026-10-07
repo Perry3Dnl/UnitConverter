@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Luminance<T> operator +(Luminance<T> left, Luminance<T> right) => new Luminance<T>(left._baseValue + right._baseValue);
         public static Luminance<T> operator -(Luminance<T> left, Luminance<T> right) => new Luminance<T>(left._baseValue - right._baseValue);

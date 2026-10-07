@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Inductance<T> operator +(Inductance<T> left, Inductance<T> right) => new Inductance<T>(left._baseValue + right._baseValue);
         public static Inductance<T> operator -(Inductance<T> left, Inductance<T> right) => new Inductance<T>(left._baseValue - right._baseValue);

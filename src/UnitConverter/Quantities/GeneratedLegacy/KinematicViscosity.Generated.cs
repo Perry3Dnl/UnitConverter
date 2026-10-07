@@ -415,7 +415,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static KinematicViscosity<T> operator +(KinematicViscosity<T> left, KinematicViscosity<T> right) => new KinematicViscosity<T>(left._baseValue + right._baseValue);
         public static KinematicViscosity<T> operator -(KinematicViscosity<T> left, KinematicViscosity<T> right) => new KinematicViscosity<T>(left._baseValue - right._baseValue);

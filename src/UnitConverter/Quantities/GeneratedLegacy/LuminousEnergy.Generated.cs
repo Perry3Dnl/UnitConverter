@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static LuminousEnergy<T> operator +(LuminousEnergy<T> left, LuminousEnergy<T> right) => new LuminousEnergy<T>(left._baseValue + right._baseValue);
         public static LuminousEnergy<T> operator -(LuminousEnergy<T> left, LuminousEnergy<T> right) => new LuminousEnergy<T>(left._baseValue - right._baseValue);

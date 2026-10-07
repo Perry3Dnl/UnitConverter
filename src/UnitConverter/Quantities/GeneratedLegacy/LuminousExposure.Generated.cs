@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static LuminousExposure<T> operator +(LuminousExposure<T> left, LuminousExposure<T> right) => new LuminousExposure<T>(left._baseValue + right._baseValue);
         public static LuminousExposure<T> operator -(LuminousExposure<T> left, LuminousExposure<T> right) => new LuminousExposure<T>(left._baseValue - right._baseValue);

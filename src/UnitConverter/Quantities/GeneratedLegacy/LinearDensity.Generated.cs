@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static LinearDensity<T> operator +(LinearDensity<T> left, LinearDensity<T> right) => new LinearDensity<T>(left._baseValue + right._baseValue);
         public static LinearDensity<T> operator -(LinearDensity<T> left, LinearDensity<T> right) => new LinearDensity<T>(left._baseValue - right._baseValue);

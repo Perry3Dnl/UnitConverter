@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static LuminousEfficacy<T> operator +(LuminousEfficacy<T> left, LuminousEfficacy<T> right) => new LuminousEfficacy<T>(left._baseValue + right._baseValue);
         public static LuminousEfficacy<T> operator -(LuminousEfficacy<T> left, LuminousEfficacy<T> right) => new LuminousEfficacy<T>(left._baseValue - right._baseValue);

@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Jerk<T> operator +(Jerk<T> left, Jerk<T> right) => new Jerk<T>(left._baseValue + right._baseValue);
         public static Jerk<T> operator -(Jerk<T> left, Jerk<T> right) => new Jerk<T>(left._baseValue - right._baseValue);
