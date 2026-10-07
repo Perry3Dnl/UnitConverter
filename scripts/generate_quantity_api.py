@@ -25,7 +25,7 @@ def render_family(family_name, family):
         "",
         "namespace UnitConverter.Quantities",
         "{",
-        f"    public static class {helper_name}",
+        f"    public static partial class {helper_name}",
         "    {",
     ]
 
@@ -56,24 +56,10 @@ def render_family(family_name, family):
 
     lines.extend([
         f"        public static {quantity_type}<T> From<T>(T value, {enum_type} unit) where T : IFloatingPoint<T>",
-        "            => unit switch",
-        "            {",
-    ])
-    for unit in family["units"]:
-        lines.append(f"                {enum_type}.{unit['enumMember']} => {quantity_type}<T>.{unit['factory']}(value),")
-    lines.extend([
-        '                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")',
-        "            };",
+        f"            => {quantity_type}<T>.From(value, unit);",
         "",
         f"        public static T In<T>(this {quantity_type}<T> quantity, {enum_type} unit) where T : IFloatingPoint<T>",
-        "            => unit switch",
-        "            {",
-    ])
-    for unit in family["units"]:
-        lines.append(f"                {enum_type}.{unit['enumMember']} => quantity.{unit['name']},")
-    lines.extend([
-        '                _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit for this strongly typed quantity.")',
-        "            };",
+        "            => quantity.In(unit);",
         "",
         f"        public static T Convert<T>(T value, {enum_type} from, {enum_type} to) where T : IFloatingPoint<T>",
         "            => From(value, from).In(to);",
