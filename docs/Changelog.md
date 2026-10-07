@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.0-preview.2 — release-readiness candidate
+
+- Promote the standalone package candidate to `2.0.0-preview.2`.
+- Keep the catalog at 150 conversion families and 1,858 unit entries including aliases.
+- Add catalog-wide strongly typed quantities, reviewed dimensional arithmetic, compile-time family isolation, and modern generic numeric interfaces on .NET 8+.
+- Route decimal conversion through the exact reduced-rational engine, including exact affine temperature handling and reciprocal fuel-economy transforms.
+- Add span-based parsing and formatting with allocation-free hot paths for typed quantities.
+- Optimize global dynamic unit detection with cached built-in alias indexes while preserving exact-case and custom-unit ambiguity semantics.
+- Optimize composite expression parsing/conversion with a bounded built-in expression cache while preserving runtime custom-unit behavior.
+- Integrate arbitrary-scale number conversion and deterministic generated number naming into the core package.
+- Add runtime custom units, composite expressions, dynamic family detection, metadata, and the `UnitConverter.SystemTextJson` companion package.
+- Validate clean NuGet consumption, NativeAOT core usage, NativeAOT JSON usage, deterministic generated code, and BenchmarkDotNet allocation regressions in CI.
+- Add Apache License 2.0 subject to Commons Clause License Condition v1.0, with `LICENSE.md` and `NOTICE` embedded in both NuGet packages.
+- Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
+
 ## 2.0.0-preview.1 — standalone .NET package
 
 - Move the 496 portable runtime files to an SDK-style .NET Standard 2.0 library, changing only namespace references in the converter code.
