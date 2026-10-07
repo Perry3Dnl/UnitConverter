@@ -19,7 +19,7 @@ namespace UnitConverter.MassConcentration
 
         public static decimal Convert(this decimal value, UnitConverterMassConcentrationUnit from, UnitConverterMassConcentrationUnit to)
         {
-            return (decimal)UnitConverterMassConcentration.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMassConcentrationUnit from, UnitConverterMassConcentrationUnit to)

@@ -19,7 +19,7 @@ namespace UnitConverter.MomentOfInertia
 
         public static decimal Convert(this decimal value, UnitConverterMomentOfInertiaUnit from, UnitConverterMomentOfInertiaUnit to)
         {
-            return (decimal)UnitConverterMomentOfInertia.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMomentOfInertiaUnit from, UnitConverterMomentOfInertiaUnit to)

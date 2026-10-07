@@ -19,7 +19,7 @@ namespace UnitConverter.MagnetizingFieldStrength
 
         public static decimal Convert(this decimal value, UnitConverterMagnetizingFieldStrengthUnit from, UnitConverterMagnetizingFieldStrengthUnit to)
         {
-            return (decimal)UnitConverterMagnetizingFieldStrength.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMagnetizingFieldStrengthUnit from, UnitConverterMagnetizingFieldStrengthUnit to)

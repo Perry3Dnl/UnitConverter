@@ -19,7 +19,7 @@ namespace UnitConverter.MagneticField
 
         public static decimal Convert(this decimal value, UnitConverterMagneticFieldUnit from, UnitConverterMagneticFieldUnit to)
         {
-            return (decimal)UnitConverterMagneticField.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterMagneticFieldUnit from, UnitConverterMagneticFieldUnit to)
