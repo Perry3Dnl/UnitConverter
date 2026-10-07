@@ -8,8 +8,8 @@ SOURCE = ROOT / "src" / "UnitConverter"
 files = sorted(SOURCE.glob("*/UnitConverter*Extensions.cs"))
 errors = []
 
-if len(files) != 98:
-    errors.append(f"Expected decimal extensions for 98 families, found {len(files)}.")
+if len(files) != 150:
+    errors.append(f"Expected decimal extensions for 150 families, found {len(files)}.")
 
 legacy = re.compile(r"\(decimal\).*Convert\(\(double\)value,\s*from,\s*to\)")
 for path in files:
