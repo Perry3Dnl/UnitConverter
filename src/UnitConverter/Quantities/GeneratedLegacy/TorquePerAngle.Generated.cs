@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static TorquePerAngle<T> operator +(TorquePerAngle<T> left, TorquePerAngle<T> right) => new TorquePerAngle<T>(left._baseValue + right._baseValue);
         public static TorquePerAngle<T> operator -(TorquePerAngle<T> left, TorquePerAngle<T> right) => new TorquePerAngle<T>(left._baseValue - right._baseValue);

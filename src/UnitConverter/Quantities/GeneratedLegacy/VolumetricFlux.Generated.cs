@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static VolumetricFlux<T> operator +(VolumetricFlux<T> left, VolumetricFlux<T> right) => new VolumetricFlux<T>(left._baseValue + right._baseValue);
         public static VolumetricFlux<T> operator -(VolumetricFlux<T> left, VolumetricFlux<T> right) => new VolumetricFlux<T>(left._baseValue - right._baseValue);

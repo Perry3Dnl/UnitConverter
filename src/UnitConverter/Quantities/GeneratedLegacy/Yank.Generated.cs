@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Yank<T> operator +(Yank<T> left, Yank<T> right) => new Yank<T>(left._baseValue + right._baseValue);
         public static Yank<T> operator -(Yank<T> left, Yank<T> right) => new Yank<T>(left._baseValue - right._baseValue);

@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static VaporPressure<T> operator +(VaporPressure<T> left, VaporPressure<T> right) => new VaporPressure<T>(left._baseValue + right._baseValue);
         public static VaporPressure<T> operator -(VaporPressure<T> left, VaporPressure<T> right) => new VaporPressure<T>(left._baseValue - right._baseValue);

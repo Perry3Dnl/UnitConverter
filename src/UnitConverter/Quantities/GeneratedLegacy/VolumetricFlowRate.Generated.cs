@@ -653,7 +653,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static VolumetricFlowRate<T> operator +(VolumetricFlowRate<T> left, VolumetricFlowRate<T> right) => new VolumetricFlowRate<T>(left._baseValue + right._baseValue);
         public static VolumetricFlowRate<T> operator -(VolumetricFlowRate<T> left, VolumetricFlowRate<T> right) => new VolumetricFlowRate<T>(left._baseValue - right._baseValue);
