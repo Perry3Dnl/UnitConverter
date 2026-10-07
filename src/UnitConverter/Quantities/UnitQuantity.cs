@@ -3,6 +3,7 @@ namespace UnitConverter.Quantities
 {
     using System;
     using System.Numerics;
+    using System.Runtime.CompilerServices;
     using UnitConverter.Catalog;
 
     /// <summary>
@@ -157,11 +158,12 @@ namespace UnitConverter.Quantities
         {
             if (typeof(T) == typeof(decimal))
             {
+                decimal input = Unsafe.As<T, decimal>(ref value);
                 decimal converted = global::UnitConverter.UnitConverterExact.Convert(
-                    (decimal)(object)value,
+                    input,
                     from,
                     to);
-                return (T)(object)converted;
+                return Unsafe.As<decimal, T>(ref converted);
             }
 
             UnitConverterFamilyDescriptor<TUnit> descriptor =
