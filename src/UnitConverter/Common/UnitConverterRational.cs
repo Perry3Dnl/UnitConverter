@@ -34,6 +34,7 @@ namespace UnitConverter
 
         public BigInteger Numerator { get; }
         public BigInteger Denominator { get; }
+        public bool IsOne => Numerator.IsOne && Denominator.IsOne;
 
         public static UnitConverterRational Zero => new UnitConverterRational(BigInteger.Zero, BigInteger.One);
         public static UnitConverterRational One => new UnitConverterRational(BigInteger.One, BigInteger.One);
