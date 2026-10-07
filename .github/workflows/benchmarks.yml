@@ -8,12 +8,14 @@ on:
       - "src/UnitConverter/**"
       - "benchmarks/**"
       - "scripts/summarize_benchmarks.py"
+      - "scripts/compare_benchmarks.py"
       - ".github/workflows/benchmarks.yml"
   pull_request:
     paths:
       - "src/UnitConverter/**"
       - "benchmarks/**"
       - "scripts/summarize_benchmarks.py"
+      - "scripts/compare_benchmarks.py"
       - ".github/workflows/benchmarks.yml"
   workflow_dispatch:
 
@@ -39,6 +41,11 @@ jobs:
       - name: Restore benchmark project
         run: dotnet restore benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj
 
+      - name: Capture reference benchmark baseline
+        run: |
+          mkdir -p artifacts/benchmarks
+          cp docs/benchmarks/latest.json artifacts/benchmarks/reference.json
+
       - name: Run BenchmarkDotNet
         run: dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj --configuration Release --no-restore -- --filter "*"
 
@@ -51,7 +58,23 @@ jobs:
             --latest-json docs/benchmarks/latest.json
           cat artifacts/benchmarks/summary.md >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Compare against latest successful main baseline
+        shell: bash
+        run: |
+          set +e
+          python scripts/compare_benchmarks.py \
+            artifacts/benchmarks/reference.json \
+            docs/benchmarks/latest.json \
+            artifacts/benchmarks \
+            --timing-warning-percent 15 \
+            --fail-on-allocation-regression \
+            --fail-on-missing
+          status=$?
+          cat artifacts/benchmarks/comparison.md >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
+
       - name: Upload benchmark results
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: unitconverter-benchmarks
