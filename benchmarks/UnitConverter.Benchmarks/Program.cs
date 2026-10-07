@@ -1,5 +1,6 @@
 using BenchmarkDotNet.Running;
 using UnitConverter.Benchmarks;
 
-BenchmarkRunner.Run<ConversionBenchmarks>();
-BenchmarkRunner.Run<TextAndDynamicBenchmarks>();
+BenchmarkSwitcher
+    .FromAssembly(typeof(ConversionBenchmarks).Assembly)
+    .Run(args);

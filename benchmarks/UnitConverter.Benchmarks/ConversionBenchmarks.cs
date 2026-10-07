@@ -20,10 +20,12 @@ public class ConversionBenchmarks
     }
 
     [Benchmark(Baseline = true)]
+    [BenchmarkCategory("Conversion", "Double", "Direct")]
     public double DirectDouble()
         => UnitConverterMetricLength.CentimeterToMeter(_doubleValue);
 
     [Benchmark]
+    [BenchmarkCategory("Conversion", "Double", "Routed")]
     public double RoutedDouble()
         => UnitConverterLength.Convert(
             _doubleValue,
@@ -31,6 +33,7 @@ public class ConversionBenchmarks
             UnitConverterLengthUnit.Meter);
 
     [Benchmark]
+    [BenchmarkCategory("Conversion", "Decimal", "Exact")]
     public decimal ExactDecimal()
         => global::UnitConverter.UnitConverterExact.Convert(
             _decimalValue,
@@ -38,12 +41,14 @@ public class ConversionBenchmarks
             UnitConverterLengthUnit.Meter);
 
     [Benchmark]
+    [BenchmarkCategory("Conversion", "Decimal", "NamedQuantity")]
     public decimal NamedQuantityDecimal()
         => Length<decimal>
             .FromCentimetres(_decimalValue)
             .Metres;
 
     [Benchmark]
+    [BenchmarkCategory("Conversion", "Decimal", "UnitQuantity")]
     public decimal UnitQuantityDecimal()
         => UnitQuantity
             .From(_decimalValue, UnitConverterLengthUnit.Centimeter)

@@ -1,0 +1,112 @@
+{
+  "benchmarks": [
+    {
+      "type": "ConversionBenchmarks",
+      "method": "DirectDouble",
+      "mean": "0.0000 ns",
+      "allocated": "0 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "ConversionBenchmarks",
+      "method": "RoutedDouble",
+      "mean": "2.4289 ns",
+      "allocated": "0 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "ConversionBenchmarks",
+      "method": "ExactDecimal",
+      "mean": "605.3082 ns",
+      "allocated": "96 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "ConversionBenchmarks",
+      "method": "NamedQuantityDecimal",
+      "mean": "36.3218 ns",
+      "allocated": "0 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "ConversionBenchmarks",
+      "method": "UnitQuantityDecimal",
+      "mean": "663.6867 ns",
+      "allocated": "96 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "TextAndDynamicBenchmarks",
+      "method": "SpanParseLength",
+      "mean": "863.064 ns",
+      "allocated": "0 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "TextAndDynamicBenchmarks",
+      "method": "SpanFormatLength",
+      "mean": "823.742 ns",
+      "allocated": "0 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "TextAndDynamicBenchmarks",
+      "method": "CatalogLookup",
+      "mean": "2.807 ns",
+      "allocated": "0 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "TextAndDynamicBenchmarks",
+      "method": "DynamicFamilyConvert",
+      "mean": "105.986 ns",
+      "allocated": "48 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "TextAndDynamicBenchmarks",
+      "method": "DynamicDetectedConvert",
+      "mean": "44.974918 µs",
+      "allocated": "6560 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "TextAndDynamicBenchmarks",
+      "method": "CompositeConvert",
+      "mean": "174.029233 µs",
+      "allocated": "27648 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    },
+    {
+      "type": "TextAndDynamicBenchmarks",
+      "method": "CompositeParse",
+      "mean": "132.391465 µs",
+      "allocated": "20840 B",
+      "error": "",
+      "stddev": "",
+      "report": "baseline"
+    }
+  ]
+}
