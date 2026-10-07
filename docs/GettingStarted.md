@@ -16,7 +16,7 @@ dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-
 The package candidate is not yet published to nuget.org. Install a local build into an existing application using the absolute package output directory:
 
 ```sh
-dotnet add package UnitConverter --version 2.0.0-preview.1 --source /absolute/path/to/UnitConverter/artifacts/packages
+dotnet add package UnitConverter --version 2.0.0-preview.2 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
 Alternatively, add a project reference to `src/UnitConverter/UnitConverter.csproj` during development.
