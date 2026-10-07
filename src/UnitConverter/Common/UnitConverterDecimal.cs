@@ -90,6 +90,11 @@ namespace UnitConverter
                 return value;
 
             UnitConverterRational toScale = LinearFamily<TUnit>.GetScale(to);
+            if (toScale.IsOne)
+                return fromScale.Apply(value);
+            if (fromScale.IsOne)
+                return toScale.ApplyInverse(value);
+
             return fromScale.Divide(toScale).Apply(value);
         }
 
