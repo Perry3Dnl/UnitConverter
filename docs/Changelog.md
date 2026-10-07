@@ -9,6 +9,11 @@
 - Remove Unity settings, editor integration, shared Core, scenes, metadata, and import archives.
 - Add NuGet metadata, a console sample, build/test/pack automation, and updated documentation.
 - See [Migration](Migration.md) for retained behavior and legacy aliases.
+- Add a shared reduced-rational conversion engine and route all 98 family `decimal` extension surfaces through decimal-native conversion without converting the input through `double`.
+- Add exact affine decimal transforms for absolute temperature and exact reciprocal decimal transforms for fuel economy.
+- Add `UnitQuantity<T, TUnit>` for compile-time family isolation across every uniform-dimension catalog family while preserving the existing named derived-quantity arithmetic.
+- Split typed fuel economy into `FuelEfficiency<T>` and `FuelConsumption<T>` so reciprocal dimensions remain distinct at compile time.
+- Add CI verification that rejects future decimal-extension regressions back to `double`.
 
 ## Historical Unity releases
 
