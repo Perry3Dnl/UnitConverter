@@ -230,7 +230,12 @@ namespace UnitConverter
 
         private static void GetDecimalParts(decimal value, out BigInteger numerator, out BigInteger denominator)
         {
+#if NET8_0_OR_GREATER
+            Span<int> bits = stackalloc int[4];
+            decimal.GetBits(value, bits);
+#else
             int[] bits = decimal.GetBits(value);
+#endif
             uint low = unchecked((uint)bits[0]);
             uint mid = unchecked((uint)bits[1]);
             uint high = unchecked((uint)bits[2]);
