@@ -125,7 +125,99 @@ def legacy_span_aliases(family):
 
     return aliases
 
+def parse_symbol_literals(family):
+    source = (
+        ROOT
+        / "src"
+        / "UnitConverter"
+        / family["folder"]
+        / f"{family['converter']}.cs"
+    ).read_text(encoding="utf-8")
+    start = source.find("public static string GetSymbol")
+    end = source.find("public static string GetDisplayName", start)
+    if start < 0 or end < 0:
+        raise RuntimeError(f"Could not locate GetSymbol for {family['name']}")
+
+    pattern = re.compile(
+        rf'case {re.escape(family["enumType"])}\.([A-Za-z0-9_]+):\s*return "([^"\\]*)";'
+    )
+    symbols = dict(pattern.findall(source[start:end]))
+    missing = [unit for unit in family["units"] if unit not in symbols]
+    if missing:
+        raise RuntimeError(
+            f"Could not parse symbols for {family['name']}: {', '.join(missing)}"
+        )
+    return symbols
+
+
+def render_length_resolver(family, indent="        "):
+    e = enum_type(family)
+    symbols = parse_symbol_literals(family)
+    symbol_units = {}
+    for unit in family["units"]:
+        symbol_units.setdefault(symbols[unit], []).append(unit)
+
+    lines = [
+        f"{indent}internal static bool TryResolveCatalogUnit(ReadOnlySpan<char> text, out {e} unit)",
+        f"{indent}{{",
+    ]
+
+    for symbol, units in symbol_units.items():
+        if len(units) <= 1:
+            continue
+        literal = json.dumps(symbol, ensure_ascii=False)
+        lines.extend([
+            f"{indent}    if (text.Equals({literal}.AsSpan(), StringComparison.Ordinal))",
+            f"{indent}    {{",
+            f"{indent}        unit = default;",
+            f"{indent}        return false;",
+            f"{indent}    }}",
+        ])
+
+    for unit in family["units"]:
+        symbol = symbols[unit]
+        if len(symbol_units[symbol]) != 1:
+            continue
+        literal = json.dumps(symbol, ensure_ascii=False)
+        lines.extend([
+            f"{indent}    if (text.Equals({literal}.AsSpan(), StringComparison.Ordinal))",
+            f"{indent}    {{",
+            f"{indent}        unit = {e}.{unit};",
+            f"{indent}        return true;",
+            f"{indent}    }}",
+        ])
+
+    for alias, enum_member in legacy_span_aliases(family):
+        literal = json.dumps(alias, ensure_ascii=False)
+        lines.extend([
+            f"{indent}    if (text.Equals({literal}.AsSpan(), StringComparison.OrdinalIgnoreCase))",
+            f"{indent}    {{",
+            f"{indent}        unit = {e}.{enum_member};",
+            f"{indent}        return true;",
+            f"{indent}    }}",
+        ])
+
+    for unit in family["units"]:
+        lines.extend([
+            f'{indent}    if (text.Equals("{unit}".AsSpan(), StringComparison.OrdinalIgnoreCase))',
+            f"{indent}    {{",
+            f"{indent}        unit = {e}.{unit};",
+            f"{indent}        return true;",
+            f"{indent}    }}",
+        ])
+
+    lines.extend([
+        f"{indent}    unit = default;",
+        f"{indent}    return false;",
+        f"{indent}}}",
+    ])
+    return lines
+
+
 def render_resolver(family, indent="        "):
+    if family["type"] == "Length":
+        return render_length_resolver(family, indent)
+
     e = enum_type(family)
     c = converter_type(family)
     lines = [
