@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   benchmark:
@@ -51,19 +51,6 @@ jobs:
             --latest-json docs/benchmarks/latest.json
           cat artifacts/benchmarks/summary.md >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Publish latest benchmark badges
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          if git diff --quiet -- docs/benchmarks/badges docs/benchmarks/latest.json; then
-            echo "Benchmark badges are already current."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/benchmarks/badges docs/benchmarks/latest.json
-          git commit -m "Update benchmark badges [skip ci]"
-          git push
-
       - name: Upload benchmark results
         uses: actions/upload-artifact@v7
         with:
@@ -75,3 +62,48 @@ jobs:
             docs/benchmarks/badges/*.svg
           if-no-files-found: error
           retention-days: 30
+
+      - name: Upload badge assets
+        uses: actions/upload-artifact@v7
+        with:
+          name: unitconverter-benchmark-badges
+          path: |
+            docs/benchmarks/latest.json
+            docs/benchmarks/badges/*.svg
+          if-no-files-found: error
+          retention-days: 7
+
+  publish-badges:
+    name: Publish benchmark badges
+    needs: benchmark
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Download generated badge assets
+        uses: actions/download-artifact@v7
+        with:
+          name: unitconverter-benchmark-badges
+          path: artifacts/benchmark-badges
+
+      - name: Update checked-in badge assets
+        run: |
+          mkdir -p docs/benchmarks/badges
+          cp artifacts/benchmark-badges/latest.json docs/benchmarks/latest.json
+          cp artifacts/benchmark-badges/badges/*.svg docs/benchmarks/badges/
+
+          if git diff --quiet -- docs/benchmarks/badges docs/benchmarks/latest.json; then
+            echo "Benchmark badges are already current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/benchmarks/badges docs/benchmarks/latest.json
+          git commit -m "Update benchmark badges [skip ci]"
+          git push
