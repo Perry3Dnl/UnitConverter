@@ -34,6 +34,7 @@ namespace UnitConverter
 
         public BigInteger Numerator { get; }
         public BigInteger Denominator { get; }
+        public bool IsOne => Numerator.IsOne && Denominator.IsOne;
 
         public static UnitConverterRational Zero => new UnitConverterRational(BigInteger.Zero, BigInteger.One);
         public static UnitConverterRational One => new UnitConverterRational(BigInteger.One, BigInteger.One);
@@ -131,6 +132,11 @@ namespace UnitConverter
 
         public decimal Apply(decimal value)
         {
+#if NET8_0_OR_GREATER
+            if (TryGetPowerOfTenDecimalRatio(Numerator, Denominator, out decimal factor))
+                return NormalizeDecimal(value * factor);
+#endif
+
             GetDecimalParts(value, out BigInteger valueNumerator, out BigInteger valueDenominator);
             return DivideToDecimal(valueNumerator * Numerator, valueDenominator * Denominator);
         }
@@ -139,6 +145,11 @@ namespace UnitConverter
         {
             if (Numerator.IsZero)
                 throw new DivideByZeroException();
+
+#if NET8_0_OR_GREATER
+            if (TryGetPowerOfTenDecimalRatio(Denominator, Numerator, out decimal factor))
+                return NormalizeDecimal(value * factor);
+#endif
 
             GetDecimalParts(value, out BigInteger valueNumerator, out BigInteger valueDenominator);
             return DivideToDecimal(valueNumerator * Denominator, valueDenominator * Numerator);
@@ -228,9 +239,116 @@ namespace UnitConverter
             }
         }
 
+#if NET8_0_OR_GREATER
+        private static readonly BigInteger Int64MinValue = new BigInteger(long.MinValue);
+        private static readonly BigInteger Int64MaxValue = new BigInteger(long.MaxValue);
+
+        private static decimal NormalizeDecimal(decimal value)
+        {
+            Span<int> bits = stackalloc int[4];
+            decimal.GetBits(value, bits);
+
+            uint low = unchecked((uint)bits[0]);
+            uint mid = unchecked((uint)bits[1]);
+            uint high = unchecked((uint)bits[2]);
+            int scale = (bits[3] >> 16) & 0x7F;
+            bool negative = (bits[3] & unchecked((int)0x80000000)) != 0;
+
+            if ((low | mid | high) == 0)
+                return decimal.Zero;
+
+            while (scale > 0)
+            {
+                ulong remainder = 0;
+
+                ulong segment = (remainder << 32) | high;
+                uint nextHigh = (uint)(segment / 10);
+                remainder = segment % 10;
+
+                segment = (remainder << 32) | mid;
+                uint nextMid = (uint)(segment / 10);
+                remainder = segment % 10;
+
+                segment = (remainder << 32) | low;
+                uint nextLow = (uint)(segment / 10);
+                remainder = segment % 10;
+
+                if (remainder != 0)
+                    break;
+
+                high = nextHigh;
+                mid = nextMid;
+                low = nextLow;
+                scale--;
+            }
+
+            return new decimal(
+                unchecked((int)low),
+                unchecked((int)mid),
+                unchecked((int)high),
+                negative,
+                (byte)scale);
+        }
+
+        private static bool TryGetPowerOfTenDecimalRatio(
+            BigInteger numerator,
+            BigInteger denominator,
+            out decimal factor)
+        {
+            factor = decimal.Zero;
+
+            if (numerator < Int64MinValue ||
+                numerator > Int64MaxValue ||
+                denominator < Int64MinValue ||
+                denominator > Int64MaxValue ||
+                denominator.IsZero)
+            {
+                return false;
+            }
+
+            long numeratorValue = (long)numerator;
+            long denominatorValue = (long)denominator;
+            bool negative = (numeratorValue < 0) != (denominatorValue < 0);
+
+            ulong numeratorMagnitude = numeratorValue < 0
+                ? unchecked((ulong)(-(numeratorValue + 1))) + 1UL
+                : (ulong)numeratorValue;
+            ulong denominatorMagnitude = denominatorValue < 0
+                ? unchecked((ulong)(-(denominatorValue + 1))) + 1UL
+                : (ulong)denominatorValue;
+
+            int scale = 0;
+            while (denominatorMagnitude > 1UL && denominatorMagnitude % 10UL == 0UL)
+            {
+                denominatorMagnitude /= 10UL;
+                scale++;
+            }
+
+            if (denominatorMagnitude != 1UL || scale > 28)
+                return false;
+
+            decimal coefficient = numeratorMagnitude;
+            Span<int> bits = stackalloc int[4];
+            decimal.GetBits(coefficient, bits);
+
+            factor = new decimal(
+                bits[0],
+                bits[1],
+                bits[2],
+                negative,
+                (byte)scale);
+            return true;
+        }
+#endif
+
         private static void GetDecimalParts(decimal value, out BigInteger numerator, out BigInteger denominator)
         {
+#if NET8_0_OR_GREATER
+            Span<int> bits = stackalloc int[4];
+            decimal.GetBits(value, bits);
+#else
             int[] bits = decimal.GetBits(value);
+#endif
             uint low = unchecked((uint)bits[0]);
             uint mid = unchecked((uint)bits[1]);
             uint high = unchecked((uint)bits[2]);
