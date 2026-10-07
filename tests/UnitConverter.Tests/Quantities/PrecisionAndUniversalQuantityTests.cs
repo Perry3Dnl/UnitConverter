@@ -166,6 +166,52 @@ namespace UnitConverter.Tests.Quantities
         }
 
         [Test]
+        public void EveryRegisteredUnitHasADecimalConversionPath()
+        {
+            MethodInfo genericConvert = typeof(global::UnitConverter.UnitConverterExact)
+                .GetMethod("Convert", BindingFlags.Public | BindingFlags.Static);
+
+            foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
+            {
+                MethodInfo convert = genericConvert.MakeGenericMethod(family.UnitType);
+                UnitConverterUnitDescriptor baseUnit = null;
+                foreach (UnitConverterUnitDescriptor unit in family.Units)
+                {
+                    if (unit.Name == family.BaseUnitName)
+                    {
+                        baseUnit = unit;
+                        break;
+                    }
+                }
+
+                Assert.That(baseUnit, Is.Not.Null, family.Name + " has no base unit.");
+
+                foreach (UnitConverterUnitDescriptor unit in family.Units)
+                {
+                    try
+                    {
+                        convert.Invoke(null, new[] { (object)1m, unit.Unit, baseUnit.Unit });
+                        convert.Invoke(null, new[] { (object)1m, baseUnit.Unit, unit.Unit });
+                    }
+                    catch (TargetInvocationException exception)
+                        when (exception.InnerException is OverflowException)
+                    {
+                        // A valid decimal path may still produce a mathematically correct
+                        // result outside System.Decimal's finite range.
+                    }
+                    catch (TargetInvocationException exception)
+                    {
+                        Assert.Fail(
+                            family.Name + "." + unit.Name +
+                            " has no usable decimal path: " +
+                            exception.InnerException?.GetType().Name + " - " +
+                            exception.InnerException?.Message);
+                    }
+                }
+            }
+        }
+
+        [Test]
         public void NonUniformFuelEconomyCannotPretendToBeOneDimension()
         {
             Assert.Throws<NotSupportedException>(() =>
