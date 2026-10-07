@@ -585,7 +585,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MassFlowRate<T> operator +(MassFlowRate<T> left, MassFlowRate<T> right) => new MassFlowRate<T>(left._baseValue + right._baseValue);
         public static MassFlowRate<T> operator -(MassFlowRate<T> left, MassFlowRate<T> right) => new MassFlowRate<T>(left._baseValue - right._baseValue);

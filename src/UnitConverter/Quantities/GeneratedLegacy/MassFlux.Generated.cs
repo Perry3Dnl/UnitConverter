@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MassFlux<T> operator +(MassFlux<T> left, MassFlux<T> right) => new MassFlux<T>(left._baseValue + right._baseValue);
         public static MassFlux<T> operator -(MassFlux<T> left, MassFlux<T> right) => new MassFlux<T>(left._baseValue - right._baseValue);

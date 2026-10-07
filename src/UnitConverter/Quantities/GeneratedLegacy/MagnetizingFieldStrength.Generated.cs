@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MagnetizingFieldStrength<T> operator +(MagnetizingFieldStrength<T> left, MagnetizingFieldStrength<T> right) => new MagnetizingFieldStrength<T>(left._baseValue + right._baseValue);
         public static MagnetizingFieldStrength<T> operator -(MagnetizingFieldStrength<T> left, MagnetizingFieldStrength<T> right) => new MagnetizingFieldStrength<T>(left._baseValue - right._baseValue);

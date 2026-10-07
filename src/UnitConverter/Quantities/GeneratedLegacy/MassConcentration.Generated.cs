@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MassConcentration<T> operator +(MassConcentration<T> left, MassConcentration<T> right) => new MassConcentration<T>(left._baseValue + right._baseValue);
         public static MassConcentration<T> operator -(MassConcentration<T> left, MassConcentration<T> right) => new MassConcentration<T>(left._baseValue - right._baseValue);

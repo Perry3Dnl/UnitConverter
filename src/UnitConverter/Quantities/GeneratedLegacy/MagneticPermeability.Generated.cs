@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MagneticPermeability<T> operator +(MagneticPermeability<T> left, MagneticPermeability<T> right) => new MagneticPermeability<T>(left._baseValue + right._baseValue);
         public static MagneticPermeability<T> operator -(MagneticPermeability<T> left, MagneticPermeability<T> right) => new MagneticPermeability<T>(left._baseValue - right._baseValue);

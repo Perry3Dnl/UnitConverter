@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static MagneticFlux<T> operator +(MagneticFlux<T> left, MagneticFlux<T> right) => new MagneticFlux<T>(left._baseValue + right._baseValue);
         public static MagneticFlux<T> operator -(MagneticFlux<T> left, MagneticFlux<T> right) => new MagneticFlux<T>(left._baseValue - right._baseValue);

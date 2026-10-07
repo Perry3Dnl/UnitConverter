@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static LuminousFlux<T> operator +(LuminousFlux<T> left, LuminousFlux<T> right) => new LuminousFlux<T>(left._baseValue + right._baseValue);
         public static LuminousFlux<T> operator -(LuminousFlux<T> left, LuminousFlux<T> right) => new LuminousFlux<T>(left._baseValue - right._baseValue);
