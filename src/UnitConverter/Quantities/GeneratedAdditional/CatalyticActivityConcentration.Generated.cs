@@ -8,7 +8,7 @@ using UnitConverter.CatalyticActivityConcentration;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Catalytic Activity Concentration quantity backed by the family base unit.</summary>
-    public readonly struct CatalyticActivityConcentration<T> :
+    public readonly partial struct CatalyticActivityConcentration<T> :
         IEquatable<CatalyticActivityConcentration<T>>,
         IComparable<CatalyticActivityConcentration<T>>,
         IFormattable,

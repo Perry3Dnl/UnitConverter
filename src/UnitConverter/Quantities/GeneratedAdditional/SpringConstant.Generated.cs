@@ -8,7 +8,7 @@ using UnitConverter.SpringConstant;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Spring Constant quantity backed by the family base unit.</summary>
-    public readonly struct SpringConstant<T> :
+    public readonly partial struct SpringConstant<T> :
         IEquatable<SpringConstant<T>>,
         IComparable<SpringConstant<T>>,
         IFormattable,

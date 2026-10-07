@@ -8,7 +8,7 @@ using UnitConverter.AmountFlowRate;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Amount Flow Rate quantity backed by the family base unit.</summary>
-    public readonly struct AmountFlowRate<T> :
+    public readonly partial struct AmountFlowRate<T> :
         IEquatable<AmountFlowRate<T>>,
         IComparable<AmountFlowRate<T>>,
         IFormattable,

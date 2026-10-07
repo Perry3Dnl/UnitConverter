@@ -8,7 +8,7 @@ using UnitConverter.ThermalResistance;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Thermal Resistance quantity backed by the family base unit.</summary>
-    public readonly struct ThermalResistance<T> :
+    public readonly partial struct ThermalResistance<T> :
         IEquatable<ThermalResistance<T>>,
         IComparable<ThermalResistance<T>>,
         IFormattable,

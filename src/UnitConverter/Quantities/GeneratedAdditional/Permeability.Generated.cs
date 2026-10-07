@@ -8,7 +8,7 @@ using UnitConverter.Permeability;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Permeability quantity backed by the family base unit.</summary>
-    public readonly struct Permeability<T> :
+    public readonly partial struct Permeability<T> :
         IEquatable<Permeability<T>>,
         IComparable<Permeability<T>>,
         IFormattable,

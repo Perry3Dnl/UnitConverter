@@ -8,7 +8,7 @@ using UnitConverter.Impedance;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Impedance quantity backed by the family base unit.</summary>
-    public readonly struct Impedance<T> :
+    public readonly partial struct Impedance<T> :
         IEquatable<Impedance<T>>,
         IComparable<Impedance<T>>,
         IFormattable,

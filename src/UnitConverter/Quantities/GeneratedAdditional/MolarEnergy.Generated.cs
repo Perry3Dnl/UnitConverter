@@ -8,7 +8,7 @@ using UnitConverter.MolarEnergy;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Molar Energy quantity backed by the family base unit.</summary>
-    public readonly struct MolarEnergy<T> :
+    public readonly partial struct MolarEnergy<T> :
         IEquatable<MolarEnergy<T>>,
         IComparable<MolarEnergy<T>>,
         IFormattable,

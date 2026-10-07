@@ -8,7 +8,7 @@ using UnitConverter.HeatFluxDensity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Heat Flux Density quantity backed by the family base unit.</summary>
-    public readonly struct HeatFluxDensity<T> :
+    public readonly partial struct HeatFluxDensity<T> :
         IEquatable<HeatFluxDensity<T>>,
         IComparable<HeatFluxDensity<T>>,
         IFormattable,

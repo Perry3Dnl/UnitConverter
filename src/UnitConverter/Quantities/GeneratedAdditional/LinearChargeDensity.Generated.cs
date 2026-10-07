@@ -8,7 +8,7 @@ using UnitConverter.LinearChargeDensity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Linear Charge Density quantity backed by the family base unit.</summary>
-    public readonly struct LinearChargeDensity<T> :
+    public readonly partial struct LinearChargeDensity<T> :
         IEquatable<LinearChargeDensity<T>>,
         IComparable<LinearChargeDensity<T>>,
         IFormattable,

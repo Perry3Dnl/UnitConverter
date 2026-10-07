@@ -8,7 +8,7 @@ using UnitConverter.Molality;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Molality quantity backed by the family base unit.</summary>
-    public readonly struct Molality<T> :
+    public readonly partial struct Molality<T> :
         IEquatable<Molality<T>>,
         IComparable<Molality<T>>,
         IFormattable,

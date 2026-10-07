@@ -8,7 +8,7 @@ using UnitConverter.DampingCoefficient;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Damping Coefficient quantity backed by the family base unit.</summary>
-    public readonly struct DampingCoefficient<T> :
+    public readonly partial struct DampingCoefficient<T> :
         IEquatable<DampingCoefficient<T>>,
         IComparable<DampingCoefficient<T>>,
         IFormattable,

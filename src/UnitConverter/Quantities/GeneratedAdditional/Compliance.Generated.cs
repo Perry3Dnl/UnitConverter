@@ -8,7 +8,7 @@ using UnitConverter.Compliance;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Compliance quantity backed by the family base unit.</summary>
-    public readonly struct Compliance<T> :
+    public readonly partial struct Compliance<T> :
         IEquatable<Compliance<T>>,
         IComparable<Compliance<T>>,
         IFormattable,

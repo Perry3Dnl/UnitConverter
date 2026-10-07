@@ -8,7 +8,7 @@ using UnitConverter.MolarHeatCapacity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Molar Heat Capacity quantity backed by the family base unit.</summary>
-    public readonly struct MolarHeatCapacity<T> :
+    public readonly partial struct MolarHeatCapacity<T> :
         IEquatable<MolarHeatCapacity<T>>,
         IComparable<MolarHeatCapacity<T>>,
         IFormattable,

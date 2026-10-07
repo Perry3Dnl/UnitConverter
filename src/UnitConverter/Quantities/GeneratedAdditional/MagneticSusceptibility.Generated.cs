@@ -8,7 +8,7 @@ using UnitConverter.MagneticSusceptibility;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Magnetic Susceptibility quantity backed by the family base unit.</summary>
-    public readonly struct MagneticSusceptibility<T> :
+    public readonly partial struct MagneticSusceptibility<T> :
         IEquatable<MagneticSusceptibility<T>>,
         IComparable<MagneticSusceptibility<T>>,
         IFormattable,

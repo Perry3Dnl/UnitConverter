@@ -8,7 +8,7 @@ using UnitConverter.Osmolality;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Osmolality quantity backed by the family base unit.</summary>
-    public readonly struct Osmolality<T> :
+    public readonly partial struct Osmolality<T> :
         IEquatable<Osmolality<T>>,
         IComparable<Osmolality<T>>,
         IFormattable,

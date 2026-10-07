@@ -8,7 +8,7 @@ using UnitConverter.VolumeFraction;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Volume Fraction quantity backed by the family base unit.</summary>
-    public readonly struct VolumeFraction<T> :
+    public readonly partial struct VolumeFraction<T> :
         IEquatable<VolumeFraction<T>>,
         IComparable<VolumeFraction<T>>,
         IFormattable,

@@ -8,7 +8,7 @@ using UnitConverter.MoleFraction;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Mole Fraction quantity backed by the family base unit.</summary>
-    public readonly struct MoleFraction<T> :
+    public readonly partial struct MoleFraction<T> :
         IEquatable<MoleFraction<T>>,
         IComparable<MoleFraction<T>>,
         IFormattable,

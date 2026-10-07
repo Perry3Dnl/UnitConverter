@@ -8,7 +8,7 @@ using UnitConverter.MagneticVectorPotential;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Magnetic Vector Potential quantity backed by the family base unit.</summary>
-    public readonly struct MagneticVectorPotential<T> :
+    public readonly partial struct MagneticVectorPotential<T> :
         IEquatable<MagneticVectorPotential<T>>,
         IComparable<MagneticVectorPotential<T>>,
         IFormattable,

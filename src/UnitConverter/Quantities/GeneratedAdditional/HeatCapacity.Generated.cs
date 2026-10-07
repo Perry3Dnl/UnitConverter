@@ -8,7 +8,7 @@ using UnitConverter.HeatCapacity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Heat Capacity quantity backed by the family base unit.</summary>
-    public readonly struct HeatCapacity<T> :
+    public readonly partial struct HeatCapacity<T> :
         IEquatable<HeatCapacity<T>>,
         IComparable<HeatCapacity<T>>,
         IFormattable,

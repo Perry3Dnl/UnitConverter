@@ -8,7 +8,7 @@ using UnitConverter.SpecificSurfaceArea;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Specific Surface Area quantity backed by the family base unit.</summary>
-    public readonly struct SpecificSurfaceArea<T> :
+    public readonly partial struct SpecificSurfaceArea<T> :
         IEquatable<SpecificSurfaceArea<T>>,
         IComparable<SpecificSurfaceArea<T>>,
         IFormattable,

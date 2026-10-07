@@ -8,7 +8,7 @@ using UnitConverter.AngularFrequency;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Angular Frequency quantity backed by the family base unit.</summary>
-    public readonly struct AngularFrequency<T> :
+    public readonly partial struct AngularFrequency<T> :
         IEquatable<AngularFrequency<T>>,
         IComparable<AngularFrequency<T>>,
         IFormattable,

@@ -8,7 +8,7 @@ using UnitConverter.VolumetricHeatCapacity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Volumetric Heat Capacity quantity backed by the family base unit.</summary>
-    public readonly struct VolumetricHeatCapacity<T> :
+    public readonly partial struct VolumetricHeatCapacity<T> :
         IEquatable<VolumetricHeatCapacity<T>>,
         IComparable<VolumetricHeatCapacity<T>>,
         IFormattable,

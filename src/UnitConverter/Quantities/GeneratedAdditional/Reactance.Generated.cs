@@ -8,7 +8,7 @@ using UnitConverter.Reactance;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Reactance quantity backed by the family base unit.</summary>
-    public readonly struct Reactance<T> :
+    public readonly partial struct Reactance<T> :
         IEquatable<Reactance<T>>,
         IComparable<Reactance<T>>,
         IFormattable,

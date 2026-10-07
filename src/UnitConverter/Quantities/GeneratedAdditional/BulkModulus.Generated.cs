@@ -8,7 +8,7 @@ using UnitConverter.BulkModulus;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Bulk Modulus quantity backed by the family base unit.</summary>
-    public readonly struct BulkModulus<T> :
+    public readonly partial struct BulkModulus<T> :
         IEquatable<BulkModulus<T>>,
         IComparable<BulkModulus<T>>,
         IFormattable,

@@ -8,7 +8,7 @@ using UnitConverter.MagneticDipoleMoment;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Magnetic Dipole Moment quantity backed by the family base unit.</summary>
-    public readonly struct MagneticDipoleMoment<T> :
+    public readonly partial struct MagneticDipoleMoment<T> :
         IEquatable<MagneticDipoleMoment<T>>,
         IComparable<MagneticDipoleMoment<T>>,
         IFormattable,

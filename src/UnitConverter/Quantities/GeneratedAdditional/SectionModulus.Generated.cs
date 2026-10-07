@@ -8,7 +8,7 @@ using UnitConverter.SectionModulus;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Section Modulus quantity backed by the family base unit.</summary>
-    public readonly struct SectionModulus<T> :
+    public readonly partial struct SectionModulus<T> :
         IEquatable<SectionModulus<T>>,
         IComparable<SectionModulus<T>>,
         IFormattable,

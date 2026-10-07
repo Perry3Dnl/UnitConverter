@@ -8,7 +8,7 @@ using UnitConverter.ThermalConductance;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Thermal Conductance quantity backed by the family base unit.</summary>
-    public readonly struct ThermalConductance<T> :
+    public readonly partial struct ThermalConductance<T> :
         IEquatable<ThermalConductance<T>>,
         IComparable<ThermalConductance<T>>,
         IFormattable,

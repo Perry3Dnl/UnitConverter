@@ -8,7 +8,7 @@ using UnitConverter.Stress;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Stress quantity backed by the family base unit.</summary>
-    public readonly struct Stress<T> :
+    public readonly partial struct Stress<T> :
         IEquatable<Stress<T>>,
         IComparable<Stress<T>>,
         IFormattable,

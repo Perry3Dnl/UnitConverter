@@ -8,7 +8,7 @@ using UnitConverter.AreaMomentOfInertia;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Area Moment Of Inertia quantity backed by the family base unit.</summary>
-    public readonly struct AreaMomentOfInertia<T> :
+    public readonly partial struct AreaMomentOfInertia<T> :
         IEquatable<AreaMomentOfInertia<T>>,
         IComparable<AreaMomentOfInertia<T>>,
         IFormattable,

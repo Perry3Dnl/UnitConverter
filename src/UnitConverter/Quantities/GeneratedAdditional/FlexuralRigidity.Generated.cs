@@ -8,7 +8,7 @@ using UnitConverter.FlexuralRigidity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Flexural Rigidity quantity backed by the family base unit.</summary>
-    public readonly struct FlexuralRigidity<T> :
+    public readonly partial struct FlexuralRigidity<T> :
         IEquatable<FlexuralRigidity<T>>,
         IComparable<FlexuralRigidity<T>>,
         IFormattable,

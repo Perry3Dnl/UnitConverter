@@ -8,7 +8,7 @@ using UnitConverter.MolarVolume;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Molar Volume quantity backed by the family base unit.</summary>
-    public readonly struct MolarVolume<T> :
+    public readonly partial struct MolarVolume<T> :
         IEquatable<MolarVolume<T>>,
         IComparable<MolarVolume<T>>,
         IFormattable,

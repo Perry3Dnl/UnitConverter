@@ -8,7 +8,7 @@ using UnitConverter.MechanicalMobility;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Mechanical Mobility quantity backed by the family base unit.</summary>
-    public readonly struct MechanicalMobility<T> :
+    public readonly partial struct MechanicalMobility<T> :
         IEquatable<MechanicalMobility<T>>,
         IComparable<MechanicalMobility<T>>,
         IFormattable,

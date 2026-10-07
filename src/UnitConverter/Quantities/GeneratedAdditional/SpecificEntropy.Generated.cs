@@ -8,7 +8,7 @@ using UnitConverter.SpecificEntropy;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Specific Entropy quantity backed by the family base unit.</summary>
-    public readonly struct SpecificEntropy<T> :
+    public readonly partial struct SpecificEntropy<T> :
         IEquatable<SpecificEntropy<T>>,
         IComparable<SpecificEntropy<T>>,
         IFormattable,

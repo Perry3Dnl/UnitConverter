@@ -8,7 +8,7 @@ using UnitConverter.Elastance;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Elastance quantity backed by the family base unit.</summary>
-    public readonly struct Elastance<T> :
+    public readonly partial struct Elastance<T> :
         IEquatable<Elastance<T>>,
         IComparable<Elastance<T>>,
         IFormattable,

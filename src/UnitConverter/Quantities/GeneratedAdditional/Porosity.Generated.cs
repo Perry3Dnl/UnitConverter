@@ -8,7 +8,7 @@ using UnitConverter.Porosity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Porosity quantity backed by the family base unit.</summary>
-    public readonly struct Porosity<T> :
+    public readonly partial struct Porosity<T> :
         IEquatable<Porosity<T>>,
         IComparable<Porosity<T>>,
         IFormattable,

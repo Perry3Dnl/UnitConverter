@@ -8,7 +8,7 @@ using UnitConverter.YoungModulus;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Young Modulus quantity backed by the family base unit.</summary>
-    public readonly struct YoungModulus<T> :
+    public readonly partial struct YoungModulus<T> :
         IEquatable<YoungModulus<T>>,
         IComparable<YoungModulus<T>>,
         IFormattable,

@@ -8,7 +8,7 @@ using UnitConverter.MassFraction;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Mass Fraction quantity backed by the family base unit.</summary>
-    public readonly struct MassFraction<T> :
+    public readonly partial struct MassFraction<T> :
         IEquatable<MassFraction<T>>,
         IComparable<MassFraction<T>>,
         IFormattable,

@@ -8,7 +8,7 @@ using UnitConverter.Wavenumber;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Wavenumber quantity backed by the family base unit.</summary>
-    public readonly struct Wavenumber<T> :
+    public readonly partial struct Wavenumber<T> :
         IEquatable<Wavenumber<T>>,
         IComparable<Wavenumber<T>>,
         IFormattable,

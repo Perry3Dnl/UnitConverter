@@ -8,7 +8,7 @@ using UnitConverter.SpecificEnergy;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Specific Energy quantity backed by the family base unit.</summary>
-    public readonly struct SpecificEnergy<T> :
+    public readonly partial struct SpecificEnergy<T> :
         IEquatable<SpecificEnergy<T>>,
         IComparable<SpecificEnergy<T>>,
         IFormattable,

@@ -8,7 +8,7 @@ using UnitConverter.Strain;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Strain quantity backed by the family base unit.</summary>
-    public readonly struct Strain<T> :
+    public readonly partial struct Strain<T> :
         IEquatable<Strain<T>>,
         IComparable<Strain<T>>,
         IFormattable,

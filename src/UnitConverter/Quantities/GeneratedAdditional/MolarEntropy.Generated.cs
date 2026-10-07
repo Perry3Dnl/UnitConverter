@@ -8,7 +8,7 @@ using UnitConverter.MolarEntropy;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Molar Entropy quantity backed by the family base unit.</summary>
-    public readonly struct MolarEntropy<T> :
+    public readonly partial struct MolarEntropy<T> :
         IEquatable<MolarEntropy<T>>,
         IComparable<MolarEntropy<T>>,
         IFormattable,

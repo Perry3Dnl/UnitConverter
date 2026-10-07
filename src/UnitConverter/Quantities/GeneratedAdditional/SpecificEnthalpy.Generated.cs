@@ -8,7 +8,7 @@ using UnitConverter.SpecificEnthalpy;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Specific Enthalpy quantity backed by the family base unit.</summary>
-    public readonly struct SpecificEnthalpy<T> :
+    public readonly partial struct SpecificEnthalpy<T> :
         IEquatable<SpecificEnthalpy<T>>,
         IComparable<SpecificEnthalpy<T>>,
         IFormattable,

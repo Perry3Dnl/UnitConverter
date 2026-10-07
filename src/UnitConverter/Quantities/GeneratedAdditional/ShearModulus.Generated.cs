@@ -8,7 +8,7 @@ using UnitConverter.ShearModulus;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Shear Modulus quantity backed by the family base unit.</summary>
-    public readonly struct ShearModulus<T> :
+    public readonly partial struct ShearModulus<T> :
         IEquatable<ShearModulus<T>>,
         IComparable<ShearModulus<T>>,
         IFormattable,

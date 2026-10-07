@@ -8,7 +8,7 @@ using UnitConverter.StrainRate;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Strain Rate quantity backed by the family base unit.</summary>
-    public readonly struct StrainRate<T> :
+    public readonly partial struct StrainRate<T> :
         IEquatable<StrainRate<T>>,
         IComparable<StrainRate<T>>,
         IFormattable,

@@ -8,7 +8,7 @@ using UnitConverter.ElectricDipoleMoment;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Electric Dipole Moment quantity backed by the family base unit.</summary>
-    public readonly struct ElectricDipoleMoment<T> :
+    public readonly partial struct ElectricDipoleMoment<T> :
         IEquatable<ElectricDipoleMoment<T>>,
         IComparable<ElectricDipoleMoment<T>>,
         IFormattable,

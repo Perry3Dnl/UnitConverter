@@ -8,7 +8,7 @@ using UnitConverter.SurfaceChargeDensity;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Surface Charge Density quantity backed by the family base unit.</summary>
-    public readonly struct SurfaceChargeDensity<T> :
+    public readonly partial struct SurfaceChargeDensity<T> :
         IEquatable<SurfaceChargeDensity<T>>,
         IComparable<SurfaceChargeDensity<T>>,
         IFormattable,

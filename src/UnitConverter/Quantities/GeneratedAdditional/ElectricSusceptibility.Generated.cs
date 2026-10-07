@@ -8,7 +8,7 @@ using UnitConverter.ElectricSusceptibility;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Electric Susceptibility quantity backed by the family base unit.</summary>
-    public readonly struct ElectricSusceptibility<T> :
+    public readonly partial struct ElectricSusceptibility<T> :
         IEquatable<ElectricSusceptibility<T>>,
         IComparable<ElectricSusceptibility<T>>,
         IFormattable,

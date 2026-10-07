@@ -8,7 +8,7 @@ using UnitConverter.MagneticReluctance;
 namespace UnitConverter.Quantities
 {
     /// <summary>Strongly typed Magnetic Reluctance quantity backed by the family base unit.</summary>
-    public readonly struct MagneticReluctance<T> :
+    public readonly partial struct MagneticReluctance<T> :
         IEquatable<MagneticReluctance<T>>,
         IComparable<MagneticReluctance<T>>,
         IFormattable,
