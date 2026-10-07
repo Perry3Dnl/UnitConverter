@@ -124,26 +124,31 @@ namespace UnitConverter.Tests
         {
             UnitConverterCustomUnits.Clear();
 
-            UnitConverterExpressionParseResult builtIn =
-                UnitConverterExpressionParser.TryParse("light-year");
-            Assert.That(builtIn.Success, Is.True);
+            try
+            {
+                UnitConverterExpressionParseResult builtIn =
+                    UnitConverterExpressionParser.TryParse("light-year");
+                Assert.That(builtIn.Success, Is.True);
 
-            UnitConverterCustomUnits.RegisterLinear(
-                UnitConverterFamily.Time,
-                "CustomLightYear",
-                "light-year",
-                "Second",
-                2d);
+                UnitConverterCustomUnits.RegisterLinear(
+                    UnitConverterFamily.Time,
+                    "CustomLightYear",
+                    "light-year",
+                    "Second",
+                    2d);
 
-            UnitConverterExpressionParseResult withCustom =
-                UnitConverterExpressionParser.TryParse("light-year");
+                UnitConverterExpressionParseResult withCustom =
+                    UnitConverterExpressionParser.TryParse("light-year");
 
-            Assert.That(withCustom.Success, Is.False);
-            Assert.That(
-                withCustom.Error,
-                Is.EqualTo(UnitConverterError.AmbiguousUnit));
-
-            UnitConverterCustomUnits.Clear();
+                Assert.That(withCustom.Success, Is.False);
+                Assert.That(
+                    withCustom.Error,
+                    Is.EqualTo(UnitConverterError.AmbiguousUnit));
+            }
+            finally
+            {
+                UnitConverterCustomUnits.Clear();
+            }
         }
 
         [Test]
