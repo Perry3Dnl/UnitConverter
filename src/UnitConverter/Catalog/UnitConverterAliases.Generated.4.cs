@@ -796,6 +796,34 @@ namespace UnitConverter.Catalog
                         default:
                             return null;
                     }
+                case UnitConverterFamily.Stress:
+                    switch (unitName)
+                    {
+                        case "Pascal":
+                            return new[] { "pascal", "pascals" };
+                        case "Kilopascal":
+                            return new[] { "kilopascal" };
+                        case "Megapascal":
+                            return new[] { "megapascal" };
+                        case "Gigapascal":
+                            return new[] { "gigapascal" };
+                        default:
+                            return null;
+                    }
+                case UnitConverterFamily.YoungModulus:
+                    switch (unitName)
+                    {
+                        case "Pascal":
+                            return new[] { "pascal", "pascals" };
+                        case "Kilopascal":
+                            return new[] { "kilopascal" };
+                        case "Megapascal":
+                            return new[] { "megapascal" };
+                        case "Gigapascal":
+                            return new[] { "gigapascal" };
+                        default:
+                            return null;
+                    }
                 default:
                     return null;
             }
