@@ -4,6 +4,7 @@ namespace UnitConverter
     using System.Collections.Generic;
     using UnitConverter.Catalog;
     using UnitConverter.FuelEconomy;
+    using UnitConverter.SpecificGravity;
     using UnitConverter.Temperature;
 
     /// <summary>
@@ -74,6 +75,14 @@ namespace UnitConverter
                     value,
                     (UnitConverterFuelEconomyUnit)(object)from,
                     (UnitConverterFuelEconomyUnit)(object)to);
+            }
+
+            if (typeof(TUnit) == typeof(UnitConverterSpecificGravityUnit))
+            {
+                return SpecificGravityDecimal.Convert(
+                    value,
+                    (UnitConverterSpecificGravityUnit)(object)from,
+                    (UnitConverterSpecificGravityUnit)(object)to);
             }
 
             UnitConverterRational fromScale = LinearFamily<TUnit>.GetScale(from);
@@ -177,7 +186,10 @@ namespace UnitConverter
                 AffineTransform target = GetTransform(to);
                 UnitConverterRational scale = source.Scale.Divide(target.Scale);
                 UnitConverterRational offset = source.Offset.Subtract(target.Offset).Divide(target.Scale);
-                return scale.Apply(value) + offset.ToDecimal();
+                return UnitConverterRational.FromDecimal(value)
+                    .Multiply(scale)
+                    .Add(offset)
+                    .ToDecimal();
             }
 
             private static AffineTransform GetTransform(UnitConverterTemperatureUnit unit)
@@ -242,6 +254,105 @@ namespace UnitConverter
                         return new AffineTransform(UnitConverterRational.Parse("11604518.121550081"), zero);
                     default:
                         throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported temperature unit.");
+                }
+            }
+        }
+
+        private static class SpecificGravityDecimal
+        {
+            private static readonly UnitConverterRational One = UnitConverterRational.One;
+            private static readonly UnitConverterRational Hundred = UnitConverterRational.FromInt64(100);
+            private static readonly UnitConverterRational Thousand = UnitConverterRational.FromInt64(1000);
+            private static readonly UnitConverterRational Million = UnitConverterRational.Parse("1000000");
+            private static readonly UnitConverterRational Billion = UnitConverterRational.Parse("1000000000");
+            private static readonly UnitConverterRational Trillion = UnitConverterRational.Parse("1000000000000");
+            private static readonly UnitConverterRational TenThousand = UnitConverterRational.Parse("10000");
+            private static readonly UnitConverterRational ApiNumerator = UnitConverterRational.Parse("141.5");
+            private static readonly UnitConverterRational ApiOffset = UnitConverterRational.Parse("131.5");
+            private static readonly UnitConverterRational BaumeLightNumerator = UnitConverterRational.FromInt64(140);
+            private static readonly UnitConverterRational BaumeLightOffset = UnitConverterRational.FromInt64(130);
+            private static readonly UnitConverterRational BaumeHeavyConstant = UnitConverterRational.FromInt64(145);
+            private static readonly UnitConverterRational TwaddellScale = UnitConverterRational.FromInt64(200);
+
+            internal static decimal Convert(
+                decimal value,
+                UnitConverterSpecificGravityUnit from,
+                UnitConverterSpecificGravityUnit to)
+            {
+                UnitConverterRational exactValue = UnitConverterRational.FromDecimal(value);
+                UnitConverterRational ratio = ToRatio(exactValue, from);
+                return FromRatio(ratio, to).ToDecimal();
+            }
+
+            private static UnitConverterRational ToRatio(
+                UnitConverterRational value,
+                UnitConverterSpecificGravityUnit unit)
+            {
+                switch (unit)
+                {
+                    case UnitConverterSpecificGravityUnit.Ratio:
+                    case UnitConverterSpecificGravityUnit.SpecificGravity:
+                    case UnitConverterSpecificGravityUnit.RelativeDensity:
+                        return value;
+                    case UnitConverterSpecificGravityUnit.Percent:
+                        return value.Divide(Hundred);
+                    case UnitConverterSpecificGravityUnit.PerMille:
+                        return value.Divide(Thousand);
+                    case UnitConverterSpecificGravityUnit.Ppm:
+                        return value.Divide(Million);
+                    case UnitConverterSpecificGravityUnit.Ppb:
+                        return value.Divide(Billion);
+                    case UnitConverterSpecificGravityUnit.Ppt:
+                        return value.Divide(Trillion);
+                    case UnitConverterSpecificGravityUnit.BasisPoint:
+                    case UnitConverterSpecificGravityUnit.PerTenThousand:
+                        return value.Divide(TenThousand);
+                    case UnitConverterSpecificGravityUnit.APIGravity:
+                        return ApiNumerator.Divide(value.Add(ApiOffset));
+                    case UnitConverterSpecificGravityUnit.BaumeLight:
+                        return BaumeLightNumerator.Divide(BaumeLightOffset.Add(value));
+                    case UnitConverterSpecificGravityUnit.BaumeHeavy:
+                        return BaumeHeavyConstant.Divide(BaumeHeavyConstant.Subtract(value));
+                    case UnitConverterSpecificGravityUnit.Twaddell:
+                        return One.Add(value.Divide(TwaddellScale));
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported specific gravity unit.");
+                }
+            }
+
+            private static UnitConverterRational FromRatio(
+                UnitConverterRational ratio,
+                UnitConverterSpecificGravityUnit unit)
+            {
+                switch (unit)
+                {
+                    case UnitConverterSpecificGravityUnit.Ratio:
+                    case UnitConverterSpecificGravityUnit.SpecificGravity:
+                    case UnitConverterSpecificGravityUnit.RelativeDensity:
+                        return ratio;
+                    case UnitConverterSpecificGravityUnit.Percent:
+                        return ratio.Multiply(Hundred);
+                    case UnitConverterSpecificGravityUnit.PerMille:
+                        return ratio.Multiply(Thousand);
+                    case UnitConverterSpecificGravityUnit.Ppm:
+                        return ratio.Multiply(Million);
+                    case UnitConverterSpecificGravityUnit.Ppb:
+                        return ratio.Multiply(Billion);
+                    case UnitConverterSpecificGravityUnit.Ppt:
+                        return ratio.Multiply(Trillion);
+                    case UnitConverterSpecificGravityUnit.BasisPoint:
+                    case UnitConverterSpecificGravityUnit.PerTenThousand:
+                        return ratio.Multiply(TenThousand);
+                    case UnitConverterSpecificGravityUnit.APIGravity:
+                        return ApiNumerator.Divide(ratio).Subtract(ApiOffset);
+                    case UnitConverterSpecificGravityUnit.BaumeLight:
+                        return BaumeLightNumerator.Divide(ratio).Subtract(BaumeLightOffset);
+                    case UnitConverterSpecificGravityUnit.BaumeHeavy:
+                        return BaumeHeavyConstant.Subtract(BaumeHeavyConstant.Divide(ratio));
+                    case UnitConverterSpecificGravityUnit.Twaddell:
+                        return ratio.Subtract(One).Multiply(TwaddellScale);
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported specific gravity unit.");
                 }
             }
         }
