@@ -5,6 +5,7 @@ using UnitConverter.Catalog;
 using UnitConverter.FuelEconomy;
 using UnitConverter.Length;
 using UnitConverter.Quantities;
+using UnitConverter.SpecificGravity;
 using UnitConverter.Temperature;
 
 namespace UnitConverter.Tests.Quantities
@@ -93,6 +94,39 @@ namespace UnitConverter.Tests.Quantities
 
             Assert.That(efficiency, Is.EqualTo(40m));
             Assert.That(consumption, Is.EqualTo(2.5m));
+        }
+
+        [Test]
+        public void SpecificGravityFormulaUnitsUseExactRationalTransforms()
+        {
+            decimal apiRatio = global::UnitConverter.UnitConverterExact.Convert(
+                10m,
+                UnitConverterSpecificGravityUnit.APIGravity,
+                UnitConverterSpecificGravityUnit.Ratio);
+            decimal lightRatio = global::UnitConverter.UnitConverterExact.Convert(
+                10m,
+                UnitConverterSpecificGravityUnit.BaumeLight,
+                UnitConverterSpecificGravityUnit.Ratio);
+            decimal heavyRatio = global::UnitConverter.UnitConverterExact.Convert(
+                0m,
+                UnitConverterSpecificGravityUnit.BaumeHeavy,
+                UnitConverterSpecificGravityUnit.Ratio);
+            decimal twaddellRatio = global::UnitConverter.UnitConverterExact.Convert(
+                0m,
+                UnitConverterSpecificGravityUnit.Twaddell,
+                UnitConverterSpecificGravityUnit.Ratio);
+
+            Assert.That(apiRatio, Is.EqualTo(1m));
+            Assert.That(lightRatio, Is.EqualTo(1m));
+            Assert.That(heavyRatio, Is.EqualTo(1m));
+            Assert.That(twaddellRatio, Is.EqualTo(1m));
+
+            Assert.That(
+                global::UnitConverter.UnitConverterExact.Convert(
+                    1m,
+                    UnitConverterSpecificGravityUnit.Ratio,
+                    UnitConverterSpecificGravityUnit.APIGravity),
+                Is.EqualTo(10m));
         }
 
         [Test]
