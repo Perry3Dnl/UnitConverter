@@ -120,6 +120,33 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void CachedBuiltInParseStillRespectsLaterCustomUnitAmbiguity()
+        {
+            UnitConverterCustomUnits.Clear();
+
+            UnitConverterExpressionParseResult builtIn =
+                UnitConverterExpressionParser.TryParse("light-year");
+            Assert.That(builtIn.Success, Is.True);
+
+            UnitConverterCustomUnits.RegisterLinear(
+                UnitConverterFamily.Time,
+                "CustomLightYear",
+                "light-year",
+                "Second",
+                2d);
+
+            UnitConverterExpressionParseResult withCustom =
+                UnitConverterExpressionParser.TryParse("light-year");
+
+            Assert.That(withCustom.Success, Is.False);
+            Assert.That(
+                withCustom.Error,
+                Is.EqualTo(UnitConverterError.AmbiguousUnit));
+
+            UnitConverterCustomUnits.Clear();
+        }
+
+        [Test]
         public void Convert_IncompatibleDimensions_ReturnsStructuredError()
         {
             UnitConverterCompositeResult result =
