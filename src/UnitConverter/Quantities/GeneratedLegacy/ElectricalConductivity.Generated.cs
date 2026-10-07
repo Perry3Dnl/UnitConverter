@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ElectricalConductivity<T> operator +(ElectricalConductivity<T> left, ElectricalConductivity<T> right) => new ElectricalConductivity<T>(left._baseValue + right._baseValue);
         public static ElectricalConductivity<T> operator -(ElectricalConductivity<T> left, ElectricalConductivity<T> right) => new ElectricalConductivity<T>(left._baseValue - right._baseValue);

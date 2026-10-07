@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ElectricFlux<T> operator +(ElectricFlux<T> left, ElectricFlux<T> right) => new ElectricFlux<T>(left._baseValue + right._baseValue);
         public static ElectricFlux<T> operator -(ElectricFlux<T> left, ElectricFlux<T> right) => new ElectricFlux<T>(left._baseValue - right._baseValue);

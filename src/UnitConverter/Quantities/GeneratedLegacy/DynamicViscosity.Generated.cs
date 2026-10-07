@@ -483,7 +483,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static DynamicViscosity<T> operator +(DynamicViscosity<T> left, DynamicViscosity<T> right) => new DynamicViscosity<T>(left._baseValue + right._baseValue);
         public static DynamicViscosity<T> operator -(DynamicViscosity<T> left, DynamicViscosity<T> right) => new DynamicViscosity<T>(left._baseValue - right._baseValue);

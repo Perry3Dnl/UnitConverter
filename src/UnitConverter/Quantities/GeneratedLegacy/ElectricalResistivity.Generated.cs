@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ElectricalResistivity<T> operator +(ElectricalResistivity<T> left, ElectricalResistivity<T> right) => new ElectricalResistivity<T>(left._baseValue + right._baseValue);
         public static ElectricalResistivity<T> operator -(ElectricalResistivity<T> left, ElectricalResistivity<T> right) => new ElectricalResistivity<T>(left._baseValue - right._baseValue);

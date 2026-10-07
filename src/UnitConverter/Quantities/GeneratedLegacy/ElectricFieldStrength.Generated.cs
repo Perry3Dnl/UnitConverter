@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ElectricFieldStrength<T> operator +(ElectricFieldStrength<T> left, ElectricFieldStrength<T> right) => new ElectricFieldStrength<T>(left._baseValue + right._baseValue);
         public static ElectricFieldStrength<T> operator -(ElectricFieldStrength<T> left, ElectricFieldStrength<T> right) => new ElectricFieldStrength<T>(left._baseValue - right._baseValue);

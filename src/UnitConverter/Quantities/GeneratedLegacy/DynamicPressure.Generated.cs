@@ -296,7 +296,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static DynamicPressure<T> operator +(DynamicPressure<T> left, DynamicPressure<T> right) => new DynamicPressure<T>(left._baseValue + right._baseValue);
         public static DynamicPressure<T> operator -(DynamicPressure<T> left, DynamicPressure<T> right) => new DynamicPressure<T>(left._baseValue - right._baseValue);

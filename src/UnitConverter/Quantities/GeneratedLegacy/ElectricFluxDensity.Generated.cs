@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ElectricFluxDensity<T> operator +(ElectricFluxDensity<T> left, ElectricFluxDensity<T> right) => new ElectricFluxDensity<T>(left._baseValue + right._baseValue);
         public static ElectricFluxDensity<T> operator -(ElectricFluxDensity<T> left, ElectricFluxDensity<T> right) => new ElectricFluxDensity<T>(left._baseValue - right._baseValue);
