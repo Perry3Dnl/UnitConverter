@@ -36,6 +36,19 @@ namespace UnitConverter.Tests.Quantities
         }
 
         [Test]
+        public void ExactConverterPowerOfTenFastPathPreservesDecimalPrecision()
+        {
+            decimal converted = global::UnitConverter.UnitConverterExact.Convert(
+                12345678901234567890.12345678m,
+                UnitConverterLengthUnit.Centimeter,
+                UnitConverterLengthUnit.Meter);
+
+            Assert.That(
+                converted,
+                Is.EqualTo(123456789012345678.9012345678m));
+        }
+
+        [Test]
         public void ExactConverterComposesRationalFactorsBeforeApplyingThem()
         {
             decimal converted = global::UnitConverter.UnitConverterExact.Convert(
