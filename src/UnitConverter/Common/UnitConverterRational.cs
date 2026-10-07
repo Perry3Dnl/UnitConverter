@@ -191,10 +191,7 @@ namespace UnitConverter
             {
                 BigInteger chunk = BigInteger.GreatestCommonDivisor(factor, chunkBase);
                 if (chunk.IsOne)
-                {
-                    T converted = T.CreateChecked((double)factor);
-                    return multiply ? value * converted : value / converted;
-                }
+                    throw new OverflowException("Rational factor contains an integer component too large for generic numeric conversion.");
 
                 T convertedChunk = T.CreateChecked((long)chunk);
                 value = multiply ? value * convertedChunk : value / convertedChunk;
