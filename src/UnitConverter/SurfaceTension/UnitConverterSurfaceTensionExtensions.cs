@@ -19,7 +19,7 @@ namespace UnitConverter.SurfaceTension
 
         public static decimal Convert(this decimal value, UnitConverterSurfaceTensionUnit from, UnitConverterSurfaceTensionUnit to)
         {
-            return (decimal)UnitConverterSurfaceTension.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterSurfaceTensionUnit from, UnitConverterSurfaceTensionUnit to)

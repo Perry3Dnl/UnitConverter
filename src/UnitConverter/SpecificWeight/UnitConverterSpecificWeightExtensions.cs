@@ -19,7 +19,7 @@ namespace UnitConverter.SpecificWeight
 
         public static decimal Convert(this decimal value, UnitConverterSpecificWeightUnit from, UnitConverterSpecificWeightUnit to)
         {
-            return (decimal)UnitConverterSpecificWeight.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterSpecificWeightUnit from, UnitConverterSpecificWeightUnit to)

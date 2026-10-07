@@ -19,7 +19,7 @@ namespace UnitConverter.SpecificGravity
 
         public static decimal Convert(this decimal value, UnitConverterSpecificGravityUnit from, UnitConverterSpecificGravityUnit to)
         {
-            return (decimal)UnitConverterSpecificGravity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterSpecificGravityUnit from, UnitConverterSpecificGravityUnit to)

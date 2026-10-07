@@ -19,7 +19,7 @@ namespace UnitConverter.Snap
 
         public static decimal Convert(this decimal value, UnitConverterSnapUnit from, UnitConverterSnapUnit to)
         {
-            return (decimal)UnitConverterSnap.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterSnapUnit from, UnitConverterSnapUnit to)

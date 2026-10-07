@@ -19,7 +19,7 @@ namespace UnitConverter.ThermalExpansion
 
         public static decimal Convert(this decimal value, UnitConverterThermalExpansionUnit from, UnitConverterThermalExpansionUnit to)
         {
-            return (decimal)UnitConverterThermalExpansion.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterThermalExpansionUnit from, UnitConverterThermalExpansionUnit to)

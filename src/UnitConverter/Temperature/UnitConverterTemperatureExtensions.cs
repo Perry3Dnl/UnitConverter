@@ -19,7 +19,7 @@ namespace UnitConverter.Temperature
 
         public static decimal Convert(this decimal value, UnitConverterTemperatureUnit from, UnitConverterTemperatureUnit to)
         {
-            return (decimal)UnitConverterTemperature.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterTemperatureUnit from, UnitConverterTemperatureUnit to)

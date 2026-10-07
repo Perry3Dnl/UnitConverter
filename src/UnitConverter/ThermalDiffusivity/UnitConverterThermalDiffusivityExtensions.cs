@@ -19,7 +19,7 @@ namespace UnitConverter.ThermalDiffusivity
 
         public static decimal Convert(this decimal value, UnitConverterThermalDiffusivityUnit from, UnitConverterThermalDiffusivityUnit to)
         {
-            return (decimal)UnitConverterThermalDiffusivity.Convert((double)value, from, to);
+            return global::UnitConverter.UnitConverterExact.Convert(value, from, to);
         }
 
         public static double Convert(this byte value, UnitConverterThermalDiffusivityUnit from, UnitConverterThermalDiffusivityUnit to)
