@@ -59,11 +59,11 @@ namespace UnitConverter.Permeability
         public static double MicrometerSquaredToSquareMeter(double value) => value * ((double)1 / (double)1000000000000);
         public static double SquareMeterToMicrometerSquared(double value) => value / ((double)1 / (double)1000000000000);
 
-        public static double DarcyToSquareMeter(double value) => value * ((double)9869233 / (double)10000000000000000000);
-        public static double SquareMeterToDarcy(double value) => value / ((double)9869233 / (double)10000000000000000000);
+        public static double DarcyToSquareMeter(double value) => value * 9.8692330000000009e-13d;
+        public static double SquareMeterToDarcy(double value) => value / 9.8692330000000009e-13d;
 
-        public static double MillidarcyToSquareMeter(double value) => value * ((double)9869233 / (double)10000000000000000000000);
-        public static double SquareMeterToMillidarcy(double value) => value / ((double)9869233 / (double)10000000000000000000000);
+        public static double MillidarcyToSquareMeter(double value) => value * 9.8692330000000007e-16d;
+        public static double SquareMeterToMillidarcy(double value) => value / 9.8692330000000007e-16d;
 
         public static string GetSymbol(UnitConverterPermeabilityUnit unit)
         {

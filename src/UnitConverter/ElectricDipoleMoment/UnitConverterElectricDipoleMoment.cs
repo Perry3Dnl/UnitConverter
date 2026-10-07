@@ -62,7 +62,7 @@ namespace UnitConverter.ElectricDipoleMoment
         public static double MicrocoulombMeterToCoulombMeter(double value) => value * ((double)1 / (double)1000000);
         public static double CoulombMeterToMicrocoulombMeter(double value) => value / ((double)1 / (double)1000000);
 
-        public static double DebyeToCoulombMeter(double value) => value * ((double)83391 / (double)25000000000000000000000000000000000);
+        public static double DebyeToCoulombMeter(double value) => value * 3.33564e-30d;
         public static double CoulombMeterToDebye(double value) => value / ((double)83391 / (double)25000000000000000000000000000000000);
 
         public static string GetSymbol(UnitConverterElectricDipoleMomentUnit unit)

@@ -43,7 +43,10 @@ def rational_expr(value):
 
 def double_factor(value):
     value = fraction(value)
-    return f"((double){value.numerator} / (double){value.denominator})"
+    max_int64 = (1 << 63) - 1
+    if abs(value.numerator) <= max_int64 and value.denominator <= max_int64:
+        return f"((double){value.numerator} / (double){value.denominator})"
+    return format(float(value), ".17g") + "d"
 
 def render_converter(family):
     name = family["name"]
