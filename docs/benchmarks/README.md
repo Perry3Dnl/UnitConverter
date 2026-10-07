@@ -21,4 +21,4 @@ Hosted-runner timings vary. Treat published numbers as a release-comparison base
 
 ## Latest baseline
 
-The latest checked-in baseline is recorded in [BASELINE.md](BASELINE.md). README performance badges are updated from that same measured run.
+The latest checked-in baseline is recorded in [BASELINE.md](BASELINE.md). README performance badges are updated from that same measured run. The initial baseline was captured from GitHub Actions run `37611558045` on the fully typed 150-family API.
