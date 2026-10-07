@@ -398,7 +398,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Angle<T> operator +(Angle<T> left, Angle<T> right) => new Angle<T>(left._baseValue + right._baseValue);
         public static Angle<T> operator -(Angle<T> left, Angle<T> right) => new Angle<T>(left._baseValue - right._baseValue);

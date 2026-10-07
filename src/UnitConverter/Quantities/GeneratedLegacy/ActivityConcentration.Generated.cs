@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ActivityConcentration<T> operator +(ActivityConcentration<T> left, ActivityConcentration<T> right) => new ActivityConcentration<T>(left._baseValue + right._baseValue);
         public static ActivityConcentration<T> operator -(ActivityConcentration<T> left, ActivityConcentration<T> right) => new ActivityConcentration<T>(left._baseValue - right._baseValue);

@@ -330,7 +330,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Capacitance<T> operator +(Capacitance<T> left, Capacitance<T> right) => new Capacitance<T>(left._baseValue + right._baseValue);
         public static Capacitance<T> operator -(Capacitance<T> left, Capacitance<T> right) => new Capacitance<T>(left._baseValue - right._baseValue);

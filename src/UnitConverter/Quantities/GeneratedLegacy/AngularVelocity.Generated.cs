@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static AngularVelocity<T> operator +(AngularVelocity<T> left, AngularVelocity<T> right) => new AngularVelocity<T>(left._baseValue + right._baseValue);
         public static AngularVelocity<T> operator -(AngularVelocity<T> left, AngularVelocity<T> right) => new AngularVelocity<T>(left._baseValue - right._baseValue);

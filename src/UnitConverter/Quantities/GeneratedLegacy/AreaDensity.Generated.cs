@@ -245,7 +245,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static AreaDensity<T> operator +(AreaDensity<T> left, AreaDensity<T> right) => new AreaDensity<T>(left._baseValue + right._baseValue);
         public static AreaDensity<T> operator -(AreaDensity<T> left, AreaDensity<T> right) => new AreaDensity<T>(left._baseValue - right._baseValue);

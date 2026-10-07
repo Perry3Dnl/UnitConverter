@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static AngularMomentum<T> operator +(AngularMomentum<T> left, AngularMomentum<T> right) => new AngularMomentum<T>(left._baseValue + right._baseValue);
         public static AngularMomentum<T> operator -(AngularMomentum<T> left, AngularMomentum<T> right) => new AngularMomentum<T>(left._baseValue - right._baseValue);

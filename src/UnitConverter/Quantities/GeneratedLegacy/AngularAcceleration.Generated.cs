@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static AngularAcceleration<T> operator +(AngularAcceleration<T> left, AngularAcceleration<T> right) => new AngularAcceleration<T>(left._baseValue + right._baseValue);
         public static AngularAcceleration<T> operator -(AngularAcceleration<T> left, AngularAcceleration<T> right) => new AngularAcceleration<T>(left._baseValue - right._baseValue);

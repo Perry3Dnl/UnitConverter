@@ -262,7 +262,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static AmountOfSubstance<T> operator +(AmountOfSubstance<T> left, AmountOfSubstance<T> right) => new AmountOfSubstance<T>(left._baseValue + right._baseValue);
         public static AmountOfSubstance<T> operator -(AmountOfSubstance<T> left, AmountOfSubstance<T> right) => new AmountOfSubstance<T>(left._baseValue - right._baseValue);
