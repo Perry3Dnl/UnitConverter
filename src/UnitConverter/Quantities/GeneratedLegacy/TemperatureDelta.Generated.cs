@@ -347,7 +347,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static TemperatureDelta<T> operator +(TemperatureDelta<T> left, TemperatureDelta<T> right) => new TemperatureDelta<T>(left._baseValue + right._baseValue);
         public static TemperatureDelta<T> operator -(TemperatureDelta<T> left, TemperatureDelta<T> right) => new TemperatureDelta<T>(left._baseValue - right._baseValue);

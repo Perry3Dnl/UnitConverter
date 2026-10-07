@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static SpecificWeight<T> operator +(SpecificWeight<T> left, SpecificWeight<T> right) => new SpecificWeight<T>(left._baseValue + right._baseValue);
         public static SpecificWeight<T> operator -(SpecificWeight<T> left, SpecificWeight<T> right) => new SpecificWeight<T>(left._baseValue - right._baseValue);

@@ -347,7 +347,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Temperature<T> operator +(Temperature<T> left, Temperature<T> right) => new Temperature<T>(left._baseValue + right._baseValue);
         public static Temperature<T> operator -(Temperature<T> left, Temperature<T> right) => new Temperature<T>(left._baseValue - right._baseValue);

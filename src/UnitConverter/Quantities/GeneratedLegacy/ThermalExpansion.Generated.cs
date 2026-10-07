@@ -211,7 +211,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ThermalExpansion<T> operator +(ThermalExpansion<T> left, ThermalExpansion<T> right) => new ThermalExpansion<T>(left._baseValue + right._baseValue);
         public static ThermalExpansion<T> operator -(ThermalExpansion<T> left, ThermalExpansion<T> right) => new ThermalExpansion<T>(left._baseValue - right._baseValue);

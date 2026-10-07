@@ -279,7 +279,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static SurfaceTension<T> operator +(SurfaceTension<T> left, SurfaceTension<T> right) => new SurfaceTension<T>(left._baseValue + right._baseValue);
         public static SurfaceTension<T> operator -(SurfaceTension<T> left, SurfaceTension<T> right) => new SurfaceTension<T>(left._baseValue - right._baseValue);

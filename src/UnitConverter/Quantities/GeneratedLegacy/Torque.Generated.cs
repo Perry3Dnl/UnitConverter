@@ -347,7 +347,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static Torque<T> operator +(Torque<T> left, Torque<T> right) => new Torque<T>(left._baseValue + right._baseValue);
         public static Torque<T> operator -(Torque<T> left, Torque<T> right) => new Torque<T>(left._baseValue - right._baseValue);

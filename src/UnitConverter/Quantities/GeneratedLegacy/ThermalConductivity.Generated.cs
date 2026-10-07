@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ThermalConductivity<T> operator +(ThermalConductivity<T> left, ThermalConductivity<T> right) => new ThermalConductivity<T>(left._baseValue + right._baseValue);
         public static ThermalConductivity<T> operator -(ThermalConductivity<T> left, ThermalConductivity<T> right) => new ThermalConductivity<T>(left._baseValue - right._baseValue);

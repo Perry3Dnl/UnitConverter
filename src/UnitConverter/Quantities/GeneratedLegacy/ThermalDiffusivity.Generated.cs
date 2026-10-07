@@ -228,7 +228,7 @@ namespace UnitConverter.Quantities
             }
             unit = default;
             return false;
-        }}
+        }
 
         public static ThermalDiffusivity<T> operator +(ThermalDiffusivity<T> left, ThermalDiffusivity<T> right) => new ThermalDiffusivity<T>(left._baseValue + right._baseValue);
         public static ThermalDiffusivity<T> operator -(ThermalDiffusivity<T> left, ThermalDiffusivity<T> right) => new ThermalDiffusivity<T>(left._baseValue - right._baseValue);
