@@ -254,7 +254,11 @@ def verify_consumer(root_directory, name, target_framework, output_type, include
     write_consumer_program(consumer, include_json)
 
     subprocess.run(
-        ["dotnet", "restore", "Consumer.csproj", "--source", str(feed)],
+        [
+            "dotnet", "restore", "Consumer.csproj",
+            "--source", str(feed),
+            "--source", "https://api.nuget.org/v3/index.json"
+        ],
         cwd=consumer,
         env=environment,
         check=True)
