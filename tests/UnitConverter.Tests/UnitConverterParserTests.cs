@@ -139,6 +139,35 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void TryParse_CustomCulture_WithThousandsSeparator_IsSupported()
+        {
+            double value;
+            UnitConverterLengthUnit unit;
+
+            bool success = UnitConverterParser.TryParse(
+                "1.234,5 km",
+                CultureInfo.GetCultureInfo("nl-NL"),
+                out value,
+                out unit);
+
+            Assert.That(success, Is.True);
+            Assert.That(value, Is.EqualTo(1234.5d));
+            Assert.That(unit, Is.EqualTo(UnitConverterLengthUnit.Kilometer));
+        }
+
+        [Test]
+        public void TryConvert_CustomCulture_UsesSameCultureRulesAsParse()
+        {
+            UnitConverterConversionResult result = UnitConverterParser.TryConvert(
+                "1.234,5 km",
+                UnitConverterLengthUnit.Meter,
+                CultureInfo.GetCultureInfo("nl-NL"));
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(result.Value, Is.EqualTo(1234500d));
+        }
+
+        [Test]
         public void TryConvert_InvalidInput_ReturnsFailure()
         {
             UnitConverterConversionResult result = UnitConverterParser.TryConvert(
