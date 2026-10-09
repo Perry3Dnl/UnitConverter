@@ -8,9 +8,13 @@
 [![span format](docs/benchmarks/badges/span-format.svg)](docs/benchmarks/BASELINE.md)
 [![exact decimal](docs/benchmarks/badges/exact-decimal.svg)](docs/benchmarks/BASELINE.md)
 
-A high-performance standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It keeps the straightforward static/direct/numeric APIs while also providing strongly typed quantities, dimensional arithmetic, exact decimal/rational conversion, span parsing/formatting, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale number conversion.
+A high-performance, dependency-free .NET unit conversion engine built for both simple application code and demanding engineering/scientific workloads. The current core catalog contains **150 conversion families**, **1,858 registered units**, and **9,395 accepted unit names, symbols, aliases, and notation variants**. Those units provide **39,458 directed non-identity unit-to-unit conversion pairs** inside their compatible families, while the core assembly exposes **1,102 public types** and **14,494 public methods/overloads** across direct converters, numeric extensions, typed quantities, parsing/formatting, exact conversion, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale numbers.
+
+UnitConverter does not force one programming model. Use a direct `double`/`float`/`decimal` conversion when that is all you need, fluent numeric extensions when you want compact code, `UnitValue<TUnit>` when the unit should travel with the value, or strongly typed quantities when compile-time dimensional safety matters. Exact decimal/rational routes, allocation-aware span APIs, runtime unit detection, localization, NativeAOT validation, and BenchmarkDotNet regression gates are all part of the same standalone core design.
 
 The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. The packages have not yet been published to nuget.org.
+
+> **Scale metrics are generated from the compiled catalog/API, not estimated.** A conversion pair is one directed `from → to` route within the same family and excludes identity conversions such as `Meter → Meter`. Reproduce the current numbers with `dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj -c Release -- --stats`.
 
 ## Why UnitConverter
 
