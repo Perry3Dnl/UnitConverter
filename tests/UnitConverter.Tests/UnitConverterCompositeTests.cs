@@ -30,6 +30,20 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void Parse_NormalizedCacheKeyPreservesCallerExpressionText()
+        {
+            UnitConverterUnitExpression superscript =
+                UnitConverterExpressionParser.Parse("  kg·m/s²  ");
+            UnitConverterUnitExpression ascii =
+                UnitConverterExpressionParser.Parse("kg*m/s^2");
+
+            Assert.That(superscript.Text, Is.EqualTo("kg·m/s²"));
+            Assert.That(ascii.Text, Is.EqualTo("kg*m/s^2"));
+            Assert.That(superscript.Dimensions, Is.EqualTo(ascii.Dimensions));
+            Assert.That(superscript.ScaleToCanonical, Is.EqualTo(ascii.ScaleToCanonical));
+        }
+
+        [Test]
         public void Parse_ParenthesizedThermalConductivityExpression_Works()
         {
             UnitConverterUnitExpression expression =
