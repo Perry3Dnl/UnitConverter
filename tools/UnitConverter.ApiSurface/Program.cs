@@ -260,11 +260,13 @@ namespace UnitConverter.ApiSurface
             }
             if (value is string)
             {
-                return """ + value.ToString().Replace("\\", "\\\\").Replace(""", "\\"") + """;
+                return "string:" +
+                    Convert.ToBase64String(
+                        Encoding.UTF8.GetBytes((string)value));
             }
             if (value is char)
             {
-                return "'" + value + "'";
+                return "char:" + ((int)(char)value).ToString(CultureInfo.InvariantCulture);
             }
             if (value is bool)
             {
