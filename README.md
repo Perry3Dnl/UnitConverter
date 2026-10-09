@@ -36,6 +36,8 @@ dotnet restore UnitConverter.sln
 dotnet build UnitConverter.sln --configuration Release --no-restore
 dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
 dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
+dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+python scripts/verify_package.py artifacts/packages
 ```
 
 The `.nupkg` and `.snupkg` are written to `artifacts/packages`. The SDK is a build requirement; consumers need a runtime compatible with .NET Standard 2.0.
