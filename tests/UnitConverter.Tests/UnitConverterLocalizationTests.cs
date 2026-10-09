@@ -95,6 +95,32 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void LocalizationRegistration_RejectsInvariantAliasForDifferentUnit()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("fr-FR");
+
+            Assert.Throws<System.InvalidOperationException>(() =>
+                UnitConverterLocalization.Register(
+                    culture,
+                    UnitConverterLengthUnit.Mile,
+                    "m",
+                    "metre"));
+        }
+
+        [Test]
+        public void LocalizationRegistration_AllowsInvariantAliasForSameUnit()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("fr-FR");
+
+            Assert.DoesNotThrow(() =>
+                UnitConverterLocalization.Register(
+                    culture,
+                    UnitConverterLengthUnit.Meter,
+                    "mètre",
+                    "m"));
+        }
+
+        [Test]
         public void CustomLocalization_CanBeRegisteredWithoutChangingCatalog()
         {
             CultureInfo culture = CultureInfo.GetCultureInfo("fr-FR");
