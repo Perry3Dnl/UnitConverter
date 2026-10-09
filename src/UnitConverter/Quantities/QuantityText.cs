@@ -7,6 +7,16 @@ namespace UnitConverter.Quantities
 {
     internal static class QuantityText
     {
+        public static string Format<T>(
+            T value,
+            string unit,
+            string format,
+            IFormatProvider provider)
+            where T : IFloatingPoint<T>
+        {
+            return value.ToString(format, provider) + " " + unit;
+        }
+
         public static bool TryFormat<T>(
             T value,
             ReadOnlySpan<char> unit,
