@@ -5,8 +5,14 @@ namespace UnitConverter.SystemTextJson
     using System.Text.Json.Serialization;
     using UnitConverter.Catalog;
 
+    /// <summary>
+    /// Registers UnitConverter JSON converters on <see cref="JsonSerializerOptions"/>.
+    /// </summary>
     public static class UnitConverterJson
     {
+        /// <summary>
+        /// Registers JSON support for a specific UnitValue unit enum.
+        /// </summary>
         public static JsonSerializerOptions AddUnitConverter<TUnit>(
             this JsonSerializerOptions options)
             where TUnit : struct
@@ -28,6 +34,9 @@ namespace UnitConverter.SystemTextJson
             return options;
         }
 
+        /// <summary>
+        /// Registers the UnitValue converter factory for all catalog unit enum types.
+        /// </summary>
         public static JsonSerializerOptions AddUnitConverter(
             this JsonSerializerOptions options)
         {
@@ -49,6 +58,9 @@ namespace UnitConverter.SystemTextJson
         }
     }
 
+    /// <summary>
+    /// Creates System.Text.Json converters for UnitValue&lt;TUnit&gt; values.
+    /// </summary>
     public sealed class UnitValueJsonConverterFactory : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -69,6 +81,9 @@ namespace UnitConverter.SystemTextJson
         }
     }
 
+    /// <summary>
+    /// Serializes UnitValue values using a numeric value and stable catalog unit name.
+    /// </summary>
     public sealed class UnitValueJsonConverter<TUnit>
         : JsonConverter<UnitValue<TUnit>>
         where TUnit : struct
