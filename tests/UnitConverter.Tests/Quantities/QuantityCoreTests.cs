@@ -68,7 +68,7 @@ namespace UnitConverter.Tests.Quantities
             bool success = length.TryFormat(buffer, out int written, "0.0".AsSpan(), null);
 
             Assert.That(success, Is.True);
-            Assert.That(new string(buffer.Slice(0, written)), Is.EqualTo("12.5"));
+            Assert.That(new string(buffer.Slice(0, written)), Is.EqualTo("12.5 m"));
         }
 
         [Test]
