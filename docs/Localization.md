@@ -2,7 +2,7 @@
 
 UnitConverter separates numeric culture from unit vocabulary.
 
-Numeric parsing and formatting already accepts `IFormatProvider`, so decimal separators and other numeric conventions follow the caller's culture. Localization v1 adds culture-aware unit display names and parsing aliases without changing stable symbols or enum names.
+Numeric parsing and formatting accepts `IFormatProvider`, so decimal separators, group separators, scientific notation, and other supported numeric conventions follow the caller's culture. Localization v1 adds culture-aware unit display names and parsing aliases without changing stable symbols or enum names.
 
 ## Culture-aware parsing
 
@@ -70,4 +70,6 @@ Registration does not modify the generated unit catalog or conversion factors. I
 
 ## Built-in scope
 
-Localization v1 includes a small curated Dutch vocabulary for common length and temperature units as the first built-in locale. The infrastructure is deliberately independent from the generated English alias catalog so additional locale definition files can be added incrementally without changing conversion code.
+Built-in localization data is definition-driven. `definitions/unit-localization.json` is validated against the real family/unit enums and `scripts/generate_localization.py` emits checked-in dependency-free C#. CI rejects stale or invalid generated output. The current Dutch built-in vocabulary contains 85 localized unit entries across 13 commonly used families, with parent-culture fallback from `nl-NL` to `nl`.
+
+`UnitConverterLocalization.GetSupportedCultures<TUnit>()` exposes built-in or runtime-registered cultures for a family, while `TryGetDisplayName` allows callers to query localized display metadata without formatting a value. Additional locales can be expanded incrementally without changing converter implementations or adding runtime package dependencies.
