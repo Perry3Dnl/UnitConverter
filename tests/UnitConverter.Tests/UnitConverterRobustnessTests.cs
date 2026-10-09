@@ -37,6 +37,30 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void ParserTryConvert_UnsupportedUnitTypeReturnsFailure()
+        {
+            UnitConverterConversionResult result =
+                UnitConverterParser.TryConvert(
+                    "1 Monday",
+                    DayOfWeek.Tuesday);
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.ErrorMessage, Is.Not.Empty);
+        }
+
+        [Test]
+        public void ParserTryConvert_InvalidTargetUnitReturnsFailure()
+        {
+            UnitConverterConversionResult result =
+                UnitConverterParser.TryConvert(
+                    "1 m",
+                    (UnitConverterLengthUnit)int.MaxValue);
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.ErrorMessage, Is.Not.Empty);
+        }
+
+        [Test]
         public void UnitValueTo_InvalidTargetUnitFailsBeforeConversion()
         {
             var value =
