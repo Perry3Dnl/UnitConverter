@@ -308,7 +308,7 @@ namespace UnitConverter
     /// <summary>
     /// A parsed numeric value together with the unit that was present in the source text.
     /// </summary>
-    public readonly struct UnitConverterParsedValue<TUnit>
+    public readonly struct UnitConverterParsedValue<TUnit> : IFormattable
         where TUnit : struct
     {
         public UnitConverterParsedValue(double value, TUnit unit)
@@ -323,7 +323,17 @@ namespace UnitConverter
 
         public override string ToString()
         {
-            return Value.ToString(CultureInfo.InvariantCulture) + " " + Unit;
+            return UnitConverterFormatter.Format(Value, Unit);
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return UnitConverterFormatter.Format(
+                Value,
+                Unit,
+                string.IsNullOrEmpty(format) ? "G" : format,
+                formatProvider ?? CultureInfo.InvariantCulture,
+                UnitConverterUnitFormat.Symbol);
         }
     }
 }
