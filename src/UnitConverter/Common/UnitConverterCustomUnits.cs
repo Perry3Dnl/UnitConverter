@@ -21,7 +21,11 @@ namespace UnitConverter
             Name = name;
             Symbol = symbol;
             DisplayName = displayName;
-            Aliases = aliases ?? new string[0];
+            string[] aliasSnapshot =
+                aliases == null
+                    ? new string[0]
+                    : (string[])aliases.Clone();
+            Aliases = Array.AsReadOnly(aliasSnapshot);
             ReferenceUnit = referenceUnit;
             Dimensions = dimensions;
             ScaleToReference = scaleToReference;
