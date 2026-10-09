@@ -13,9 +13,12 @@ namespace UnitConverter.Tests
         private static readonly string[] CompleteDutchFamilies =
         {
             "Angle",
+            "Area",
+            "Energy",
             "Force",
             "Frequency",
             "Power",
+            "Pressure",
             "Speed",
             "Temperature",
             "Time",
