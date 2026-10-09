@@ -40,7 +40,7 @@ namespace UnitConverter
         public UnitConverterError Error { get; }
         public string ErrorMessage { get; }
 
-        public static UnitConverterParseResult<TUnit> Ok(double value, TUnit unit)
+        internal static UnitConverterParseResult<TUnit> Ok(double value, TUnit unit)
         {
             return new UnitConverterParseResult<TUnit>(
                 true,
@@ -50,7 +50,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterParseResult<TUnit> Fail(
+        internal static UnitConverterParseResult<TUnit> Fail(
             UnitConverterError error,
             string errorMessage)
         {
@@ -97,7 +97,7 @@ namespace UnitConverter
         public UnitConverterError Error { get; }
         public string ErrorMessage { get; }
 
-        public static UnitConverterDynamicResult Ok(
+        internal static UnitConverterDynamicResult Ok(
             double value,
             UnitConverterFamily family,
             UnitConverterUnitDescriptor fromUnit,
@@ -115,7 +115,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterDynamicResult Ok(
+        internal static UnitConverterDynamicResult Ok(
             double value,
             UnitConverterFamily family,
             UnitConverterUnitDescriptor fromUnit,
@@ -135,7 +135,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterDynamicResult Fail(
+        internal static UnitConverterDynamicResult Fail(
             UnitConverterFamily family,
             UnitConverterError error,
             string errorMessage)
