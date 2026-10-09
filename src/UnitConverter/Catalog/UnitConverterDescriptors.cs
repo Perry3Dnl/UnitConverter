@@ -75,9 +75,22 @@ namespace UnitConverter.Catalog
             return descriptor;
         }
 
-        public abstract bool TryGetUnit(
+        public virtual bool TryGetUnit(
             object unit,
-            out UnitConverterUnitDescriptor descriptor);
+            out UnitConverterUnitDescriptor descriptor)
+        {
+            foreach (UnitConverterUnitDescriptor candidate in Units)
+            {
+                if (object.Equals(candidate.Unit, unit))
+                {
+                    descriptor = candidate;
+                    return true;
+                }
+            }
+
+            descriptor = null;
+            return false;
+        }
 
         public abstract UnitConverterUnitResolution ResolveUnit(string text, out object unit);
         public abstract double Convert(double value, object from, object to);
