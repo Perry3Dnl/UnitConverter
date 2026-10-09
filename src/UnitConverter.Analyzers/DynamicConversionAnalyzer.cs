@@ -1,6 +1,8 @@
 namespace UnitConverter.Analyzers
 {
+    using System;
     using System.Collections.Immutable;
+    using System.Globalization;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.CodeAnalysis.Diagnostics;
@@ -67,10 +69,51 @@ namespace UnitConverter.Analyzers
                 return;
             }
 
+            string input = (string)firstConstant.Value;
+            string target = (string)secondConstant.Value;
+
+            if (!LooksLikeInvariantQuantity(input) ||
+                string.IsNullOrWhiteSpace(target))
+            {
+                return;
+            }
+
             context.ReportDiagnostic(
                 Diagnostic.Create(
                     Rule,
                     invocation.GetLocation()));
+        }
+
+        private static bool LooksLikeInvariantQuantity(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return false;
+            }
+
+            string text = input.Trim();
+            for (int splitIndex = text.Length - 1; splitIndex > 0; splitIndex--)
+            {
+                string numberPart = text.Substring(0, splitIndex).TrimEnd();
+                string unitPart = text.Substring(splitIndex).Trim();
+
+                if (unitPart.Length == 0)
+                {
+                    continue;
+                }
+
+                double ignored;
+                if (double.TryParse(
+                    numberPart,
+                    NumberStyles.Float | NumberStyles.AllowThousands,
+                    CultureInfo.InvariantCulture,
+                    out ignored))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
