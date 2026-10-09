@@ -144,21 +144,39 @@ namespace UnitConverter.SystemTextJson
                     typeof(TUnit).FullName + ".");
             }
 
-            TUnit unit;
-            UnitConverterUnitResolution resolution =
-                descriptor.ResolveUnit(unitText, out unit);
+            TUnit unit = default(TUnit);
+            bool resolvedStableName = false;
 
-            if (resolution == UnitConverterUnitResolution.Ambiguous)
+            foreach (UnitConverterUnitDescriptor candidate in descriptor.Units)
             {
-                throw new JsonException(
-                    "The unit '" + unitText + "' is ambiguous.");
+                if (string.Equals(
+                    candidate.Name,
+                    unitText,
+                    StringComparison.Ordinal))
+                {
+                    unit = (TUnit)candidate.Unit;
+                    resolvedStableName = true;
+                    break;
+                }
             }
 
-            if (resolution != UnitConverterUnitResolution.Resolved)
+            if (!resolvedStableName)
             {
-                throw new JsonException(
-                    "The unit '" + unitText + "' is not recognized for " +
-                    descriptor.Name + ".");
+                UnitConverterUnitResolution resolution =
+                    descriptor.ResolveUnit(unitText, out unit);
+
+                if (resolution == UnitConverterUnitResolution.Ambiguous)
+                {
+                    throw new JsonException(
+                        "The unit '" + unitText + "' is ambiguous.");
+                }
+
+                if (resolution != UnitConverterUnitResolution.Resolved)
+                {
+                    throw new JsonException(
+                        "The unit '" + unitText + "' is not recognized for " +
+                        descriptor.Name + ".");
+                }
             }
 
             return new UnitValue<TUnit>(value, unit);
