@@ -259,9 +259,9 @@ namespace UnitConverter
             IFormatProvider formatProvider)
         {
             bool hasBuiltIn = false;
-            foreach (UnitConverterUnitCandidate candidate in primary)
+            for (int index = 0; index < primary.Count; index++)
             {
-                if (!candidate.IsCustom)
+                if (!primary[index].IsCustom)
                 {
                     hasBuiltIn = true;
                     break;
@@ -295,14 +295,14 @@ namespace UnitConverter
                 new List<UnitConverterUnitCandidate>(
                     primary.Count + localized.Count);
 
-            foreach (UnitConverterUnitCandidate candidate in primary)
+            for (int index = 0; index < primary.Count; index++)
             {
-                combined.Add(candidate);
+                combined.Add(primary[index]);
             }
 
-            foreach (UnitConverterUnitCandidate candidate in localized)
+            for (int index = 0; index < localized.Count; index++)
             {
-                combined.Add(candidate);
+                combined.Add(localized[index]);
             }
 
             IReadOnlyList<UnitConverterUnitCandidate> result =
