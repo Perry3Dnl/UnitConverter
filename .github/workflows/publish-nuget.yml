@@ -26,9 +26,13 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "10.0.x"
-      - name: Require explicit publish confirmation
+      - name: Require main branch and explicit publish confirmation
         shell: bash
         run: |
+          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
+            echo "Publication is only allowed from main."
+            exit 1
+          fi
           if [ "${{ inputs.confirm }}" != "publish" ]; then
             echo "Publication cancelled: confirmation must be exactly publish."
             exit 1
@@ -52,6 +56,20 @@ jobs:
         run: dotnet build UnitConverter.sln --configuration Release --no-restore
       - name: Test
         run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
+      - name: Verify analyzer diagnostic
+        shell: bash
+        run: |
+          mkdir -p artifacts/analyzers
+          dotnet build tests/UnitConverter.AnalyzerSmoke/UnitConverter.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
+          test "$(grep -Eo 'Program\.cs\([0-9]+,[0-9]+\): warning UC0002' artifacts/analyzers/build.log | sort -u | wc -l)" -eq 2
+      - name: Publish NativeAOT smoke consumer
+        run: dotnet publish samples/UnitConverter.NativeAotSmoke/UnitConverter.NativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/nativeaot
+      - name: Run NativeAOT smoke consumer
+        run: ./artifacts/nativeaot/UnitConverter.NativeAotSmoke
+      - name: Publish JSON NativeAOT smoke consumer
+        run: dotnet publish samples/UnitConverter.JsonNativeAotSmoke/UnitConverter.JsonNativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/json-nativeaot
+      - name: Run JSON NativeAOT smoke consumer
+        run: ./artifacts/json-nativeaot/UnitConverter.JsonNativeAotSmoke
       - name: Pack release packages
         run: |
           mkdir -p artifacts/packages
