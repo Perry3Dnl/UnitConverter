@@ -27,6 +27,10 @@
 - Harden generic exact conversion and `UnitValue<TUnit>` invalid-unit behavior so Try/throw contracts remain predictable for unsupported types and enum values.
 - Make System.Text.Json property-type validation explicit, canonicalize equivalent composite-expression cache keys without changing caller-visible expression text, and extend UC0002 guidance to matching `TryConvert` calls.
 - Narrow arbitrary-scale `TryParse` exception handling so unexpected runtime/programming failures are not silently reported as invalid numeric input.
+- Ship XML documentation files for the core and System.Text.Json packages so NuGet consumers receive IntelliSense documentation alongside the assemblies.
+- Tighten the public result surface by keeping result construction helpers internal while preserving public read-only result contracts.
+- Add symmetric catalog lookup APIs for stable family names, unit-enum types, and enum-based base-unit lookup.
+- Harden `UnitConverterParser.TryConvert` so expected parse/conversion failures return a failure result without swallowing unexpected runtime errors.
 - Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
 
 ## 2.0.0-preview.1 — standalone .NET package
