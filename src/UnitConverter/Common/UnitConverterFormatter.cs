@@ -76,7 +76,10 @@ namespace UnitConverter
                     unitText = descriptor.Symbol;
                     break;
                 case UnitConverterUnitFormat.DisplayName:
-                    unitText = descriptor.DisplayName;
+                    unitText = UnitConverterLocalization.GetDisplayName(
+                        unit,
+                        formatProvider ?? CultureInfo.InvariantCulture,
+                        descriptor.DisplayName);
                     break;
                 case UnitConverterUnitFormat.EnumName:
                     unitText = descriptor.Name;
