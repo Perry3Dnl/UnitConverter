@@ -45,10 +45,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Mass<T> other && Equals(other);
         public override int GetHashCode() => _kilograms.GetHashCode();
         public int CompareTo(Mass<T> other) => _kilograms.CompareTo(other._kilograms);
-        public override string ToString() => _kilograms.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _kilograms.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_kilograms, "kg", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_kilograms, "kg", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _kilograms.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_kilograms, "kg".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct Acceleration<T> :
@@ -90,10 +90,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Acceleration<T> other && Equals(other);
         public override int GetHashCode() => _metresPerSecondSquared.GetHashCode();
         public int CompareTo(Acceleration<T> other) => _metresPerSecondSquared.CompareTo(other._metresPerSecondSquared);
-        public override string ToString() => _metresPerSecondSquared.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _metresPerSecondSquared.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_metresPerSecondSquared, "m/s²", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_metresPerSecondSquared, "m/s²", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _metresPerSecondSquared.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_metresPerSecondSquared, "m/s²".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct Force<T> :
@@ -143,10 +143,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Force<T> other && Equals(other);
         public override int GetHashCode() => _newtons.GetHashCode();
         public int CompareTo(Force<T> other) => _newtons.CompareTo(other._newtons);
-        public override string ToString() => _newtons.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _newtons.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_newtons, "N", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_newtons, "N", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _newtons.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_newtons, "N".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct Area<T> :
@@ -190,10 +190,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Area<T> other && Equals(other);
         public override int GetHashCode() => _squareMetres.GetHashCode();
         public int CompareTo(Area<T> other) => _squareMetres.CompareTo(other._squareMetres);
-        public override string ToString() => _squareMetres.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _squareMetres.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_squareMetres, "m²", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_squareMetres, "m²", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _squareMetres.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_squareMetres, "m²".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct Volume<T> :
@@ -237,10 +237,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Volume<T> other && Equals(other);
         public override int GetHashCode() => _cubicMetres.GetHashCode();
         public int CompareTo(Volume<T> other) => _cubicMetres.CompareTo(other._cubicMetres);
-        public override string ToString() => _cubicMetres.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _cubicMetres.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_cubicMetres, "m³", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_cubicMetres, "m³", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _cubicMetres.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_cubicMetres, "m³".AsSpan(), destination, out charsWritten, format, provider);
     }
 }
 #endif
