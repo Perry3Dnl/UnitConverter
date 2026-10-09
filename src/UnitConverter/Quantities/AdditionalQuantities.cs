@@ -43,10 +43,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Density<T> other && Equals(other);
         public override int GetHashCode() => _kilogramsPerCubicMetre.GetHashCode();
         public int CompareTo(Density<T> other) => _kilogramsPerCubicMetre.CompareTo(other._kilogramsPerCubicMetre);
-        public override string ToString() => _kilogramsPerCubicMetre.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _kilogramsPerCubicMetre.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_kilogramsPerCubicMetre, "kg/m³", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_kilogramsPerCubicMetre, "kg/m³", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _kilogramsPerCubicMetre.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_kilogramsPerCubicMetre, "kg/m³".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct Frequency<T> :
@@ -88,10 +88,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Frequency<T> other && Equals(other);
         public override int GetHashCode() => _hertz.GetHashCode();
         public int CompareTo(Frequency<T> other) => _hertz.CompareTo(other._hertz);
-        public override string ToString() => _hertz.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _hertz.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_hertz, "Hz", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_hertz, "Hz", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _hertz.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_hertz, "Hz".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct ElectricCurrent<T> :
@@ -127,10 +127,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is ElectricCurrent<T> other && Equals(other);
         public override int GetHashCode() => _amperes.GetHashCode();
         public int CompareTo(ElectricCurrent<T> other) => _amperes.CompareTo(other._amperes);
-        public override string ToString() => _amperes.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _amperes.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_amperes, "A", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_amperes, "A", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _amperes.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_amperes, "A".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct ElectricCharge<T> where T : IFloatingPoint<T>
