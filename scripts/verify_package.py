@@ -53,6 +53,8 @@ def read_metadata(package):
 with zipfile.ZipFile(core_package) as archive:
     names = archive.namelist()
     assert "lib/netstandard2.0/UnitConverter.dll" in names
+    assert "lib/netstandard2.0/UnitConverter.xml" in names
+    assert "lib/net8.0/UnitConverter.xml" in names
     assert "README.md" in names
     assert "LICENSE.md" in names
     assert "NOTICE" in names
@@ -85,6 +87,7 @@ with zipfile.ZipFile(core_package) as archive:
 with zipfile.ZipFile(json_package) as archive:
     names = archive.namelist()
     assert "lib/netstandard2.0/UnitConverter.SystemTextJson.dll" in names
+    assert "lib/netstandard2.0/UnitConverter.SystemTextJson.xml" in names
     assert "README.md" in names
     assert "LICENSE.md" in names
     assert "NOTICE" in names
