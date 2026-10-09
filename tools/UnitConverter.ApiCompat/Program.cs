@@ -18,6 +18,12 @@ internal static class Program
         string baselinePath = Path.Combine(root, BaselineRelativePath);
         string current = RenderSnapshot();
 
+        if (args.Length == 1 && args[0] == "--stats")
+        {
+            Console.WriteLine(RenderStats());
+            return 0;
+        }
+
         if (args.Length == 1 && args[0] == "--write")
         {
             Directory.CreateDirectory(Path.GetDirectoryName(baselinePath));
@@ -46,6 +52,60 @@ internal static class Program
         foreach (string line in currentLines.Except(expectedLines).OrderBy(x => x, StringComparer.Ordinal)) Console.Error.WriteLine("+ " + line);
         Console.Error.WriteLine("If intentional, regenerate with: dotnet run --project tools/UnitConverter.ApiCompat -- --write");
         return 1;
+    }
+
+    private static string RenderStats()
+    {
+        var families = UnitConverter.Catalog.UnitConverterCatalog.GetFamilies();
+        int unitCount = 0;
+        long directedPairs = 0;
+        int acceptedAliasCount = 0;
+
+        foreach (UnitConverter.Catalog.UnitConverterFamilyDescriptor family in families)
+        {
+            int count = family.Units.Count;
+            unitCount += count;
+            directedPairs += (long)count * (count - 1);
+
+            foreach (UnitConverter.Catalog.UnitConverterUnitDescriptor unit in family.Units)
+            {
+                acceptedAliasCount += unit.Aliases.Length;
+            }
+        }
+
+        Assembly core = typeof(UnitConverterParser).Assembly;
+        Type[] exportedTypes = core.GetExportedTypes();
+
+        int publicMethods = 0;
+        int publicConstructors = 0;
+        int publicProperties = 0;
+
+        BindingFlags flags =
+            BindingFlags.Public |
+            BindingFlags.Instance |
+            BindingFlags.Static |
+            BindingFlags.DeclaredOnly;
+
+        foreach (Type type in exportedTypes)
+        {
+            publicMethods += type.GetMethods(flags).Count(method => !method.IsSpecialName);
+            publicConstructors += type.GetConstructors(flags).Length;
+            publicProperties += type.GetProperties(flags).Length;
+        }
+
+        var lines = new[]
+        {
+            "families=" + families.Length,
+            "units=" + unitCount,
+            "accepted_aliases=" + acceptedAliasCount,
+            "directed_non_identity_pairs=" + directedPairs,
+            "exported_types=" + exportedTypes.Length,
+            "public_methods=" + publicMethods,
+            "public_constructors=" + publicConstructors,
+            "public_properties=" + publicProperties,
+        };
+
+        return string.Join(Environment.NewLine, lines);
     }
 
     private static string RenderSnapshot()
