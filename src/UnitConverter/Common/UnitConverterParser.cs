@@ -153,14 +153,10 @@ namespace UnitConverter
         public static UnitConverterConversionResult TryConvert<TUnit>(string input, TUnit to)
             where TUnit : struct
         {
-            try
-            {
-                return UnitConverterConversionResult.Ok(Convert(input, to));
-            }
-            catch (Exception exception)
-            {
-                return UnitConverterConversionResult.Fail(exception.Message);
-            }
+            return TryConvert(
+                input,
+                to,
+                CultureInfo.InvariantCulture);
         }
 
         public static UnitConverterConversionResult TryConvert<TUnit>(
@@ -171,9 +167,30 @@ namespace UnitConverter
         {
             try
             {
-                return UnitConverterConversionResult.Ok(Convert(input, to, formatProvider));
+                return UnitConverterConversionResult.Ok(
+                    Convert(input, to, formatProvider));
             }
-            catch (Exception exception)
+            catch (ArgumentException exception)
+            {
+                return UnitConverterConversionResult.Fail(exception.Message);
+            }
+            catch (FormatException exception)
+            {
+                return UnitConverterConversionResult.Fail(exception.Message);
+            }
+            catch (InvalidOperationException exception)
+            {
+                return UnitConverterConversionResult.Fail(exception.Message);
+            }
+            catch (NotSupportedException exception)
+            {
+                return UnitConverterConversionResult.Fail(exception.Message);
+            }
+            catch (OverflowException exception)
+            {
+                return UnitConverterConversionResult.Fail(exception.Message);
+            }
+            catch (DivideByZeroException exception)
             {
                 return UnitConverterConversionResult.Fail(exception.Message);
             }
