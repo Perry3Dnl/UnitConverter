@@ -45,10 +45,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Energy<T> other && Equals(other);
         public override int GetHashCode() => _joules.GetHashCode();
         public int CompareTo(Energy<T> other) => _joules.CompareTo(other._joules);
-        public override string ToString() => _joules.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _joules.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_joules, "J", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_joules, "J", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _joules.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_joules, "J".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct Power<T> :
@@ -86,10 +86,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Power<T> other && Equals(other);
         public override int GetHashCode() => _watts.GetHashCode();
         public int CompareTo(Power<T> other) => _watts.CompareTo(other._watts);
-        public override string ToString() => _watts.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _watts.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_watts, "W", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_watts, "W", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _watts.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_watts, "W".AsSpan(), destination, out charsWritten, format, provider);
     }
 
     public readonly partial struct Pressure<T> :
@@ -133,10 +133,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Pressure<T> other && Equals(other);
         public override int GetHashCode() => _pascals.GetHashCode();
         public int CompareTo(Pressure<T> other) => _pascals.CompareTo(other._pascals);
-        public override string ToString() => _pascals.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _pascals.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_pascals, "Pa", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_pascals, "Pa", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _pascals.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_pascals, "Pa".AsSpan(), destination, out charsWritten, format, provider);
     }
 }
 #endif
