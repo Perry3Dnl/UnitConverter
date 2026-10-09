@@ -168,6 +168,18 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void ParsedValue_ToString_UsesCanonicalSymbolFormatting()
+        {
+            UnitConverterParsedValue<UnitConverterLengthUnit> parsed =
+                UnitConverterParser.Parse<UnitConverterLengthUnit>("1.5 kilometer");
+
+            Assert.That(parsed.ToString(), Is.EqualTo("1.5 km"));
+            Assert.That(
+                parsed.ToString("0.0", CultureInfo.GetCultureInfo("nl-NL")),
+                Is.EqualTo("1,5 km"));
+        }
+
+        [Test]
         public void TryConvert_InvalidInput_ReturnsFailure()
         {
             UnitConverterConversionResult result = UnitConverterParser.TryConvert(
