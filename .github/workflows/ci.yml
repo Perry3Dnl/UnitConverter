@@ -39,6 +39,8 @@ jobs:
         run: dotnet restore UnitConverter.sln
       - name: Build
         run: dotnet build UnitConverter.sln --configuration Release --no-restore
+      - name: Build public API snapshot tool
+        run: dotnet build tools/UnitConverter.ApiSurface/UnitConverter.ApiSurface.csproj --configuration Release
       - name: Verify public API compatibility baseline
         run: python scripts/generate_public_api.py --check --no-build
       - name: Test
