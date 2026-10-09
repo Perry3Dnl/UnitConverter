@@ -31,6 +31,14 @@
 - Tighten the public result surface by keeping result construction helpers internal while preserving public read-only result contracts.
 - Add symmetric catalog lookup APIs for stable family names, unit-enum types, and enum-based base-unit lookup.
 - Harden `UnitConverterParser.TryConvert` so expected parse/conversion failures return a failure result without swallowing unexpected runtime errors.
+- Add a checked-in public API fingerprint baseline for the core and System.Text.Json assemblies; CI now rejects unreviewed public signature changes.
+- Add catalog-wide mathematical conformance tests covering representative base round-trips and exact-decimal versus double-route parity where representable.
+- Add deterministic parser abuse/fuzz coverage and explicit limits for general parser input length, composite expression length, nesting depth, and exponent magnitude.
+- Make Dutch localization completeness measurable and CI-enforced; Angle, Area, Energy, Force, Frequency, Power, Pressure, Speed, Temperature, and Time now have explicit entries for every registered unit in those families, while Length, Mass, and Volume remain marked partial.
+- Expand package consumption verification to a netstandard2.0 compile consumer plus net8.0 and net10.0 executable consumers installed from the produced NuGet packages.
+- Add BenchmarkDotNet coverage for localized parsing/dynamic conversion and UnitValue conversion.
+- Lead the README and getting-started guide with UnitConverter's multiple API safety levels and sharpen NuGet search metadata.
+- Add a manual main-only NuGet Trusted Publishing workflow using GitHub OIDC, a protected release environment, full tests/package verification/analyzer checks, and NativeAOT gates before publishing.
 - Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
 
 ## 2.0.0-preview.1 — standalone .NET package
