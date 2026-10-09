@@ -30,3 +30,6 @@ UnitConverter is a standalone .NET Standard 2.0 library. Its existing family rou
 - [Packaging](Developer/Packaging.md)
 - [Culture and localization](Localization.md)
 - [Analyzer guidance](Analyzers.md)
+
+- [Localization coverage](LocalizationCoverage.md)
+- [Public API compatibility](Developer/ApiCompatibility.md)

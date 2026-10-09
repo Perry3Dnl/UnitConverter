@@ -152,35 +152,38 @@ with zipfile.ZipFile(analyzer_package) as archive:
     assert license_element.attrib.get("type") == "file"
     assert license_element.text == "LICENSE.md"
 
-with tempfile.TemporaryDirectory(prefix="unitconverter-package-") as temporary:
-    consumer = Path(temporary)
-    environment = dict(os.environ)
-    environment["NUGET_PACKAGES"] = str(consumer / "packages")
-    (consumer / "global.json").write_text((root / "global.json").read_text())
-    (consumer / "NuGet.Config").write_text(
-        '<configuration><packageSources><clear /></packageSources></configuration>')
-
+def write_consumer_project(directory, target_framework, output_type, include_json, include_analyzer):
     project = ET.Element("Project", Sdk="Microsoft.NET.Sdk")
     properties = ET.SubElement(project, "PropertyGroup")
-    ET.SubElement(properties, "OutputType").text = "Exe"
-    ET.SubElement(properties, "TargetFramework").text = "net10.0"
+    if output_type:
+        ET.SubElement(properties, "OutputType").text = output_type
+    ET.SubElement(properties, "TargetFramework").text = target_framework
     ET.SubElement(properties, "ImplicitUsings").text = "disable"
     ET.SubElement(properties, "Nullable").text = "disable"
+
     items = ET.SubElement(project, "ItemGroup")
     ET.SubElement(items, "PackageReference", Include=core_id, Version=core_version)
-    ET.SubElement(items, "PackageReference", Include=json_id, Version=json_version)
-    analyzer_reference = ET.SubElement(
-        items,
-        "PackageReference",
-        Include=analyzer_id,
-        Version=analyzer_version)
-    analyzer_reference.set("PrivateAssets", "all")
+
+    if include_json:
+        ET.SubElement(items, "PackageReference", Include=json_id, Version=json_version)
+
+    if include_analyzer:
+        analyzer_reference = ET.SubElement(
+            items,
+            "PackageReference",
+            Include=analyzer_id,
+            Version=analyzer_version)
+        analyzer_reference.set("PrivateAssets", "all")
+
     ET.ElementTree(project).write(
-        consumer / "Consumer.csproj",
+        directory / "Consumer.csproj",
         encoding="utf-8",
         xml_declaration=True)
 
-    program = r'''using System;
+
+def write_consumer_program(directory, include_json):
+    if include_json:
+        source = r'''using System;
 using System.Text.Json;
 using UnitConverter;
 using UnitConverter.Length;
@@ -215,24 +218,109 @@ public static class Program
     }
 }
 '''
-    (consumer / "Program.cs").write_text(program)
+    else:
+        source = r'''using UnitConverter.Length;
+
+public static class ConsumerSmoke
+{
+    public static double Convert()
+    {
+        return UnitConverterLength.Convert(
+            1.8,
+            UnitConverterLengthUnit.Kilometer,
+            UnitConverterLengthUnit.Meter);
+    }
+}
+'''
+
+    (directory / "Program.cs").write_text(source)
+
+
+def verify_consumer(root_directory, name, target_framework, output_type, include_json, include_analyzer, run):
+    consumer = root_directory / name
+    consumer.mkdir()
+    environment = dict(os.environ)
+    environment["NUGET_PACKAGES"] = str(root_directory / ("packages-" + name))
+    (consumer / "global.json").write_text((root / "global.json").read_text())
+    (consumer / "NuGet.Config").write_text(
+        '<configuration><packageSources><clear /></packageSources></configuration>')
+
+    write_consumer_project(
+        consumer,
+        target_framework,
+        output_type,
+        include_json,
+        include_analyzer)
+    write_consumer_program(consumer, include_json)
 
     subprocess.run(
-        ["dotnet", "restore", "Consumer.csproj", "--source", str(feed)],
+        [
+            "dotnet", "restore", "Consumer.csproj",
+            "--source", str(feed),
+            "--source", "https://api.nuget.org/v3/index.json"
+        ],
         cwd=consumer,
         env=environment,
         check=True)
 
     assets = json.loads((consumer / "obj/project.assets.json").read_text())
     assert assets["libraries"][core_id + "/" + core_version]["type"] == "package"
-    assert assets["libraries"][json_id + "/" + json_version]["type"] == "package"
-    assert assets["libraries"][analyzer_id + "/" + analyzer_version]["type"] == "package"
+    if include_json:
+        assert assets["libraries"][json_id + "/" + json_version]["type"] == "package"
+    if include_analyzer:
+        assert assets["libraries"][analyzer_id + "/" + analyzer_version]["type"] == "package"
 
     subprocess.run(
-        ["dotnet", "run", "--project", "Consumer.csproj",
+        ["dotnet", "build", "Consumer.csproj",
          "--configuration", "Release", "--no-restore"],
         cwd=consumer,
         env=environment,
         check=True)
 
-print("Verified packages:", core_package.name, json_package.name, "and", analyzer_package.name)
+    if run:
+        subprocess.run(
+            ["dotnet", "run", "--project", "Consumer.csproj",
+             "--configuration", "Release", "--no-build"],
+            cwd=consumer,
+            env=environment,
+            check=True)
+
+
+with tempfile.TemporaryDirectory(prefix="unitconverter-package-") as temporary:
+    matrix_root = Path(temporary)
+
+    verify_consumer(
+        matrix_root,
+        "netstandard20",
+        "netstandard2.0",
+        None,
+        include_json=True,
+        include_analyzer=True,
+        run=False)
+
+    verify_consumer(
+        matrix_root,
+        "net8",
+        "net8.0",
+        "Exe",
+        include_json=True,
+        include_analyzer=True,
+        run=True)
+
+    verify_consumer(
+        matrix_root,
+        "net10",
+        "net10.0",
+        "Exe",
+        include_json=True,
+        include_analyzer=True,
+        run=True)
+
+print(
+    "Verified packages and consumer matrix:",
+    core_package.name,
+    json_package.name,
+    "and",
+    analyzer_package.name,
+    "(netstandard2.0 build, net8.0 run, net10.0 run)")
+

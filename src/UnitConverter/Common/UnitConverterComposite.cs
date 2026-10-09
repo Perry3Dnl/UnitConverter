@@ -125,6 +125,9 @@ namespace UnitConverter
     {
         private const int MaxCandidates = 128;
         private const int MaxCachedBuiltInExpressions = 256;
+        private const int MaxExpressionLength = 4096;
+        private const int MaxNestingDepth = 64;
+        private const int MaxAbsoluteExponent = 1024;
         private static readonly ConcurrentDictionary<string, UnitConverterUnitExpression[]> BuiltInCandidateCache =
             new ConcurrentDictionary<string, UnitConverterUnitExpression[]>(StringComparer.Ordinal);
 
@@ -188,6 +191,12 @@ namespace UnitConverter
                 return false;
             }
 
+            if (expression.Length > MaxExpressionLength)
+            {
+                errorMessage = "The unit expression exceeds the maximum supported length.";
+                return false;
+            }
+
             string normalized = Normalize(expression.Trim());
             bool cacheEligible = !UnitConverterCustomUnits.HasUnits;
             UnitConverterUnitExpression[] cached;
@@ -237,6 +246,7 @@ namespace UnitConverter
         {
             private readonly string _text;
             private int _index;
+            private int _nestingDepth;
 
             public Parser(string text)
             {
@@ -345,7 +355,15 @@ namespace UnitConverter
                     _text[_index] >= '0' &&
                     _text[_index] <= '9')
                 {
-                    exponent = (exponent * 10) + (_text[_index] - '0');
+                    int digit = _text[_index] - '0';
+                    if (exponent > (MaxAbsoluteExponent - digit) / 10)
+                    {
+                        return Fail(
+                            UnitConverterError.InvalidExpression,
+                            "The unit expression exponent exceeds the supported limit.");
+                    }
+
+                    exponent = (exponent * 10) + digit;
                     _index++;
                 }
 
@@ -383,8 +401,19 @@ namespace UnitConverter
 
                 if (_text[_index] == '(')
                 {
+                    if (_nestingDepth >= MaxNestingDepth)
+                    {
+                        return Fail(
+                            UnitConverterError.InvalidExpression,
+                            "The unit expression nesting depth exceeds the supported limit.");
+                    }
+
+                    _nestingDepth++;
                     _index++;
-                    if (!TryParseProduct(out expressions))
+                    bool parsed = TryParseProduct(out expressions);
+                    _nestingDepth--;
+
+                    if (!parsed)
                     {
                         return false;
                     }

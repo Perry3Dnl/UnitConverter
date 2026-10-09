@@ -1,6 +1,6 @@
 # Getting started
 
-The library targets .NET Standard 2.0. Building the repository and running its tests or console sample requires the .NET 10 SDK selected by `global.json`.
+UnitConverter lets you choose between direct numeric conversion, fluent numeric extensions, value-plus-unit wrappers, strongly typed quantities, and runtime/dynamic conversion. They all use the same catalog and conversion definitions; choose the surface that best fits the code you are writing.
 
 ## Build and install
 
@@ -21,18 +21,35 @@ dotnet add package UnitConverter --version 2.0.0-preview.2 --source /absolute/pa
 
 Alternatively, add a project reference to `src/UnitConverter/UnitConverter.csproj` during development.
 
-## Convert a value
+## Choose an API style
 
 ```csharp
+using UnitConverter;
 using UnitConverter.Length;
+using UnitConverter.Quantities;
 
+// Direct numeric route.
 double millimeters = UnitConverterLength.Convert(
     12.5,
     UnitConverterLengthUnit.Centimeter,
     UnitConverterLengthUnit.Millimeter);
+
+// Fluent numeric route.
+double metres = 4d.Convert(
+    UnitConverterLengthUnit.Kilometer,
+    UnitConverterLengthUnit.Meter);
+
+// Keep the unit with the value.
+var distance = new UnitValue<UnitConverterLengthUnit>(
+    4d,
+    UnitConverterLengthUnit.Kilometer)
+    .To(UnitConverterLengthUnit.Meter);
+
+// Compile-time dimensional safety.
+Length<decimal> typed = Length<decimal>.FromKilometres(4m);
 ```
 
-Each family has its own unit enum and converts through a family base unit. Length converts through metres; temperature converts through kelvin. Choose source and destination units from the same family.
+Each family has its own unit enum and a stable catalog base unit. The numeric APIs remain first-class; typed quantities are an additional safety level, not a replacement.
 
 ## Use extensions or direct methods
 

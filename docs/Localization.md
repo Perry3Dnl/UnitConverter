@@ -73,3 +73,10 @@ Registration does not modify the generated unit catalog or conversion factors. I
 Built-in localization data is definition-driven. `definitions/unit-localization.json` is validated against the real family/unit enums and `scripts/generate_localization.py` emits checked-in dependency-free C#. CI rejects stale or invalid generated output. The current Dutch built-in vocabulary contains 85 localized unit entries across 13 commonly used families, with parent-culture fallback from `nl-NL` to `nl`.
 
 `UnitConverterLocalization.GetSupportedCultures<TUnit>()` exposes built-in or runtime-registered cultures for a family, while `TryGetDisplayName` allows callers to query localized display metadata without formatting a value. Additional locales can be expanded incrementally without changing converter implementations or adding runtime package dependencies.
+## Localization coverage
+
+Built-in locale data is tracked explicitly rather than described as all-or-nothing. `docs/LocalizationCoverage.md` is generated from the locale definitions and catalog enums. A family is marked **complete** only when every registered unit in that family has an explicit locale entry; otherwise it remains **partial**.
+
+The current Dutch locale has complete coverage for Angle, Area, Energy, Force, Frequency, Power, Pressure, Speed, Temperature, and Time. Length, Mass, and Volume remain intentionally marked partial until every unit in those larger catalogs has been reviewed.
+
+CI validates both the generated runtime registrations and the coverage report, so adding a unit to a family marked complete requires adding its locale entry in the same change.
