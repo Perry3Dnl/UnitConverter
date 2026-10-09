@@ -87,10 +87,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Length<T> other && Equals(other);
         public override int GetHashCode() => _metres.GetHashCode();
         public int CompareTo(Length<T> other) => _metres.CompareTo(other._metres);
-        public override string ToString() => _metres.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _metres.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_metres, "m", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_metres, "m", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _metres.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_metres, "m".AsSpan(), destination, out charsWritten, format, provider);
 
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider, ReadOnlySpan<char> unit)
         {
@@ -192,10 +192,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Time<T> other && Equals(other);
         public override int GetHashCode() => _seconds.GetHashCode();
         public int CompareTo(Time<T> other) => _seconds.CompareTo(other._seconds);
-        public override string ToString() => _seconds.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _seconds.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_seconds, "s", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_seconds, "s", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _seconds.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_seconds, "s".AsSpan(), destination, out charsWritten, format, provider);
 
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider, ReadOnlySpan<char> unit)
         {
@@ -298,10 +298,10 @@ namespace UnitConverter.Quantities
         public override bool Equals(object obj) => obj is Speed<T> other && Equals(other);
         public override int GetHashCode() => _metresPerSecond.GetHashCode();
         public int CompareTo(Speed<T> other) => _metresPerSecond.CompareTo(other._metresPerSecond);
-        public override string ToString() => _metresPerSecond.ToString();
-        public string ToString(string format, IFormatProvider formatProvider) => _metresPerSecond.ToString(format, formatProvider);
+        public override string ToString() => QuantityText.Format(_metresPerSecond, "m/s", null, null);
+        public string ToString(string format, IFormatProvider formatProvider) => QuantityText.Format(_metresPerSecond, "m/s", format, formatProvider);
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider)
-            => _metresPerSecond.TryFormat(destination, out charsWritten, format, provider);
+            => QuantityText.TryFormat(_metresPerSecond, "m/s".AsSpan(), destination, out charsWritten, format, provider);
 
         public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider provider, ReadOnlySpan<char> unit)
         {
