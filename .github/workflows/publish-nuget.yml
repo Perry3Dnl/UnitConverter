@@ -43,7 +43,9 @@ jobs:
           python scripts/generate_length_quantity.py --check
           python scripts/verify_decimal_precision.py
       - name: Restore
-        run: dotnet restore UnitConverter.sln
+        run: |
+          dotnet restore UnitConverter.sln
+          dotnet restore tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj
       - name: Verify public API compatibility baseline
         run: dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release --no-restore -- --check
       - name: Build
