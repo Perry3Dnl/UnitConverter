@@ -1,5 +1,6 @@
 namespace UnitConverter.Tests
 {
+    using System.Globalization;
     using NUnit.Framework;
     using UnitConverter.Catalog;
 
@@ -141,6 +142,47 @@ namespace UnitConverter.Tests
             Assert.That(result.CustomFromUnit, Is.SameAs(perryLength));
             Assert.That(result.FromUnit, Is.Null);
             Assert.That(result.ToUnit, Is.Not.Null);
+        }
+
+        [Test]
+        public void DynamicConversion_MixesLocalizedBuiltInAndCustomUnits()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("nl-NL");
+            UnitConverterCustomUnit perryLength =
+                UnitConverterCustomUnits.RegisterLinear(
+                    UnitConverterFamily.Length,
+                    "PerryLength",
+                    "perryLength",
+                    "Meter",
+                    2d);
+
+            UnitConverterDynamicResult fromLocalized =
+                UnitConverterDynamic.TryConvert(
+                    1d,
+                    UnitConverterFamily.Length,
+                    "voet",
+                    "perryLength",
+                    culture);
+
+            Assert.That(fromLocalized.Success, Is.True);
+            Assert.That(
+                fromLocalized.Value,
+                Is.EqualTo(0.1524d).Within(1e-12d));
+
+            UnitConverterDynamicResult toLocalized =
+                UnitConverterDynamic.TryConvert(
+                    1d,
+                    UnitConverterFamily.Length,
+                    "perryLength",
+                    "voet",
+                    culture);
+
+            Assert.That(toLocalized.Success, Is.True);
+            Assert.That(
+                toLocalized.Value,
+                Is.EqualTo(2d / 0.3048d).Within(1e-12d));
+            Assert.That(toLocalized.CustomFromUnit, Is.SameAs(perryLength));
+            Assert.That(toLocalized.ToUnit.Name, Is.EqualTo("Foot"));
         }
 
         [Test]
