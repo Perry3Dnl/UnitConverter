@@ -21,6 +21,46 @@ dotnet add package UnitConverter --version 2.0.0-preview.2 --source /absolute/pa
 
 Alternatively, add a project reference to `src/UnitConverter/UnitConverter.csproj` during development.
 
+## Pick the level of unit safety you need
+
+The simplest API keeps values as ordinary numbers:
+
+```csharp
+using UnitConverter.Length;
+
+double metres = UnitConverterLength.Convert(
+    4d,
+    UnitConverterLengthUnit.Kilometer,
+    UnitConverterLengthUnit.Meter);
+
+double centimetres = 4d
+    .Convert(UnitConverterLengthUnit.Kilometer, UnitConverterLengthUnit.Meter)
+    .Convert(UnitConverterLengthUnit.Meter, UnitConverterLengthUnit.Centimeter);
+```
+
+When retaining unit state is useful, use `UnitValue<TUnit>`:
+
+```csharp
+var distance = new UnitValue<UnitConverterLengthUnit>(
+    4d,
+    UnitConverterLengthUnit.Kilometer);
+
+double metres = distance
+    .To(UnitConverterLengthUnit.Meter)
+    .Value;
+```
+
+On .NET 8+, use named quantities when compile-time dimensional safety matters:
+
+```csharp
+using UnitConverter.Quantities;
+
+Length<decimal> distance = Length<decimal>.FromKilometres(4m);
+Speed<decimal> speed = distance / Time<decimal>.FromSeconds(20m);
+```
+
+For runtime unit text, use `UnitConverterDynamic`; for decimal-native conversion use `UnitConverterExact`. These APIs are complementary rather than replacements for one another.
+
 ## Convert a value
 
 ```csharp
