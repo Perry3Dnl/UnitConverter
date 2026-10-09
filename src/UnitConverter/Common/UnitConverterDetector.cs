@@ -157,17 +157,33 @@ namespace UnitConverter
                         : "The numeric value could not be parsed.");
             }
 
-            return DetectUnit(value, unitText);
+            return DetectUnit(
+                value,
+                unitText,
+                formatProvider ?? CultureInfo.InvariantCulture);
         }
 
         public static UnitConverterDetectionResult DetectUnit(string unitText)
         {
-            return DetectUnit(0d, unitText);
+            return DetectUnit(
+                unitText,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterDetectionResult DetectUnit(
+            string unitText,
+            IFormatProvider formatProvider)
+        {
+            return DetectUnit(
+                0d,
+                unitText,
+                formatProvider ?? CultureInfo.InvariantCulture);
         }
 
         private static UnitConverterDetectionResult DetectUnit(
             double value,
-            string unitText)
+            string unitText,
+            IFormatProvider formatProvider)
         {
             if (string.IsNullOrWhiteSpace(unitText))
             {
@@ -222,9 +238,108 @@ namespace UnitConverter
                     ignoreCase);
             }
 
+            bool localizedAmbiguous;
+            IReadOnlyList<UnitConverterUnitCandidate> localized =
+                GetLocalizedCandidates(
+                    candidateText,
+                    formatProvider,
+                    out localizedAmbiguous);
+
+            if (localizedAmbiguous || localized.Count > 1)
+            {
+                return UnitConverterDetectionResult.Ambiguous(
+                    value,
+                    candidateText,
+                    localized);
+            }
+
+            if (localized.Count == 1)
+            {
+                return UnitConverterDetectionResult.Resolved(
+                    value,
+                    candidateText,
+                    localized);
+            }
+
             return UnitConverterDetectionResult.Fail(
                 UnitConverterError.UnknownUnit,
                 "The unit '" + candidateText + "' is not recognized.");
+        }
+
+        private static IReadOnlyList<UnitConverterUnitCandidate> GetLocalizedCandidates(
+            string text,
+            IFormatProvider formatProvider,
+            out bool ambiguous)
+        {
+            ambiguous = false;
+            var matches = new List<UnitConverterUnitCandidate>();
+
+            foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
+            {
+                object resolved;
+                UnitConverterUnitResolution resolution =
+                    UnitConverterLocalization.ResolveUnit(
+                        family.UnitType,
+                        text,
+                        formatProvider,
+                        out resolved);
+
+                if (resolution == UnitConverterUnitResolution.Ambiguous)
+                {
+                    ambiguous = true;
+                    continue;
+                }
+
+                if (resolution != UnitConverterUnitResolution.Resolved)
+                {
+                    continue;
+                }
+
+                UnitConverterUnitDescriptor descriptor =
+                    FindUnitDescriptor(family, resolved);
+                if (descriptor == null)
+                {
+                    continue;
+                }
+
+                bool alreadyAdded = false;
+                foreach (UnitConverterUnitCandidate existing in matches)
+                {
+                    if (existing.Family.Family == family.Family &&
+                        object.Equals(existing.Unit.Unit, descriptor.Unit))
+                    {
+                        alreadyAdded = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyAdded)
+                {
+                    matches.Add(
+                        new UnitConverterUnitCandidate(
+                            family,
+                            descriptor));
+                }
+            }
+
+            return matches.Count == 0
+                ? EmptyCandidates
+                : matches.AsReadOnly();
+        }
+
+        private static UnitConverterUnitDescriptor FindUnitDescriptor(
+            UnitConverterFamilyDescriptor family,
+            object unit)
+        {
+            foreach (UnitConverterUnitDescriptor descriptor in family.Units)
+            {
+                if (object.Equals(descriptor.Unit, unit))
+                {
+                    return descriptor;
+                }
+            }
+
+            return null;
         }
 
         private static IReadOnlyList<UnitConverterUnitCandidate> GetCandidates(
