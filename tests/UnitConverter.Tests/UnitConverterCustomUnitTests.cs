@@ -205,6 +205,42 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void GlobalDetection_LocalizedBuiltInAndCustomAliasCollisionIsAmbiguous()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("nl-NL");
+
+            UnitConverterCustomUnits.RegisterLinear(
+                UnitConverterFamily.Time,
+                "CustomMileWord",
+                "mijl",
+                "Second",
+                2d);
+
+            UnitConverterDetectionResult result =
+                UnitConverterDetector.Detect(
+                    "2 mijl",
+                    culture);
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(
+                result.Status,
+                Is.EqualTo(UnitConverterDetectionStatus.Ambiguous));
+            Assert.That(
+                result.Candidates,
+                Has.Some.Matches<UnitConverterUnitCandidate>(
+                    candidate =>
+                        candidate.IsCustom &&
+                        candidate.CustomUnit.Name == "CustomMileWord"));
+            Assert.That(
+                result.Candidates,
+                Has.Some.Matches<UnitConverterUnitCandidate>(
+                    candidate =>
+                        !candidate.IsCustom &&
+                        candidate.Family.Family == UnitConverterFamily.Length &&
+                        candidate.Unit.Name == "Mile"));
+        }
+
+        [Test]
         public void GlobalDetection_CustomUnitCanMakeBuiltInAliasAmbiguousAcrossFamilies()
         {
             UnitConverterCustomUnits.RegisterLinear(
