@@ -1,7 +1,10 @@
 namespace UnitConverter.Tests
 {
     using NUnit.Framework;
+    using System;
+    using System.Reflection;
     using System.Text.Json;
+    using UnitConverter.Catalog;
     using UnitConverter.Length;
     using UnitConverter.SystemTextJson;
     using UnitConverter.Temperature;
@@ -73,6 +76,81 @@ namespace UnitConverter.Tests
                 JsonSerializer.Deserialize<UnitValue<UnitConverterLengthUnit>>(
                     json,
                     CreateOptions()));
+        }
+
+        [Test]
+        public void EveryCatalogUnit_RoundTripsWithStableEnumName()
+        {
+            JsonSerializerOptions options = CreateOptions();
+
+            foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
+            {
+                Type unitValueType = typeof(UnitValue<>).MakeGenericType(family.UnitType);
+                ConstructorInfo constructor = unitValueType.GetConstructor(
+                    new[] { typeof(double), family.UnitType });
+
+                Assert.That(constructor, Is.Not.Null, family.Name);
+
+                PropertyInfo valueProperty = unitValueType.GetProperty("Value");
+                PropertyInfo unitProperty = unitValueType.GetProperty("Unit");
+
+                foreach (UnitConverterUnitDescriptor unit in family.Units)
+                {
+                    object original = constructor.Invoke(new[] { (object)1.25d, unit.Unit });
+                    string json = JsonSerializer.Serialize(original, unitValueType, options);
+                    object restored = JsonSerializer.Deserialize(json, unitValueType, options);
+
+                    string context = family.Name + "." + unit.Name;
+                    Assert.That(restored, Is.Not.Null, context);
+                    Assert.That(
+                        (double)valueProperty.GetValue(restored),
+                        Is.EqualTo(1.25d),
+                        context);
+                    Assert.That(
+                        unitProperty.GetValue(restored),
+                        Is.EqualTo(unit.Unit),
+                        context);
+                    Assert.That(
+                        json,
+                        Does.Contain("\"unit\":\"" + unit.Name + "\""),
+                        context);
+                }
+            }
+        }
+
+        [Test]
+        public void EveryCatalogSymbol_IsAcceptedAsJsonInputWhenUnambiguous()
+        {
+            JsonSerializerOptions options = CreateOptions();
+
+            foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
+            {
+                Type unitValueType = typeof(UnitValue<>).MakeGenericType(family.UnitType);
+                PropertyInfo unitProperty = unitValueType.GetProperty("Unit");
+
+                foreach (UnitConverterUnitDescriptor unit in family.Units)
+                {
+                    object resolved;
+                    if (family.ResolveUnit(unit.Symbol, out resolved) !=
+                        UnitConverterUnitResolution.Resolved)
+                    {
+                        continue;
+                    }
+
+                    string json =
+                        "{\"value\":2.5,\"unit\":" +
+                        JsonSerializer.Serialize(unit.Symbol) +
+                        "}";
+
+                    object restored =
+                        JsonSerializer.Deserialize(json, unitValueType, options);
+
+                    Assert.That(
+                        unitProperty.GetValue(restored),
+                        Is.EqualTo(unit.Unit),
+                        family.Name + "." + unit.Name);
+                }
+            }
         }
 
         [Test]
