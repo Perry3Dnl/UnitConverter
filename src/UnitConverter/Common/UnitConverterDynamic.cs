@@ -642,15 +642,10 @@ namespace UnitConverter
             UnitConverterFamilyDescriptor family,
             object unit)
         {
-            foreach (UnitConverterUnitDescriptor descriptor in family.Units)
-            {
-                if (object.Equals(descriptor.Unit, unit))
-                {
-                    return descriptor;
-                }
-            }
-
-            return null;
+            UnitConverterUnitDescriptor descriptor;
+            return family.TryGetUnit(unit, out descriptor)
+                ? descriptor
+                : null;
         }
     }
 }
