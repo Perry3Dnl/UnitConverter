@@ -12,6 +12,50 @@ A high-performance standalone .NET unit conversion library with **150 conversion
 
 The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The packages are prepared and validated in CI but have not yet been published to nuget.org.
 
+## Choose the API style that fits the code
+
+UnitConverter does not force one quantity model. The same conversion engine is available through direct numeric, fluent numeric, value-plus-unit, strongly typed, exact-decimal, and runtime-dynamic APIs.
+
+```csharp
+using UnitConverter;
+using UnitConverter.Length;
+using UnitConverter.Quantities;
+
+// Straightforward numeric conversion.
+double metres = UnitConverterLength.Convert(
+    4d,
+    UnitConverterLengthUnit.Kilometer,
+    UnitConverterLengthUnit.Meter);
+
+// Fluent numeric conversion. The developer explicitly supplies source/target units.
+double centimetres = 4d
+    .Convert(UnitConverterLengthUnit.Kilometer, UnitConverterLengthUnit.Meter)
+    .Convert(UnitConverterLengthUnit.Meter, UnitConverterLengthUnit.Centimeter);
+
+// Keep the current unit attached to the value.
+double metresFromValue = new UnitValue<UnitConverterLengthUnit>(
+    4d,
+    UnitConverterLengthUnit.Kilometer)
+    .To(UnitConverterLengthUnit.Meter)
+    .Value;
+
+// Compile-time dimensional quantity.
+Length<decimal> typed = Length<decimal>.FromKilometres(4m);
+decimal typedMetres = typed.Metres;
+
+// Decimal-native exact/rational conversion path.
+decimal exactMetres = UnitConverterExact.Convert(
+    4m,
+    UnitConverterLengthUnit.Kilometer,
+    UnitConverterLengthUnit.Meter);
+
+// Units known only at runtime.
+double runtimeMetres = UnitConverterDynamic.Convert("4 km", "m");
+```
+
+The design goal is deliberate: use primitive conversions when primitive values are the right tool, and opt into stronger unit retention or compile-time dimensional safety only where the application benefits from it.
+
+
 ## Performance baseline
 
 UnitConverter has a dedicated BenchmarkDotNet suite covering direct/routed conversion, exact decimal arithmetic, named and universal quantities, span parsing/formatting, catalog lookup, dynamic conversion, and composite expressions.
