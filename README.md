@@ -12,6 +12,59 @@ A high-performance standalone .NET unit conversion library with **150 conversion
 
 The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The packages are prepared and validated in CI but have not yet been published to nuget.org.
 
+## Why UnitConverter
+
+UnitConverter is designed for developers who want to choose the right safety level for each part of an application instead of being forced into one quantity model. The dependency-free core supports ordinary numeric conversion, fluent numeric extensions, value-plus-unit wrappers, strongly typed quantities, runtime/dynamic conversion, exact decimal/rational paths, composite expressions, custom units, metadata, and arbitrary-scale numbers.
+
+### Choose the API style that fits
+
+```csharp
+using UnitConverter;
+using UnitConverter.Length;
+using UnitConverter.Quantities;
+
+// 1. Straightforward numeric conversion.
+double metres = UnitConverterLength.Convert(
+    4d,
+    UnitConverterLengthUnit.Kilometer,
+    UnitConverterLengthUnit.Meter);
+
+// 2. Fluent numeric conversion. The developer controls the current unit.
+double metresAgain = 4d.Convert(
+    UnitConverterLengthUnit.Kilometer,
+    UnitConverterLengthUnit.Meter);
+
+// 3. Value + unit when the unit should travel with the value.
+double metresFromValue = new UnitValue<UnitConverterLengthUnit>(
+    4d,
+    UnitConverterLengthUnit.Kilometer)
+    .To(UnitConverterLengthUnit.Meter)
+    .Value;
+
+// 4. Strongly typed quantity when compile-time dimensional safety matters.
+Length<decimal> distance = Length<decimal>.FromKilometres(4m);
+decimal typedMetres = distance.Metres;
+```
+
+For runtime text, exact decimal workflows, or composite units:
+
+```csharp
+double parsed = UnitConverterDynamic.Convert("36 km/h", "m/s");
+
+decimal exact = UnitConverterExact.Convert(
+    1m,
+    UnitConverterLengthUnit.Inch,
+    UnitConverterLengthUnit.Foot);
+
+double composite = UnitConverterComposite.Convert(
+    1d,
+    "N*m",
+    "J");
+```
+
+The core package has **no third-party runtime package dependencies**. Install only the optional JSON or analyzer companion when that integration is useful.
+
+
 ## Performance baseline
 
 UnitConverter has a dedicated BenchmarkDotNet suite covering direct/routed conversion, exact decimal arithmetic, named and universal quantities, span parsing/formatting, catalog lookup, dynamic conversion, and composite expressions.
