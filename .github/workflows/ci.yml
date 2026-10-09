@@ -37,10 +37,17 @@ jobs:
         run: dotnet build UnitConverter.sln --configuration Release --no-restore
       - name: Test
         run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitConverter.trx" --results-directory artifacts/test-results
+      - name: Verify analyzer diagnostic
+        shell: bash
+        run: |
+          mkdir -p artifacts/analyzers
+          dotnet build tests/UnitConverter.AnalyzerSmoke/UnitConverter.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
+          grep -q "warning UC0002" artifacts/analyzers/build.log
       - name: Pack
         run: |
           dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
           dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
       - name: Verify package and consume it in a clean project
         run: python scripts/verify_package.py artifacts/packages
       - name: Publish NativeAOT smoke consumer

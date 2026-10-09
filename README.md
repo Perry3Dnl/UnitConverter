@@ -10,7 +10,7 @@
 
 A high-performance standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It keeps the straightforward static/direct/numeric APIs while also providing strongly typed quantities, dimensional arithmetic, exact decimal/rational conversion, span parsing/formatting, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale number conversion.
 
-The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**, while `UnitConverter.SystemTextJson` targets **.NET Standard 2.0**. The packages are prepared and validated in CI but have not yet been published to nuget.org.
+The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The packages are prepared and validated in CI but have not yet been published to nuget.org.
 
 ## Performance baseline
 
@@ -37,6 +37,7 @@ dotnet build UnitConverter.sln --configuration Release --no-restore
 dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
 dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
 dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
 python scripts/verify_package.py artifacts/packages
 ```
 
@@ -73,6 +74,11 @@ double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
 ```
 
 The root namespace is now `UnitConverter`. Converter class names, existing enum values, conversion factors, overloads, and the base-unit conversion flow are preserved from version 1.1.3. Higher-level APIs are additive: strings can be parsed and formatted through the shared catalog, and `UnitValue<TUnit>` can retain a unit when that is useful without replacing the numeric API.
+
+
+UnitConverter deliberately supports multiple safety levels. Strongly typed quantities are available when compile-time dimensional safety matters, while direct methods, numeric/family converters, dynamic conversion, and low-level APIs remain supported for developers who intentionally need them. The optional `UnitConverter.Analyzers` package adds IntelliSense guidance for selected escape-hatch patterns without making those APIs unavailable.
+
+Culture-aware numeric parsing/formatting is supported through `IFormatProvider`. Localization v1 also allows culture-specific unit display names and parsing aliases while keeping symbols and enum names invariant. See [Culture and localization](docs/Localization.md) and [Analyzers](docs/Analyzers.md).
 
 ```csharp
 double miles = UnitConverterParser.Convert("1.8 km", UnitConverterLengthUnit.Mile);
@@ -353,6 +359,8 @@ dotnet run --project samples/UnitConverter.Demo --configuration Release
 - [Migration from the Unity package](docs/Migration.md)
 - [Testing](docs/Developer/Testing.md)
 - [Conversion provenance](docs/Provenance.md)
+- [Culture and localization](docs/Localization.md)
+- [Analyzer guidance](docs/Analyzers.md)
 - [Packaging](docs/Developer/Packaging.md)
 
 Unity inspectors, settings assets, scenes, assembly definitions, metadata files, and the shared Unity Core layer have been removed. The original Unity package remains available in [the 1.1.3 import commit](https://github.com/Perry3Dnl/UnitConverter/tree/332369313b1a428a66432e811c542562efa24e40).

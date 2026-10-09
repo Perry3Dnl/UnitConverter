@@ -1,4 +1,4 @@
-"""Check package payloads and consume both packages in a clean console project."""
+"""Check package payloads and consume the release packages in a clean console project."""
 
 from pathlib import Path
 import json
@@ -24,22 +24,22 @@ packages = {
     if not path.name.endswith(".symbols.nupkg")
 }
 
-core_candidates = [
-    path for name, path in packages.items()
-    if name.startswith("UnitConverter.") and not name.startswith("UnitConverter.SystemTextJson.")
-]
-json_candidates = [
-    path for name, path in packages.items()
-    if name.startswith("UnitConverter.SystemTextJson.")
-]
+expected_package_names = {
+    "core": "UnitConverter." + expected_version + ".nupkg",
+    "json": "UnitConverter.SystemTextJson." + expected_version + ".nupkg",
+    "analyzers": "UnitConverter.Analyzers." + expected_version + ".nupkg",
+}
 
-if len(core_candidates) != 1:
-    raise SystemExit("Expected exactly one UnitConverter core package in " + str(feed))
-if len(json_candidates) != 1:
-    raise SystemExit("Expected exactly one UnitConverter.SystemTextJson package in " + str(feed))
+missing = [
+    name for name in expected_package_names.values()
+    if name not in packages
+]
+if missing:
+    raise SystemExit("Missing expected package(s): " + ", ".join(missing))
 
-core_package = core_candidates[0]
-json_package = json_candidates[0]
+core_package = packages[expected_package_names["core"]]
+json_package = packages[expected_package_names["json"]]
+analyzer_package = packages[expected_package_names["analyzers"]]
 
 def read_metadata(package):
     with zipfile.ZipFile(package) as archive:
@@ -111,6 +111,28 @@ with zipfile.ZipFile(json_package) as archive:
     assert license_element.attrib.get("type") == "file"
     assert license_element.text == "LICENSE.md"
 
+with zipfile.ZipFile(analyzer_package) as archive:
+    names = archive.namelist()
+    assert "analyzers/dotnet/cs/UnitConverter.Analyzers.dll" in names
+    assert "README.md" in names
+    assert "LICENSE.md" in names
+    assert "NOTICE" in names
+    assert not any(name.startswith("lib/") and name.endswith(".dll") for name in names)
+    specification = ET.fromstring(
+        archive.read(next(name for name in names if name.endswith(".nuspec"))))
+    namespace = {"n": specification.tag.split("}")[0][1:]}
+    metadata = specification.find("n:metadata", namespace)
+    analyzer_id = metadata.findtext("n:id", namespaces=namespace)
+    analyzer_version = metadata.findtext("n:version", namespaces=namespace)
+    assert analyzer_id == "UnitConverter.Analyzers"
+    assert analyzer_version == expected_version
+    assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter.Analyzers"
+    assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    license_element = metadata.find("n:license", namespace)
+    assert license_element is not None
+    assert license_element.attrib.get("type") == "file"
+    assert license_element.text == "LICENSE.md"
+
 with tempfile.TemporaryDirectory(prefix="unitconverter-package-") as temporary:
     consumer = Path(temporary)
     environment = dict(os.environ)
@@ -128,6 +150,12 @@ with tempfile.TemporaryDirectory(prefix="unitconverter-package-") as temporary:
     items = ET.SubElement(project, "ItemGroup")
     ET.SubElement(items, "PackageReference", Include=core_id, Version=core_version)
     ET.SubElement(items, "PackageReference", Include=json_id, Version=json_version)
+    analyzer_reference = ET.SubElement(
+        items,
+        "PackageReference",
+        Include=analyzer_id,
+        Version=analyzer_version)
+    analyzer_reference.set("PrivateAssets", "all")
     ET.ElementTree(project).write(
         consumer / "Consumer.csproj",
         encoding="utf-8",
@@ -179,6 +207,7 @@ public static class Program
     assets = json.loads((consumer / "obj/project.assets.json").read_text())
     assert assets["libraries"][core_id + "/" + core_version]["type"] == "package"
     assert assets["libraries"][json_id + "/" + json_version]["type"] == "package"
+    assert assets["libraries"][analyzer_id + "/" + analyzer_version]["type"] == "package"
 
     subprocess.run(
         ["dotnet", "run", "--project", "Consumer.csproj",
@@ -187,4 +216,4 @@ public static class Program
         env=environment,
         check=True)
 
-print("Verified packages:", core_package.name, "and", json_package.name)
+print("Verified packages:", core_package.name, json_package.name, "and", analyzer_package.name)

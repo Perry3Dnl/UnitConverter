@@ -13,6 +13,8 @@
 - Add runtime custom units, composite expressions, dynamic family detection, metadata, and the `UnitConverter.SystemTextJson` companion package.
 - Validate clean NuGet consumption, NativeAOT core usage, NativeAOT JSON usage, deterministic generated code, and BenchmarkDotNet allocation regressions in CI.
 - Add Apache License 2.0 subject to Commons Clause License Condition v1.0, with `LICENSE.md` and `NOTICE` embedded in both NuGet packages.
+- Add culture-aware localized unit display names and parse aliases with explicit `IFormatProvider` semantics, parent-culture fallback, invariant symbols, and runtime vocabulary registration.
+- Add the optional `UnitConverter.Analyzers` package. `UC0002` guides compile-time-known dynamic string conversions toward typed or family-specific APIs while preserving dynamic conversion as a supported escape hatch.
 - Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
 
 ## 2.0.0-preview.1 — standalone .NET package
