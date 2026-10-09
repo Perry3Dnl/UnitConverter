@@ -194,6 +194,10 @@ namespace UnitConverter
             {
                 return UnitConverterConversionResult.Fail(exception.Message);
             }
+            catch (UnitConverterConversionException exception)
+            {
+                return UnitConverterConversionResult.Fail(exception.Message);
+            }
         }
 
         internal static bool TrySplitValueAndUnit(
