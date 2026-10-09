@@ -70,6 +70,6 @@ Registration does not modify the generated unit catalog or conversion factors. I
 
 ## Built-in scope
 
-Built-in localization data is definition-driven. `definitions/unit-localization.json` is validated against the real family/unit enums and `scripts/generate_localization.py` emits checked-in dependency-free C#. CI rejects stale or invalid generated output. The current Dutch built-in vocabulary contains 85 localized unit entries across 13 commonly used families, with parent-culture fallback from `nl-NL` to `nl`.
+Built-in localization data is definition-driven. `definitions/unit-localization.json` is validated against the real family/unit enums and `scripts/generate_localization.py` emits checked-in dependency-free C#. CI rejects stale or invalid generated output. The current Dutch built-in vocabulary contains 244 localized unit entries across 22 families, including common mechanical, motion, digital, electrical, torque, charge, and density vocabulary, with parent-culture fallback from `nl-NL` to `nl`. Explicit coverage is tracked in [LocalizationCoverage.md](LocalizationCoverage.md); invariant fallback does not count as localized coverage.
 
 `UnitConverterLocalization.GetSupportedCultures<TUnit>()` exposes built-in or runtime-registered cultures for a family, while `TryGetDisplayName` allows callers to query localized display metadata without formatting a value. Additional locales can be expanded incrementally without changing converter implementations or adding runtime package dependencies.
