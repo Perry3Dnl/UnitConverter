@@ -61,6 +61,20 @@ namespace UnitConverter
         internal static decimal Convert<TUnit>(decimal value, TUnit from, TUnit to)
             where TUnit : struct
         {
+            if (!typeof(TUnit).IsEnum)
+            {
+                throw new ArgumentException(
+                    typeof(TUnit).FullName + " is not a unit enum.");
+            }
+
+            UnitConverterFamilyDescriptor<TUnit> registeredDescriptor;
+            if (!UnitConverterCatalog.TryGetFamily(out registeredDescriptor))
+            {
+                throw new NotSupportedException(
+                    "No unit family descriptor is registered for " +
+                    typeof(TUnit).FullName + ".");
+            }
+
             if (typeof(TUnit) == typeof(UnitConverterTemperatureUnit))
             {
                 return TemperatureDecimal.Convert(
