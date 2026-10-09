@@ -7,8 +7,8 @@
     <PackageId>UnitConverter</PackageId>
     <Title>UnitConverter</Title>
     <Authors>Perry3Dnl</Authors>
-    <Description>High-performance .NET unit conversion library with 150 physical and engineering families, strongly typed quantities, exact decimal/rational conversion, span parsing and formatting, composite and custom units, runtime metadata, culture-aware localized unit vocabulary, and arbitrary-scale number conversion.</Description>
-    <PackageTags>units;conversion;physics;engineering;quantities;dimensional-analysis;decimal;parsing;formatting;big-numbers;arbitrary-scale</PackageTags>
+    <Description>Dependency-free high-performance .NET unit conversion library with 150 physical and engineering families, direct numeric APIs, strongly typed quantities, exact decimal/rational conversion, span parsing/formatting, dynamic and composite conversion, custom units, metadata, localization, and arbitrary-scale numbers.</Description>
+    <PackageTags>units;unit-converter;conversion;measurement;units-of-measurement;physics;engineering;quantities;dimensional-analysis;decimal;parsing;formatting;high-performance;nativeaot;big-numbers;arbitrary-scale</PackageTags>
     <PackageProjectUrl>https://github.com/Perry3Dnl/UnitConverter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
