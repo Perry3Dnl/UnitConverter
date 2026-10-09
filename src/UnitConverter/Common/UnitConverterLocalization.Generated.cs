@@ -107,24 +107,124 @@ namespace UnitConverter
                 "vierkante meter", "vierkante meter", "vierkante meters");
             UnitConverterLocalization.Register(
                 culture,
-                global::UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer,
-                "vierkante kilometer", "vierkante kilometer", "vierkante kilometers");
-            UnitConverterLocalization.Register(
-                culture,
-                global::UnitConverter.Area.UnitConverterAreaUnit.SquareFoot,
-                "vierkante voet", "vierkante voet", "vierkante voeten");
-            UnitConverterLocalization.Register(
-                culture,
-                global::UnitConverter.Area.UnitConverterAreaUnit.SquareMile,
-                "vierkante mijl", "vierkante mijl", "vierkante mijlen");
+                global::UnitConverter.Area.UnitConverterAreaUnit.Are,
+                "are", "are");
             UnitConverterLocalization.Register(
                 culture,
                 global::UnitConverter.Area.UnitConverterAreaUnit.Hectare,
                 "hectare", "hectare", "hectaren");
             UnitConverterLocalization.Register(
                 culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareKilometer,
+                "vierkante kilometer", "vierkante kilometer", "vierkante kilometers");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareInch,
+                "vierkante inch", "vierkante inch");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareFoot,
+                "vierkante voet", "vierkante voet", "vierkante voeten");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareYard,
+                "vierkante yard", "vierkante yard", "vierkante yards");
+            UnitConverterLocalization.Register(
+                culture,
                 global::UnitConverter.Area.UnitConverterAreaUnit.Acre,
                 "acre", "acre", "acres");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareMile,
+                "vierkante mijl", "vierkante mijl", "vierkante mijlen");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.Rood,
+                "rood", "rood");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.Township,
+                "township", "township");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.Barn,
+                "barn", "barn");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareNanometer,
+                "vierkante nanometer", "vierkante nanometer");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareMicrometer,
+                "vierkante micrometer", "vierkante micrometer");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareDecimeter,
+                "vierkante decimeter", "vierkante decimeter");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareDecameter,
+                "vierkante decameter", "vierkante decameter");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareHectometer,
+                "vierkante hectometer", "vierkante hectometer");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareMegameter,
+                "vierkante megameter", "vierkante megameter");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareThou,
+                "vierkante thou", "vierkante thou");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.CircularMil,
+                "circulaire mil", "circulaire mil");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareRod,
+                "vierkante rod", "vierkante rod");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquarePole,
+                "vierkante pole", "vierkante pole");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquarePerch,
+                "vierkante perch", "vierkante perch");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareChain,
+                "vierkante chain", "vierkante chain");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareFurlong,
+                "vierkante furlong", "vierkante furlong");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.Section,
+                "section", "section");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.Homestead,
+                "homestead", "homestead");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.SquareLeague,
+                "vierkante league", "vierkante league");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.Dunam,
+                "dunam", "dunam");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Area.UnitConverterAreaUnit.Tatami,
+                "tatami", "tatami");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.ElectronVolt,
+                "elektronvolt", "elektronvolt");
             UnitConverterLocalization.Register(
                 culture,
                 global::UnitConverter.Energy.UnitConverterEnergyUnit.Joule,
@@ -139,12 +239,100 @@ namespace UnitConverter
                 "megajoule", "megajoule");
             UnitConverterLocalization.Register(
                 culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.WattHour,
+                "wattuur", "wattuur", "watturen");
+            UnitConverterLocalization.Register(
+                culture,
                 global::UnitConverter.Energy.UnitConverterEnergyUnit.KilowattHour,
                 "kilowattuur", "kilowattuur", "kilowatturen");
             UnitConverterLocalization.Register(
                 culture,
                 global::UnitConverter.Energy.UnitConverterEnergyUnit.Calorie,
                 "calorie", "calorie", "calorieën");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Kilocalorie,
+                "kilocalorie", "kilocalorie", "kilocalorieën");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.BtuInternational,
+                "internationale BTU", "internationale BTU", "internationale btu");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.ThermUS,
+                "Amerikaanse therm", "Amerikaanse therm");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.FootPound,
+                "foot-pound", "foot-pound");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Erg,
+                "erg", "erg");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.TonTNT,
+                "ton TNT", "ton TNT", "ton tnt");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Nanojoule,
+                "nanojoule", "nanojoule");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Microjoule,
+                "microjoule", "microjoule");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Millijoule,
+                "millijoule", "millijoule");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Gigajoule,
+                "gigajoule", "gigajoule");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Terajoule,
+                "terajoule", "terajoule");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.WattSecond,
+                "wattseconde", "wattseconde", "wattseconden");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.KiloelectronVolt,
+                "kilo-elektronvolt", "kilo-elektronvolt");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.MegaelectronVolt,
+                "mega-elektronvolt", "mega-elektronvolt");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.GigaelectronVolt,
+                "giga-elektronvolt", "giga-elektronvolt");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.TeraelectronVolt,
+                "tera-elektronvolt", "tera-elektronvolt");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.HorsepowerHour,
+                "paardenkrachtuur", "paardenkrachtuur", "paardenkrachturen");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.KilogramForceMeter,
+                "kilogramkrachtmeter", "kilogramkrachtmeter");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.Quad,
+                "quad", "quad");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.ThermEC,
+                "EG-therm", "EG-therm", "eg-therm");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Energy.UnitConverterEnergyUnit.ThermUK,
+                "Britse therm", "Britse therm");
             UnitConverterLocalization.Register(
                 culture,
                 global::UnitConverter.Force.UnitConverterForceUnit.Micronewton,
@@ -491,8 +679,100 @@ namespace UnitConverter
                 "atmosfeer", "atmosfeer", "atmosferen");
             UnitConverterLocalization.Register(
                 culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.Torr,
+                "torr", "torr");
+            UnitConverterLocalization.Register(
+                culture,
                 global::UnitConverter.Pressure.UnitConverterPressureUnit.MillimeterMercury,
-                "millimeter kwik", "millimeter kwik");
+                "millimeter kwik", "millimeter kwik", "millimeter kwikkolom");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.InchMercury,
+                "inch kwik", "inch kwik", "inch kwikkolom");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.Psi,
+                "pondkracht per vierkante inch", "pondkracht per vierkante inch", "psi");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.Psf,
+                "pondkracht per vierkante voet", "pondkracht per vierkante voet", "psf");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.Barye,
+                "barye", "barye");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.Micropascal,
+                "micropascal", "micropascal");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.Millipascal,
+                "millipascal", "millipascal");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.Gigapascal,
+                "gigapascal", "gigapascal");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.TechnicalAtmosphere,
+                "technische atmosfeer", "technische atmosfeer", "technische atmosferen");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.KilogramForcePerSquareCentimeter,
+                "kilogramkracht per vierkante centimeter", "kilogramkracht per vierkante centimeter");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.MillimeterWater,
+                "millimeter waterkolom", "millimeter waterkolom", "millimeter water");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.CentimeterWater,
+                "centimeter waterkolom", "centimeter waterkolom", "centimeter water");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.InchWater,
+                "inch waterkolom", "inch waterkolom", "inch water");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.FootWater,
+                "voet waterkolom", "voet waterkolom");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.MeterWater,
+                "meter waterkolom", "meter waterkolom", "meter water");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.DynePerSquareCentimeter,
+                "dyne per vierkante centimeter", "dyne per vierkante centimeter");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.KilopoundPerSquareInch,
+                "kilopondkracht per vierkante inch", "kilopondkracht per vierkante inch");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.TonForceUSPerSquareFoot,
+                "Amerikaanse tonkracht per vierkante voet", "Amerikaanse tonkracht per vierkante voet");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.MicronMercury,
+                "micron kwik", "micron kwik", "micron kwikkolom");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.CentimeterMercury,
+                "centimeter kwik", "centimeter kwik", "centimeter kwikkolom");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.PoundForcePerSquareYard,
+                "pondkracht per vierkante yard", "pondkracht per vierkante yard");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.OunceForcePerSquareInch,
+                "ouncekracht per vierkante inch", "ouncekracht per vierkante inch");
+            UnitConverterLocalization.Register(
+                culture,
+                global::UnitConverter.Pressure.UnitConverterPressureUnit.GramForcePerSquareCentimeter,
+                "gramkracht per vierkante centimeter", "gramkracht per vierkante centimeter");
             UnitConverterLocalization.Register(
                 culture,
                 global::UnitConverter.Speed.UnitConverterSpeedUnit.MeterPerSecond,
