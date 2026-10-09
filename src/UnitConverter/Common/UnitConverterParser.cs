@@ -63,6 +63,14 @@ namespace UnitConverter
             TUnit unit;
             UnitConverterUnitResolution resolution = descriptor.ResolveUnit(unitText, out unit);
 
+            if (resolution == UnitConverterUnitResolution.Unknown)
+            {
+                resolution = UnitConverterLocalization.ResolveUnit(
+                    unitText,
+                    formatProvider ?? CultureInfo.InvariantCulture,
+                    out unit);
+            }
+
             if (resolution == UnitConverterUnitResolution.Ambiguous)
             {
                 return UnitConverterParseResult<TUnit>.Fail(
