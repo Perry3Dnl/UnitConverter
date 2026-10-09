@@ -21,6 +21,12 @@
 - Guarantee that System.Text.Json's stable enum-name output round-trips even when an enum name collides with a case-insensitive alias; validate serialization across the full catalog.
 - Index typed catalog unit descriptor lookup by enum value and refine UC0002 to avoid obvious false positives.
 - Add the optional `UnitConverter.Analyzers` package. `UC0002` guides compile-time-known dynamic string conversions toward typed or family-specific APIs while preserving dynamic conversion as a supported escape hatch.
+- Make dynamic conversion and global unit detection fully culture-symmetric: localized source/target aliases now work through family, family-name and auto-detected routes, including custom-unit interoperability and explicit ambiguity handling.
+- Harden runtime metadata as read-only snapshots and expose indexed object-based unit descriptor lookup so dynamic/custom/detection routes reuse the catalog's O(1) metadata index.
+- Reject localized aliases that would be unreachable because they collide with an invariant alias for another unit.
+- Harden generic exact conversion and `UnitValue<TUnit>` invalid-unit behavior so Try/throw contracts remain predictable for unsupported types and enum values.
+- Make System.Text.Json property-type validation explicit, canonicalize equivalent composite-expression cache keys without changing caller-visible expression text, and extend UC0002 guidance to matching `TryConvert` calls.
+- Narrow arbitrary-scale `TryParse` exception handling so unexpected runtime/programming failures are not silently reported as invalid numeric input.
 - Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
 
 ## 2.0.0-preview.1 — standalone .NET package
