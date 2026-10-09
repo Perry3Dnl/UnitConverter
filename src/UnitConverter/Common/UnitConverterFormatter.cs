@@ -4,6 +4,9 @@ namespace UnitConverter
     using System.Globalization;
     using UnitConverter.Catalog;
 
+    /// <summary>
+    /// Selects how a unit is represented in formatted text.
+    /// </summary>
     public enum UnitConverterUnitFormat
     {
         Symbol = 0,
@@ -11,6 +14,9 @@ namespace UnitConverter
         EnumName = 2,
     }
 
+    /// <summary>
+    /// Formats numeric values with catalog unit symbols, localized display names, or stable enum names.
+    /// </summary>
     public static class UnitConverterFormatter
     {
         public static string Format<TUnit>(double value, TUnit unit)
