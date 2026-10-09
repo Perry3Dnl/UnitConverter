@@ -213,7 +213,8 @@ namespace UnitConverter
                     fromUnit,
                     fromBuiltInResolution,
                     fromCustomResolution,
-                    "source");
+                    "source",
+                    formatProvider);
 
             if (!fromFailure.Success &&
                 fromFailure.Error != UnitConverterError.None)
@@ -228,7 +229,8 @@ namespace UnitConverter
                     toUnit,
                     toBuiltInResolution,
                     toCustomResolution,
-                    "target");
+                    "target",
+                    formatProvider);
 
             if (!toFailure.Success &&
                 toFailure.Error != UnitConverterError.None)
@@ -260,12 +262,6 @@ namespace UnitConverter
                 }
                 else
                 {
-                    converted = UnitConverterCustomUnits.Convert(
-                        value,
-                        family,
-                        fromUnit,
-                        toUnit);
-
                     if (sourceIsBuiltIn)
                     {
                         fromDescriptor =
@@ -277,6 +273,12 @@ namespace UnitConverter
                         toDescriptor =
                             FindUnitDescriptor(descriptor, toBuiltIn);
                     }
+
+                    converted = UnitConverterCustomUnits.Convert(
+                        value,
+                        family,
+                        sourceIsBuiltIn ? fromDescriptor.Name : fromUnit,
+                        targetIsBuiltIn ? toDescriptor.Name : toUnit);
                 }
 
                 return UnitConverterDynamicResult.Ok(
@@ -527,7 +529,8 @@ namespace UnitConverter
             string unitText,
             UnitConverterUnitResolution builtInResolution,
             UnitConverterUnitResolution customResolution,
-            string role)
+            string role,
+            IFormatProvider formatProvider)
         {
             if (builtInResolution == UnitConverterUnitResolution.Ambiguous ||
                 customResolution == UnitConverterUnitResolution.Ambiguous)
@@ -559,7 +562,7 @@ namespace UnitConverter
                 return default(UnitConverterDynamicResult);
             }
 
-            if (ExistsInAnotherFamily(descriptor, unitText))
+            if (ExistsInAnotherFamily(descriptor, unitText, formatProvider))
             {
                 return UnitConverterDynamicResult.Fail(
                     family,
@@ -595,7 +598,7 @@ namespace UnitConverter
                     "The " + role + " unit '" + unitText + "' is ambiguous in " + descriptor.Name + ".");
             }
 
-            if (ExistsInAnotherFamily(descriptor, unitText))
+            if (ExistsInAnotherFamily(descriptor, unitText, CultureInfo.InvariantCulture))
             {
                 return UnitConverterDynamicResult.Fail(
                     family,
@@ -611,7 +614,8 @@ namespace UnitConverter
 
         private static bool ExistsInAnotherFamily(
             UnitConverterFamilyDescriptor requestedFamily,
-            string unitText)
+            string unitText,
+            IFormatProvider formatProvider)
         {
             foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
             {
@@ -621,7 +625,11 @@ namespace UnitConverter
                 }
 
                 object ignored;
-                if (family.ResolveUnit(unitText, out ignored) != UnitConverterUnitResolution.Unknown)
+                if (ResolveBuiltInUnit(
+                    family,
+                    unitText,
+                    formatProvider,
+                    out ignored) != UnitConverterUnitResolution.Unknown)
                 {
                     return true;
                 }
