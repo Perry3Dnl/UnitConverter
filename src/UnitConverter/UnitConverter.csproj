@@ -16,7 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
-    <PackageReleaseNotes>2.0.0-preview.2: 150 conversion families and 1,858 unit entries; catalog-wide strongly typed quantities and dimensional arithmetic; exact decimal/rational conversion; allocation-free span parsing/formatting for typed quantities; optimized dynamic detection and composite expressions; runtime custom units; integrated arbitrary-scale number conversion; System.Text.Json companion support; NativeAOT validation; culture-aware unit display/parse localization; optional analyzer guidance package; Apache-2.0 with Commons Clause v1.0 licensing.</PackageReleaseNotes>
+    <PackageReleaseNotes>2.0.0-preview.2: 150 conversion families and 1,858 unit entries; catalog-wide strongly typed quantities and dimensional arithmetic; exact decimal/rational conversion; allocation-free span parsing/formatting for typed quantities; optimized dynamic detection and composite expressions; runtime custom units; integrated arbitrary-scale number conversion; System.Text.Json companion support; NativeAOT validation; definition-driven culture-aware unit display/parse localization; culture-consistent typed/span parsing; completed inverse dimensional arithmetic; optional analyzer guidance package; Apache-2.0 with Commons Clause v1.0 licensing.</PackageReleaseNotes>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
