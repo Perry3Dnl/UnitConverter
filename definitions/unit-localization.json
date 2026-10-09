@@ -172,6 +172,89 @@
             "millennium",
             "millennia"
           ]
+        },
+        "JulianYear": {
+          "displayName": "Juliaans jaar",
+          "aliases": [
+            "Juliaans jaar",
+            "Juliaanse jaren"
+          ]
+        },
+        "Femtosecond": {
+          "displayName": "femtoseconde",
+          "aliases": [
+            "femtoseconde",
+            "femtoseconden"
+          ]
+        },
+        "Picosecond": {
+          "displayName": "picoseconde",
+          "aliases": [
+            "picoseconde",
+            "picoseconden"
+          ]
+        },
+        "Decisecond": {
+          "displayName": "deciseconde",
+          "aliases": [
+            "deciseconde",
+            "deciseconden"
+          ]
+        },
+        "Centisecond": {
+          "displayName": "centiseconde",
+          "aliases": [
+            "centiseconde",
+            "centiseconden"
+          ]
+        },
+        "Shake": {
+          "displayName": "shake",
+          "aliases": [
+            "shake",
+            "shakes"
+          ]
+        },
+        "Svedberg": {
+          "displayName": "svedberg",
+          "aliases": [
+            "svedberg"
+          ]
+        },
+        "SiderealDay": {
+          "displayName": "siderische dag",
+          "aliases": [
+            "siderische dag",
+            "siderische dagen"
+          ]
+        },
+        "TropicalYear": {
+          "displayName": "tropisch jaar",
+          "aliases": [
+            "tropisch jaar",
+            "tropische jaren"
+          ]
+        },
+        "SiderealYear": {
+          "displayName": "siderisch jaar",
+          "aliases": [
+            "siderisch jaar",
+            "siderische jaren"
+          ]
+        },
+        "JulianMonth": {
+          "displayName": "Juliaanse maand",
+          "aliases": [
+            "Juliaanse maand",
+            "Juliaanse maanden"
+          ]
+        },
+        "ThirtyDayMonth": {
+          "displayName": "maand van dertig dagen",
+          "aliases": [
+            "maand van dertig dagen",
+            "maanden van dertig dagen"
+          ]
         }
       },
       "Mass": {
@@ -1203,12 +1286,13 @@
   },
   "completeFamilies": {
     "nl": [
-      "Temperature",
-      "Speed",
-      "Frequency",
       "Angle",
       "Force",
-      "Power"
+      "Frequency",
+      "Power",
+      "Speed",
+      "Temperature",
+      "Time"
     ]
   }
 }
