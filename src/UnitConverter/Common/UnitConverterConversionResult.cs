@@ -13,12 +13,12 @@ namespace UnitConverter
             ErrorMessage = errorMessage;
         }
 
-        public static UnitConverterConversionResult Ok(double value)
+        internal static UnitConverterConversionResult Ok(double value)
         {
             return new UnitConverterConversionResult(true, value, null);
         }
 
-        public static UnitConverterConversionResult Fail(string errorMessage)
+        internal static UnitConverterConversionResult Fail(string errorMessage)
         {
             return new UnitConverterConversionResult(false, 0d, errorMessage);
         }
