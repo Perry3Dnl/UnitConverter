@@ -33,6 +33,8 @@ jobs:
         run: python scripts/generate_length_quantity.py --check
       - name: Verify decimal precision routes
         run: python scripts/verify_decimal_precision.py
+      - name: Verify public API compatibility baseline
+        run: dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release -- --check
       - name: Restore
         run: dotnet restore UnitConverter.sln
       - name: Build
