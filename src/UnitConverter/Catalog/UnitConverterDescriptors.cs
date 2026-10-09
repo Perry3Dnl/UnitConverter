@@ -104,6 +104,7 @@ namespace UnitConverter.Catalog
         private readonly UnitConverterUnitDescriptor[] _units;
         private readonly IReadOnlyList<UnitConverterUnitDescriptor> _readOnlyUnits;
         private readonly Dictionary<TUnit, UnitConverterUnitDescriptor> _unitsByValue;
+        private readonly Dictionary<string, TUnit> _enumNames;
         private readonly Dictionary<string, TUnit> _exactAliases;
         private readonly Dictionary<string, TUnit> _ignoreCaseAliases;
         private readonly HashSet<string> _ambiguousExactAliases;
@@ -131,6 +132,7 @@ namespace UnitConverter.Catalog
             _convert = convert ?? throw new ArgumentNullException(nameof(convert));
             _getExactScale = getExactScale;
             _unitsByValue = new Dictionary<TUnit, UnitConverterUnitDescriptor>();
+            _enumNames = new Dictionary<string, TUnit>(StringComparer.Ordinal);
             _exactAliases = new Dictionary<string, TUnit>(StringComparer.Ordinal);
             _ignoreCaseAliases = new Dictionary<string, TUnit>(StringComparer.OrdinalIgnoreCase);
             _ambiguousExactAliases = new HashSet<string>(StringComparer.Ordinal);
@@ -142,6 +144,7 @@ namespace UnitConverter.Catalog
             foreach (TUnit unit in UnitConverterUnitValues.GetValues<TUnit>())
             {
                 string enumName = unit.ToString();
+                _enumNames.Add(enumName, unit);
                 string symbol = getSymbol == null ? null : getSymbol(unit);
                 string displayName = getDisplayName == null ? null : getDisplayName(unit);
                 string[] additionalAliases = getAliases == null ? null : getAliases(unit);
@@ -224,6 +227,11 @@ namespace UnitConverter.Catalog
             }
 
             string candidate = text.Trim();
+
+            if (_enumNames.TryGetValue(candidate, out unit))
+            {
+                return UnitConverterUnitResolution.Resolved;
+            }
 
             if (_ambiguousExactAliases.Contains(candidate))
             {
