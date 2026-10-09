@@ -27,6 +27,12 @@ namespace UnitConverter.Quantities
         public static Energy<T> operator /(Energy<T> quantity, T scalar) => FromJoules(quantity._joules / scalar);
         public static Power<T> operator /(Energy<T> energy, Time<T> time)
             => Power<T>.FromWatts(energy._joules / time.Seconds);
+        public static Time<T> operator /(Energy<T> energy, Power<T> power)
+            => Time<T>.FromSeconds(energy._joules / power.Watts);
+        public static Force<T> operator /(Energy<T> energy, Length<T> length)
+            => Force<T>.FromNewtons(energy._joules / length.Metres);
+        public static Length<T> operator /(Energy<T> energy, Force<T> force)
+            => Length<T>.FromMetres(energy._joules / force.Newtons);
 
         public static bool operator ==(Energy<T> left, Energy<T> right) => left.Equals(right);
         public static bool operator !=(Energy<T> left, Energy<T> right) => !left.Equals(right);
@@ -113,6 +119,8 @@ namespace UnitConverter.Quantities
         public static Pressure<T> operator /(Pressure<T> quantity, T scalar) => FromPascals(quantity._pascals / scalar);
         public static Force<T> operator *(Pressure<T> pressure, Area<T> area)
             => Force<T>.FromNewtons(pressure._pascals * area.SquareMetres);
+        public static Force<T> operator *(Area<T> area, Pressure<T> pressure)
+            => Force<T>.FromNewtons(area.SquareMetres * pressure._pascals);
 
         public static bool operator ==(Pressure<T> left, Pressure<T> right) => left.Equals(right);
         public static bool operator !=(Pressure<T> left, Pressure<T> right) => !left.Equals(right);
