@@ -10,6 +10,7 @@ namespace UnitConverter.Benchmarks;
 public class TextAndDynamicBenchmarks
 {
     private static readonly CultureInfo Invariant = CultureInfo.InvariantCulture;
+    private static readonly CultureInfo Dutch = CultureInfo.GetCultureInfo("nl-NL");
     private readonly Length<decimal> _length = Length<decimal>.FromMetres(123.456m);
 
     [Benchmark]
@@ -18,6 +19,14 @@ public class TextAndDynamicBenchmarks
         => Length<decimal>.Parse(
             "123.456 cm".AsSpan(),
             Invariant);
+
+
+    [Benchmark]
+    [BenchmarkCategory("Text", "Localization", "Parsing")]
+    public global::UnitConverter.UnitConverterParsedValue<global::UnitConverter.Length.UnitConverterLengthUnit> LocalizedParseLength()
+        => global::UnitConverter.UnitConverterParser.Parse<global::UnitConverter.Length.UnitConverterLengthUnit>(
+            "1,5 mijl",
+            Dutch);
 
     [Benchmark]
     [BenchmarkCategory("Text", "Span", "Formatting")]
