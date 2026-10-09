@@ -200,20 +200,13 @@ namespace UnitConverter
                     candidateText,
                     StringComparison.Ordinal);
 
-            if (exact.Count == 1)
+            if (exact.Count > 0)
             {
-                return UnitConverterDetectionResult.Resolved(
+                return FinalizeCandidatesWithLocalization(
                     value,
                     candidateText,
-                    exact);
-            }
-
-            if (exact.Count > 1)
-            {
-                return UnitConverterDetectionResult.Ambiguous(
-                    value,
-                    candidateText,
-                    exact);
+                    exact,
+                    formatProvider);
             }
 
             IReadOnlyList<UnitConverterUnitCandidate> ignoreCase =
@@ -222,20 +215,13 @@ namespace UnitConverter
                     candidateText,
                     StringComparison.OrdinalIgnoreCase);
 
-            if (ignoreCase.Count == 1)
+            if (ignoreCase.Count > 0)
             {
-                return UnitConverterDetectionResult.Resolved(
+                return FinalizeCandidatesWithLocalization(
                     value,
                     candidateText,
-                    ignoreCase);
-            }
-
-            if (ignoreCase.Count > 1)
-            {
-                return UnitConverterDetectionResult.Ambiguous(
-                    value,
-                    candidateText,
-                    ignoreCase);
+                    ignoreCase,
+                    formatProvider);
             }
 
             bool localizedAmbiguous;
@@ -264,6 +250,68 @@ namespace UnitConverter
             return UnitConverterDetectionResult.Fail(
                 UnitConverterError.UnknownUnit,
                 "The unit '" + candidateText + "' is not recognized.");
+        }
+
+        private static UnitConverterDetectionResult FinalizeCandidatesWithLocalization(
+            double value,
+            string text,
+            IReadOnlyList<UnitConverterUnitCandidate> primary,
+            IFormatProvider formatProvider)
+        {
+            bool hasBuiltIn = false;
+            foreach (UnitConverterUnitCandidate candidate in primary)
+            {
+                if (!candidate.IsCustom)
+                {
+                    hasBuiltIn = true;
+                    break;
+                }
+            }
+
+            // Invariant built-in aliases keep their existing precedence. A custom-only
+            // match, however, must still be checked against culture-specific built-ins.
+            if (hasBuiltIn)
+            {
+                return primary.Count == 1
+                    ? UnitConverterDetectionResult.Resolved(value, text, primary)
+                    : UnitConverterDetectionResult.Ambiguous(value, text, primary);
+            }
+
+            bool localizedAmbiguous;
+            IReadOnlyList<UnitConverterUnitCandidate> localized =
+                GetLocalizedCandidates(
+                    text,
+                    formatProvider,
+                    out localizedAmbiguous);
+
+            if (localized.Count == 0 && !localizedAmbiguous)
+            {
+                return primary.Count == 1
+                    ? UnitConverterDetectionResult.Resolved(value, text, primary)
+                    : UnitConverterDetectionResult.Ambiguous(value, text, primary);
+            }
+
+            var combined =
+                new List<UnitConverterUnitCandidate>(
+                    primary.Count + localized.Count);
+
+            foreach (UnitConverterUnitCandidate candidate in primary)
+            {
+                combined.Add(candidate);
+            }
+
+            foreach (UnitConverterUnitCandidate candidate in localized)
+            {
+                combined.Add(candidate);
+            }
+
+            IReadOnlyList<UnitConverterUnitCandidate> result =
+                combined.AsReadOnly();
+
+            return UnitConverterDetectionResult.Ambiguous(
+                value,
+                text,
+                result);
         }
 
         private static IReadOnlyList<UnitConverterUnitCandidate> GetLocalizedCandidates(
