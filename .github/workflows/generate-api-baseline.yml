@@ -1,0 +1,35 @@
+name: Generate API baseline
+
+on:
+  push:
+    branches:
+      - release/hardening-roadmap-preview2
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: release/hardening-roadmap-preview2
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet restore tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj
+      - run: dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release --no-restore -- --write
+      - shell: bash
+        run: |
+          if git diff --quiet -- docs/api/public-api-baseline.txt; then
+            echo "Baseline already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/api/public-api-baseline.txt
+          git commit -m "Capture public API compatibility baseline"
+          git push origin HEAD:release/hardening-roadmap-preview2
