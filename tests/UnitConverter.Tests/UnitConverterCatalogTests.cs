@@ -71,6 +71,39 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void Catalog_ThrowingLookupsMirrorTryLookups()
+        {
+            UnitConverterFamilyDescriptor byName =
+                UnitConverterCatalog.GetFamily("length");
+            UnitConverterFamilyDescriptor<UnitConverter.Length.UnitConverterLengthUnit> byType =
+                UnitConverterCatalog.GetFamily<UnitConverter.Length.UnitConverterLengthUnit>();
+
+            Assert.That(byName.Family, Is.EqualTo(UnitConverterFamily.Length));
+            Assert.That(byType.Family, Is.EqualTo(UnitConverterFamily.Length));
+            Assert.That(
+                UnitConverterCatalog.GetBaseUnitName(UnitConverterFamily.Length),
+                Is.EqualTo(byName.BaseUnitName));
+
+            string baseUnitName;
+            Assert.That(
+                UnitConverterCatalog.TryGetBaseUnitName(
+                    UnitConverterFamily.Length,
+                    out baseUnitName),
+                Is.True);
+            Assert.That(baseUnitName, Is.EqualTo(byName.BaseUnitName));
+        }
+
+        [Test]
+        public void Catalog_ThrowingLookupsRejectUnknownConsumersClearly()
+        {
+            Assert.Throws<System.ArgumentException>(() =>
+                UnitConverterCatalog.GetFamily("definitely-not-a-family"));
+
+            Assert.Throws<System.NotSupportedException>(() =>
+                UnitConverterCatalog.GetFamily<System.DayOfWeek>());
+        }
+
+        [Test]
         public void Catalog_MetadataSnapshotsCannotMutateInternalState()
         {
             UnitConverterFamilyDescriptor family =
