@@ -154,6 +154,51 @@ namespace UnitConverter
             }
         }
 
+        internal static UnitConverterUnitResolution ResolveUnit(
+            Type unitType,
+            string text,
+            IFormatProvider formatProvider,
+            out object unit)
+        {
+            unit = null;
+            if (unitType == null || string.IsNullOrWhiteSpace(text))
+            {
+                return UnitConverterUnitResolution.Unknown;
+            }
+
+            CultureInfo culture = GetCulture(formatProvider);
+            lock (Sync)
+            {
+                Dictionary<string, CultureTable> byCulture;
+                if (!Tables.TryGetValue(unitType, out byCulture))
+                {
+                    return UnitConverterUnitResolution.Unknown;
+                }
+
+                string candidate = text.Trim();
+                foreach (string cultureName in EnumerateCultureFallbacks(culture))
+                {
+                    CultureTable table;
+                    if (!byCulture.TryGetValue(cultureName, out table))
+                    {
+                        continue;
+                    }
+
+                    if (table.AmbiguousAliases.Contains(candidate))
+                    {
+                        return UnitConverterUnitResolution.Ambiguous;
+                    }
+
+                    if (table.Aliases.TryGetValue(candidate, out unit))
+                    {
+                        return UnitConverterUnitResolution.Resolved;
+                    }
+                }
+            }
+
+            return UnitConverterUnitResolution.Unknown;
+        }
+
         private static UnitConverterUnitResolution ResolveUnitLocked<TUnit>(
             string text,
             CultureInfo culture,
