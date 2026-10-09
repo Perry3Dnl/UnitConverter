@@ -58,7 +58,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Length.UnitConverterLengthUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Length.UnitConverterLengthUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -164,7 +165,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Time.UnitConverterTimeUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Time.UnitConverterTimeUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -266,7 +268,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Speed.UnitConverterSpeedUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Speed.UnitConverterSpeedUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
