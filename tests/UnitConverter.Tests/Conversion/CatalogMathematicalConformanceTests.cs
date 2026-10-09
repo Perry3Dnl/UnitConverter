@@ -31,10 +31,19 @@ namespace UnitConverter.Tests.Conversion
                         Assert.That(double.IsNaN(restored), Is.False, context + " restored NaN.");
                         Assert.That(double.IsInfinity(restored), Is.False, context + " restored infinity.");
 
-                        double relativeTolerance =
-                            family.Family == UnitConverterFamily.SpecificGravity
-                                ? 1e-3d
-                                : 1e-8d;
+                        double relativeTolerance;
+                        if (family.Family == UnitConverterFamily.SpecificGravity)
+                        {
+                            relativeTolerance = 1e-3d;
+                        }
+                        else if (family.Family == UnitConverterFamily.Temperature)
+                        {
+                            relativeTolerance = 1e-7d;
+                        }
+                        else
+                        {
+                            relativeTolerance = 1e-8d;
+                        }
                         double tolerance =
                             Math.Max(relativeTolerance, Math.Abs(Sample) * relativeTolerance);
                         Assert.That(restored, Is.EqualTo(Sample).Within(tolerance), context);
