@@ -163,6 +163,22 @@ namespace UnitConverter
             }
         }
 
+        public static UnitConverterConversionResult TryConvert<TUnit>(
+            string input,
+            TUnit to,
+            IFormatProvider formatProvider)
+            where TUnit : struct
+        {
+            try
+            {
+                return UnitConverterConversionResult.Ok(Convert(input, to, formatProvider));
+            }
+            catch (Exception exception)
+            {
+                return UnitConverterConversionResult.Fail(exception.Message);
+            }
+        }
+
         internal static bool TrySplitValueAndUnit(
             string text,
             IFormatProvider formatProvider,
@@ -192,7 +208,7 @@ namespace UnitConverter
 
             if (double.TryParse(
                 trimmed,
-                NumberStyles.Float,
+                NumberStyles.Float | NumberStyles.AllowThousands,
                 formatProvider,
                 out numericOnly))
             {
@@ -213,7 +229,7 @@ namespace UnitConverter
                 double candidateValue;
                 if (double.TryParse(
                     numberPart,
-                    NumberStyles.Float,
+                    NumberStyles.Float | NumberStyles.AllowThousands,
                     formatProvider,
                     out candidateValue))
                 {
@@ -250,7 +266,7 @@ namespace UnitConverter
 
             if (double.TryParse(
                 trimmed,
-                NumberStyles.Float,
+                NumberStyles.Float | NumberStyles.AllowThousands,
                 formatProvider,
                 out numericOnly))
             {
@@ -273,7 +289,7 @@ namespace UnitConverter
                 double candidateValue;
                 if (double.TryParse(
                     numberPart,
-                    NumberStyles.Float,
+                    NumberStyles.Float | NumberStyles.AllowThousands,
                     formatProvider,
                     out candidateValue))
                 {
@@ -292,7 +308,7 @@ namespace UnitConverter
     /// <summary>
     /// A parsed numeric value together with the unit that was present in the source text.
     /// </summary>
-    public readonly struct UnitConverterParsedValue<TUnit>
+    public readonly struct UnitConverterParsedValue<TUnit> : IFormattable
         where TUnit : struct
     {
         public UnitConverterParsedValue(double value, TUnit unit)
@@ -307,7 +323,17 @@ namespace UnitConverter
 
         public override string ToString()
         {
-            return Value.ToString(CultureInfo.InvariantCulture) + " " + Unit;
+            return UnitConverterFormatter.Format(Value, Unit);
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return UnitConverterFormatter.Format(
+                Value,
+                Unit,
+                string.IsNullOrEmpty(format) ? "G" : format,
+                formatProvider ?? CultureInfo.InvariantCulture,
+                UnitConverterUnitFormat.Symbol);
         }
     }
 }

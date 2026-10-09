@@ -65,6 +65,36 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void BuiltInLocalization_ExposesSupportedCultureMetadata()
+        {
+            CultureInfo[] cultures =
+                UnitConverterLocalization.GetSupportedCultures<UnitConverterLengthUnit>();
+
+            Assert.That(cultures, Has.Some.Property("Name").EqualTo("nl"));
+        }
+
+        [Test]
+        public void BuiltInLocalization_CoversMultipleCoreFamilies()
+        {
+            string speed = UnitConverterFormatter.Format(
+                36d,
+                UnitConverter.Speed.UnitConverterSpeedUnit.KilometerPerHour,
+                "G",
+                CultureInfo.GetCultureInfo("nl-NL"),
+                UnitConverterUnitFormat.DisplayName);
+
+            string pressure = UnitConverterFormatter.Format(
+                1d,
+                UnitConverter.Pressure.UnitConverterPressureUnit.Atmosphere,
+                "G",
+                CultureInfo.GetCultureInfo("nl-NL"),
+                UnitConverterUnitFormat.DisplayName);
+
+            Assert.That(speed, Is.EqualTo("36 kilometer per uur"));
+            Assert.That(pressure, Is.EqualTo("1 atmosfeer"));
+        }
+
+        [Test]
         public void CustomLocalization_CanBeRegisteredWithoutChangingCatalog()
         {
             CultureInfo culture = CultureInfo.GetCultureInfo("fr-FR");

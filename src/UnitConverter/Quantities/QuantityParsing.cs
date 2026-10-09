@@ -21,7 +21,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Acceleration.UnitConverterAccelerationUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Acceleration.UnitConverterAccelerationUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -43,7 +44,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Area.UnitConverterAreaUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Area.UnitConverterAreaUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -65,7 +67,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Current.UnitConverterCurrentUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Current.UnitConverterCurrentUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -87,7 +90,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Density.UnitConverterDensityUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Density.UnitConverterDensityUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -109,7 +113,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.ElectricCharge.UnitConverterElectricChargeUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -131,7 +136,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.ElectricResistance.UnitConverterElectricResistanceUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -153,7 +159,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Energy.UnitConverterEnergyUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Energy.UnitConverterEnergyUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -175,7 +182,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Force.UnitConverterForceUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Force.UnitConverterForceUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -197,7 +205,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Frequency.UnitConverterFrequencyUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Frequency.UnitConverterFrequencyUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -219,7 +228,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Mass.UnitConverterMassUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Mass.UnitConverterMassUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -241,7 +251,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Power.UnitConverterPowerUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Power.UnitConverterPowerUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -263,7 +274,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Pressure.UnitConverterPressureUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Pressure.UnitConverterPressureUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -285,7 +297,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Voltage.UnitConverterVoltageUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Voltage.UnitConverterVoltageUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
@@ -307,7 +320,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Volume.UnitConverterVolumeUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.Volume.UnitConverterVolumeUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;

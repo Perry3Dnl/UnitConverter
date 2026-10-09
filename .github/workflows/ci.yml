@@ -23,6 +23,8 @@ jobs:
         run: python scripts/generate_additional_families.py --check
       - name: Verify generated aliases
         run: python scripts/generate_aliases.py --check
+      - name: Verify generated localization
+        run: python scripts/generate_localization.py --check
       - name: Verify generated quantity API
         run: python scripts/generate_quantity_api.py --check
       - name: Verify catalog-wide legacy named quantities
@@ -42,7 +44,7 @@ jobs:
         run: |
           mkdir -p artifacts/analyzers
           dotnet build tests/UnitConverter.AnalyzerSmoke/UnitConverter.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
-          grep -q "warning UC0002" artifacts/analyzers/build.log
+          test "$(grep -Eo 'Program\.cs\([0-9]+,[0-9]+\): warning UC0002' artifacts/analyzers/build.log | sort -u | wc -l)" -eq 1
       - name: Pack
         run: |
           dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages

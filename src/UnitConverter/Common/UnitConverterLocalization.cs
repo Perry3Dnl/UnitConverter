@@ -4,8 +4,6 @@ namespace UnitConverter
     using System.Collections.Generic;
     using System.Globalization;
     using UnitConverter.Catalog;
-    using UnitConverter.Length;
-    using UnitConverter.Temperature;
 
     /// <summary>
     /// Optional culture-aware unit names and parsing aliases.
@@ -20,51 +18,7 @@ namespace UnitConverter
 
         static UnitConverterLocalization()
         {
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterLengthUnit.Meter,
-                "meter",
-                "meter", "meters");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterLengthUnit.Kilometer,
-                "kilometer",
-                "kilometer", "kilometers");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterLengthUnit.Centimeter,
-                "centimeter",
-                "centimeter", "centimeters");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterLengthUnit.Millimeter,
-                "millimeter",
-                "millimeter", "millimeters");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterLengthUnit.Mile,
-                "mijl",
-                "mijl", "mijlen");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterLengthUnit.Foot,
-                "voet",
-                "voet", "voeten");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterTemperatureUnit.Celsius,
-                "graad Celsius",
-                "graad Celsius", "graden Celsius");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterTemperatureUnit.Fahrenheit,
-                "graad Fahrenheit",
-                "graad Fahrenheit", "graden Fahrenheit");
-            Register(
-                CultureInfo.GetCultureInfo("nl"),
-                UnitConverterTemperatureUnit.Kelvin,
-                "kelvin",
-                "kelvin");
+            UnitConverterBuiltInLocalization.RegisterAll();
         }
 
         public static void Register<TUnit>(
@@ -121,6 +75,44 @@ namespace UnitConverter
                 {
                     AddAlias(table, displayName, unit);
                 }
+            }
+        }
+
+        public static bool TryGetDisplayName<TUnit>(
+            TUnit unit,
+            IFormatProvider formatProvider,
+            out string displayName)
+            where TUnit : struct
+        {
+            CultureInfo culture = GetCulture(formatProvider);
+            lock (Sync)
+            {
+                return TryGetDisplayName(typeof(TUnit), unit, culture, out displayName);
+            }
+        }
+
+        public static CultureInfo[] GetSupportedCultures<TUnit>()
+            where TUnit : struct
+        {
+            lock (Sync)
+            {
+                Dictionary<string, CultureTable> byCulture;
+                if (!Tables.TryGetValue(typeof(TUnit), out byCulture))
+                {
+                    return new CultureInfo[0];
+                }
+
+                var result = new List<CultureInfo>();
+                foreach (string name in byCulture.Keys)
+                {
+                    result.Add(string.IsNullOrEmpty(name)
+                        ? CultureInfo.InvariantCulture
+                        : CultureInfo.GetCultureInfo(name));
+                }
+
+                result.Sort((left, right) =>
+                    StringComparer.OrdinalIgnoreCase.Compare(left.Name, right.Name));
+                return result.ToArray();
             }
         }
 

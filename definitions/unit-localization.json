@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "description": "Curated built-in localization vocabulary. Runtime remains dependency-free; this file is converted to checked-in C# by scripts/generate_localization.py.",
+  "cultures": {
+    "nl": {
+      "Length": {
+        "Meter": { "displayName": "meter", "aliases": ["meter", "meters"] },
+        "Kilometer": { "displayName": "kilometer", "aliases": ["kilometer", "kilometers"] },
+        "Centimeter": { "displayName": "centimeter", "aliases": ["centimeter", "centimeters"] },
+        "Millimeter": { "displayName": "millimeter", "aliases": ["millimeter", "millimeters"] },
+        "Micrometer": { "displayName": "micrometer", "aliases": ["micrometer", "micrometers"] },
+        "Inch": { "displayName": "inch", "aliases": ["inch", "inches"] },
+        "Foot": { "displayName": "voet", "aliases": ["voet", "voeten"] },
+        "Yard": { "displayName": "yard", "aliases": ["yard", "yards"] },
+        "Mile": { "displayName": "mijl", "aliases": ["mijl", "mijlen"] },
+        "NauticalMile": { "displayName": "zeemijl", "aliases": ["zeemijl", "zeemijlen"] },
+        "LightYear": { "displayName": "lichtjaar", "aliases": ["lichtjaar", "lichtjaren"] }
+      },
+      "Time": {
+        "Nanosecond": { "displayName": "nanoseconde", "aliases": ["nanoseconde", "nanoseconden"] },
+        "Microsecond": { "displayName": "microseconde", "aliases": ["microseconde", "microseconden"] },
+        "Millisecond": { "displayName": "milliseconde", "aliases": ["milliseconde", "milliseconden"] },
+        "Second": { "displayName": "seconde", "aliases": ["seconde", "seconden"] },
+        "Minute": { "displayName": "minuut", "aliases": ["minuut", "minuten"] },
+        "Hour": { "displayName": "uur", "aliases": ["uur", "uren"] },
+        "Day": { "displayName": "dag", "aliases": ["dag", "dagen"] },
+        "Week": { "displayName": "week", "aliases": ["week", "weken"] },
+        "Fortnight": { "displayName": "veertien dagen", "aliases": ["veertien dagen"] },
+        "CommonYear": { "displayName": "jaar", "aliases": ["jaar", "jaren"] },
+        "Decade": { "displayName": "decennium", "aliases": ["decennium", "decennia"] },
+        "Century": { "displayName": "eeuw", "aliases": ["eeuw", "eeuwen"] },
+        "Millennium": { "displayName": "millennium", "aliases": ["millennium", "millennia"] }
+      },
+      "Mass": {
+        "Microgram": { "displayName": "microgram", "aliases": ["microgram"] },
+        "Milligram": { "displayName": "milligram", "aliases": ["milligram"] },
+        "Gram": { "displayName": "gram", "aliases": ["gram"] },
+        "Kilogram": { "displayName": "kilogram", "aliases": ["kilogram", "kilo", "kilo's"] },
+        "MetricTon": { "displayName": "metrische ton", "aliases": ["metrische ton", "metrische tonnen"] },
+        "Ounce": { "displayName": "ounce", "aliases": ["ounce", "ounces"] },
+        "Pound": { "displayName": "pond", "aliases": ["pond", "ponden"] },
+        "Stone": { "displayName": "stone", "aliases": ["stone"] },
+        "Carat": { "displayName": "karaat", "aliases": ["karaat"] }
+      },
+      "Speed": {
+        "MeterPerSecond": { "displayName": "meter per seconde", "aliases": ["meter per seconde", "meters per seconde"] },
+        "KilometerPerHour": { "displayName": "kilometer per uur", "aliases": ["kilometer per uur", "kilometers per uur"] },
+        "FootPerSecond": { "displayName": "voet per seconde", "aliases": ["voet per seconde", "voeten per seconde"] },
+        "MilePerHour": { "displayName": "mijl per uur", "aliases": ["mijl per uur", "mijlen per uur"] },
+        "Knot": { "displayName": "knoop", "aliases": ["knoop", "knopen"] }
+      },
+      "Area": {
+        "SquareMillimeter": { "displayName": "vierkante millimeter", "aliases": ["vierkante millimeter", "vierkante millimeters"] },
+        "SquareCentimeter": { "displayName": "vierkante centimeter", "aliases": ["vierkante centimeter", "vierkante centimeters"] },
+        "SquareMeter": { "displayName": "vierkante meter", "aliases": ["vierkante meter", "vierkante meters"] },
+        "SquareKilometer": { "displayName": "vierkante kilometer", "aliases": ["vierkante kilometer", "vierkante kilometers"] },
+        "SquareFoot": { "displayName": "vierkante voet", "aliases": ["vierkante voet", "vierkante voeten"] },
+        "SquareMile": { "displayName": "vierkante mijl", "aliases": ["vierkante mijl", "vierkante mijlen"] },
+        "Hectare": { "displayName": "hectare", "aliases": ["hectare", "hectaren"] },
+        "Acre": { "displayName": "acre", "aliases": ["acre", "acres"] }
+      },
+      "Volume": {
+        "Milliliter": { "displayName": "milliliter", "aliases": ["milliliter", "milliliters"] },
+        "Centiliter": { "displayName": "centiliter", "aliases": ["centiliter", "centiliters"] },
+        "Deciliter": { "displayName": "deciliter", "aliases": ["deciliter", "deciliters"] },
+        "Liter": { "displayName": "liter", "aliases": ["liter", "liters"] },
+        "CubicMeter": { "displayName": "kubieke meter", "aliases": ["kubieke meter", "kubieke meters"] },
+        "CubicFoot": { "displayName": "kubieke voet", "aliases": ["kubieke voet", "kubieke voeten"] },
+        "USGallon": { "displayName": "Amerikaanse gallon", "aliases": ["Amerikaanse gallon", "Amerikaanse gallons"] },
+        "ImperialGallon": { "displayName": "imperiale gallon", "aliases": ["imperiale gallon", "imperiale gallons"] }
+      },
+      "Pressure": {
+        "Pascal": { "displayName": "pascal", "aliases": ["pascal"] },
+        "Hectopascal": { "displayName": "hectopascal", "aliases": ["hectopascal"] },
+        "Kilopascal": { "displayName": "kilopascal", "aliases": ["kilopascal"] },
+        "Megapascal": { "displayName": "megapascal", "aliases": ["megapascal"] },
+        "Bar": { "displayName": "bar", "aliases": ["bar"] },
+        "Millibar": { "displayName": "millibar", "aliases": ["millibar"] },
+        "Atmosphere": { "displayName": "atmosfeer", "aliases": ["atmosfeer", "atmosferen"] },
+        "MillimeterMercury": { "displayName": "millimeter kwik", "aliases": ["millimeter kwik"] }
+      },
+      "Temperature": {
+        "Kelvin": { "displayName": "kelvin", "aliases": ["kelvin"] },
+        "Celsius": { "displayName": "graad Celsius", "aliases": ["graad Celsius", "graden Celsius"] },
+        "Fahrenheit": { "displayName": "graad Fahrenheit", "aliases": ["graad Fahrenheit", "graden Fahrenheit"] },
+        "Rankine": { "displayName": "graad Rankine", "aliases": ["graad Rankine", "graden Rankine"] }
+      },
+      "Force": {
+        "Newton": { "displayName": "newton", "aliases": ["newton"] },
+        "Kilonewton": { "displayName": "kilonewton", "aliases": ["kilonewton"] },
+        "PoundForce": { "displayName": "pondkracht", "aliases": ["pondkracht"] }
+      },
+      "Energy": {
+        "Joule": { "displayName": "joule", "aliases": ["joule"] },
+        "Kilojoule": { "displayName": "kilojoule", "aliases": ["kilojoule"] },
+        "Megajoule": { "displayName": "megajoule", "aliases": ["megajoule"] },
+        "KilowattHour": { "displayName": "kilowattuur", "aliases": ["kilowattuur", "kilowatturen"] },
+        "Calorie": { "displayName": "calorie", "aliases": ["calorie", "calorieën"] }
+      },
+      "Power": {
+        "Watt": { "displayName": "watt", "aliases": ["watt"] },
+        "Kilowatt": { "displayName": "kilowatt", "aliases": ["kilowatt"] },
+        "Megawatt": { "displayName": "megawatt", "aliases": ["megawatt"] },
+        "HorsepowerMechanical": { "displayName": "paardenkracht", "aliases": ["paardenkracht", "paardenkrachten"] }
+      },
+      "Frequency": {
+        "Hertz": { "displayName": "hertz", "aliases": ["hertz"] },
+        "Kilohertz": { "displayName": "kilohertz", "aliases": ["kilohertz"] },
+        "Megahertz": { "displayName": "megahertz", "aliases": ["megahertz"] },
+        "Gigahertz": { "displayName": "gigahertz", "aliases": ["gigahertz"] }
+      },
+      "Angle": {
+        "Degree": { "displayName": "graad", "aliases": ["graad", "graden"] },
+        "Radian": { "displayName": "radiaal", "aliases": ["radiaal", "radialen"] },
+        "Turn": { "displayName": "omwenteling", "aliases": ["omwenteling", "omwentelingen"] }
+      }
+    }
+  }
+}

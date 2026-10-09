@@ -69,6 +69,7 @@ namespace UnitConverter.Catalog
         private readonly Func<double, TUnit, TUnit, double> _convert;
         private readonly Func<TUnit, global::UnitConverter.UnitConverterRational> _getExactScale;
         private readonly UnitConverterUnitDescriptor[] _units;
+        private readonly Dictionary<TUnit, UnitConverterUnitDescriptor> _unitsByValue;
         private readonly Dictionary<string, TUnit> _exactAliases;
         private readonly Dictionary<string, TUnit> _ignoreCaseAliases;
         private readonly HashSet<string> _ambiguousExactAliases;
@@ -95,6 +96,7 @@ namespace UnitConverter.Catalog
 
             _convert = convert ?? throw new ArgumentNullException(nameof(convert));
             _getExactScale = getExactScale;
+            _unitsByValue = new Dictionary<TUnit, UnitConverterUnitDescriptor>();
             _exactAliases = new Dictionary<string, TUnit>(StringComparer.Ordinal);
             _ignoreCaseAliases = new Dictionary<string, TUnit>(StringComparer.OrdinalIgnoreCase);
             _ambiguousExactAliases = new HashSet<string>(StringComparer.Ordinal);
@@ -133,14 +135,17 @@ namespace UnitConverter.Catalog
                     uniformDimensions = false;
                 }
 
-                units.Add(new UnitConverterUnitDescriptor(
+                var unitDescriptor = new UnitConverterUnitDescriptor(
                     unit,
                     enumName,
                     symbol,
                     displayName,
                     acceptedAliases,
                     unitDimensions,
-                    UnitConverterProvenanceCatalog.Get(family, enumName)));
+                    UnitConverterProvenanceCatalog.Get(family, enumName));
+
+                units.Add(unitDescriptor);
+                _unitsByValue.Add(unit, unitDescriptor);
 
                 foreach (string alias in acceptedAliases)
                 {
@@ -241,17 +246,7 @@ namespace UnitConverter.Catalog
 
         public bool TryGetUnit(TUnit unit, out UnitConverterUnitDescriptor descriptor)
         {
-            foreach (UnitConverterUnitDescriptor candidate in _units)
-            {
-                if (EqualityComparer<TUnit>.Default.Equals((TUnit)candidate.Unit, unit))
-                {
-                    descriptor = candidate;
-                    return true;
-                }
-            }
-
-            descriptor = null;
-            return false;
+            return _unitsByValue.TryGetValue(unit, out descriptor);
         }
 
         public override UnitConverterUnitResolution ResolveUnit(string text, out object unit)

@@ -470,7 +470,8 @@ namespace UnitConverter.Quantities
             result = default;
             if (!QuantityText.TryParseValueAndUnit(s, provider, out T value, out ReadOnlySpan<char> unitText))
                 return false;
-            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.KinematicViscosity.UnitConverterKinematicViscosityUnit unit))
+            if (!TryResolveCatalogUnit(unitText, out global::UnitConverter.KinematicViscosity.UnitConverterKinematicViscosityUnit unit) &&
+                !QuantityText.TryResolveLocalizedUnit(unitText, provider, out unit))
                 return false;
             result = From(value, unit);
             return true;
