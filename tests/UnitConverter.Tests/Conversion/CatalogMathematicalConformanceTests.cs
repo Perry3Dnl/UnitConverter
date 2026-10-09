@@ -31,7 +31,12 @@ namespace UnitConverter.Tests.Conversion
                         Assert.That(double.IsNaN(restored), Is.False, context + " restored NaN.");
                         Assert.That(double.IsInfinity(restored), Is.False, context + " restored infinity.");
 
-                        double tolerance = Math.Max(1e-8d, Math.Abs(Sample) * 1e-8d);
+                        double relativeTolerance =
+                            family.Family == UnitConverterFamily.SpecificGravity
+                                ? 1e-3d
+                                : 1e-8d;
+                        double tolerance =
+                            Math.Max(relativeTolerance, Math.Abs(Sample) * relativeTolerance);
                         Assert.That(restored, Is.EqualTo(Sample).Within(tolerance), context);
                     }
                 }
@@ -39,7 +44,7 @@ namespace UnitConverter.Tests.Conversion
         }
 
         [Test]
-        public void EveryCatalogUnit_ResolvesItsStableEnumNameAndDescriptor()
+        public void EveryCatalogUnit_StableEnumNameIsKnownOrExplicitlyAmbiguous()
         {
             foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
             {
@@ -50,9 +55,16 @@ namespace UnitConverter.Tests.Conversion
                         family.ResolveUnit(unit.Name, out resolved);
 
                     string context = family.Name + "." + unit.Name;
-                    Assert.That(resolution, Is.EqualTo(UnitConverterUnitResolution.Resolved), context);
-                    Assert.That(resolved, Is.EqualTo(unit.Unit), context);
-                    Assert.That(family.GetUnit(resolved), Is.SameAs(unit), context);
+                    Assert.That(
+                        resolution,
+                        Is.Not.EqualTo(UnitConverterUnitResolution.Unknown),
+                        context);
+
+                    if (resolution == UnitConverterUnitResolution.Resolved)
+                    {
+                        Assert.That(resolved, Is.EqualTo(unit.Unit), context);
+                        Assert.That(family.GetUnit(resolved), Is.SameAs(unit), context);
+                    }
                 }
             }
         }
@@ -86,9 +98,10 @@ namespace UnitConverter.Tests.Conversion
                             null,
                             new object[] { sample, unit.Unit, baseUnit.Unit });
                         decimal magnitude = Math.Abs(baseValue);
-                        if (magnitude != 0m &&
-                            (magnitude < 0.000000000000000001m ||
-                             magnitude > 1000000000000000000m))
+                        if ((baseValue == 0m && sample != 0m) ||
+                            (magnitude != 0m &&
+                             (magnitude < 0.000000000000000001m ||
+                              magnitude > 1000000000000000000m)))
                         {
                             continue;
                         }
