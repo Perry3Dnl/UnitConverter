@@ -23,6 +23,8 @@ jobs:
         run: python scripts/generate_additional_families.py --check
       - name: Verify generated aliases
         run: python scripts/generate_aliases.py --check
+      - name: Verify generated localization
+        run: python scripts/generate_localization.py --check
       - name: Verify generated quantity API
         run: python scripts/generate_quantity_api.py --check
       - name: Verify catalog-wide legacy named quantities
