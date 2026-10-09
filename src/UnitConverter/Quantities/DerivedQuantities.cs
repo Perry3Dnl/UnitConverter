@@ -31,6 +31,8 @@ namespace UnitConverter.Quantities
             => Force<T>.FromNewtons(mass._kilograms * acceleration.MetresPerSecondSquared);
         public static Density<T> operator /(Mass<T> mass, Volume<T> volume)
             => Density<T>.FromKilogramsPerCubicMetre(mass._kilograms / volume.CubicMetres);
+        public static Volume<T> operator /(Mass<T> mass, Density<T> density)
+            => Volume<T>.FromCubicMetres(mass._kilograms / density.KilogramsPerCubicMetre);
 
         public static bool operator ==(Mass<T> left, Mass<T> right) => left.Equals(right);
         public static bool operator !=(Mass<T> left, Mass<T> right) => !left.Equals(right);
@@ -123,6 +125,12 @@ namespace UnitConverter.Quantities
             => Energy<T>.FromJoules(force._newtons * length.Metres);
         public static Pressure<T> operator /(Force<T> force, Area<T> area)
             => Pressure<T>.FromPascals(force._newtons / area.SquareMetres);
+        public static Area<T> operator /(Force<T> force, Pressure<T> pressure)
+            => Area<T>.FromSquareMetres(force._newtons / pressure.Pascals);
+        public static SpringConstant<T> operator /(Force<T> force, Length<T> length)
+            => SpringConstant<T>.FromNewtonPerMeter(force._newtons / length.Metres);
+        public static DampingCoefficient<T> operator /(Force<T> force, Speed<T> speed)
+            => DampingCoefficient<T>.FromNewtonSecondPerMeter(force._newtons / speed.MetresPerSecond);
 
         public static bool operator ==(Force<T> left, Force<T> right) => left.Equals(right);
         public static bool operator !=(Force<T> left, Force<T> right) => !left.Equals(right);
