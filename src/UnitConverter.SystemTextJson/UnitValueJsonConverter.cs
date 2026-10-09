@@ -110,7 +110,13 @@ namespace UnitConverter.SystemTextJson
                     "value",
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    value = reader.GetDouble();
+                    if (reader.TokenType != JsonTokenType.Number ||
+                        !reader.TryGetDouble(out value))
+                    {
+                        throw new JsonException(
+                            "The 'value' property must be a finite JSON number representable as Double.");
+                    }
+
                     hasValue = true;
                 }
                 else if (string.Equals(
@@ -118,6 +124,12 @@ namespace UnitConverter.SystemTextJson
                     "unit",
                     StringComparison.OrdinalIgnoreCase))
                 {
+                    if (reader.TokenType != JsonTokenType.String)
+                    {
+                        throw new JsonException(
+                            "The 'unit' property must be a string.");
+                    }
+
                     unitText = reader.GetString();
                 }
                 else
