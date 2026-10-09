@@ -28,6 +28,40 @@ The packages use a custom license file because the project is licensed under Apa
 
 Before publication, confirm ownership or availability of the intended NuGet package IDs.
 
+
+## NuGet publication
+
+Publication is intentionally separate from the normal build workflow. `.github/workflows/publish-nuget.yml` is manual-only and first reruns generated-source checks, the public API compatibility baseline, the full test suite, package verification, and the clean consumer matrix. Only the second job receives GitHub OIDC permission.
+
+The workflow uses NuGet Trusted Publishing through `NuGet/login@v1`; no long-lived NuGet API key is stored in the repository.
+
+Before the first publish:
+
+1. Confirm that the intended IDs `UnitConverter`, `UnitConverter.SystemTextJson`, and `UnitConverter.Analyzers` are available to or already owned by the intended NuGet.org account. The repository does not assume ID ownership.
+2. On NuGet.org, create a Trusted Publishing policy for this GitHub repository and workflow file `publish-nuget.yml`.
+3. Configure the policy with GitHub environment `nuget-release`.
+4. Create the matching GitHub environment `nuget-release`; required reviewers are recommended so a manual dispatch still needs human approval.
+5. Run **Publish NuGet release** manually, provide the NuGet.org username that owns the policy, and type exactly `publish` in the confirmation input.
+6. After the first successful publish, verify package README rendering, license presentation, symbols, dependency metadata, target frameworks, and ownership directly on nuget.org.
+
+For a private GitHub repository, NuGet.org can initially show a Trusted Publishing policy as temporarily active until the first successful publish associates the immutable GitHub owner/repository identifiers.
+
+The publication workflow uses `--skip-duplicate`, but a version should still be treated as immutable once published. Change the central version in `Directory.Build.props` for every subsequent release.
+
+## Release checklist
+
+Before publishing a preview or stable release:
+
+- `main` CI is green, including the public API fingerprint gate.
+- Performance regression CI is green.
+- `python scripts/verify_package.py artifacts/packages` passes the netstandard2.0 compile consumer and net8.0/net10.0 run consumers.
+- `docs/LocalizationCoverage.md` accurately distinguishes complete and partial locale families.
+- Release notes and README describe the exact version being published.
+- Package IDs and NuGet.org ownership are verified.
+- The repository/project URL is intentionally accessible at the level expected for public package consumers.
+- Package icon/branding is reviewed if an icon is going to be used; do not block correctness on branding.
+- The GitHub `nuget-release` environment and NuGet Trusted Publishing policy match `publish-nuget.yml`.
+
 ## References
 
 - [.NET library targeting guidance](https://learn.microsoft.com/en-us/dotnet/standard/library-guidance/cross-platform-targeting)
