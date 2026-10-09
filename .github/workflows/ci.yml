@@ -25,6 +25,8 @@ jobs:
         run: python scripts/generate_aliases.py --check
       - name: Verify generated localization
         run: python scripts/generate_localization.py --check
+      - name: Verify localization coverage report
+        run: python scripts/check_localization_coverage.py --check
       - name: Verify generated quantity API
         run: python scripts/generate_quantity_api.py --check
       - name: Verify catalog-wide legacy named quantities
@@ -37,6 +39,8 @@ jobs:
         run: dotnet restore UnitConverter.sln
       - name: Build
         run: dotnet build UnitConverter.sln --configuration Release --no-restore
+      - name: Verify public API compatibility baseline
+        run: python scripts/generate_public_api.py --check --no-build
       - name: Test
         run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitConverter.trx" --results-directory artifacts/test-results
       - name: Verify analyzer diagnostic
