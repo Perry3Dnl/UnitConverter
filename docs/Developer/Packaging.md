@@ -22,13 +22,17 @@ Output includes the `.nupkg` for installation and `.snupkg` for debug symbols. T
 
 ## Candidate versus publication
 
-The workflow builds downloadable package artifacts. It does not push to nuget.org or a package registry.
+Normal CI builds downloadable package artifacts and never publishes them. A separate manual workflow, `.github/workflows/release-nuget.yml`, performs the same build/test/API/package-consumer validation and defaults to validation-only mode.
+
+Publishing requires an explicit workflow dispatch with `publish=true`. The publish job is restricted to the `nuget-release` GitHub environment and uses nuget.org Trusted Publishing/OIDC rather than a long-lived API key. Configure the corresponding nuget.org trusted-publishing policy for repository owner `Perry3Dnl`, repository `UnitConverter`, workflow file `release-nuget.yml`, and environment `nuget-release`. The workflow input `nuget_user` is the nuget.org profile/user name, not an email address.
+
+Before the first live publish, confirm ownership or availability of all three intended package IDs: `UnitConverter`, `UnitConverter.SystemTextJson`, and `UnitConverter.Analyzers`.
 
 The packages use a custom license file because the project is licensed under Apache License 2.0 subject to the Commons Clause License Condition v1.0. NuGet package metadata points to `LICENSE.md`, and both `LICENSE.md` and `NOTICE` are included at the package root. This is a source-available license, not an OSI-approved open-source license.
 
-Before publication, confirm ownership or availability of the intended NuGet package IDs.
 
 ## References
 
 - [.NET library targeting guidance](https://learn.microsoft.com/en-us/dotnet/standard/library-guidance/cross-platform-targeting)
 - [Create a NuGet package with the .NET CLI](https://learn.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli)
+- [NuGet.org Trusted Publishing](https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing)
