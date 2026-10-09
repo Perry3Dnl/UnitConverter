@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir -p artifacts/analyzers
           dotnet build tests/UnitConverter.AnalyzerSmoke/UnitConverter.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
-          grep -q "warning UC0002" artifacts/analyzers/build.log
+          test "$(grep -c "warning UC0002" artifacts/analyzers/build.log)" -eq 1
       - name: Pack
         run: |
           dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
