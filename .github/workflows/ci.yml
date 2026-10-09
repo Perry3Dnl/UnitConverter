@@ -41,6 +41,7 @@ jobs:
         run: |
           dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
           dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
       - name: Verify package and consume it in a clean project
         run: python scripts/verify_package.py artifacts/packages
       - name: Publish NativeAOT smoke consumer
