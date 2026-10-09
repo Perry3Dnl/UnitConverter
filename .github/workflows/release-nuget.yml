@@ -49,6 +49,23 @@ jobs:
           dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
       - name: Verify package payload and consumer matrix
         run: python scripts/verify_package.py artifacts/packages
+      - name: Report current nuget.org package IDs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for id in UnitConverter UnitConverter.SystemTextJson UnitConverter.Analyzers; do
+            url="https://api.nuget.org/v3-flatcontainer/${id,,}/index.json"
+            status="$(curl -sS -o /tmp/nuget-index.json -w '%{http_code}' "$url")"
+            if [ "$status" = "200" ]; then
+              echo "$id: already exists on nuget.org"
+              cat /tmp/nuget-index.json
+              echo
+            elif [ "$status" = "404" ]; then
+              echo "$id: no existing package found on nuget.org"
+            else
+              echo "$id: nuget.org status check returned HTTP $status"
+            fi
+          done
       - name: Show release candidates
         shell: bash
         run: |
