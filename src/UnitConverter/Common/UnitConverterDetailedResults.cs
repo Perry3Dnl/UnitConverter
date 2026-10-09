@@ -2,6 +2,9 @@ namespace UnitConverter
 {
     using UnitConverter.Catalog;
 
+    /// <summary>
+    /// Identifies a structured parsing, resolution, or conversion failure.
+    /// </summary>
     public enum UnitConverterError
     {
         None = 0,
@@ -17,6 +20,10 @@ namespace UnitConverter
         IncompatibleDimensions = 10,
     }
 
+    /// <summary>
+    /// Represents the result of parsing a numeric value and unit without throwing for expected input errors.
+    /// </summary>
+    /// <typeparam name="TUnit">The catalog unit enum type.</typeparam>
     public readonly struct UnitConverterParseResult<TUnit>
         where TUnit : struct
     {
@@ -63,6 +70,9 @@ namespace UnitConverter
         }
     }
 
+    /// <summary>
+    /// Represents a dynamic conversion result, including resolved built-in/custom unit metadata and structured failure information.
+    /// </summary>
     public readonly struct UnitConverterDynamicResult
     {
         private UnitConverterDynamicResult(
