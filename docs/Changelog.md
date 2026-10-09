@@ -16,6 +16,7 @@
 - Add culture-aware localized unit display names and parse aliases with explicit `IFormatProvider` semantics, parent-culture fallback, invariant symbols, and runtime vocabulary registration.
 - Make built-in localization definition-driven and CI-validated, with generated dependency-free C# and an initial Dutch vocabulary spanning 85 units across 13 families.
 - Align general and named quantity parsing for culture-specific group separators, compact forms such as `1.5km`, localized aliases, and multiword unit names while preserving the allocation-free symbol fast path.
+- Align the established hand-written named quantities with generated quantity formatting: default text now includes the invariant base-unit symbol, culture applies to numeric text, and default text round-trips through parsing.
 - Complete inverse arithmetic for existing dimensional relations including length/speed/time, speed/acceleration/time, energy/force/length, energy/power/time, mass/density/volume, pressure/area/force, spring force, damping and mechanical mobility.
 - Guarantee that System.Text.Json's stable enum-name output round-trips even when an enum name collides with a case-insensitive alias; validate serialization across the full catalog.
 - Index typed catalog unit descriptor lookup by enum value and refine UC0002 to avoid obvious false positives.
