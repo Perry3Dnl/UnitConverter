@@ -114,11 +114,21 @@ namespace UnitConverter.Numbers
                 value = Parse(text);
                 return true;
             }
-            catch
+            catch (ArgumentException)
             {
-                value = default(ArbitraryScaleNumber);
-                return false;
             }
+            catch (FormatException)
+            {
+            }
+            catch (InvalidOperationException)
+            {
+            }
+            catch (OverflowException)
+            {
+            }
+
+            value = default(ArbitraryScaleNumber);
+            return false;
         }
 
         public ArbitraryScaleNumber In(string scale)
