@@ -71,6 +71,49 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void Catalog_MetadataSnapshotsCannotMutateInternalState()
+        {
+            UnitConverterFamilyDescriptor family =
+                UnitConverterCatalog.GetFamily(UnitConverterFamily.Length);
+            UnitConverterUnitDescriptor meter =
+                family.Units.First(unit => unit.Name == "Meter");
+
+            string[] aliases = meter.Aliases;
+            string originalAlias = aliases[0];
+            aliases[0] = "mutated-outside-catalog";
+
+            Assert.That(
+                meter.Aliases[0],
+                Is.EqualTo(originalAlias),
+                "Alias snapshots must not mutate the catalog.");
+            Assert.That(
+                family.Units,
+                Is.Not.TypeOf<UnitConverterUnitDescriptor[]>(),
+                "The read-only unit view must not expose the backing array.");
+            Assert.That(
+                meter.Provenance.Sources,
+                Is.Not.TypeOf<UnitConverterProvenanceSource[]>(),
+                "Provenance sources must not expose the backing array.");
+        }
+
+        [Test]
+        public void RuntimeDescriptorLookup_UsesSameCanonicalMetadataAsTypedLookup()
+        {
+            UnitConverterFamilyDescriptor family =
+                UnitConverterCatalog.GetFamily(UnitConverterFamily.Length);
+
+            object resolved;
+            Assert.That(
+                family.ResolveUnit("m", out resolved),
+                Is.EqualTo(UnitConverterUnitResolution.Resolved));
+
+            UnitConverterUnitDescriptor descriptor;
+            Assert.That(family.TryGetUnit(resolved, out descriptor), Is.True);
+            Assert.That(descriptor.Name, Is.EqualTo("Meter"));
+            Assert.That(family.GetUnit(resolved), Is.SameAs(descriptor));
+        }
+
+        [Test]
         public void Catalog_ExposesStandardsAndLegacyProvenanceStates()
         {
             UnitConverterFamilyDescriptor length =
