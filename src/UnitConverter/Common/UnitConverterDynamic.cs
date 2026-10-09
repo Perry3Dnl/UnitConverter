@@ -4,6 +4,10 @@ namespace UnitConverter
     using System.Globalization;
     using UnitConverter.Catalog;
 
+    /// <summary>
+    /// Converts values when the unit family or unit text is known only at runtime.
+    /// Prefer family-specific or strongly typed APIs when units are known at compile time.
+    /// </summary>
     public static class UnitConverterDynamic
     {
 
