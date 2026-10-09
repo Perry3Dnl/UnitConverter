@@ -1,0 +1,18 @@
+name: Readme stats
+
+on:
+  push:
+    branches:
+      - docs/readme-scale-stats
+  workflow_dispatch:
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+      - run: dotnet restore tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj
+      - run: dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release --no-restore -- --stats
