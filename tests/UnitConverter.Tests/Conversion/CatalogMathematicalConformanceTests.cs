@@ -16,8 +16,14 @@ namespace UnitConverter.Tests.Conversion
         {
             foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
             {
+                UnitConverterUnitDescriptor baseUnit =
+                    family.Units.Single(unit => unit.Name == family.BaseUnitName);
+
                 foreach (UnitConverterUnitDescriptor from in family.Units)
                 {
+                    double originalCanonical =
+                        family.Convert(Sample, from.Unit, baseUnit.Unit);
+
                     foreach (UnitConverterUnitDescriptor to in family.Units)
                     {
                         string context =
@@ -31,22 +37,18 @@ namespace UnitConverter.Tests.Conversion
                         Assert.That(double.IsNaN(restored), Is.False, context + " restored NaN.");
                         Assert.That(double.IsInfinity(restored), Is.False, context + " restored infinity.");
 
-                        double relativeTolerance;
-                        if (family.Family == UnitConverterFamily.SpecificGravity)
-                        {
-                            relativeTolerance = 1e-3d;
-                        }
-                        else if (family.Family == UnitConverterFamily.Temperature)
-                        {
-                            relativeTolerance = 1e-7d;
-                        }
-                        else
-                        {
-                            relativeTolerance = 1e-8d;
-                        }
+                        double restoredCanonical =
+                            family.Convert(restored, from.Unit, baseUnit.Unit);
+
                         double tolerance =
-                            Math.Max(relativeTolerance, Math.Abs(Sample) * relativeTolerance);
-                        Assert.That(restored, Is.EqualTo(Sample).Within(tolerance), context);
+                            Math.Max(
+                                1e-12d,
+                                Math.Abs(originalCanonical) * 1e-10d);
+
+                        Assert.That(
+                            restoredCanonical,
+                            Is.EqualTo(originalCanonical).Within(tolerance),
+                            context + " canonical/base-unit error");
                     }
                 }
             }
