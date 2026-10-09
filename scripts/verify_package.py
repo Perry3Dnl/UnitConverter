@@ -240,7 +240,7 @@ def verify_consumer(root_directory, name, target_framework, output_type, include
     consumer = root_directory / name
     consumer.mkdir()
     environment = dict(os.environ)
-    environment["NUGET_PACKAGES"] = str(root_directory / "packages-" + name)
+    environment["NUGET_PACKAGES"] = str(root_directory / ("packages-" + name))
     (consumer / "global.json").write_text((root / "global.json").read_text())
     (consumer / "NuGet.Config").write_text(
         '<configuration><packageSources><clear /></packageSources></configuration>')
