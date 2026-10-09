@@ -240,14 +240,20 @@ with tempfile.TemporaryDirectory(prefix="unitconverter-package-") as temporary:
 
         (consumer / "global.json").write_text((root / "global.json").read_text())
         (consumer / "NuGet.Config").write_text(
-            '<configuration><packageSources><clear /></packageSources></configuration>')
+            '<configuration>'
+            '<packageSources>'
+            '<clear />'
+            '<add key="local-unitconverter" value="' + str(feed) + '" />'
+            '<add key="nuget.org" value="https://api.nuget.org/v3/index.json" />'
+            '</packageSources>'
+            '</configuration>')
 
         write_consumer_project(consumer, target_framework, executable)
         (consumer / "Consumer.cs").write_text(
             program_source if executable else consumer_source)
 
         subprocess.run(
-            ["dotnet", "restore", "Consumer.csproj", "--source", str(feed)],
+            ["dotnet", "restore", "Consumer.csproj"],
             cwd=consumer,
             env=environment,
             check=True)
