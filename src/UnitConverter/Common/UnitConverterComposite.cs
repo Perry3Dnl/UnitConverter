@@ -46,7 +46,7 @@ namespace UnitConverter
         public UnitConverterError Error { get; }
         public string ErrorMessage { get; }
 
-        public static UnitConverterExpressionParseResult Ok(
+        internal static UnitConverterExpressionParseResult Ok(
             UnitConverterUnitExpression expression)
         {
             return new UnitConverterExpressionParseResult(
@@ -56,7 +56,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterExpressionParseResult Fail(
+        internal static UnitConverterExpressionParseResult Fail(
             UnitConverterError error,
             string errorMessage)
         {
@@ -93,7 +93,7 @@ namespace UnitConverter
         public UnitConverterError Error { get; }
         public string ErrorMessage { get; }
 
-        public static UnitConverterCompositeResult Ok(
+        internal static UnitConverterCompositeResult Ok(
             double value,
             UnitConverterUnitExpression from,
             UnitConverterUnitExpression to)
@@ -107,7 +107,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterCompositeResult Fail(
+        internal static UnitConverterCompositeResult Fail(
             UnitConverterError error,
             string errorMessage)
         {

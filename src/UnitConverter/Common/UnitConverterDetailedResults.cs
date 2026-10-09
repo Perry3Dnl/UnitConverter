@@ -2,6 +2,9 @@ namespace UnitConverter
 {
     using UnitConverter.Catalog;
 
+    /// <summary>
+    /// Identifies a structured parsing, resolution, or conversion failure.
+    /// </summary>
     public enum UnitConverterError
     {
         None = 0,
@@ -17,6 +20,10 @@ namespace UnitConverter
         IncompatibleDimensions = 10,
     }
 
+    /// <summary>
+    /// Represents the result of parsing a numeric value and unit without throwing for expected input errors.
+    /// </summary>
+    /// <typeparam name="TUnit">The catalog unit enum type.</typeparam>
     public readonly struct UnitConverterParseResult<TUnit>
         where TUnit : struct
     {
@@ -40,7 +47,7 @@ namespace UnitConverter
         public UnitConverterError Error { get; }
         public string ErrorMessage { get; }
 
-        public static UnitConverterParseResult<TUnit> Ok(double value, TUnit unit)
+        internal static UnitConverterParseResult<TUnit> Ok(double value, TUnit unit)
         {
             return new UnitConverterParseResult<TUnit>(
                 true,
@@ -50,7 +57,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterParseResult<TUnit> Fail(
+        internal static UnitConverterParseResult<TUnit> Fail(
             UnitConverterError error,
             string errorMessage)
         {
@@ -63,6 +70,9 @@ namespace UnitConverter
         }
     }
 
+    /// <summary>
+    /// Represents a dynamic conversion result, including resolved built-in/custom unit metadata and structured failure information.
+    /// </summary>
     public readonly struct UnitConverterDynamicResult
     {
         private UnitConverterDynamicResult(
@@ -97,7 +107,7 @@ namespace UnitConverter
         public UnitConverterError Error { get; }
         public string ErrorMessage { get; }
 
-        public static UnitConverterDynamicResult Ok(
+        internal static UnitConverterDynamicResult Ok(
             double value,
             UnitConverterFamily family,
             UnitConverterUnitDescriptor fromUnit,
@@ -115,7 +125,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterDynamicResult Ok(
+        internal static UnitConverterDynamicResult Ok(
             double value,
             UnitConverterFamily family,
             UnitConverterUnitDescriptor fromUnit,
@@ -135,7 +145,7 @@ namespace UnitConverter
                 null);
         }
 
-        public static UnitConverterDynamicResult Fail(
+        internal static UnitConverterDynamicResult Fail(
             UnitConverterFamily family,
             UnitConverterError error,
             string errorMessage)

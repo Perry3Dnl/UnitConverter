@@ -14,12 +14,18 @@ namespace UnitConverter
     /// </summary>
     public static class UnitConverterExact
     {
+        /// <summary>
+        /// Converts a decimal value without routing through double precision.
+        /// </summary>
         public static decimal Convert<TUnit>(decimal value, TUnit from, TUnit to)
             where TUnit : struct
         {
             return UnitConverterDecimal.Convert(value, from, to);
         }
 
+        /// <summary>
+        /// Attempts an exact decimal conversion and returns false for expected unit, range, or arithmetic failures.
+        /// </summary>
         public static bool TryConvert<TUnit>(decimal value, TUnit from, TUnit to, out decimal result)
             where TUnit : struct
         {

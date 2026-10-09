@@ -53,6 +53,17 @@ def read_metadata(package):
 with zipfile.ZipFile(core_package) as archive:
     names = archive.namelist()
     assert "lib/netstandard2.0/UnitConverter.dll" in names
+    assert "lib/netstandard2.0/UnitConverter.xml" in names
+    assert "lib/net8.0/UnitConverter.xml" in names
+    core_docs = ET.fromstring(archive.read("lib/net8.0/UnitConverter.xml"))
+    documented_members = {
+        member.attrib.get("name")
+        for member in core_docs.findall(".//member")
+    }
+    assert "T:UnitConverter.UnitConverterParser" in documented_members
+    assert "T:UnitConverter.UnitConverterDynamic" in documented_members
+    assert "T:UnitConverter.UnitConverterExact" in documented_members
+    assert "T:UnitConverter.Catalog.UnitConverterCatalog" in documented_members
     assert "README.md" in names
     assert "LICENSE.md" in names
     assert "NOTICE" in names
@@ -85,6 +96,14 @@ with zipfile.ZipFile(core_package) as archive:
 with zipfile.ZipFile(json_package) as archive:
     names = archive.namelist()
     assert "lib/netstandard2.0/UnitConverter.SystemTextJson.dll" in names
+    assert "lib/netstandard2.0/UnitConverter.SystemTextJson.xml" in names
+    json_docs = ET.fromstring(
+        archive.read("lib/netstandard2.0/UnitConverter.SystemTextJson.xml"))
+    json_documented_members = {
+        member.attrib.get("name")
+        for member in json_docs.findall(".//member")
+    }
+    assert "T:UnitConverter.SystemTextJson.UnitConverterJson" in json_documented_members
     assert "README.md" in names
     assert "LICENSE.md" in names
     assert "NOTICE" in names
