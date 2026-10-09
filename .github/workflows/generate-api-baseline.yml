@@ -24,7 +24,7 @@ jobs:
       - run: dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release --no-restore -- --write
       - shell: bash
         run: |
-          if git diff --quiet -- docs/api/public-api-baseline.txt; then
+          if [ -z "$(git status --porcelain -- docs/api/public-api-baseline.txt)" ]; then
             echo "Baseline already current."
             exit 0
           fi
