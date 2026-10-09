@@ -31,6 +31,14 @@
 - Tighten the public result surface by keeping result construction helpers internal while preserving public read-only result contracts.
 - Add symmetric catalog lookup APIs for stable family names, unit-enum types, and enum-based base-unit lookup.
 - Harden `UnitConverterParser.TryConvert` so expected parse/conversion failures return a failure result without swallowing unexpected runtime errors.
+- Add a checked-in public API compatibility baseline for core `netstandard2.0`, core `net8.0`, and the System.Text.Json companion; CI rejects unintentional public API drift.
+- Add catalog-wide mathematical conformance checks across every unit pair plus precision-aware decimal round-trip validation.
+- Add deterministic parser abuse/fuzz coverage across typed parsing, dynamic detection/conversion, composite parsing, and composite conversion.
+- Expand explicit Dutch localization from 85 units across 13 families to 244 units across 22 families and generate a measurable localization coverage report.
+- Verify the built NuGet packages from clean `netstandard2.0`, `net8.0`, and `net10.0` consumer projects.
+- Expand BenchmarkDotNet coverage to localized parsing, `UnitValue<TUnit>.To`, typed arithmetic, and runtime custom-unit conversion.
+- Add a gated manual nuget.org Trusted Publishing workflow using GitHub OIDC, with validation-only mode as the default.
+- Put the direct, fluent numeric, value-plus-unit, typed, exact-decimal, and runtime-dynamic API choices at the top of onboarding documentation.
 - Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
 
 ## 2.0.0-preview.1 — standalone .NET package
