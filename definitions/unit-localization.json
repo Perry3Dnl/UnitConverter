@@ -101,7 +101,7 @@
         "Watt": { "displayName": "watt", "aliases": ["watt"] },
         "Kilowatt": { "displayName": "kilowatt", "aliases": ["kilowatt"] },
         "Megawatt": { "displayName": "megawatt", "aliases": ["megawatt"] },
-        "Horsepower": { "displayName": "paardenkracht", "aliases": ["paardenkracht", "paardenkrachten"] }
+        "HorsepowerMechanical": { "displayName": "paardenkracht", "aliases": ["paardenkracht", "paardenkrachten"] }
       },
       "Frequency": {
         "Hertz": { "displayName": "hertz", "aliases": ["hertz"] },
@@ -112,7 +112,7 @@
       "Angle": {
         "Degree": { "displayName": "graad", "aliases": ["graad", "graden"] },
         "Radian": { "displayName": "radiaal", "aliases": ["radiaal", "radialen"] },
-        "Revolution": { "displayName": "omwenteling", "aliases": ["omwenteling", "omwentelingen"] }
+        "Turn": { "displayName": "omwenteling", "aliases": ["omwenteling", "omwentelingen"] }
       }
     }
   }
