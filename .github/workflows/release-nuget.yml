@@ -1,0 +1,102 @@
+name: Release NuGet packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      nuget_user:
+        description: "nuget.org username/profile name used by Trusted Publishing (not email)"
+        required: true
+        type: string
+      publish:
+        description: "Actually publish packages to nuget.org"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore
+        run: dotnet restore UnitConverter.sln
+      - name: Build
+        run: dotnet build UnitConverter.sln --configuration Release --no-restore
+      - name: Test
+        run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
+      - name: Build public API snapshot tool
+        run: dotnet build tools/UnitConverter.ApiSurface/UnitConverter.ApiSurface.csproj --configuration Release
+      - name: Verify public API compatibility baseline
+        run: python scripts/generate_public_api.py --check --no-build
+      - name: Verify generated localization and coverage
+        run: |
+          python scripts/generate_localization.py --check
+          python scripts/check_localization_coverage.py --check
+      - name: Pack release packages
+        run: |
+          mkdir -p artifacts/packages
+          dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
+      - name: Verify package payload and consumer matrix
+        run: python scripts/verify_package.py artifacts/packages
+      - name: Show release candidates
+        shell: bash
+        run: |
+          echo "Release candidate packages:"
+          find artifacts/packages -maxdepth 1 -type f \( -name '*.nupkg' -o -name '*.snupkg' \) -print | sort
+      - name: Upload validated release candidates
+        uses: actions/upload-artifact@v7
+        with:
+          name: validated-nuget-release-candidates
+          path: |
+            artifacts/packages/*.nupkg
+            artifacts/packages/*.snupkg
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    needs: validate
+    if: inputs.publish == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: nuget-release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - name: Download validated packages
+        uses: actions/download-artifact@v7
+        with:
+          name: validated-nuget-release-candidates
+          path: artifacts/packages
+      - name: NuGet login via Trusted Publishing
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ inputs.nuget_user }}
+      - name: Publish packages
+        shell: bash
+        env:
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+        run: |
+          set -euo pipefail
+          for package in artifacts/packages/*.nupkg; do
+            echo "Publishing $package"
+            dotnet nuget push "$package" \
+              --api-key "$NUGET_API_KEY" \
+              --source https://api.nuget.org/v3/index.json \
+              --skip-duplicate
+          done
