@@ -23,17 +23,19 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Generate public API baseline
         run: python scripts/generate_public_api.py
+      - name: Generate localization source
+        run: python scripts/generate_localization.py
       - name: Generate localization coverage
         run: python scripts/check_localization_coverage.py
       - name: Commit generated release baselines
         shell: bash
         run: |
-          if git diff --quiet -- docs/api/PublicApi.txt docs/LocalizationCoverage.md; then
+          if git diff --quiet -- docs/api/PublicApi.txt docs/LocalizationCoverage.md src/UnitConverter/Common/UnitConverterLocalization.Generated.cs; then
             echo "Generated release baselines are already current."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/api/PublicApi.txt docs/LocalizationCoverage.md
+          git add docs/api/PublicApi.txt docs/LocalizationCoverage.md src/UnitConverter/Common/UnitConverterLocalization.Generated.cs
           git commit -m "Generate release hardening baselines"
           git push origin HEAD:quality/release-hardening-pass
