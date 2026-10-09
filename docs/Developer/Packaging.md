@@ -1,6 +1,6 @@
 # Packaging
 
-The core package ID is `UnitConverter`, targeting `netstandard2.0` and `net8.0`. The companion package is `UnitConverter.SystemTextJson`, targeting `netstandard2.0`. The current public-release candidate is `2.0.0-preview.2`, defined centrally in `Directory.Build.props`.
+The core package ID is `UnitConverter`, targeting `netstandard2.0` and `net8.0`. The optional companion packages are `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers`, both targeting `netstandard2.0`. The current public-release candidate is `2.0.0-preview.2`, defined centrally in `Directory.Build.props`.
 
 ## Create the package
 
@@ -12,6 +12,7 @@ dotnet build UnitConverter.sln --configuration Release --no-restore
 dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
 dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
 dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
 python scripts/verify_package.py artifacts/packages
 ```
 
