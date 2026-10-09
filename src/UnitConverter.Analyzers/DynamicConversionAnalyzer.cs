@@ -43,7 +43,7 @@ namespace UnitConverter.Analyzers
                 context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
 
             if (method == null ||
-                method.Name != "Convert" ||
+                (method.Name != "Convert" && method.Name != "TryConvert") ||
                 method.ContainingType == null ||
                 method.ContainingType.ToDisplayString() != "UnitConverter.UnitConverterDynamic")
             {
@@ -51,26 +51,32 @@ namespace UnitConverter.Analyzers
             }
 
             SeparatedSyntaxList<ArgumentSyntax> arguments = invocation.ArgumentList.Arguments;
-            if (arguments.Count < 2)
+            int inputIndex = FindParameterIndex(method, "input");
+            int targetIndex = FindParameterIndex(method, "toUnit");
+
+            if (inputIndex < 0 ||
+                targetIndex < 0 ||
+                inputIndex >= arguments.Count ||
+                targetIndex >= arguments.Count)
             {
                 return;
             }
 
-            Optional<object> firstConstant =
-                context.SemanticModel.GetConstantValue(arguments[0].Expression);
-            Optional<object> secondConstant =
-                context.SemanticModel.GetConstantValue(arguments[1].Expression);
+            Optional<object> inputConstant =
+                context.SemanticModel.GetConstantValue(arguments[inputIndex].Expression);
+            Optional<object> targetConstant =
+                context.SemanticModel.GetConstantValue(arguments[targetIndex].Expression);
 
-            if (!firstConstant.HasValue ||
-                !(firstConstant.Value is string) ||
-                !secondConstant.HasValue ||
-                !(secondConstant.Value is string))
+            if (!inputConstant.HasValue ||
+                !(inputConstant.Value is string) ||
+                !targetConstant.HasValue ||
+                !(targetConstant.Value is string))
             {
                 return;
             }
 
-            string input = (string)firstConstant.Value;
-            string target = (string)secondConstant.Value;
+            string input = (string)inputConstant.Value;
+            string target = (string)targetConstant.Value;
 
             if (!LooksLikeInvariantQuantity(input) ||
                 string.IsNullOrWhiteSpace(target))
@@ -82,6 +88,24 @@ namespace UnitConverter.Analyzers
                 Diagnostic.Create(
                     Rule,
                     invocation.GetLocation()));
+        }
+
+        private static int FindParameterIndex(
+            IMethodSymbol method,
+            string parameterName)
+        {
+            for (int index = 0; index < method.Parameters.Length; index++)
+            {
+                if (string.Equals(
+                    method.Parameters[index].Name,
+                    parameterName,
+                    StringComparison.Ordinal))
+                {
+                    return index;
+                }
+            }
+
+            return -1;
         }
 
         private static bool LooksLikeInvariantQuantity(string input)
