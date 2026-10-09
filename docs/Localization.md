@@ -77,6 +77,6 @@ Built-in localization data is definition-driven. `definitions/unit-localization.
 
 Built-in locale data is tracked explicitly rather than described as all-or-nothing. `docs/LocalizationCoverage.md` is generated from the locale definitions and catalog enums. A family is marked **complete** only when every registered unit in that family has an explicit locale entry; otherwise it remains **partial**.
 
-The current Dutch locale has complete coverage for Angle, Force, Frequency, Power, Speed, Temperature, and Time. Larger families such as Length, Mass, Area, Volume, Pressure, and Energy remain intentionally marked partial until every unit has been reviewed.
+The current Dutch locale has complete coverage for Angle, Area, Energy, Force, Frequency, Power, Pressure, Speed, Temperature, and Time. Length, Mass, and Volume remain intentionally marked partial until every unit in those larger catalogs has been reviewed.
 
 CI validates both the generated runtime registrations and the coverage report, so adding a unit to a family marked complete requires adding its locale entry in the same change.
