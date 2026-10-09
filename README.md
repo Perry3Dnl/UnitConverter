@@ -10,7 +10,7 @@
 
 A high-performance standalone .NET unit conversion library with **150 conversion families** and **1,858 unit entries**, including aliases. It keeps the straightforward static/direct/numeric APIs while also providing strongly typed quantities, dimensional arithmetic, exact decimal/rational conversion, span parsing/formatting, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale number conversion.
 
-The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The packages are prepared and validated in CI but have not yet been published to nuget.org.
+The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. The packages have not yet been published to nuget.org.
 
 ## Why UnitConverter
 
@@ -102,7 +102,7 @@ Install the candidate into an existing application using the absolute path to th
 dotnet add package UnitConverter --version 2.0.0-preview.2 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
-GitHub Actions also builds the solution, runs the NUnit suite, creates the packages, and tests installation into a clean console application. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors.
+GitHub Actions also builds the solution, runs the NUnit suite, verifies the checked-in public API fingerprint baseline, creates all three packages, and installs the produced packages into clean **netstandard2.0**, **net8.0**, and **net10.0** consumers. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors. Parser abuse/fuzz tests and explicit expression-complexity limits guard malformed and adversarial input.
 
 ## Use the existing API
 
@@ -131,7 +131,7 @@ The root namespace is now `UnitConverter`. Converter class names, existing enum 
 
 UnitConverter deliberately supports multiple safety levels. Strongly typed quantities are available when compile-time dimensional safety matters, while direct methods, numeric/family converters, dynamic conversion, and low-level APIs remain supported for developers who intentionally need them. The optional `UnitConverter.Analyzers` package adds IntelliSense guidance for selected escape-hatch patterns without making those APIs unavailable.
 
-Culture-aware numeric parsing/formatting is supported through `IFormatProvider`. Localization v1 also allows culture-specific unit display names and parsing aliases while keeping symbols and enum names invariant. See [Culture and localization](docs/Localization.md) and [Analyzers](docs/Analyzers.md).
+Culture-aware numeric parsing/formatting is supported through `IFormatProvider`. Culture-specific unit display names and parsing aliases keep symbols and enum names invariant. Dutch localization is currently **complete** for Angle, Area, Energy, Force, Frequency, Power, Pressure, Speed, Temperature, and Time; Length, Mass, and Volume remain explicitly **partial** until every catalog entry has been reviewed. CI verifies generated localization data and completeness metadata. See [Culture and localization](docs/Localization.md), [Localization coverage](docs/LocalizationCoverage.md), and [Analyzers](docs/Analyzers.md).
 
 ```csharp
 double miles = UnitConverterParser.Convert("1.8 km", UnitConverterLengthUnit.Mile);
@@ -378,6 +378,12 @@ The established named quantities such as `Length<T>`, `Time<T>`, `Speed<T>`, `Fo
 Integral extensions continue to return `double` to preserve fractional results. Decimal extensions use the shared exact/rational conversion engine. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 
+## Release readiness
+
+The preview release pipeline is prepared but intentionally does **not** publish automatically. `.github/workflows/publish-nuget.yml` is manual-only, requires execution from `main`, reruns generated-source checks, public API compatibility, tests, analyzer validation, package/consumer verification, and both NativeAOT smoke applications, then uses **NuGet Trusted Publishing through GitHub OIDC** for the publish step.
+
+Before the first nuget.org publication, the remaining account/repository setup is external to the codebase: confirm ownership/availability of the three package IDs, configure the NuGet Trusted Publishing policy for this repository/workflow, and create the protected GitHub `nuget-release` environment. See [Packaging and release](docs/Developer/Packaging.md).
+
 ## License
 
 UnitConverter and `UnitConverter.SystemTextJson` are **source-available** under the **Apache License 2.0 subject to the Commons Clause License Condition v1.0**.
@@ -393,10 +399,11 @@ See [LICENSE.md](LICENSE.md) and [NOTICE](NOTICE) for the complete terms and att
 | Path | Contents |
 | --- | --- |
 | `src/UnitConverter` | Conversion library, retaining the family and unit-system folders |
-| `tests/UnitConverter.Tests` | Migrated NUnit tests and assembly checks |
+| `tests/UnitConverter.Tests` | NUnit tests, catalog-wide conformance, API contracts, localization completeness, and parser abuse/fuzz coverage |
 | `samples/UnitConverter.Demo` | Console examples of the existing APIs |
 | `docs` | API guides, supported units, migration notes, and developer documentation |
-| `scripts/verify_package.py` | Package inspection and installation check |
+| `scripts/verify_package.py` | Package inspection plus netstandard2.0/net8.0/net10.0 clean-consumer verification |
+| `tools/UnitConverter.ApiCompat` | Dependency-free public API fingerprint checker used by CI |
 
 Run the sample with:
 
@@ -413,7 +420,9 @@ dotnet run --project samples/UnitConverter.Demo --configuration Release
 - [Testing](docs/Developer/Testing.md)
 - [Conversion provenance](docs/Provenance.md)
 - [Culture and localization](docs/Localization.md)
+- [Localization coverage](docs/LocalizationCoverage.md)
 - [Analyzer guidance](docs/Analyzers.md)
-- [Packaging](docs/Developer/Packaging.md)
+- [Public API compatibility](docs/Developer/ApiCompatibility.md)
+- [Packaging and release](docs/Developer/Packaging.md)
 
 Unity inspectors, settings assets, scenes, assembly definitions, metadata files, and the shared Unity Core layer have been removed. The original Unity package remains available in [the 1.1.3 import commit](https://github.com/Perry3Dnl/UnitConverter/tree/332369313b1a428a66432e811c542562efa24e40).
