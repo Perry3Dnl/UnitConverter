@@ -467,25 +467,10 @@
             "vierkante meters"
           ]
         },
-        "SquareKilometer": {
-          "displayName": "vierkante kilometer",
+        "Are": {
+          "displayName": "are",
           "aliases": [
-            "vierkante kilometer",
-            "vierkante kilometers"
-          ]
-        },
-        "SquareFoot": {
-          "displayName": "vierkante voet",
-          "aliases": [
-            "vierkante voet",
-            "vierkante voeten"
-          ]
-        },
-        "SquareMile": {
-          "displayName": "vierkante mijl",
-          "aliases": [
-            "vierkante mijl",
-            "vierkante mijlen"
+            "are"
           ]
         },
         "Hectare": {
@@ -495,11 +480,171 @@
             "hectaren"
           ]
         },
+        "SquareKilometer": {
+          "displayName": "vierkante kilometer",
+          "aliases": [
+            "vierkante kilometer",
+            "vierkante kilometers"
+          ]
+        },
+        "SquareInch": {
+          "displayName": "vierkante inch",
+          "aliases": [
+            "vierkante inch"
+          ]
+        },
+        "SquareFoot": {
+          "displayName": "vierkante voet",
+          "aliases": [
+            "vierkante voet",
+            "vierkante voeten"
+          ]
+        },
+        "SquareYard": {
+          "displayName": "vierkante yard",
+          "aliases": [
+            "vierkante yard",
+            "vierkante yards"
+          ]
+        },
         "Acre": {
           "displayName": "acre",
           "aliases": [
             "acre",
             "acres"
+          ]
+        },
+        "SquareMile": {
+          "displayName": "vierkante mijl",
+          "aliases": [
+            "vierkante mijl",
+            "vierkante mijlen"
+          ]
+        },
+        "Rood": {
+          "displayName": "rood",
+          "aliases": [
+            "rood"
+          ]
+        },
+        "Township": {
+          "displayName": "township",
+          "aliases": [
+            "township"
+          ]
+        },
+        "Barn": {
+          "displayName": "barn",
+          "aliases": [
+            "barn"
+          ]
+        },
+        "SquareNanometer": {
+          "displayName": "vierkante nanometer",
+          "aliases": [
+            "vierkante nanometer"
+          ]
+        },
+        "SquareMicrometer": {
+          "displayName": "vierkante micrometer",
+          "aliases": [
+            "vierkante micrometer"
+          ]
+        },
+        "SquareDecimeter": {
+          "displayName": "vierkante decimeter",
+          "aliases": [
+            "vierkante decimeter"
+          ]
+        },
+        "SquareDecameter": {
+          "displayName": "vierkante decameter",
+          "aliases": [
+            "vierkante decameter"
+          ]
+        },
+        "SquareHectometer": {
+          "displayName": "vierkante hectometer",
+          "aliases": [
+            "vierkante hectometer"
+          ]
+        },
+        "SquareMegameter": {
+          "displayName": "vierkante megameter",
+          "aliases": [
+            "vierkante megameter"
+          ]
+        },
+        "SquareThou": {
+          "displayName": "vierkante thou",
+          "aliases": [
+            "vierkante thou"
+          ]
+        },
+        "CircularMil": {
+          "displayName": "circulaire mil",
+          "aliases": [
+            "circulaire mil"
+          ]
+        },
+        "SquareRod": {
+          "displayName": "vierkante rod",
+          "aliases": [
+            "vierkante rod"
+          ]
+        },
+        "SquarePole": {
+          "displayName": "vierkante pole",
+          "aliases": [
+            "vierkante pole"
+          ]
+        },
+        "SquarePerch": {
+          "displayName": "vierkante perch",
+          "aliases": [
+            "vierkante perch"
+          ]
+        },
+        "SquareChain": {
+          "displayName": "vierkante chain",
+          "aliases": [
+            "vierkante chain"
+          ]
+        },
+        "SquareFurlong": {
+          "displayName": "vierkante furlong",
+          "aliases": [
+            "vierkante furlong"
+          ]
+        },
+        "Section": {
+          "displayName": "section",
+          "aliases": [
+            "section"
+          ]
+        },
+        "Homestead": {
+          "displayName": "homestead",
+          "aliases": [
+            "homestead"
+          ]
+        },
+        "SquareLeague": {
+          "displayName": "vierkante league",
+          "aliases": [
+            "vierkante league"
+          ]
+        },
+        "Dunam": {
+          "displayName": "dunam",
+          "aliases": [
+            "dunam"
+          ]
+        },
+        "Tatami": {
+          "displayName": "tatami",
+          "aliases": [
+            "tatami"
           ]
         }
       },
@@ -605,10 +750,159 @@
             "atmosferen"
           ]
         },
+        "Torr": {
+          "displayName": "torr",
+          "aliases": [
+            "torr"
+          ]
+        },
         "MillimeterMercury": {
           "displayName": "millimeter kwik",
           "aliases": [
-            "millimeter kwik"
+            "millimeter kwik",
+            "millimeter kwikkolom"
+          ]
+        },
+        "InchMercury": {
+          "displayName": "inch kwik",
+          "aliases": [
+            "inch kwik",
+            "inch kwikkolom"
+          ]
+        },
+        "Psi": {
+          "displayName": "pondkracht per vierkante inch",
+          "aliases": [
+            "pondkracht per vierkante inch",
+            "psi"
+          ]
+        },
+        "Psf": {
+          "displayName": "pondkracht per vierkante voet",
+          "aliases": [
+            "pondkracht per vierkante voet",
+            "psf"
+          ]
+        },
+        "Barye": {
+          "displayName": "barye",
+          "aliases": [
+            "barye"
+          ]
+        },
+        "Micropascal": {
+          "displayName": "micropascal",
+          "aliases": [
+            "micropascal"
+          ]
+        },
+        "Millipascal": {
+          "displayName": "millipascal",
+          "aliases": [
+            "millipascal"
+          ]
+        },
+        "Gigapascal": {
+          "displayName": "gigapascal",
+          "aliases": [
+            "gigapascal"
+          ]
+        },
+        "TechnicalAtmosphere": {
+          "displayName": "technische atmosfeer",
+          "aliases": [
+            "technische atmosfeer",
+            "technische atmosferen"
+          ]
+        },
+        "KilogramForcePerSquareCentimeter": {
+          "displayName": "kilogramkracht per vierkante centimeter",
+          "aliases": [
+            "kilogramkracht per vierkante centimeter"
+          ]
+        },
+        "MillimeterWater": {
+          "displayName": "millimeter waterkolom",
+          "aliases": [
+            "millimeter waterkolom",
+            "millimeter water"
+          ]
+        },
+        "CentimeterWater": {
+          "displayName": "centimeter waterkolom",
+          "aliases": [
+            "centimeter waterkolom",
+            "centimeter water"
+          ]
+        },
+        "InchWater": {
+          "displayName": "inch waterkolom",
+          "aliases": [
+            "inch waterkolom",
+            "inch water"
+          ]
+        },
+        "FootWater": {
+          "displayName": "voet waterkolom",
+          "aliases": [
+            "voet waterkolom"
+          ]
+        },
+        "MeterWater": {
+          "displayName": "meter waterkolom",
+          "aliases": [
+            "meter waterkolom",
+            "meter water"
+          ]
+        },
+        "DynePerSquareCentimeter": {
+          "displayName": "dyne per vierkante centimeter",
+          "aliases": [
+            "dyne per vierkante centimeter"
+          ]
+        },
+        "KilopoundPerSquareInch": {
+          "displayName": "kilopondkracht per vierkante inch",
+          "aliases": [
+            "kilopondkracht per vierkante inch"
+          ]
+        },
+        "TonForceUSPerSquareFoot": {
+          "displayName": "Amerikaanse tonkracht per vierkante voet",
+          "aliases": [
+            "Amerikaanse tonkracht per vierkante voet"
+          ]
+        },
+        "MicronMercury": {
+          "displayName": "micron kwik",
+          "aliases": [
+            "micron kwik",
+            "micron kwikkolom"
+          ]
+        },
+        "CentimeterMercury": {
+          "displayName": "centimeter kwik",
+          "aliases": [
+            "centimeter kwik",
+            "centimeter kwikkolom"
+          ]
+        },
+        "PoundForcePerSquareYard": {
+          "displayName": "pondkracht per vierkante yard",
+          "aliases": [
+            "pondkracht per vierkante yard"
+          ]
+        },
+        "OunceForcePerSquareInch": {
+          "displayName": "ouncekracht per vierkante inch",
+          "aliases": [
+            "ouncekracht per vierkante inch"
+          ]
+        },
+        "GramForcePerSquareCentimeter": {
+          "displayName": "gramkracht per vierkante centimeter",
+          "aliases": [
+            "gramkracht per vierkante centimeter"
           ]
         }
       },
@@ -860,6 +1154,12 @@
         }
       },
       "Energy": {
+        "ElectronVolt": {
+          "displayName": "elektronvolt",
+          "aliases": [
+            "elektronvolt"
+          ]
+        },
         "Joule": {
           "displayName": "joule",
           "aliases": [
@@ -878,6 +1178,13 @@
             "megajoule"
           ]
         },
+        "WattHour": {
+          "displayName": "wattuur",
+          "aliases": [
+            "wattuur",
+            "watturen"
+          ]
+        },
         "KilowattHour": {
           "displayName": "kilowattuur",
           "aliases": [
@@ -890,6 +1197,138 @@
           "aliases": [
             "calorie",
             "calorieën"
+          ]
+        },
+        "Kilocalorie": {
+          "displayName": "kilocalorie",
+          "aliases": [
+            "kilocalorie",
+            "kilocalorieën"
+          ]
+        },
+        "BtuInternational": {
+          "displayName": "internationale BTU",
+          "aliases": [
+            "internationale BTU",
+            "internationale btu"
+          ]
+        },
+        "ThermUS": {
+          "displayName": "Amerikaanse therm",
+          "aliases": [
+            "Amerikaanse therm"
+          ]
+        },
+        "FootPound": {
+          "displayName": "foot-pound",
+          "aliases": [
+            "foot-pound"
+          ]
+        },
+        "Erg": {
+          "displayName": "erg",
+          "aliases": [
+            "erg"
+          ]
+        },
+        "TonTNT": {
+          "displayName": "ton TNT",
+          "aliases": [
+            "ton TNT",
+            "ton tnt"
+          ]
+        },
+        "Nanojoule": {
+          "displayName": "nanojoule",
+          "aliases": [
+            "nanojoule"
+          ]
+        },
+        "Microjoule": {
+          "displayName": "microjoule",
+          "aliases": [
+            "microjoule"
+          ]
+        },
+        "Millijoule": {
+          "displayName": "millijoule",
+          "aliases": [
+            "millijoule"
+          ]
+        },
+        "Gigajoule": {
+          "displayName": "gigajoule",
+          "aliases": [
+            "gigajoule"
+          ]
+        },
+        "Terajoule": {
+          "displayName": "terajoule",
+          "aliases": [
+            "terajoule"
+          ]
+        },
+        "WattSecond": {
+          "displayName": "wattseconde",
+          "aliases": [
+            "wattseconde",
+            "wattseconden"
+          ]
+        },
+        "KiloelectronVolt": {
+          "displayName": "kilo-elektronvolt",
+          "aliases": [
+            "kilo-elektronvolt"
+          ]
+        },
+        "MegaelectronVolt": {
+          "displayName": "mega-elektronvolt",
+          "aliases": [
+            "mega-elektronvolt"
+          ]
+        },
+        "GigaelectronVolt": {
+          "displayName": "giga-elektronvolt",
+          "aliases": [
+            "giga-elektronvolt"
+          ]
+        },
+        "TeraelectronVolt": {
+          "displayName": "tera-elektronvolt",
+          "aliases": [
+            "tera-elektronvolt"
+          ]
+        },
+        "HorsepowerHour": {
+          "displayName": "paardenkrachtuur",
+          "aliases": [
+            "paardenkrachtuur",
+            "paardenkrachturen"
+          ]
+        },
+        "KilogramForceMeter": {
+          "displayName": "kilogramkrachtmeter",
+          "aliases": [
+            "kilogramkrachtmeter"
+          ]
+        },
+        "Quad": {
+          "displayName": "quad",
+          "aliases": [
+            "quad"
+          ]
+        },
+        "ThermEC": {
+          "displayName": "EG-therm",
+          "aliases": [
+            "EG-therm",
+            "eg-therm"
+          ]
+        },
+        "ThermUK": {
+          "displayName": "Britse therm",
+          "aliases": [
+            "Britse therm"
           ]
         }
       },
@@ -1287,9 +1726,12 @@
   "completeFamilies": {
     "nl": [
       "Angle",
+      "Area",
+      "Energy",
       "Force",
       "Frequency",
       "Power",
+      "Pressure",
       "Speed",
       "Temperature",
       "Time"
