@@ -10,6 +10,7 @@ namespace UnitConverter
     /// </summary>
     public static class UnitConverterParser
     {
+        private const int MaxInputLength = 4096;
         public static bool TryParse<TUnit>(string input, out double value, out TUnit unit)
             where TUnit : struct
         {
@@ -219,7 +220,7 @@ namespace UnitConverter
             unitText = null;
             error = UnitConverterError.InvalidNumber;
 
-            if (string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(text) || text.Length > MaxInputLength)
             {
                 return false;
             }
@@ -277,7 +278,7 @@ namespace UnitConverter
             unitText = null;
             error = UnitConverterError.InvalidNumber;
 
-            if (string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(text) || text.Length > MaxInputLength)
             {
                 return false;
             }
