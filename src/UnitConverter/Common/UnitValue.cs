@@ -45,6 +45,14 @@ namespace UnitConverter
                     "No unit family descriptor is registered for " + typeof(TUnit).FullName + ".");
             }
 
+            if (!descriptor.TryGetUnit(unit, out _))
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(unit),
+                    unit,
+                    "Unsupported unit.");
+            }
+
             return new UnitValue<TUnit>(
                 descriptor.Convert(Value, Unit, unit),
                 unit);

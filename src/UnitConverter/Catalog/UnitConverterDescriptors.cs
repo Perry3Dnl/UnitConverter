@@ -12,6 +12,8 @@ namespace UnitConverter.Catalog
 
     public sealed class UnitConverterUnitDescriptor
     {
+        private readonly string[] _aliases;
+
         internal UnitConverterUnitDescriptor(
             object unit,
             string name,
@@ -25,7 +27,9 @@ namespace UnitConverter.Catalog
             Name = name;
             Symbol = symbol;
             DisplayName = displayName;
-            Aliases = aliases ?? new string[0];
+            _aliases = aliases == null
+                ? new string[0]
+                : (string[])aliases.Clone();
             Dimensions = dimensions;
             Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
         }
@@ -34,7 +38,8 @@ namespace UnitConverter.Catalog
         public string Name { get; }
         public string Symbol { get; }
         public string DisplayName { get; }
-        public string[] Aliases { get; }
+        public string[] Aliases => (string[])_aliases.Clone();
+        internal string[] AliasStorage => _aliases;
         public UnitConverterDimensions Dimensions { get; }
         public UnitConverterProvenance Provenance { get; }
     }
@@ -59,6 +64,34 @@ namespace UnitConverter.Catalog
         public abstract Type UnitType { get; }
         public abstract IReadOnlyList<UnitConverterUnitDescriptor> Units { get; }
 
+        public UnitConverterUnitDescriptor GetUnit(object unit)
+        {
+            UnitConverterUnitDescriptor descriptor;
+            if (!TryGetUnit(unit, out descriptor))
+            {
+                throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit.");
+            }
+
+            return descriptor;
+        }
+
+        public virtual bool TryGetUnit(
+            object unit,
+            out UnitConverterUnitDescriptor descriptor)
+        {
+            foreach (UnitConverterUnitDescriptor candidate in Units)
+            {
+                if (object.Equals(candidate.Unit, unit))
+                {
+                    descriptor = candidate;
+                    return true;
+                }
+            }
+
+            descriptor = null;
+            return false;
+        }
+
         public abstract UnitConverterUnitResolution ResolveUnit(string text, out object unit);
         public abstract double Convert(double value, object from, object to);
     }
@@ -69,6 +102,7 @@ namespace UnitConverter.Catalog
         private readonly Func<double, TUnit, TUnit, double> _convert;
         private readonly Func<TUnit, global::UnitConverter.UnitConverterRational> _getExactScale;
         private readonly UnitConverterUnitDescriptor[] _units;
+        private readonly IReadOnlyList<UnitConverterUnitDescriptor> _readOnlyUnits;
         private readonly Dictionary<TUnit, UnitConverterUnitDescriptor> _unitsByValue;
         private readonly Dictionary<string, TUnit> _exactAliases;
         private readonly Dictionary<string, TUnit> _ignoreCaseAliases;
@@ -165,6 +199,7 @@ namespace UnitConverter.Catalog
             }
 
             _units = units.ToArray();
+            _readOnlyUnits = Array.AsReadOnly(_units);
             _dimensions = firstDimensions ?? UnitConverterDimensions.Dimensionless;
             _hasUniformDimensions = uniformDimensions;
         }
@@ -172,7 +207,7 @@ namespace UnitConverter.Catalog
         public override UnitConverterDimensions Dimensions => _dimensions;
         public override bool HasUniformDimensions => _hasUniformDimensions;
         public override Type UnitType => typeof(TUnit);
-        public override IReadOnlyList<UnitConverterUnitDescriptor> Units => _units;
+        public override IReadOnlyList<UnitConverterUnitDescriptor> Units => _readOnlyUnits;
 
         public bool TryResolveUnit(string text, out TUnit unit)
         {
@@ -247,6 +282,19 @@ namespace UnitConverter.Catalog
         public bool TryGetUnit(TUnit unit, out UnitConverterUnitDescriptor descriptor)
         {
             return _unitsByValue.TryGetValue(unit, out descriptor);
+        }
+
+        public override bool TryGetUnit(
+            object unit,
+            out UnitConverterUnitDescriptor descriptor)
+        {
+            if (unit is TUnit)
+            {
+                return _unitsByValue.TryGetValue((TUnit)unit, out descriptor);
+            }
+
+            descriptor = null;
+            return false;
         }
 
         public override UnitConverterUnitResolution ResolveUnit(string text, out object unit)

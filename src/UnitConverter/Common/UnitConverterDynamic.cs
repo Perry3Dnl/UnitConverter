@@ -55,7 +55,8 @@ namespace UnitConverter
                 return TryConvertDetectedCandidate(
                     detection.Value,
                     candidate,
-                    toUnit);
+                    toUnit,
+                    formatProvider ?? CultureInfo.InvariantCulture);
             }
 
             UnitConverterUnitCandidate selected = null;
@@ -65,8 +66,10 @@ namespace UnitConverter
                 object ignored;
                 UnitConverterCustomUnit ignoredCustom;
                 bool builtInTarget =
-                    candidate.Family.ResolveUnit(
+                    ResolveBuiltInUnit(
+                        candidate.Family,
                         toUnit,
+                        formatProvider ?? CultureInfo.InvariantCulture,
                         out ignored) == UnitConverterUnitResolution.Resolved;
                 bool customTarget =
                     UnitConverterCustomUnits.Resolve(
@@ -101,7 +104,8 @@ namespace UnitConverter
             return TryConvertDetectedCandidate(
                 detection.Value,
                 selected,
-                toUnit);
+                toUnit,
+                formatProvider ?? CultureInfo.InvariantCulture);
         }
 
         public static double Convert(
@@ -156,6 +160,21 @@ namespace UnitConverter
             string fromUnit,
             string toUnit)
         {
+            return TryConvert(
+                value,
+                family,
+                fromUnit,
+                toUnit,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            double value,
+            UnitConverterFamily family,
+            string fromUnit,
+            string toUnit,
+            IFormatProvider formatProvider)
+        {
             UnitConverterFamilyDescriptor descriptor;
             if (!UnitConverterCatalog.TryGetFamily(family, out descriptor))
             {
@@ -167,14 +186,22 @@ namespace UnitConverter
 
             object fromBuiltIn;
             UnitConverterUnitResolution fromBuiltInResolution =
-                descriptor.ResolveUnit(fromUnit, out fromBuiltIn);
+                ResolveBuiltInUnit(
+                    descriptor,
+                    fromUnit,
+                    formatProvider,
+                    out fromBuiltIn);
             UnitConverterCustomUnit fromCustom;
             UnitConverterUnitResolution fromCustomResolution =
                 UnitConverterCustomUnits.Resolve(family, fromUnit, out fromCustom);
 
             object toBuiltIn;
             UnitConverterUnitResolution toBuiltInResolution =
-                descriptor.ResolveUnit(toUnit, out toBuiltIn);
+                ResolveBuiltInUnit(
+                    descriptor,
+                    toUnit,
+                    formatProvider,
+                    out toBuiltIn);
             UnitConverterCustomUnit toCustom;
             UnitConverterUnitResolution toCustomResolution =
                 UnitConverterCustomUnits.Resolve(family, toUnit, out toCustom);
@@ -186,7 +213,8 @@ namespace UnitConverter
                     fromUnit,
                     fromBuiltInResolution,
                     fromCustomResolution,
-                    "source");
+                    "source",
+                    formatProvider);
 
             if (!fromFailure.Success &&
                 fromFailure.Error != UnitConverterError.None)
@@ -201,7 +229,8 @@ namespace UnitConverter
                     toUnit,
                     toBuiltInResolution,
                     toCustomResolution,
-                    "target");
+                    "target",
+                    formatProvider);
 
             if (!toFailure.Success &&
                 toFailure.Error != UnitConverterError.None)
@@ -233,12 +262,6 @@ namespace UnitConverter
                 }
                 else
                 {
-                    converted = UnitConverterCustomUnits.Convert(
-                        value,
-                        family,
-                        fromUnit,
-                        toUnit);
-
                     if (sourceIsBuiltIn)
                     {
                         fromDescriptor =
@@ -250,6 +273,12 @@ namespace UnitConverter
                         toDescriptor =
                             FindUnitDescriptor(descriptor, toBuiltIn);
                     }
+
+                    converted = UnitConverterCustomUnits.Convert(
+                        value,
+                        family,
+                        sourceIsBuiltIn ? fromDescriptor.Name : fromUnit,
+                        targetIsBuiltIn ? toDescriptor.Name : toUnit);
                 }
 
                 return UnitConverterDynamicResult.Ok(
@@ -315,7 +344,7 @@ namespace UnitConverter
                         : "The numeric value could not be parsed.");
             }
 
-            return TryConvert(value, family, fromUnit, toUnit);
+            return TryConvert(value, family, fromUnit, toUnit, formatProvider ?? CultureInfo.InvariantCulture);
         }
 
         public static UnitConverterDynamicResult TryConvert(
@@ -324,6 +353,21 @@ namespace UnitConverter
             string fromUnit,
             string toUnit)
         {
+            return TryConvert(
+                value,
+                familyName,
+                fromUnit,
+                toUnit,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            double value,
+            string familyName,
+            string fromUnit,
+            string toUnit,
+            IFormatProvider formatProvider)
+        {
             UnitConverterFamilyDescriptor descriptor;
             if (!UnitConverterCatalog.TryGetFamily(familyName, out descriptor))
             {
@@ -333,7 +377,12 @@ namespace UnitConverter
                     "The unit family '" + familyName + "' is not registered.");
             }
 
-            return TryConvert(value, descriptor.Family, fromUnit, toUnit);
+            return TryConvert(
+                value,
+                descriptor.Family,
+                fromUnit,
+                toUnit,
+                formatProvider ?? CultureInfo.InvariantCulture);
         }
 
         public static UnitConverterDynamicResult TryConvert(
@@ -341,6 +390,19 @@ namespace UnitConverter
             string familyName,
             string toUnit)
         {
+            return TryConvert(
+                input,
+                familyName,
+                toUnit,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterDynamicResult TryConvert(
+            string input,
+            string familyName,
+            string toUnit,
+            IFormatProvider formatProvider)
+        {
             UnitConverterFamilyDescriptor descriptor;
             if (!UnitConverterCatalog.TryGetFamily(familyName, out descriptor))
             {
@@ -350,14 +412,19 @@ namespace UnitConverter
                     "The unit family '" + familyName + "' is not registered.");
             }
 
-            return TryConvert(input, descriptor.Family, toUnit);
+            return TryConvert(
+                input,
+                descriptor.Family,
+                toUnit,
+                formatProvider ?? CultureInfo.InvariantCulture);
         }
 
 
         private static UnitConverterDynamicResult TryConvertDetectedCandidate(
             double value,
             UnitConverterUnitCandidate candidate,
-            string toUnit)
+            string toUnit,
+            IFormatProvider formatProvider)
         {
             if (candidate.IsCustom)
             {
@@ -365,7 +432,8 @@ namespace UnitConverter
                     value,
                     candidate.Family.Family,
                     candidate.CustomUnit.Name,
-                    toUnit);
+                    toUnit,
+                    formatProvider);
             }
 
             UnitConverterCustomUnit customTarget;
@@ -381,12 +449,17 @@ namespace UnitConverter
                     value,
                     candidate.Family.Family,
                     candidate.Unit.Name,
-                    toUnit);
+                    toUnit,
+                    formatProvider);
             }
 
             object target;
             UnitConverterUnitResolution resolution =
-                candidate.Family.ResolveUnit(toUnit, out target);
+                ResolveBuiltInUnit(
+                    candidate.Family,
+                    toUnit,
+                    formatProvider,
+                    out target);
 
             if (resolution == UnitConverterUnitResolution.Ambiguous ||
                 customResolution == UnitConverterUnitResolution.Ambiguous)
@@ -429,13 +502,35 @@ namespace UnitConverter
             }
         }
 
+        private static UnitConverterUnitResolution ResolveBuiltInUnit(
+            UnitConverterFamilyDescriptor descriptor,
+            string text,
+            IFormatProvider formatProvider,
+            out object unit)
+        {
+            UnitConverterUnitResolution resolution =
+                descriptor.ResolveUnit(text, out unit);
+
+            if (resolution != UnitConverterUnitResolution.Unknown)
+            {
+                return resolution;
+            }
+
+            return UnitConverterLocalization.ResolveUnit(
+                descriptor.UnitType,
+                text,
+                formatProvider ?? CultureInfo.InvariantCulture,
+                out unit);
+        }
+
         private static UnitConverterDynamicResult GetEndpointFailure(
             UnitConverterFamilyDescriptor descriptor,
             UnitConverterFamily family,
             string unitText,
             UnitConverterUnitResolution builtInResolution,
             UnitConverterUnitResolution customResolution,
-            string role)
+            string role,
+            IFormatProvider formatProvider)
         {
             if (builtInResolution == UnitConverterUnitResolution.Ambiguous ||
                 customResolution == UnitConverterUnitResolution.Ambiguous)
@@ -467,7 +562,7 @@ namespace UnitConverter
                 return default(UnitConverterDynamicResult);
             }
 
-            if (ExistsInAnotherFamily(descriptor, unitText))
+            if (ExistsInAnotherFamily(descriptor, unitText, formatProvider))
             {
                 return UnitConverterDynamicResult.Fail(
                     family,
@@ -503,7 +598,7 @@ namespace UnitConverter
                     "The " + role + " unit '" + unitText + "' is ambiguous in " + descriptor.Name + ".");
             }
 
-            if (ExistsInAnotherFamily(descriptor, unitText))
+            if (ExistsInAnotherFamily(descriptor, unitText, CultureInfo.InvariantCulture))
             {
                 return UnitConverterDynamicResult.Fail(
                     family,
@@ -519,7 +614,8 @@ namespace UnitConverter
 
         private static bool ExistsInAnotherFamily(
             UnitConverterFamilyDescriptor requestedFamily,
-            string unitText)
+            string unitText,
+            IFormatProvider formatProvider)
         {
             foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
             {
@@ -529,7 +625,11 @@ namespace UnitConverter
                 }
 
                 object ignored;
-                if (family.ResolveUnit(unitText, out ignored) != UnitConverterUnitResolution.Unknown)
+                if (ResolveBuiltInUnit(
+                    family,
+                    unitText,
+                    formatProvider,
+                    out ignored) != UnitConverterUnitResolution.Unknown)
                 {
                     return true;
                 }
@@ -542,15 +642,10 @@ namespace UnitConverter
             UnitConverterFamilyDescriptor family,
             object unit)
         {
-            foreach (UnitConverterUnitDescriptor descriptor in family.Units)
-            {
-                if (object.Equals(descriptor.Unit, unit))
-                {
-                    return descriptor;
-                }
-            }
-
-            return null;
+            UnitConverterUnitDescriptor descriptor;
+            return family.TryGetUnit(unit, out descriptor)
+                ? descriptor
+                : null;
         }
     }
 }

@@ -21,7 +21,11 @@ namespace UnitConverter
             Name = name;
             Symbol = symbol;
             DisplayName = displayName;
-            Aliases = aliases ?? new string[0];
+            string[] aliasSnapshot =
+                aliases == null
+                    ? new string[0]
+                    : (string[])aliases.Clone();
+            Aliases = Array.AsReadOnly(aliasSnapshot);
             ReferenceUnit = referenceUnit;
             Dimensions = dimensions;
             ScaleToReference = scaleToReference;
@@ -616,15 +620,10 @@ namespace UnitConverter
             UnitConverterFamilyDescriptor family,
             object unit)
         {
-            foreach (UnitConverterUnitDescriptor descriptor in family.Units)
-            {
-                if (object.Equals(descriptor.Unit, unit))
-                {
-                    return descriptor;
-                }
-            }
-
-            return null;
+            UnitConverterUnitDescriptor descriptor;
+            return family.TryGetUnit(unit, out descriptor)
+                ? descriptor
+                : null;
         }
 
         private static void EnsureSameFamily(

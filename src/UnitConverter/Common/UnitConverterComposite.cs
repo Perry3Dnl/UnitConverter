@@ -188,17 +188,17 @@ namespace UnitConverter
                 return false;
             }
 
+            string normalized = Normalize(expression.Trim());
             bool cacheEligible = !UnitConverterCustomUnits.HasUnits;
             UnitConverterUnitExpression[] cached;
             if (cacheEligible &&
-                BuiltInCandidateCache.TryGetValue(expression, out cached))
+                BuiltInCandidateCache.TryGetValue(normalized, out cached))
             {
                 candidates = cached;
                 error = UnitConverterError.None;
                 return true;
             }
 
-            string normalized = Normalize(expression);
             var parser = new Parser(normalized);
             List<UnitConverterUnitExpression> parsed;
 
@@ -216,7 +216,7 @@ namespace UnitConverter
                 BuiltInCandidateCache.Count < MaxCachedBuiltInExpressions)
             {
                 candidates = BuiltInCandidateCache.GetOrAdd(
-                    expression,
+                    normalized,
                     candidates);
             }
 

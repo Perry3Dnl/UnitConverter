@@ -1,5 +1,6 @@
 namespace UnitConverter.Tests
 {
+    using System.Globalization;
     using NUnit.Framework;
     using UnitConverter.Catalog;
 
@@ -144,6 +145,47 @@ namespace UnitConverter.Tests
         }
 
         [Test]
+        public void DynamicConversion_MixesLocalizedBuiltInAndCustomUnits()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("nl-NL");
+            UnitConverterCustomUnit perryLength =
+                UnitConverterCustomUnits.RegisterLinear(
+                    UnitConverterFamily.Length,
+                    "PerryLength",
+                    "perryLength",
+                    "Meter",
+                    2d);
+
+            UnitConverterDynamicResult fromLocalized =
+                UnitConverterDynamic.TryConvert(
+                    1d,
+                    UnitConverterFamily.Length,
+                    "voet",
+                    "perryLength",
+                    culture);
+
+            Assert.That(fromLocalized.Success, Is.True);
+            Assert.That(
+                fromLocalized.Value,
+                Is.EqualTo(0.1524d).Within(1e-12d));
+
+            UnitConverterDynamicResult toLocalized =
+                UnitConverterDynamic.TryConvert(
+                    1d,
+                    UnitConverterFamily.Length,
+                    "perryLength",
+                    "voet",
+                    culture);
+
+            Assert.That(toLocalized.Success, Is.True);
+            Assert.That(
+                toLocalized.Value,
+                Is.EqualTo(2d / 0.3048d).Within(1e-12d));
+            Assert.That(toLocalized.CustomFromUnit, Is.SameAs(perryLength));
+            Assert.That(toLocalized.ToUnit.Name, Is.EqualTo("Foot"));
+        }
+
+        [Test]
         public void GlobalDetection_FindsCustomUnit()
         {
             UnitConverterCustomUnit perryLength =
@@ -160,6 +202,42 @@ namespace UnitConverter.Tests
             Assert.That(result.Success, Is.True);
             Assert.That(result.Candidate.IsCustom, Is.True);
             Assert.That(result.Candidate.CustomUnit, Is.SameAs(perryLength));
+        }
+
+        [Test]
+        public void GlobalDetection_LocalizedBuiltInAndCustomAliasCollisionIsAmbiguous()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("nl-NL");
+
+            UnitConverterCustomUnits.RegisterLinear(
+                UnitConverterFamily.Time,
+                "CustomMileWord",
+                "mijl",
+                "Second",
+                2d);
+
+            UnitConverterDetectionResult result =
+                UnitConverterDetector.Detect(
+                    "2 mijl",
+                    culture);
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(
+                result.Status,
+                Is.EqualTo(UnitConverterDetectionStatus.Ambiguous));
+            Assert.That(
+                result.Candidates,
+                Has.Some.Matches<UnitConverterUnitCandidate>(
+                    candidate =>
+                        candidate.IsCustom &&
+                        candidate.CustomUnit.Name == "CustomMileWord"));
+            Assert.That(
+                result.Candidates,
+                Has.Some.Matches<UnitConverterUnitCandidate>(
+                    candidate =>
+                        !candidate.IsCustom &&
+                        candidate.Family.Family == UnitConverterFamily.Length &&
+                        candidate.Unit.Name == "Mile"));
         }
 
         [Test]

@@ -1,5 +1,6 @@
 namespace UnitConverter.Tests
 {
+    using System.Globalization;
     using NUnit.Framework;
     using UnitConverter.Catalog;
     using UnitConverter.Length;
@@ -37,6 +38,64 @@ namespace UnitConverter.Tests
                 UnitConverterLengthUnit.Mile);
 
             Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void DynamicFamilyConversion_ResolvesLocalizedSourceAndTarget()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("nl-NL");
+
+            UnitConverterDynamicResult result =
+                UnitConverterDynamic.TryConvert(
+                    "1,0 mijl",
+                    UnitConverterFamily.Length,
+                    "voet",
+                    culture);
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(result.Value, Is.EqualTo(5280d).Within(1e-9d));
+            Assert.That(result.FromUnit.Name, Is.EqualTo("Mile"));
+            Assert.That(result.ToUnit.Name, Is.EqualTo("Foot"));
+        }
+
+        [Test]
+        public void DynamicFamilyNameRoute_PreservesLocalizationProvider()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("nl-NL");
+
+            UnitConverterDynamicResult result =
+                UnitConverterDynamic.TryConvert(
+                    "1,0 mijl",
+                    "length",
+                    "voet",
+                    culture);
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(result.Value, Is.EqualTo(5280d).Within(1e-9d));
+        }
+
+        [Test]
+        public void GlobalDetection_UsesLocalizedAliasAsFallback()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("nl-NL");
+
+            UnitConverterDetectionResult detection =
+                UnitConverterDetector.Detect(
+                    "1,0 mijl",
+                    culture);
+
+            Assert.That(detection.Success, Is.True);
+            Assert.That(detection.Candidate.Family.Family, Is.EqualTo(UnitConverterFamily.Length));
+            Assert.That(detection.Candidate.Unit.Name, Is.EqualTo("Mile"));
+
+            UnitConverterDynamicResult converted =
+                UnitConverterDynamic.TryConvert(
+                    "1,0 mijl",
+                    "voet",
+                    culture);
+
+            Assert.That(converted.Success, Is.True);
+            Assert.That(converted.Value, Is.EqualTo(5280d).Within(1e-9d));
         }
 
         [Test]

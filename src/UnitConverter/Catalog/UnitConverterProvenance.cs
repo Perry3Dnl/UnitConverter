@@ -40,7 +40,11 @@ namespace UnitConverter.Catalog
         {
             Status = status;
             Note = note;
-            Sources = sources ?? new UnitConverterProvenanceSource[0];
+            UnitConverterProvenanceSource[] snapshot =
+                sources == null
+                    ? new UnitConverterProvenanceSource[0]
+                    : (UnitConverterProvenanceSource[])sources.Clone();
+            Sources = Array.AsReadOnly(snapshot);
         }
 
         public UnitConverterProvenanceStatus Status { get; }

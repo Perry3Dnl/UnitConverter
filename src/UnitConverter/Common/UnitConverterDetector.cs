@@ -157,17 +157,33 @@ namespace UnitConverter
                         : "The numeric value could not be parsed.");
             }
 
-            return DetectUnit(value, unitText);
+            return DetectUnit(
+                value,
+                unitText,
+                formatProvider ?? CultureInfo.InvariantCulture);
         }
 
         public static UnitConverterDetectionResult DetectUnit(string unitText)
         {
-            return DetectUnit(0d, unitText);
+            return DetectUnit(
+                unitText,
+                CultureInfo.InvariantCulture);
+        }
+
+        public static UnitConverterDetectionResult DetectUnit(
+            string unitText,
+            IFormatProvider formatProvider)
+        {
+            return DetectUnit(
+                0d,
+                unitText,
+                formatProvider ?? CultureInfo.InvariantCulture);
         }
 
         private static UnitConverterDetectionResult DetectUnit(
             double value,
-            string unitText)
+            string unitText,
+            IFormatProvider formatProvider)
         {
             if (string.IsNullOrWhiteSpace(unitText))
             {
@@ -184,20 +200,13 @@ namespace UnitConverter
                     candidateText,
                     StringComparison.Ordinal);
 
-            if (exact.Count == 1)
+            if (exact.Count > 0)
             {
-                return UnitConverterDetectionResult.Resolved(
+                return FinalizeCandidatesWithLocalization(
                     value,
                     candidateText,
-                    exact);
-            }
-
-            if (exact.Count > 1)
-            {
-                return UnitConverterDetectionResult.Ambiguous(
-                    value,
-                    candidateText,
-                    exact);
+                    exact,
+                    formatProvider);
             }
 
             IReadOnlyList<UnitConverterUnitCandidate> ignoreCase =
@@ -206,25 +215,174 @@ namespace UnitConverter
                     candidateText,
                     StringComparison.OrdinalIgnoreCase);
 
-            if (ignoreCase.Count == 1)
+            if (ignoreCase.Count > 0)
             {
-                return UnitConverterDetectionResult.Resolved(
+                return FinalizeCandidatesWithLocalization(
                     value,
                     candidateText,
-                    ignoreCase);
+                    ignoreCase,
+                    formatProvider);
             }
 
-            if (ignoreCase.Count > 1)
+            bool localizedAmbiguous;
+            IReadOnlyList<UnitConverterUnitCandidate> localized =
+                GetLocalizedCandidates(
+                    candidateText,
+                    formatProvider,
+                    out localizedAmbiguous);
+
+            if (localizedAmbiguous || localized.Count > 1)
             {
                 return UnitConverterDetectionResult.Ambiguous(
                     value,
                     candidateText,
-                    ignoreCase);
+                    localized);
+            }
+
+            if (localized.Count == 1)
+            {
+                return UnitConverterDetectionResult.Resolved(
+                    value,
+                    candidateText,
+                    localized);
             }
 
             return UnitConverterDetectionResult.Fail(
                 UnitConverterError.UnknownUnit,
                 "The unit '" + candidateText + "' is not recognized.");
+        }
+
+        private static UnitConverterDetectionResult FinalizeCandidatesWithLocalization(
+            double value,
+            string text,
+            IReadOnlyList<UnitConverterUnitCandidate> primary,
+            IFormatProvider formatProvider)
+        {
+            bool hasBuiltIn = false;
+            for (int index = 0; index < primary.Count; index++)
+            {
+                if (!primary[index].IsCustom)
+                {
+                    hasBuiltIn = true;
+                    break;
+                }
+            }
+
+            // Invariant built-in aliases keep their existing precedence. A custom-only
+            // match, however, must still be checked against culture-specific built-ins.
+            if (hasBuiltIn)
+            {
+                return primary.Count == 1
+                    ? UnitConverterDetectionResult.Resolved(value, text, primary)
+                    : UnitConverterDetectionResult.Ambiguous(value, text, primary);
+            }
+
+            bool localizedAmbiguous;
+            IReadOnlyList<UnitConverterUnitCandidate> localized =
+                GetLocalizedCandidates(
+                    text,
+                    formatProvider,
+                    out localizedAmbiguous);
+
+            if (localized.Count == 0 && !localizedAmbiguous)
+            {
+                return primary.Count == 1
+                    ? UnitConverterDetectionResult.Resolved(value, text, primary)
+                    : UnitConverterDetectionResult.Ambiguous(value, text, primary);
+            }
+
+            var combined =
+                new List<UnitConverterUnitCandidate>(
+                    primary.Count + localized.Count);
+
+            for (int index = 0; index < primary.Count; index++)
+            {
+                combined.Add(primary[index]);
+            }
+
+            for (int index = 0; index < localized.Count; index++)
+            {
+                combined.Add(localized[index]);
+            }
+
+            IReadOnlyList<UnitConverterUnitCandidate> result =
+                combined.AsReadOnly();
+
+            return UnitConverterDetectionResult.Ambiguous(
+                value,
+                text,
+                result);
+        }
+
+        private static IReadOnlyList<UnitConverterUnitCandidate> GetLocalizedCandidates(
+            string text,
+            IFormatProvider formatProvider,
+            out bool ambiguous)
+        {
+            ambiguous = false;
+            var matches = new List<UnitConverterUnitCandidate>();
+
+            foreach (UnitConverterFamilyDescriptor family in UnitConverterCatalog.GetFamilies())
+            {
+                object resolved;
+                UnitConverterUnitResolution resolution =
+                    UnitConverterLocalization.ResolveUnit(
+                        family.UnitType,
+                        text,
+                        formatProvider,
+                        out resolved);
+
+                if (resolution == UnitConverterUnitResolution.Ambiguous)
+                {
+                    ambiguous = true;
+                    continue;
+                }
+
+                if (resolution != UnitConverterUnitResolution.Resolved)
+                {
+                    continue;
+                }
+
+                UnitConverterUnitDescriptor descriptor =
+                    FindUnitDescriptor(family, resolved);
+                if (descriptor == null)
+                {
+                    continue;
+                }
+
+                bool alreadyAdded = false;
+                foreach (UnitConverterUnitCandidate existing in matches)
+                {
+                    if (existing.Family.Family == family.Family &&
+                        object.Equals(existing.Unit.Unit, descriptor.Unit))
+                    {
+                        alreadyAdded = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyAdded)
+                {
+                    matches.Add(
+                        new UnitConverterUnitCandidate(
+                            family,
+                            descriptor));
+                }
+            }
+
+            return matches.Count == 0
+                ? EmptyCandidates
+                : matches.AsReadOnly();
+        }
+
+        private static UnitConverterUnitDescriptor FindUnitDescriptor(
+            UnitConverterFamilyDescriptor family,
+            object unit)
+        {
+            UnitConverterUnitDescriptor descriptor;
+            return family.TryGetUnit(unit, out descriptor)
+                ? descriptor
+                : null;
         }
 
         private static IReadOnlyList<UnitConverterUnitCandidate> GetCandidates(
@@ -277,7 +435,7 @@ namespace UnitConverter
                     var candidate =
                         new UnitConverterUnitCandidate(family, unit);
 
-                    foreach (string alias in unit.Aliases)
+                    foreach (string alias in unit.AliasStorage)
                     {
                         if (string.IsNullOrWhiteSpace(alias))
                         {

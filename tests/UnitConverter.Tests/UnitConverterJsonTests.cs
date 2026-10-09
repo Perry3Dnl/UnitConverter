@@ -78,6 +78,16 @@ namespace UnitConverter.Tests
                     CreateOptions()));
         }
 
+        [TestCase("{\"value\":\"2\",\"unit\":\"km\"}")]
+        [TestCase("{\"value\":2,\"unit\":2}")]
+        public void UnitValue_Deserializer_RejectsWrongPropertyTypes(string json)
+        {
+            Assert.Throws<JsonException>(() =>
+                JsonSerializer.Deserialize<UnitValue<UnitConverterLengthUnit>>(
+                    json,
+                    CreateOptions()));
+        }
+
         [Test]
         public void EveryCatalogUnit_RoundTripsWithStableEnumName()
         {

@@ -44,6 +44,15 @@ namespace UnitConverter
                 throw new ArgumentOutOfRangeException(nameof(unit), unit, "Unsupported unit.");
             }
 
+            ValidateAgainstInvariantCatalog(family, unit, displayName);
+            if (aliases != null)
+            {
+                for (int index = 0; index < aliases.Length; index++)
+                {
+                    ValidateAgainstInvariantCatalog(family, unit, aliases[index]);
+                }
+            }
+
             string cultureName = NormalizeCultureName(culture);
             lock (Sync)
             {
@@ -154,6 +163,51 @@ namespace UnitConverter
             }
         }
 
+        internal static UnitConverterUnitResolution ResolveUnit(
+            Type unitType,
+            string text,
+            IFormatProvider formatProvider,
+            out object unit)
+        {
+            unit = null;
+            if (unitType == null || string.IsNullOrWhiteSpace(text))
+            {
+                return UnitConverterUnitResolution.Unknown;
+            }
+
+            CultureInfo culture = GetCulture(formatProvider);
+            lock (Sync)
+            {
+                Dictionary<string, CultureTable> byCulture;
+                if (!Tables.TryGetValue(unitType, out byCulture))
+                {
+                    return UnitConverterUnitResolution.Unknown;
+                }
+
+                string candidate = text.Trim();
+                foreach (string cultureName in EnumerateCultureFallbacks(culture))
+                {
+                    CultureTable table;
+                    if (!byCulture.TryGetValue(cultureName, out table))
+                    {
+                        continue;
+                    }
+
+                    if (table.AmbiguousAliases.Contains(candidate))
+                    {
+                        return UnitConverterUnitResolution.Ambiguous;
+                    }
+
+                    if (table.Aliases.TryGetValue(candidate, out unit))
+                    {
+                        return UnitConverterUnitResolution.Resolved;
+                    }
+                }
+            }
+
+            return UnitConverterUnitResolution.Unknown;
+        }
+
         private static UnitConverterUnitResolution ResolveUnitLocked<TUnit>(
             string text,
             CultureInfo culture,
@@ -241,6 +295,38 @@ namespace UnitConverter
         private static string NormalizeCultureName(CultureInfo culture)
         {
             return culture == CultureInfo.InvariantCulture ? string.Empty : culture.Name;
+        }
+
+        private static void ValidateAgainstInvariantCatalog<TUnit>(
+            UnitConverterFamilyDescriptor<TUnit> family,
+            TUnit unit,
+            string alias)
+            where TUnit : struct
+        {
+            if (string.IsNullOrWhiteSpace(alias))
+            {
+                return;
+            }
+
+            TUnit builtIn;
+            UnitConverterUnitResolution resolution =
+                family.ResolveUnit(alias, out builtIn);
+
+            if (resolution == UnitConverterUnitResolution.Unknown)
+            {
+                return;
+            }
+
+            if (resolution == UnitConverterUnitResolution.Resolved &&
+                EqualityComparer<TUnit>.Default.Equals(builtIn, unit))
+            {
+                return;
+            }
+
+            throw new InvalidOperationException(
+                "The localized alias '" + alias.Trim() +
+                "' conflicts with an invariant unit alias in " +
+                family.Name + ".");
         }
 
         private static void AddAlias<TUnit>(CultureTable table, string alias, TUnit unit)
