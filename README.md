@@ -412,6 +412,26 @@ at another magnitude; this API deliberately fixes the mapping to make
 saved values and round-trips unambiguous. Neither short notation alters
 the independent, reversible Ginor-generated naming grammar.
 
+Ginor also provides its own **reversible short addresses**:
+
+```csharp
+var position = GeneratedNumberNames.Parse("ginozillion");
+string readable = GinorNotation.ToShortName(position); // "G2:4:1"
+string compact = GinorNotation.ToCompactName(position); // canonical base-62
+
+var restored = GinorNotation.ParseShortName(readable);
+var address = GinorNotation.ParseCompactName(compact);
+string original = GeneratedNumberNames.GetName(restored); // "ginozillion"
+```
+
+Readable Ginor coordinates use `G{layer}:{magnitude}:{coefficient}`
+or `G-{layer}:{magnitude}:{coefficient}` for tiny scales. Folded
+addresses append `:F{foldDepth}`. The smaller `G~`-prefixed
+representation encodes the same coordinates using canonical base-62.
+Use `ParseShortAddress` or `ParseCompactName` to preserve folding.
+These are **name addresses**, not guarantees that all higher-layer or
+folded values can be materialized as numbers.
+
 ## Release readiness
 
 The preview release pipeline is prepared but intentionally does **not** publish automatically. `.github/workflows/publish-nuget.yml` is manual-only, requires execution from `main`, reruns generated-source checks, public API compatibility, tests, analyzer validation, package/consumer verification, and both NativeAOT smoke applications, then uses **NuGet Trusted Publishing through GitHub OIDC** for the publish step.
