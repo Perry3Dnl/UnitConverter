@@ -34,7 +34,21 @@ jobs:
       - name: Verify decimal precision routes
         run: python scripts/verify_decimal_precision.py
       - name: Verify public API compatibility baseline
-        run: dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release -- --check
+        shell: bash
+        run: |
+          set +e
+          dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release -- --check 2>&1 | tee api-compat-check.log
+          result=${PIPESTATUS[0]}
+          if [ "$result" -ne 0 ]; then
+            {
+              echo '### Public API compatibility failure'
+              echo 'Full check output:'
+              echo '```text'
+              tail -n 100 api-compat-check.log
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$result"
       - name: Restore
         run: dotnet restore UnitConverter.sln
       - name: Build
