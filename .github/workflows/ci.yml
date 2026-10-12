@@ -82,6 +82,13 @@ jobs:
           name: nuget-packages
           path: artifacts/packages/*nupkg
           if-no-files-found: error
+      - name: Upload API compatibility diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: api-compat-diagnostics
+          path: api-compat-check.log
+          if-no-files-found: ignore
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
