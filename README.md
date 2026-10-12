@@ -382,6 +382,36 @@ The established named quantities such as `Length<T>`, `Time<T>`, `Speed<T>`, `Fo
 Integral extensions continue to return `double` to preserve fractional results. Decimal extensions use the shared exact/rational conversion engine. The legacy `PixelPerUnityUnit` entry remains a numeric compatibility alias with its original one-unit-equals-one-metre convention.
 
 
+## Short numbers: conventional, gaming, and Ginor
+
+UnitConverter offers independent numeric notation APIs in `UnitConverter.Numbers`.
+All parsed values use the same exact `ArbitraryScaleNumber` representation.
+
+```csharp
+using UnitConverter.Numbers;
+
+var conventional = CompactNumberNotation.Parse("2.5B");  // 2.5e9
+var gaming = GamingNumberNotation.Parse("1.25aa");         // 1.25e114
+var ginor = ArbitraryScaleNumber.Parse("1 ginozillion"); // 1e10000
+
+string display = CompactNumberNotation.Format(conventional); // 2.5B
+string gameText = GamingNumberNotation.Format(gaming);       // 1.25aa
+string ginorText = ginor.ToScientific();                     // 1e10000
+```
+
+Conventional suffixes are case-sensitive: `K` (10^3), `M` (10^6), `B` (10^9),
+`T` (10^12), `Qa`, `Qi`, `Sx`, `Sp`, `Oc`, `No`, `Dc` (10^33). In particular,
+lowercase `m` is **not** treated as million; SI uses it for milli.
+Above `Dc`, conventional formatting falls back to scientific notation.
+
+Gaming notation is an **explicit optional convention**: `a` = 10^36,
+`b` = 10^39, ... `z` = 10^111, `aa` = 10^114,
+`ab` = 10^117, and so on with bijective base-26 lettering.
+Gaming suffixes must be lowercase. Some games start their letter sequence
+at another magnitude; this API deliberately fixes the mapping to make
+saved values and round-trips unambiguous. Neither short notation alters
+the independent, reversible Ginor-generated naming grammar.
+
 ## Release readiness
 
 The preview release pipeline is prepared but intentionally does **not** publish automatically. `.github/workflows/publish-nuget.yml` is manual-only, requires execution from `main`, reruns generated-source checks, public API compatibility, tests, analyzer validation, package/consumer verification, and both NativeAOT smoke applications, then uses **NuGet Trusted Publishing through GitHub OIDC** for the publish step.
