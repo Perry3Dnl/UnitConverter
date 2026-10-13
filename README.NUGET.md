@@ -14,7 +14,7 @@ UnitTools includes **150 conversion families**, **1,858 registered units**, and 
 | `UnitTools.SystemTextJson` | Optional `System.Text.Json` support for typed unit values |
 | `UnitTools.Analyzers` | Optional Roslyn compile-time guidance |
 
-All three packages ship with the **same version**, currently **1.0.1**. Install only the parts you need.
+All three packages ship with the **same version**, currently **1.0.2**. Install only the parts you need.
 
 ## Installation
 
