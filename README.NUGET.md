@@ -14,7 +14,7 @@ UnitConverter includes **150 conversion families**, **1,858 registered units**, 
 | `UnitConverter.SystemTextJson` | Optional `System.Text.Json` support for typed unit values |
 | `UnitConverter.Analyzers` | Optional Roslyn compile-time guidance |
 
-All three packages ship with the **same version**, starting at **1.0.0**. Install only the parts you need.
+All three packages ship with the **same version**, currently **1.0.1**. Install only the parts you need.
 
 ## Installation
 
