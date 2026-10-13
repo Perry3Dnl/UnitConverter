@@ -1,18 +1,18 @@
-# UnitConverter
+# UnitTools
 
-[![build](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/ci.yml)
-[![benchmarks](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/benchmarks.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitConverter/actions/workflows/benchmarks.yml)
+[![build](https://github.com/Perry3Dnl/UnitTools/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitTools/actions/workflows/ci.yml)
+[![benchmarks](https://github.com/Perry3Dnl/UnitTools/actions/workflows/benchmarks.yml/badge.svg?branch=main)](https://github.com/Perry3Dnl/UnitTools/actions/workflows/benchmarks.yml)
 [![routed double](docs/benchmarks/badges/routed-double.svg)](docs/benchmarks/BASELINE.md)
 [![named decimal](docs/benchmarks/badges/named-decimal.svg)](docs/benchmarks/BASELINE.md)
 [![span parse](docs/benchmarks/badges/span-parse.svg)](docs/benchmarks/BASELINE.md)
 [![span format](docs/benchmarks/badges/span-format.svg)](docs/benchmarks/BASELINE.md)
 [![exact decimal](docs/benchmarks/badges/exact-decimal.svg)](docs/benchmarks/BASELINE.md)
 
-A high-performance, dependency-free .NET unit conversion engine built for both simple application code and demanding engineering/scientific workloads. The current core catalog contains **150 conversion families**, **1,858 registered units**, and **9,395 accepted unit names, symbols, aliases, and notation variants**. Those units provide **39,458 directed non-identity unit-to-unit conversion pairs** inside their compatible families, while the core assembly exposes **1,102 public types** and **14,494 public methods/overloads** across direct converters, numeric extensions, typed quantities, parsing/formatting, exact conversion, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale numbers.
+UnitTools is a high-performance, dependency-free .NET unit conversion engine built for both simple application code and demanding engineering/scientific workloads. The current core catalog contains **150 conversion families**, **1,858 registered units**, and **9,395 accepted unit names, symbols, aliases, and notation variants**. Those units provide **39,458 directed non-identity unit-to-unit conversion pairs** inside their compatible families, while the core assembly exposes **1,102 public types** and **14,494 public methods/overloads** across direct converters, numeric extensions, typed quantities, parsing/formatting, exact conversion, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale numbers.
 
 UnitConverter does not force one programming model. Use a direct `double`/`float`/`decimal` conversion when that is all you need, fluent numeric extensions when you want compact code, `UnitValue<TUnit>` when the unit should travel with the value, or strongly typed quantities when compile-time dimensional safety matters. Exact decimal/rational routes, allocation-aware span APIs, runtime unit detection, localization, NativeAOT validation, and BenchmarkDotNet regression gates are all part of the same standalone core design.
 
-The current synchronized package version is **`1.0.1`** across `UnitConverter`, `UnitConverter.SystemTextJson`, and `UnitConverter.Analyzers`. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. Version `1.0.1` is prepared for release; publication is verified separately on NuGet.org.
+The current synchronized package version is **`1.0.1`** across `UnitTools`, `UnitTools.SystemTextJson`, and `UnitTools.Analyzers`. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. Version `1.0.1` is prepared for release; publication is verified separately on NuGet.org.
 
 > **Scale metrics are generated from the compiled catalog/API, not estimated.** A conversion pair is one directed `from → to` route within the same family and excludes identity conversions such as `Meter → Meter`. Reproduce the current numbers with `dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj -c Release -- --stats`.
 
@@ -103,7 +103,7 @@ The `.nupkg` and `.snupkg` are written to `artifacts/packages`. The SDK is a bui
 Install the candidate into an existing application using the absolute path to that directory:
 
 ```sh
-dotnet add package UnitConverter --version 1.0.0 --source /absolute/path/to/UnitConverter/artifacts/packages
+dotnet add package UnitTools --version 1.0.0 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
 GitHub Actions also builds the solution, runs the NUnit suite, verifies the checked-in public API fingerprint baseline, creates all three packages, and installs the produced packages into clean **netstandard2.0**, **net8.0**, and **net10.0** consumers. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors. Parser abuse/fuzz tests and explicit expression-complexity limits guard malformed and adversarial input.
@@ -479,4 +479,4 @@ dotnet run --project samples/UnitConverter.Demo --configuration Release
 - [Public API compatibility](docs/Developer/ApiCompatibility.md)
 - [Packaging and release](docs/Developer/Packaging.md)
 
-Unity inspectors, settings assets, scenes, assembly definitions, metadata files, and the shared Unity Core layer have been removed. The original Unity package remains available in [the 1.1.3 import commit](https://github.com/Perry3Dnl/UnitConverter/tree/332369313b1a428a66432e811c542562efa24e40).
+Unity inspectors, settings assets, scenes, assembly definitions, metadata files, and the shared Unity Core layer have been removed. The original Unity package remains available in [the 1.1.3 import commit](https://github.com/Perry3Dnl/UnitTools/tree/332369313b1a428a66432e811c542562efa24e40).
