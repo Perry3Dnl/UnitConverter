@@ -41,6 +41,8 @@ jobs:
             git fetch origin main --quiet
             git merge-base --is-ancestor "${{ github.sha }}" origin/main || { echo "::error::Release tag must reference a commit on main."; exit 1; }
           fi
+      - name: Verify UnitTools package identity and shared version
+        run: python scripts/verify_package_identity.py
       - name: Verify generated sources
         run: |
           python scripts/generate_additional_families.py --check
