@@ -1,4 +1,4 @@
-name: NuGet Release
+name: UnitTools NuGet Release
 
 on:
   push:
@@ -183,7 +183,7 @@ jobs:
           set -euo pipefail
           extra_args=()
           if [ "$RUN_ATTEMPT" -gt 1 ]; then extra_args+=(--skip-duplicate); fi
-          for id in UnitConverter UnitConverter.SystemTextJson UnitConverter.Analyzers; do
+          for id in UnitTools UnitTools.SystemTextJson UnitTools.Analyzers; do
             dotnet nuget push "artifacts/packages/${id}.${VERSION}.nupkg" \
               --api-key "$NUGET_API_KEY" \
               --source https://api.nuget.org/v3/index.json \
