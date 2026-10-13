@@ -110,6 +110,8 @@ with zipfile.ZipFile(json_package) as archive:
     assert "README.md" in names
     assert "LICENSE.md" in names
     assert "NOTICE" in names
+    assert "unitconverter.png" in names
+    assert archive.read("unitconverter.png") == (root / "assets/unitconverter.png").read_bytes()
     specification = ET.fromstring(
         archive.read(next(name for name in names if name.endswith(".nuspec"))))
     namespace = {"n": specification.tag.split("}")[0][1:]}
@@ -140,6 +142,8 @@ with zipfile.ZipFile(analyzer_package) as archive:
     assert "README.md" in names
     assert "LICENSE.md" in names
     assert "NOTICE" in names
+    assert "unitconverter.png" in names
+    assert archive.read("unitconverter.png") == (root / "assets/unitconverter.png").read_bytes()
     assert not any(name.startswith("lib/") and name.endswith(".dll") for name in names)
     specification = ET.fromstring(
         archive.read(next(name for name in names if name.endswith(".nuspec"))))
