@@ -1,25 +1,25 @@
-# UnitConverter
+# UnitTools
 
 **High-performance .NET unit conversions — straightforward numeric APIs, strongly typed quantities, and precise calculations.**
 
-[GitHub repository](https://github.com/Perry3Dnl/UnitConverter) · [Documentation](https://github.com/Perry3Dnl/UnitConverter/tree/main/docs) · [Release notes](https://github.com/Perry3Dnl/UnitConverter/blob/main/docs/Changelog.md)
+[GitHub repository](https://github.com/Perry3Dnl/UnitTools) · [Documentation](https://github.com/Perry3Dnl/UnitTools/tree/main/docs) · [Release notes](https://github.com/Perry3Dnl/UnitTools/blob/main/docs/Changelog.md)
 
-UnitConverter includes **150 conversion families**, **1,858 registered units**, and **39,458 directed non-identity conversions** within compatible families. Choose direct numeric conversion, fluent extensions, typed quantities, exact decimal/rational conversion, dynamic parsing, or custom unit definitions. The core library has no third-party runtime package dependencies.
+UnitTools includes **150 conversion families**, **1,858 registered units**, and **39,458 directed non-identity conversions** within compatible families. Choose direct numeric conversion, fluent extensions, typed quantities, exact decimal/rational conversion, dynamic parsing, or custom unit definitions. The core library has no third-party runtime package dependencies.
 
 ## Packages
 
 | NuGet package | Purpose |
 | --- | --- |
-| `UnitConverter` | Full conversion engine and quantity APIs |
-| `UnitConverter.SystemTextJson` | Optional `System.Text.Json` support for typed unit values |
-| `UnitConverter.Analyzers` | Optional Roslyn compile-time guidance |
+| `UnitTools` | Full conversion engine and quantity APIs |
+| `UnitTools.SystemTextJson` | Optional `System.Text.Json` support for typed unit values |
+| `UnitTools.Analyzers` | Optional Roslyn compile-time guidance |
 
 All three packages ship with the **same version**, currently **1.0.1**. Install only the parts you need.
 
 ## Installation
 
 ```bash
-dotnet add package UnitConverter
+dotnet add package UnitTools
 ```
 
 For JSON integration or analyzer diagnostics, install the matching companion package in addition to the core package.
@@ -71,6 +71,6 @@ double energy = UnitConverterComposite.Convert(1d, "N*m", "J");
 
 ## Documentation and license
 
-For complete APIs, sample programs, benchmarking, and supported families, visit the [GitHub README](https://github.com/Perry3Dnl/UnitConverter#readme).
+For complete APIs, sample programs, benchmarking, and supported families, visit the [GitHub README](https://github.com/Perry3Dnl/UnitTools#readme).
 
-**License:** Apache License 2.0 with Commons Clause v1.0. Redistribution is subject to the Commons Clause restriction on selling the software itself. Review the [full license](https://github.com/Perry3Dnl/UnitConverter/blob/main/LICENSE.md) before redistribution.
+**License:** Apache License 2.0 with Commons Clause v1.0. Redistribution is subject to the Commons Clause restriction on selling the software itself. Review the [full license](https://github.com/Perry3Dnl/UnitTools/blob/main/LICENSE.md) before redistribution.
