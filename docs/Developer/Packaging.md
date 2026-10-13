@@ -65,3 +65,6 @@ Before publishing a preview or stable release:
 
 - [.NET library targeting guidance](https://learn.microsoft.com/en-us/dotnet/standard/library-guidance/cross-platform-targeting)
 - [Create a NuGet package with the .NET CLI](https://learn.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli)
+## Package README files
+
+GitHub renders the repository-root `README.md`. NuGet displays the separately maintained `README.NUGET.md`, declared through `<PackageReadmeFile>README.NUGET.md</PackageReadmeFile>` and embedded in each of the three packages. Keep links in the NuGet version absolute, because relative repository links and benchmark badge assets are not guaranteed to resolve in NuGet's gallery. The package verification script checks that all three packages embed the exact NuGet README and declare it in their nuspec metadata.
