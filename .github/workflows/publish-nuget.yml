@@ -1,19 +1,18 @@
-name: Publish NuGet release
+name: NuGet Release
 
 on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
   workflow_dispatch:
-    inputs:
-      nuget_user:
-        description: "NuGet.org username that owns the Trusted Publishing policy"
-        required: true
-        type: string
-      confirm:
-        description: "Type publish to authorize pushing the current package version"
-        required: true
-        type: string
 
 permissions:
   contents: read
+
+concurrency:
+  group: nuget-release-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   verify:
@@ -22,20 +21,21 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "10.0.x"
-      - name: Require main branch and explicit publish confirmation
+      - name: Check version and tagged release
         shell: bash
         run: |
-          if [ "${{ github.ref }}" != "refs/heads/main" ]; then
-            echo "Publication is only allowed from main."
-            exit 1
-          fi
-          if [ "${{ inputs.confirm }}" != "publish" ]; then
-            echo "Publication cancelled: confirmation must be exactly publish."
-            exit 1
+          set -euo pipefail
+          VERSION="$(python -c 'import xml.etree.ElementTree as E; print(E.parse("Directory.Build.props").findtext(".//Version"))')"
+          echo "Release version: $VERSION"
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            test "${{ github.ref_name }}" = "v$VERSION"
+            git fetch origin main --quiet
+            test "${{ github.sha }}" = "$(git rev-parse origin/main)"
           fi
       - name: Verify generated sources
         run: |
@@ -82,28 +82,61 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: nuget-release-candidate
-          path: artifacts/packages/*nupkg
+          path: |
+            artifacts/packages/*.nupkg
+            artifacts/packages/*.snupkg
           if-no-files-found: error
           retention-days: 7
 
+  dispatch-tagged-release:
+    name: Create version tag and start release
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message, 'Release v')
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+    steps:
+      - name: Tag release commit and dispatch workflow
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VERSION="$(python -c 'import xml.etree.ElementTree as E; print(E.parse("Directory.Build.props").findtext(".//Version"))')"
+          TAG="v$VERSION"
+          if OLD="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" --jq '.object.sha' 2>/dev/null)"; then
+            test "$OLD" = "$GITHUB_SHA" || { echo "::error::Existing tag points at another commit"; exit 1; }
+          else
+            gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$TAG" -f sha="$GITHUB_SHA" > /dev/null
+          fi
+          gh api --method POST "repos/$GITHUB_REPOSITORY/actions/workflows/publish-nuget.yml/dispatches" -f ref="$TAG"
+
   publish:
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && startsWith(github.ref, 'refs/tags/v')
     needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: nuget-release
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - uses: actions/download-artifact@v7
         with:
           name: nuget-release-candidate
           path: artifacts/packages
+      - name: Verify NuGet username secret
+        shell: bash
+        env:
+          NUGET_USER: ${{ secrets.NUGET_USER }}
+        run: |
+          test -n "$NUGET_USER" || { echo "::error::Configure GitHub secret NUGET_USER"; exit 1; }
       - name: NuGet login with Trusted Publishing
         id: nuget-login
         uses: NuGet/login@v1
         with:
-          user: ${{ inputs.nuget_user }}
+          user: ${{ secrets.NUGET_USER }}
       - name: Push NuGet packages
         shell: bash
         env:
@@ -130,7 +163,6 @@ jobs:
             dotnet nuget push "$package" \
               --api-key "$NUGET_API_KEY" \
               --source https://api.nuget.org/v3/index.json \
-              --skip-duplicate \
               --no-symbols
           done
 
@@ -138,5 +170,21 @@ jobs:
             dotnet nuget push "$symbol" \
               --api-key "$NUGET_API_KEY" \
               --source https://api.nuget.org/v3/index.json \
-              --skip-duplicate
+ 
           done
+      - name: Generate SHA256 hashes
+        shell: bash
+        run: |
+          cd artifacts/packages
+          sha256sum *.nupkg *.snupkg > SHA256SUMS.txt
+      - name: Create GitHub release with NuGet artifacts
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="${{ github.ref_name }}"
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "UnitConverter $TAG" --generate-notes --verify-tag
+          fi
+          gh release upload "$TAG" artifacts/packages/*.nupkg artifacts/packages/*.snupkg artifacts/packages/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --clobber
