@@ -17,7 +17,7 @@
     <PackageReadmeFile>README.NUGET.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
-    <PackageReleaseNotes>1.0.0: optional UC0002 guidance for compile-time-known dynamic conversions with conservative false-positive filtering across Convert/TryConvert and Roslyn release tracking.</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.1: optional UC0002 guidance for compile-time-known dynamic conversions with conservative false-positive filtering across Convert/TryConvert and Roslyn release tracking.</PackageReleaseNotes>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <DevelopmentDependency>true</DevelopmentDependency>
