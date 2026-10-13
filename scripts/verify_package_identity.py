@@ -46,6 +46,7 @@ for package_id, relative_path in projects.items():
         assert "../UnitConverter/UnitConverter.csproj" in project_refs
 
 readme = (ROOT / "README.NUGET.md").read_text(encoding="utf-8")
+assert f"currently **{VERSION}**" in readme, "NuGet README version differs from shared Version"
 assert "dotnet add package UnitTools" in readme
 for package_id in projects:
     assert package_id in readme, f"NuGet README missing {package_id}"
