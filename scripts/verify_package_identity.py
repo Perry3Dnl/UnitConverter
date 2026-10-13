@@ -1,6 +1,6 @@
 """Validate UnitTools NuGet identity without changing legacy C# APIs.
 
-The public namespaces/assemblies currently remain UnitConverter during migration.
+The public namespaces/assemblies currently remain UnitTools during migration.
 Package IDs, versions, title and documentation links must consistently use UnitTools.
 """
 
@@ -13,9 +13,9 @@ if not VERSION:
     raise SystemExit("Missing shared Version in Directory.Build.props")
 
 projects = {
-    "UnitTools": "src/UnitConverter/UnitConverter.csproj",
-    "UnitTools.SystemTextJson": "src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj",
-    "UnitTools.Analyzers": "src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj",
+    "UnitTools": "src/UnitTools/UnitTools.csproj",
+    "UnitTools.SystemTextJson": "src/UnitTools.SystemTextJson/UnitTools.SystemTextJson.csproj",
+    "UnitTools.Analyzers": "src/UnitTools.Analyzers/UnitTools.Analyzers.csproj",
 }
 
 for package_id, relative_path in projects.items():
@@ -27,7 +27,7 @@ for package_id, relative_path in projects.items():
     assert prop("Title") == package_id, (relative_path, "Title")
     assert not prop("Version"), (relative_path, "unexpected local Version override")
     assert prop("PackageReadmeFile") == "README.NUGET.md", relative_path
-    assert prop("PackageIcon") == "unitconverter.png", relative_path
+    assert prop("PackageIcon") == "unittools.png", relative_path
     assert prop("PackageProjectUrl") == "https://github.com/Perry3Dnl/UnitTools", relative_path
     assert prop("RepositoryUrl") == "https://github.com/Perry3Dnl/UnitTools", relative_path
 
@@ -38,12 +38,12 @@ for package_id, relative_path in projects.items():
         if item.get("PackagePath") == "/"
     }
     assert packaged_files.get("../../README.NUGET.md") == "true", relative_path
-    assert packaged_files.get("../../assets/unitconverter.png") == "true", relative_path
+    assert packaged_files.get("../../assets/unittools.png") == "true", relative_path
 
     # Only the JSON companion has a project dependency on the conversion core.
     project_refs = [ref.get("Include", "") for ref in project.findall(".//ProjectReference")]
     if package_id.endswith(".SystemTextJson"):
-        assert "../UnitConverter/UnitConverter.csproj" in project_refs
+        assert "../UnitTools/UnitTools.csproj" in project_refs
 
 readme = (ROOT / "README.NUGET.md").read_text(encoding="utf-8")
 assert f"currently **{VERSION}**" in readme, "NuGet README version differs from shared Version"

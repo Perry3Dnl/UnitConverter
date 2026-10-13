@@ -10,11 +10,11 @@ This repository prepares a package candidate; it has not been published. Build w
 
 ## Missing namespace or type
 
-Reference `UnitConverter` and import the family namespace, such as `UnitConverter.Length`. Direct methods live in the unit-system subnamespace. Unity settings and editor types are absent from the standalone library.
+Reference `UnitTools` and import the family namespace, such as `UnitTools.Length`. Direct methods live in the unit-system subnamespace. Unity settings and editor types are absent from the standalone library.
 
 ## Duplicate converter types
 
-Remove old copied converter sources or DLLs when adding the NuGet reference. Converter class names remain the same; change old `RealisticPhysics.UnitConversion` imports to `UnitConverter` and avoid mixing the two libraries.
+Remove old copied converter sources or DLLs when adding the NuGet reference. Converter class names remain the same; change old `RealisticPhysics.UnitConversion` imports to `UnitTools` and avoid mixing the two libraries.
 
 ## Fractional or decimal results
 
@@ -26,4 +26,4 @@ Use the unit enum belonging to the selected family and avoid undefined enum valu
 
 ## Test restore fails
 
-The test project restores its test SDK, NUnit framework, and adapter from NuGet. Check feed connectivity, then run `dotnet restore UnitConverter.sln` before testing.
+The test project restores its test SDK, NUnit framework, and adapter from NuGet. Check feed connectivity, then run `dotnet restore UnitTools.sln` before testing.

@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>UnitTools.SystemTextJson</AssemblyName>
+    <RootNamespace>UnitTools.SystemTextJson</RootNamespace>
+    <IsPackable>true</IsPackable>
+    <PackageId>UnitTools.SystemTextJson</PackageId>
+    <PackageIcon>unittools.png</PackageIcon>
+    <Title>UnitTools.SystemTextJson</Title>
+    <Authors>Perry3Dnl</Authors>
+    <Description>System.Text.Json serialization companion for UnitTools typed unit values, with stable enum-name output, catalog alias input, and NativeAOT validation.</Description>
+    <PackageTags>units;conversion;json;serialization;system.text.json;quantities;nativeaot</PackageTags>
+    <PackageProjectUrl>https://github.com/Perry3Dnl/UnitTools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Perry3Dnl/UnitTools</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageReadmeFile>README.NUGET.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
+    <PackageReleaseNotes>1.0.1: System.Text.Json support for UnitValue&lt;TUnit&gt;; stable enum-name output with exact-name round-trip guarantees; catalog alias input; catalog-wide round-trip validation; explicit JSON token validation; shipped XML IntelliSense documentation; NativeAOT validation; Apache-2.0 with Commons Clause v1.0 licensing.</PackageReleaseNotes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../UnitTools/UnitTools.csproj" />
+    <PackageReference Include="System.Text.Json" Version="10.0.12" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../../README.NUGET.md" Pack="true" PackagePath="/" />
+    <None Include="../../LICENSE.md" Pack="true" PackagePath="/" />
+    <None Include="../../NOTICE" Pack="true" PackagePath="/" />
+    <None Include="../../assets/unittools.png" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>

@@ -59,7 +59,7 @@ def normalize(rows: list[dict[str, str]]) -> list[dict[str, str]]:
 
 def render_markdown(rows: list[dict[str, str]]) -> str:
     lines = [
-        "# UnitConverter benchmark summary",
+        "# UnitTools benchmark summary",
         "",
         "| Benchmark | Mean | Allocated |",
         "| --- | ---: | ---: |",

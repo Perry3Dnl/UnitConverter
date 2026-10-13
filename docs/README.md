@@ -1,6 +1,6 @@
-# UnitConverter documentation
+# UnitTools documentation
 
-UnitConverter is a standalone .NET Standard 2.0 library. Its existing family routers, direct methods, numeric extensions, and base-unit conversion flow are preserved.
+UnitTools is a standalone .NET Standard 2.0 library. Its existing family routers, direct methods, numeric extensions, and base-unit conversion flow are preserved.
 
 ## Start here
 
@@ -20,7 +20,7 @@ UnitConverter is a standalone .NET Standard 2.0 library. Its existing family rou
 
 - [Length](Examples/LengthExamples.md)
 - [Electrical quantities](Examples/ElectricalExamples.md)
-- [Console demo](../samples/UnitConverter.Demo/Program.cs)
+- [Console demo](../samples/UnitTools.Demo/Program.cs)
 
 ## Development
 

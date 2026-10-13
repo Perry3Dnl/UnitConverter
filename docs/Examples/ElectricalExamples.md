@@ -3,43 +3,43 @@
 ## Voltage
 
 ```csharp
-using UnitConverter.Voltage;
+using UnitTools.Voltage;
 
-double volts = UnitConverterVoltage.Convert(
+double volts = UnitToolsVoltage.Convert(
     12,
-    UnitConverterVoltageUnit.Volt,
-    UnitConverterVoltageUnit.Millivolt);
+    UnitToolsVoltageUnit.Volt,
+    UnitToolsVoltageUnit.Millivolt);
 ```
 
 ## Current
 
 ```csharp
-using UnitConverter.Current;
+using UnitTools.Current;
 
-double amps = UnitConverterCurrent.Convert(
+double amps = UnitToolsCurrent.Convert(
     500,
-    UnitConverterCurrentUnit.Milliampere,
-    UnitConverterCurrentUnit.Ampere);
+    UnitToolsCurrentUnit.Milliampere,
+    UnitToolsCurrentUnit.Ampere);
 ```
 
 ## Power
 
 ```csharp
-using UnitConverter.Power;
+using UnitTools.Power;
 
-double watts = UnitConverterPower.Convert(
+double watts = UnitToolsPower.Convert(
     1,
-    UnitConverterPowerUnit.Kilowatt,
-    UnitConverterPowerUnit.Watt);
+    UnitToolsPowerUnit.Kilowatt,
+    UnitToolsPowerUnit.Watt);
 ```
 
 ## Resistance
 
 ```csharp
-using UnitConverter.ElectricResistance;
+using UnitTools.ElectricResistance;
 
-double ohms = UnitConverterElectricResistance.Convert(
+double ohms = UnitToolsElectricResistance.Convert(
     2.2,
-    UnitConverterElectricResistanceUnit.Kiloohm,
-    UnitConverterElectricResistanceUnit.Ohm);
+    UnitToolsElectricResistanceUnit.Kiloohm,
+    UnitToolsElectricResistanceUnit.Ohm);
 ```
