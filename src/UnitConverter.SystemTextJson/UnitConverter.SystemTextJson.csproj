@@ -4,14 +4,14 @@
     <AssemblyName>UnitConverter.SystemTextJson</AssemblyName>
     <RootNamespace>UnitConverter.SystemTextJson</RootNamespace>
     <IsPackable>true</IsPackable>
-    <PackageId>UnitConverter.SystemTextJson</PackageId>
+    <PackageId>UnitTools.SystemTextJson</PackageId>
     <PackageIcon>unitconverter.png</PackageIcon>
-    <Title>UnitConverter.SystemTextJson</Title>
+    <Title>UnitTools.SystemTextJson</Title>
     <Authors>Perry3Dnl</Authors>
     <Description>System.Text.Json serialization companion for UnitConverter typed unit values, with stable enum-name output, catalog alias input, and NativeAOT validation.</Description>
     <PackageTags>units;conversion;json;serialization;system.text.json;quantities;nativeaot</PackageTags>
-    <PackageProjectUrl>https://github.com/Perry3Dnl/UnitConverter</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Perry3Dnl/UnitTools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Perry3Dnl/UnitTools</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageReadmeFile>README.NUGET.md</PackageReadmeFile>
