@@ -48,6 +48,8 @@ jobs:
           dotnet pack src/UnitTools.SystemTextJson/UnitTools.SystemTextJson.csproj -c Release --no-build -o artifacts/packages
           dotnet pack src/UnitTools.Analyzers/UnitTools.Analyzers.csproj -c Release --no-build -o artifacts/packages
           python scripts/verify_package.py artifacts/packages
+      # Workflow files remain untouched by the bot's commit because its token
+      # cannot push edits to .github/workflows. Update them separately on the PR.
       - name: Push migration branch and open pull request
         shell: bash
         env:
