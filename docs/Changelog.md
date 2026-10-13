@@ -1,6 +1,8 @@
 # Changelog
 
-## 2.0.0-preview.2 — release-readiness candidate
+## 1.0.0 — standalone NuGet release candidate
+
+This is the first planned public NuGet release of the standalone library. The feature and hardening history below was prepared under the internal `2.0.0-preview.2` candidate label before publication.
 
 - Promote the standalone package candidate to `2.0.0-preview.2`.
 - Keep the catalog at 150 conversion families and 1,858 unit entries including aliases.
@@ -41,7 +43,7 @@
 - Add a manual main-only NuGet Trusted Publishing workflow using GitHub OIDC, a protected release environment, full tests/package verification/analyzer checks, and NativeAOT gates before publishing.
 - Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
 
-## 2.0.0-preview.1 — standalone .NET package
+## Pre-release development — standalone .NET package
 
 - Move the 496 portable runtime files to an SDK-style .NET Standard 2.0 library, changing only namespace references in the converter code.
 - Use `UnitConverter` as the package ID, assembly name, and root namespace.
