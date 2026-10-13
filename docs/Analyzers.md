@@ -1,13 +1,13 @@
-# UnitConverter analyzers
+# UnitTools analyzers
 
-`UnitConverter.Analyzers` is an optional Roslyn analyzer package. It does not change runtime behavior and the core `UnitConverter` package remains dependency-free.
+`UnitTools.Analyzers` is an optional Roslyn analyzer package. It does not change runtime behavior and the core `UnitTools` package remains dependency-free.
 
 The analyzer philosophy is guidance rather than restriction: direct numeric converters, family converters, extensions and strongly typed quantities are all supported first-class APIs. Diagnostics are reserved for cases where code uses an escape hatch while the compiler can see enough information to recommend a safer form.
 
 ## UC0002 — compile-time-known dynamic conversion
 
 ```csharp
-double meters = UnitConverterDynamic.Convert("2 km", "m");
+double meters = UnitToolsDynamic.Convert("2 km", "m");
 ```
 
 When both arguments are compile-time string constants, `UC0002` warns that a family-specific or strongly typed API can preserve more compile-time safety.
@@ -15,10 +15,10 @@ When both arguments are compile-time string constants, `UC0002` warns that a fam
 Equivalent supported alternatives include:
 
 ```csharp
-double meters = UnitConverterLength.Convert(
+double meters = UnitToolsLength.Convert(
     2,
-    UnitConverterLengthUnit.Kilometer,
-    UnitConverterLengthUnit.Meter);
+    UnitToolsLengthUnit.Kilometer,
+    UnitToolsLengthUnit.Meter);
 
 Length<double> distance = Length<double>.FromKilometers(2);
 ```
@@ -26,7 +26,7 @@ Length<double> distance = Length<double>.FromKilometers(2);
 Dynamic conversion remains supported. It is the correct API when units or families are genuinely runtime data:
 
 ```csharp
-double result = UnitConverterDynamic.Convert(userInput, requestedUnit);
+double result = UnitToolsDynamic.Convert(userInput, requestedUnit);
 ```
 
 Because those arguments are not compile-time constants, `UC0002` is not reported.

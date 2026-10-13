@@ -1,11 +1,11 @@
 # Performance benchmarks
 
-UnitConverter uses BenchmarkDotNet for repeatable performance and allocation measurements. The benchmark project is intentionally separate from the normal solution build so BenchmarkDotNet is never a runtime or package dependency of `UnitConverter`.
+UnitTools uses BenchmarkDotNet for repeatable performance and allocation measurements. The benchmark project is intentionally separate from the normal solution build so BenchmarkDotNet is never a runtime or package dependency of `UnitTools`.
 
 ## Run the complete suite
 
 ```sh
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --filter "*"
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --filter "*"
 ```
 
 The checked-in benchmark project uses three warmup iterations and eight measurement iterations per benchmark.
@@ -16,22 +16,22 @@ Benchmark methods are categorized so optimization work can run only the relevant
 
 ```sh
 # Numeric conversion and typed quantity paths
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --anyCategories Conversion
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --anyCategories Conversion
 
 # Span parsing and formatting only
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --anyCategories Span
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --anyCategories Span
 
 # Dynamic conversion only
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --anyCategories Dynamic
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --anyCategories Dynamic
 
 # Composite expression paths
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --anyCategories Composite
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --anyCategories Composite
 ```
 
 Standard BenchmarkDotNet filters also work:
 
 ```sh
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --filter "*ConversionBenchmarks*"
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --filter "*ConversionBenchmarks*"
 ```
 
 ## Covered paths

@@ -1,0 +1,15 @@
+namespace UnitTools.Area.ImperialUK
+{
+    public static class UnitToolsImperialUKArea
+    {
+        public static double RoodToSquareMeter(double value)
+        {
+            return value * 1011.7141056d;
+        }
+
+        public static double SquareMeterToRood(double baseValue)
+        {
+            return baseValue / 1011.7141056d;
+        }
+    }
+}

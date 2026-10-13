@@ -20,7 +20,7 @@ This is the first planned public NuGet release of the standalone library. The fe
 - Optimize global dynamic unit detection with cached built-in alias indexes while preserving exact-case and custom-unit ambiguity semantics.
 - Optimize composite expression parsing/conversion with a bounded built-in expression cache while preserving runtime custom-unit behavior.
 - Integrate arbitrary-scale number conversion and deterministic generated number naming into the core package.
-- Add runtime custom units, composite expressions, dynamic family detection, metadata, and the `UnitConverter.SystemTextJson` companion package.
+- Add runtime custom units, composite expressions, dynamic family detection, metadata, and the `UnitTools.SystemTextJson` companion package.
 - Validate clean NuGet consumption, NativeAOT core usage, NativeAOT JSON usage, deterministic generated code, and BenchmarkDotNet allocation regressions in CI.
 - Add Apache License 2.0 subject to Commons Clause License Condition v1.0, with `LICENSE.md` and `NOTICE` embedded in both NuGet packages.
 - Add culture-aware localized unit display names and parse aliases with explicit `IFormatProvider` semantics, parent-culture fallback, invariant symbols, and runtime vocabulary registration.
@@ -30,7 +30,7 @@ This is the first planned public NuGet release of the standalone library. The fe
 - Complete inverse arithmetic for existing dimensional relations including length/speed/time, speed/acceleration/time, energy/force/length, energy/power/time, mass/density/volume, pressure/area/force, spring force, damping and mechanical mobility.
 - Guarantee that System.Text.Json's stable enum-name output round-trips even when an enum name collides with a case-insensitive alias; validate serialization across the full catalog.
 - Index typed catalog unit descriptor lookup by enum value and refine UC0002 to avoid obvious false positives.
-- Add the optional `UnitConverter.Analyzers` package. `UC0002` guides compile-time-known dynamic string conversions toward typed or family-specific APIs while preserving dynamic conversion as a supported escape hatch.
+- Add the optional `UnitTools.Analyzers` package. `UC0002` guides compile-time-known dynamic string conversions toward typed or family-specific APIs while preserving dynamic conversion as a supported escape hatch.
 - Make dynamic conversion and global unit detection fully culture-symmetric: localized source/target aliases now work through family, family-name and auto-detected routes, including custom-unit interoperability and explicit ambiguity handling.
 - Harden runtime metadata as read-only snapshots and expose indexed object-based unit descriptor lookup so dynamic/custom/detection routes reuse the catalog's O(1) metadata index.
 - Reject localized aliases that would be unreachable because they collide with an invariant alias for another unit.
@@ -40,21 +40,21 @@ This is the first planned public NuGet release of the standalone library. The fe
 - Ship XML documentation files for the core and System.Text.Json packages so NuGet consumers receive IntelliSense documentation alongside the assemblies.
 - Tighten the public result surface by keeping result construction helpers internal while preserving public read-only result contracts.
 - Add symmetric catalog lookup APIs for stable family names, unit-enum types, and enum-based base-unit lookup.
-- Harden `UnitConverterParser.TryConvert` so expected parse/conversion failures return a failure result without swallowing unexpected runtime errors.
+- Harden `UnitToolsParser.TryConvert` so expected parse/conversion failures return a failure result without swallowing unexpected runtime errors.
 - Add a checked-in public API fingerprint baseline for the core and System.Text.Json assemblies; CI now rejects unreviewed public signature changes.
 - Add catalog-wide mathematical conformance tests covering representative base round-trips and exact-decimal versus double-route parity where representable.
 - Add deterministic parser abuse/fuzz coverage and explicit limits for general parser input length, composite expression length, nesting depth, and exponent magnitude.
 - Make Dutch localization completeness measurable and CI-enforced; Angle, Area, Energy, Force, Frequency, Power, Pressure, Speed, Temperature, and Time now have explicit entries for every registered unit in those families, while Length, Mass, and Volume remain marked partial.
 - Expand package consumption verification to a netstandard2.0 compile consumer plus net8.0 and net10.0 executable consumers installed from the produced NuGet packages.
 - Add BenchmarkDotNet coverage for localized parsing/dynamic conversion and UnitValue conversion.
-- Lead the README and getting-started guide with UnitConverter's multiple API safety levels and sharpen NuGet search metadata.
+- Lead the README and getting-started guide with UnitTools's multiple API safety levels and sharpen NuGet search metadata.
 - Add a manual main-only NuGet Trusted Publishing workflow using GitHub OIDC, a protected release environment, full tests/package verification/analyzer checks, and NativeAOT gates before publishing.
 - Refresh NuGet descriptions, tags, release notes, README performance data, and packaging documentation for the public preview.
 
 ## Pre-release development — standalone .NET package
 
 - Move the 496 portable runtime files to an SDK-style .NET Standard 2.0 library, changing only namespace references in the converter code.
-- Use `UnitConverter` as the package ID, assembly name, and root namespace.
+- Use `UnitTools` as the package ID, assembly name, and root namespace.
 - Preserve converter class/method names, enum values, conversion constants, and base-unit routing.
 - Migrate conversion tests to a .NET 10 NUnit project.
 - Remove Unity settings, editor integration, shared Core, scenes, metadata, and import archives.
@@ -75,7 +75,7 @@ This is the first planned public NuGet release of the standalone library. The fe
 
 The entries below describe the original Unity package. Unity-specific features mentioned here are not part of the standalone package.
 
-# UnitConverter Changelog
+# UnitTools Changelog
 
 ## 1.1.3
 
@@ -146,14 +146,14 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 1.0.8
 
-- Added base-unit metadata to the UnitConverter runtime catalog.
+- Added base-unit metadata to the UnitTools runtime catalog.
 - Updated the runtime demo to use catalog base-unit metadata instead of maintaining a separate base-unit switch.
 - Fixed Runtime API demo code examples by using escaped newline strings so the demo script compiles correctly.
 - No conversion math changes.
 
 ## 1.0.7
 
-- Expanded the UnitConverter runtime demo Overview section with more package, settings, runtime, editor, conversion coverage, testing, and demo information.
+- Expanded the UnitTools runtime demo Overview section with more package, settings, runtime, editor, conversion coverage, testing, and demo information.
 - Made Runtime API examples larger and easier to read.
 - Updated Runtime API examples to use larger multi-line input-style code boxes.
 - Added additional runtime API examples for base-unit output methods, organized namespaces, and numeric extension support.
@@ -161,8 +161,8 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 1.0.6
 
-- Refined the code-generated UnitConverter runtime demo.
-- Updated the Overview section to focus on the UnitConverter settings asset workflow.
+- Refined the code-generated UnitTools runtime demo.
+- Updated the Overview section to focus on the UnitTools settings asset workflow.
 - Updated the Runtime API page with larger copyable code examples inside text input-style boxes.
 - Updated the Inspector Integration page to focus on supported inspector override examples.
 - Increased runtime demo text size for readability.
@@ -171,7 +171,7 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 1.0.5
 
-- Refined the UnitConverter runtime demo UI.
+- Refined the UnitTools runtime demo UI.
 - Simplified the Overview tab so it no longer duplicates the main tab navigation.
 - Expanded the Runtime API tab with concrete developer usage examples.
 - Expanded the Inspector Integration tab with examples of supported inspector overrides.
@@ -180,7 +180,7 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 1.0.4
 
-- Improved the code-generated UnitConverter runtime demo.
+- Improved the code-generated UnitTools runtime demo.
 - Reworked the demo navigation so overview cards open meaningful sections.
 - Added a full Conversion Tables view listing every shipped conversion family.
 - Added live base-unit conversion tables for all supported units in each family.
@@ -189,8 +189,8 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 1.0.3
 
-- Added a code-generated UnitConverter runtime demo.
-- Added a demo scene at `Assets/RealisticPhysics/UnitConverter/Demo/Scenes/UnitConverterRuntimeDemo.unity`.
+- Added a code-generated UnitTools runtime demo.
+- Added a demo scene at `Assets/RealisticPhysics/UnitTools/Demo/Scenes/UnitToolsRuntimeDemo.unity`.
 - Added runtime demo UI tabs for overview, length, mass, electrical, energy, pressure, temperature, digital, and speed conversions.
 - Added editor menu items to open or recreate the runtime demo scene.
 - Added demo documentation.
@@ -198,7 +198,7 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 1.0.2
 
-- Expanded UnitConverter known-value test coverage.
+- Expanded UnitTools known-value test coverage.
 - Added per-family known-value test files for all shipped conversion families.
 - Added base-unit checks for every supported out-of-the-box unit.
 - Added from-base checks for every supported out-of-the-box unit.
@@ -207,16 +207,16 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 1.0.1
 
-- Added Unity Test Framework EditMode tests for UnitConverter.
+- Added Unity Test Framework EditMode tests for UnitTools.
 - Added known-value conversion tests for key unit families.
 - Added extension-method API tests.
 - Added reflection-based smoke tests that check self-conversions and round-trip conversions across converter families.
-- Added UnitConverter testing documentation.
+- Added UnitTools testing documentation.
 - Updated package version tracking to RealisticPhysics suite version 1.0.1.
 
 ## 1.0.0
 
-- Added the first stable UnitConverter runtime conversion API.
+- Added the first stable UnitTools runtime conversion API.
 - Added static converter classes.
 - Added direct unit-specific conversion methods.
 - Added extension methods for common numeric value types.
@@ -224,12 +224,12 @@ The entries below describe the original Unity package. Unity-specific features m
 - Added 285 supported units.
 - Added 5,000+ compatible conversion paths.
 - Added optional Unity inspector overrides.
-- Added UnitConverter settings asset workflow.
-- Added UnitConverter documentation.
+- Added UnitTools settings asset workflow.
+- Added UnitTools documentation.
 
 ## 0.9.0
 
-- Prepared the first stable release candidate for UnitConverter.
+- Prepared the first stable release candidate for UnitTools.
 - Finalized the initial public API shape for runtime conversions, direct converters, extension methods, and inspector overrides.
 - Locked the first 22 planned conversion families for the 1.0.0 release.
 - Completed the first full documentation pass for supported families, units, symbols, and usage examples.
@@ -270,7 +270,7 @@ The entries below describe the original Unity package. Unity-specific features m
 ## 0.5.0
 
 - Added the first Unity inspector override workflow.
-- Added UnitConverter settings asset support.
+- Added UnitTools settings asset support.
 - Added serialized configuration for preferred units and display behavior.
 - Added editor-side helpers for selecting supported units by conversion family.
 - Added validation for unsupported unit selections.
@@ -297,7 +297,7 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 0.2.0
 
-- Added the initial UnitConverter runtime architecture.
+- Added the initial UnitTools runtime architecture.
 - Added the base converter pattern used by later generated converter classes.
 - Added internal conversion-factor handling for linear unit conversions.
 - Added early formula-conversion support for non-linear families such as Temperature.
@@ -307,7 +307,7 @@ The entries below describe the original Unity package. Unity-specific features m
 
 ## 0.1.0
 
-- Started the UnitConverter package.
+- Started the UnitTools package.
 - Added the initial project folder structure under the RealisticPhysics suite.
 - Added the first runtime namespace and package metadata.
 - Added early design notes for conversion families, unit enums, direct converters, and extension methods.

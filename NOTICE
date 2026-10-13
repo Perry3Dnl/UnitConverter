@@ -1,10 +1,10 @@
-UnitConverter
+UnitTools
 Copyright 2026 Perry3Dnl
 
 This product is licensed under the Apache License, Version 2.0,
 subject to the Commons Clause License Condition v1.0.
 
-The Commons Clause License Condition applies to UnitConverter,
-including the UnitConverter, UnitConverter.SystemTextJson, and UnitConverter.Analyzers packages.
+The Commons Clause License Condition applies to UnitTools,
+including the UnitTools, UnitTools.SystemTextJson, and UnitTools.Analyzers packages.
 
 See LICENSE.md for the complete license terms.

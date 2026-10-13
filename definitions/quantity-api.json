@@ -461,8 +461,8 @@
           "enumMember": "Quarter"
         }
       ],
-      "enumNamespace": "UnitConverter.Length",
-      "enumType": "UnitConverterLengthUnit",
+      "enumNamespace": "UnitTools.Length",
+      "enumType": "UnitToolsLengthUnit",
       "aliases": [
         {
           "name": "Metres",
@@ -541,8 +541,8 @@
           "enumMember": "Day"
         }
       ],
-      "enumNamespace": "UnitConverter.Time",
-      "enumType": "UnitConverterTimeUnit"
+      "enumNamespace": "UnitTools.Time",
+      "enumType": "UnitToolsTimeUnit"
     },
     "Speed": {
       "type": "Speed",
@@ -572,8 +572,8 @@
           "enumMember": "Knot"
         }
       ],
-      "enumNamespace": "UnitConverter.Speed",
-      "enumType": "UnitConverterSpeedUnit"
+      "enumNamespace": "UnitTools.Speed",
+      "enumType": "UnitToolsSpeedUnit"
     },
     "Mass": {
       "type": "Mass",
@@ -597,8 +597,8 @@
           "enumMember": "Milligram"
         }
       ],
-      "enumNamespace": "UnitConverter.Mass",
-      "enumType": "UnitConverterMassUnit"
+      "enumNamespace": "UnitTools.Mass",
+      "enumType": "UnitToolsMassUnit"
     },
     "Area": {
       "type": "Area",
@@ -622,8 +622,8 @@
           "enumMember": "Hectare"
         }
       ],
-      "enumNamespace": "UnitConverter.Area",
-      "enumType": "UnitConverterAreaUnit"
+      "enumNamespace": "UnitTools.Area",
+      "enumType": "UnitToolsAreaUnit"
     },
     "Volume": {
       "type": "Volume",
@@ -647,8 +647,8 @@
           "enumMember": "Milliliter"
         }
       ],
-      "enumNamespace": "UnitConverter.Volume",
-      "enumType": "UnitConverterVolumeUnit"
+      "enumNamespace": "UnitTools.Volume",
+      "enumType": "UnitToolsVolumeUnit"
     },
     "Acceleration": {
       "type": "Acceleration",
@@ -660,8 +660,8 @@
           "enumMember": "MeterPerSecondSquared"
         }
       ],
-      "enumNamespace": "UnitConverter.Acceleration",
-      "enumType": "UnitConverterAccelerationUnit"
+      "enumNamespace": "UnitTools.Acceleration",
+      "enumType": "UnitToolsAccelerationUnit"
     },
     "Force": {
       "type": "Force",
@@ -679,8 +679,8 @@
           "enumMember": "Kilonewton"
         }
       ],
-      "enumNamespace": "UnitConverter.Force",
-      "enumType": "UnitConverterForceUnit"
+      "enumNamespace": "UnitTools.Force",
+      "enumType": "UnitToolsForceUnit"
     },
     "Energy": {
       "type": "Energy",
@@ -698,8 +698,8 @@
           "enumMember": "Kilojoule"
         }
       ],
-      "enumNamespace": "UnitConverter.Energy",
-      "enumType": "UnitConverterEnergyUnit"
+      "enumNamespace": "UnitTools.Energy",
+      "enumType": "UnitToolsEnergyUnit"
     },
     "Power": {
       "type": "Power",
@@ -717,8 +717,8 @@
           "enumMember": "Kilowatt"
         }
       ],
-      "enumNamespace": "UnitConverter.Power",
-      "enumType": "UnitConverterPowerUnit"
+      "enumNamespace": "UnitTools.Power",
+      "enumType": "UnitToolsPowerUnit"
     },
     "Pressure": {
       "type": "Pressure",
@@ -748,8 +748,8 @@
           "enumMember": "Bar"
         }
       ],
-      "enumNamespace": "UnitConverter.Pressure",
-      "enumType": "UnitConverterPressureUnit"
+      "enumNamespace": "UnitTools.Pressure",
+      "enumType": "UnitToolsPressureUnit"
     },
     "Density": {
       "type": "Density",
@@ -767,8 +767,8 @@
           "enumMember": "GramPerCubicCentimeter"
         }
       ],
-      "enumNamespace": "UnitConverter.Density",
-      "enumType": "UnitConverterDensityUnit"
+      "enumNamespace": "UnitTools.Density",
+      "enumType": "UnitToolsDensityUnit"
     },
     "Frequency": {
       "type": "Frequency",
@@ -792,8 +792,8 @@
           "enumMember": "Megahertz"
         }
       ],
-      "enumNamespace": "UnitConverter.Frequency",
-      "enumType": "UnitConverterFrequencyUnit"
+      "enumNamespace": "UnitTools.Frequency",
+      "enumType": "UnitToolsFrequencyUnit"
     },
     "ElectricCurrent": {
       "type": "ElectricCurrent",
@@ -811,8 +811,8 @@
           "enumMember": "Milliampere"
         }
       ],
-      "enumNamespace": "UnitConverter.Current",
-      "enumType": "UnitConverterCurrentUnit"
+      "enumNamespace": "UnitTools.Current",
+      "enumType": "UnitToolsCurrentUnit"
     },
     "ElectricCharge": {
       "type": "ElectricCharge",
@@ -824,8 +824,8 @@
           "enumMember": "Coulomb"
         }
       ],
-      "enumNamespace": "UnitConverter.ElectricCharge",
-      "enumType": "UnitConverterElectricChargeUnit"
+      "enumNamespace": "UnitTools.ElectricCharge",
+      "enumType": "UnitToolsElectricChargeUnit"
     },
     "Voltage": {
       "type": "Voltage",
@@ -843,8 +843,8 @@
           "enumMember": "Millivolt"
         }
       ],
-      "enumNamespace": "UnitConverter.Voltage",
-      "enumType": "UnitConverterVoltageUnit"
+      "enumNamespace": "UnitTools.Voltage",
+      "enumType": "UnitToolsVoltageUnit"
     },
     "Resistance": {
       "type": "Resistance",
@@ -862,8 +862,8 @@
           "enumMember": "Kiloohm"
         }
       ],
-      "enumNamespace": "UnitConverter.ElectricResistance",
-      "enumType": "UnitConverterElectricResistanceUnit"
+      "enumNamespace": "UnitTools.ElectricResistance",
+      "enumType": "UnitToolsElectricResistanceUnit"
     }
   }
 }

@@ -52,27 +52,27 @@ def read_metadata(package):
 
 with zipfile.ZipFile(core_package) as archive:
     names = archive.namelist()
-    assert "lib/netstandard2.0/UnitConverter.dll" in names
-    assert "lib/netstandard2.0/UnitConverter.xml" in names
-    assert "lib/net8.0/UnitConverter.xml" in names
-    core_docs = ET.fromstring(archive.read("lib/net8.0/UnitConverter.xml"))
+    assert "lib/netstandard2.0/UnitTools.dll" in names
+    assert "lib/netstandard2.0/UnitTools.xml" in names
+    assert "lib/net8.0/UnitTools.xml" in names
+    core_docs = ET.fromstring(archive.read("lib/net8.0/UnitTools.xml"))
     documented_members = {
         member.attrib.get("name")
         for member in core_docs.findall(".//member")
     }
-    assert "T:UnitConverter.UnitConverterParser" in documented_members
-    assert "T:UnitConverter.UnitConverterDynamic" in documented_members
-    assert "T:UnitConverter.UnitConverterExact" in documented_members
-    assert "T:UnitConverter.Catalog.UnitConverterCatalog" in documented_members
+    assert "T:UnitTools.UnitToolsParser" in documented_members
+    assert "T:UnitTools.UnitToolsDynamic" in documented_members
+    assert "T:UnitTools.UnitToolsExact" in documented_members
+    assert "T:UnitTools.Catalog.UnitToolsCatalog" in documented_members
     assert "README.NUGET.md" in names
     assert archive.read("README.NUGET.md") == (root / "README.NUGET.md").read_bytes()
     assert "LICENSE.md" in names
     assert "NOTICE" in names
-    assert "unitconverter.png" in names
-    assert archive.read("unitconverter.png") == (root / "assets/unitconverter.png").read_bytes()
+    assert "unittools.png" in names
+    assert archive.read("unittools.png") == (root / "assets/unittools.png").read_bytes()
     assert sorted(name for name in names if name.endswith(".dll")) == [
-        "lib/net8.0/UnitConverter.dll",
-        "lib/netstandard2.0/UnitConverter.dll",
+        "lib/net8.0/UnitTools.dll",
+        "lib/netstandard2.0/UnitTools.dll",
     ], "Only the conversion assembly and supported target-framework assets belong in the core package"
     forbidden = ("UnityEngine", "UnityEditor", "RealisticPhysics.Core", "NUnit", "nunit")
     assert not any(part in name for name in names for part in forbidden)
@@ -91,7 +91,7 @@ with zipfile.ZipFile(core_package) as archive:
     dependencies = metadata.findall(".//n:dependency", namespace)
     assert all(dependency.attrib["id"] == "NETStandard.Library" for dependency in dependencies)
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
-    assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
+    assert metadata.findtext("n:icon", namespaces=namespace) == "unittools.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
     assert license_element.attrib.get("type") == "file"
@@ -99,21 +99,21 @@ with zipfile.ZipFile(core_package) as archive:
 
 with zipfile.ZipFile(json_package) as archive:
     names = archive.namelist()
-    assert "lib/netstandard2.0/UnitConverter.SystemTextJson.dll" in names
-    assert "lib/netstandard2.0/UnitConverter.SystemTextJson.xml" in names
+    assert "lib/netstandard2.0/UnitTools.SystemTextJson.dll" in names
+    assert "lib/netstandard2.0/UnitTools.SystemTextJson.xml" in names
     json_docs = ET.fromstring(
-        archive.read("lib/netstandard2.0/UnitConverter.SystemTextJson.xml"))
+        archive.read("lib/netstandard2.0/UnitTools.SystemTextJson.xml"))
     json_documented_members = {
         member.attrib.get("name")
         for member in json_docs.findall(".//member")
     }
-    assert "T:UnitConverter.SystemTextJson.UnitConverterJson" in json_documented_members
+    assert "T:UnitTools.SystemTextJson.UnitToolsJson" in json_documented_members
     assert "README.NUGET.md" in names
     assert archive.read("README.NUGET.md") == (root / "README.NUGET.md").read_bytes()
     assert "LICENSE.md" in names
     assert "NOTICE" in names
-    assert "unitconverter.png" in names
-    assert archive.read("unitconverter.png") == (root / "assets/unitconverter.png").read_bytes()
+    assert "unittools.png" in names
+    assert archive.read("unittools.png") == (root / "assets/unittools.png").read_bytes()
     specification = ET.fromstring(
         archive.read(next(name for name in names if name.endswith(".nuspec"))))
     namespace = {"n": specification.tag.split("}")[0][1:]}
@@ -132,7 +132,7 @@ with zipfile.ZipFile(json_package) as archive:
     assert "UnitTools" in dependency_ids
     assert "System.Text.Json" in dependency_ids
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
-    assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
+    assert metadata.findtext("n:icon", namespaces=namespace) == "unittools.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
     assert license_element.attrib.get("type") == "file"
@@ -140,13 +140,13 @@ with zipfile.ZipFile(json_package) as archive:
 
 with zipfile.ZipFile(analyzer_package) as archive:
     names = archive.namelist()
-    assert "analyzers/dotnet/cs/UnitConverter.Analyzers.dll" in names
+    assert "analyzers/dotnet/cs/UnitTools.Analyzers.dll" in names
     assert "README.NUGET.md" in names
     assert archive.read("README.NUGET.md") == (root / "README.NUGET.md").read_bytes()
     assert "LICENSE.md" in names
     assert "NOTICE" in names
-    assert "unitconverter.png" in names
-    assert archive.read("unitconverter.png") == (root / "assets/unitconverter.png").read_bytes()
+    assert "unittools.png" in names
+    assert archive.read("unittools.png") == (root / "assets/unittools.png").read_bytes()
     assert not any(name.startswith("lib/") and name.endswith(".dll") for name in names)
     specification = ET.fromstring(
         archive.read(next(name for name in names if name.endswith(".nuspec"))))
@@ -158,7 +158,7 @@ with zipfile.ZipFile(analyzer_package) as archive:
     assert analyzer_version == expected_version
     assert metadata.findtext("n:title", namespaces=namespace) == "UnitTools.Analyzers"
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
-    assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
+    assert metadata.findtext("n:icon", namespaces=namespace) == "unittools.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
     assert license_element.attrib.get("type") == "file"
@@ -197,31 +197,31 @@ def write_consumer_program(directory, include_json):
     if include_json:
         source = r'''using System;
 using System.Text.Json;
-using UnitConverter;
-using UnitConverter.Length;
-using UnitConverter.SystemTextJson;
+using UnitTools;
+using UnitTools.Length;
+using UnitTools.SystemTextJson;
 
 public static class Program
 {
     public static void Main()
     {
-        double meters = UnitConverterLength.Convert(
+        double meters = UnitToolsLength.Convert(
             1.8,
-            UnitConverterLengthUnit.Kilometer,
-            UnitConverterLengthUnit.Meter);
+            UnitToolsLengthUnit.Kilometer,
+            UnitToolsLengthUnit.Meter);
 
         if (Math.Abs(meters - 1800d) > 1e-12d)
         {
             throw new Exception("Core conversion package failed.");
         }
 
-        var value = new UnitValue<UnitConverterLengthUnit>(
+        var value = new UnitValue<UnitToolsLengthUnit>(
             1.8,
-            UnitConverterLengthUnit.Kilometer);
-        var options = new JsonSerializerOptions().AddUnitConverter();
+            UnitToolsLengthUnit.Kilometer);
+        var options = new JsonSerializerOptions().AddUnitTools();
         string json = JsonSerializer.Serialize(value, options);
-        UnitValue<UnitConverterLengthUnit> restored =
-            JsonSerializer.Deserialize<UnitValue<UnitConverterLengthUnit>>(json, options);
+        UnitValue<UnitToolsLengthUnit> restored =
+            JsonSerializer.Deserialize<UnitValue<UnitToolsLengthUnit>>(json, options);
 
         if (!restored.Equals(value))
         {
@@ -231,16 +231,16 @@ public static class Program
 }
 '''
     else:
-        source = r'''using UnitConverter.Length;
+        source = r'''using UnitTools.Length;
 
 public static class ConsumerSmoke
 {
     public static double Convert()
     {
-        return UnitConverterLength.Convert(
+        return UnitToolsLength.Convert(
             1.8,
-            UnitConverterLengthUnit.Kilometer,
-            UnitConverterLengthUnit.Meter);
+            UnitToolsLengthUnit.Kilometer,
+            UnitToolsLengthUnit.Meter);
     }
 }
 '''
@@ -298,7 +298,7 @@ def verify_consumer(root_directory, name, target_framework, output_type, include
             check=True)
 
 
-with tempfile.TemporaryDirectory(prefix="unitconverter-package-") as temporary:
+with tempfile.TemporaryDirectory(prefix="unittools-package-") as temporary:
     matrix_root = Path(temporary)
 
     verify_consumer(

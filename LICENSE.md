@@ -1,8 +1,8 @@
-# UnitConverter License
+# UnitTools License
 
 Copyright 2026 Perry3Dnl
 
-UnitConverter is licensed under the Apache License, Version 2.0, subject to the Commons Clause License Condition v1.0 below.
+UnitTools is licensed under the Apache License, Version 2.0, subject to the Commons Clause License Condition v1.0 below.
 
 ## Commons Clause License Condition v1.0
 
@@ -12,7 +12,7 @@ Without limiting other conditions in the License, the grant of rights under the 
 
 For purposes of the foregoing, "Sell" means practicing any or all of the rights granted to you under the License to provide to third parties, for a fee or other consideration (including without limitation fees for hosting or consulting/support services related to the Software), a product or service whose value derives, entirely or substantially, from the functionality of the Software. Any license notice or attribution required by the License must also include this Commons Clause License Condition notice.
 
-Software: UnitConverter, including the UnitConverter, UnitConverter.SystemTextJson, and UnitConverter.Analyzers packages
+Software: UnitTools, including the UnitTools, UnitTools.SystemTextJson, and UnitTools.Analyzers packages
 
 License: Apache License 2.0
 

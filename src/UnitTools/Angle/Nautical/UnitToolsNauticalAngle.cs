@@ -1,0 +1,15 @@
+namespace UnitTools.Angle.Nautical
+{
+    public static class UnitToolsNauticalAngle
+    {
+        public static double CompassPointToDegree(double value)
+        {
+            return value * 11.25d;
+        }
+
+        public static double DegreeToCompassPoint(double baseValue)
+        {
+            return baseValue / 11.25d;
+        }
+    }
+}

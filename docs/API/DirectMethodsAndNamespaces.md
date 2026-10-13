@@ -7,19 +7,19 @@ This is useful when a developer wants very clear method names and namespace auto
 ## Length Metric
 
 ```csharp
-using UnitConverter.Length.Metric;
+using UnitTools.Length.Metric;
 
-double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
-double millimeters = UnitConverterMetricLength.MeterToMillimeter(meters);
+double meters = UnitToolsMetricLength.CentimeterToMeter(12.5);
+double millimeters = UnitToolsMetricLength.MeterToMillimeter(meters);
 ```
 
 ## Length Imperial
 
 ```csharp
-using UnitConverter.Length.Imperial;
+using UnitTools.Length.Imperial;
 
-double meters = UnitConverterImperialLength.FootToMeter(10);
-double feet = UnitConverterImperialLength.MeterToFoot(meters);
+double meters = UnitToolsImperialLength.FootToMeter(10);
+double feet = UnitToolsImperialLength.MeterToFoot(meters);
 ```
 
 ## Volume US vs UK
@@ -27,23 +27,23 @@ double feet = UnitConverterImperialLength.MeterToFoot(meters);
 US and UK Imperial volume units are separate because some names are shared but values differ.
 
 ```csharp
-using UnitConverter.Volume.ImperialUS;
-using UnitConverter.Volume.ImperialUK;
+using UnitTools.Volume.ImperialUS;
+using UnitTools.Volume.ImperialUK;
 
-double usGallonLiters = UnitConverterImperialUSVolume.GallonToLiter(1);
-double ukGallonLiters = UnitConverterImperialUKVolume.GallonToLiter(1);
+double usGallonLiters = UnitToolsImperialUSVolume.GallonToLiter(1);
+double ukGallonLiters = UnitToolsImperialUKVolume.GallonToLiter(1);
 ```
 
 ## Namespace Convention
 
 ```text
-UnitConverter.Length.Metric
-UnitConverter.Length.Imperial
-UnitConverter.Length.Survey
-UnitConverter.Length.Nautical
-UnitConverter.Volume.ImperialUS
-UnitConverter.Volume.ImperialUK
-UnitConverter.Mass.Troy
+UnitTools.Length.Metric
+UnitTools.Length.Imperial
+UnitTools.Length.Survey
+UnitTools.Length.Nautical
+UnitTools.Volume.ImperialUS
+UnitTools.Volume.ImperialUK
+UnitTools.Mass.Troy
 ```
 
 ## Product Rule

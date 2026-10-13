@@ -7,7 +7,7 @@
       "error": "0.2028 ns",
       "stddev": "0.0723 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -16,7 +16,7 @@
       "error": "0.1564 ns",
       "stddev": "0.0694 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -25,7 +25,7 @@
       "error": "0.1618 ns",
       "stddev": "0.0718 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -34,7 +34,7 @@
       "error": "0.0016 ns",
       "stddev": "0.0008 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -43,7 +43,7 @@
       "error": "0.0153 ns",
       "stddev": "0.0068 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.ConversionBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.ConversionBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -52,7 +52,7 @@
       "error": "0.0071 ns",
       "stddev": "0.0031 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -61,7 +61,7 @@
       "error": "1.0657 ns",
       "stddev": "0.4732 ns",
       "allocated": "48 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -70,7 +70,7 @@
       "error": "0.9542 ns",
       "stddev": "0.4237 ns",
       "allocated": "24 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -79,7 +79,7 @@
       "error": "0.0538 ns",
       "stddev": "0.0192 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -88,7 +88,7 @@
       "error": "1.2956 ns",
       "stddev": "0.5753 ns",
       "allocated": "32 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -97,7 +97,7 @@
       "error": "0.2360 ns",
       "stddev": "0.0841 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -106,7 +106,7 @@
       "error": "19.0178 ns",
       "stddev": "8.4440 ns",
       "allocated": "144 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -115,7 +115,7 @@
       "error": "1.7561 ns",
       "stddev": "0.7797 ns",
       "allocated": "88 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -124,7 +124,7 @@
       "error": "1.4976 ns",
       "stddev": "0.6649 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     },
     {
       "type": "",
@@ -133,7 +133,7 @@
       "error": "0.7408 ns",
       "stddev": "0.2642 ns",
       "allocated": "0 B",
-      "report": "UnitConverter.Benchmarks.TextAndDynamicBenchmarks-report.csv"
+      "report": "UnitTools.Benchmarks.TextAndDynamicBenchmarks-report.csv"
     }
   ]
 }

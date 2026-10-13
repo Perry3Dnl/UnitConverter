@@ -1,6 +1,6 @@
 # Conversion provenance
 
-UnitConverter exposes provenance through every `UnitConverterUnitDescriptor.Provenance`.
+UnitTools exposes provenance through every `UnitToolsUnitDescriptor.Provenance`.
 
 The goal is to make the origin and audit state of conversion definitions inspectable without
 pretending that a broad standards reference proves every individual numerical factor.
@@ -17,12 +17,12 @@ pretending that a broad standards reference proves every individual numerical fa
 Consumers can distinguish these states:
 
 ```csharp
-UnitConverterUnitDescriptor meter =
-    UnitConverterCatalog
-        .GetFamily(UnitConverterFamily.Length)
+UnitToolsUnitDescriptor meter =
+    UnitToolsCatalog
+        .GetFamily(UnitToolsFamily.Length)
         .Units.First(unit => unit.Name == "Meter");
 
-foreach (UnitConverterProvenanceSource source in meter.Provenance.Sources)
+foreach (UnitToolsProvenanceSource source in meter.Provenance.Sources)
 {
     Console.WriteLine(source.Id);
     Console.WriteLine(source.Title);
@@ -40,7 +40,7 @@ The current catalogue records these authoritative reference sets:
 - **CODATA 2022 recommended values** — fundamental physical constants and associated conversion factors.
 - **IAU 2015 Resolution B3** — nominal solar and planetary conversion constants.
 
-The original UnitConverter 1.1.3 conversion core remains the explicit provenance source for
+The original UnitTools 1.1.3 conversion core remains the explicit provenance source for
 definitions that have not yet completed an external-source audit.
 
 ## Audit policy

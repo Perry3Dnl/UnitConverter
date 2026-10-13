@@ -9,12 +9,12 @@ The core package ID is `UnitTools`, targeting `netstandard2.0` and `net8.0`. The
 With the .NET 10 SDK installed, run from the repository root:
 
 ```sh
-dotnet restore UnitConverter.sln
-dotnet build UnitConverter.sln --configuration Release --no-restore
-dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
-dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
-dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
-dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
+dotnet restore UnitTools.sln
+dotnet build UnitTools.sln --configuration Release --no-restore
+dotnet test tests/UnitTools.Tests/UnitTools.Tests.csproj --configuration Release --no-build
+dotnet pack src/UnitTools/UnitTools.csproj --configuration Release --no-build --output artifacts/packages
+dotnet pack src/UnitTools.SystemTextJson/UnitTools.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+dotnet pack src/UnitTools.Analyzers/UnitTools.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
 python scripts/verify_package.py artifacts/packages
 ```
 
@@ -39,7 +39,7 @@ To publish `1.0.1`:
 
 1. Confirm all main CI checks and package validation are green.
 2. Configure GitHub Actions secret `NUGET_USER` to the owning NuGet.org username (not an email or API key).
-3. Configure the NuGet Trusted Publishing policy for owner `Perry3Dnl`, repository `UnitConverter`, workflow `publish-nuget.yml`, and GitHub environment `nuget-release`. Create the matching GitHub environment.
+3. Configure the NuGet Trusted Publishing policy for owner `Perry3Dnl`, repository `UnitTools`, workflow `publish-nuget.yml`, and GitHub environment `nuget-release`. Create the matching GitHub environment.
 4. Push a dedicated commit to `main` whose message begins with **`Release v1.0.1`**. After validation succeeds, the workflow creates `v1.0.1` and dispatches a tagged workflow run.
 5. That tagged run validates the version/tag and all release gates again, publishes the three packages and available symbol packages using short-lived OIDC credentials, then creates a GitHub Release with all packages and `SHA256SUMS.txt`.
 

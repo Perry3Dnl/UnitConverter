@@ -27,25 +27,25 @@ For JSON integration or analyzer diagnostics, install the matching companion pac
 ## Quick start
 
 ```csharp
-using UnitConverter;
-using UnitConverter.Length;
-using UnitConverter.Quantities;
+using UnitTools;
+using UnitTools.Length;
+using UnitTools.Quantities;
 
 // Numeric conversion: 4 km -> 4000 m.
-double meters = UnitConverterLength.Convert(
+double meters = UnitToolsLength.Convert(
     4d,
-    UnitConverterLengthUnit.Kilometer,
-    UnitConverterLengthUnit.Meter);
+    UnitToolsLengthUnit.Kilometer,
+    UnitToolsLengthUnit.Meter);
 
 // Fluent numeric conversion.
 double fluentMeters = 4d.Convert(
-    UnitConverterLengthUnit.Kilometer,
-    UnitConverterLengthUnit.Meter);
+    UnitToolsLengthUnit.Kilometer,
+    UnitToolsLengthUnit.Meter);
 
 // Keep the unit attached to a value.
-double wrappedMeters = new UnitValue<UnitConverterLengthUnit>(
-    4d, UnitConverterLengthUnit.Kilometer)
-    .To(UnitConverterLengthUnit.Meter).Value;
+double wrappedMeters = new UnitValue<UnitToolsLengthUnit>(
+    4d, UnitToolsLengthUnit.Kilometer)
+    .To(UnitToolsLengthUnit.Meter).Value;
 
 // Compile-time dimensional safety.
 Length<decimal> distance = Length<decimal>.FromKilometres(4m);
@@ -55,10 +55,10 @@ decimal typedMeters = distance.Metres;
 ### Parsing, exact arithmetic, and composite units
 
 ```csharp
-double speed = UnitConverterDynamic.Convert("36 km/h", "m/s");
-decimal exact = UnitConverterExact.Convert(
-    1m, UnitConverterLengthUnit.Inch, UnitConverterLengthUnit.Foot);
-double energy = UnitConverterComposite.Convert(1d, "N*m", "J");
+double speed = UnitToolsDynamic.Convert("36 km/h", "m/s");
+decimal exact = UnitToolsExact.Convert(
+    1m, UnitToolsLengthUnit.Inch, UnitToolsLengthUnit.Foot);
+double energy = UnitToolsComposite.Convert(1d, "N*m", "J");
 ```
 
 ## Compatibility and design

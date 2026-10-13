@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One-time, all-tracked-files UnitConverter -> UnitTools source migration.
+"""One-time, all-tracked-files UnitTools -> UnitTools source migration.
 
 Run only on a dedicated migration branch. Rebuild all generated artifacts,
 refresh the public API baseline, and run CI before merging.
@@ -29,16 +29,16 @@ for relative in sorted(tracked, key=lambda p: (len(p.parts), len(str(p))), rever
         content = None
 
     if content is not None:
-        updated = (content.replace("UnitConverter", "UnitTools")
-                          .replace("unitconverter", "unittools")
-                          .replace("UNITCONVERTER", "UNITTOOLS"))
+        updated = (content.replace("UnitTools", "UnitTools")
+                          .replace("unittools", "unittools")
+                          .replace("UNITTOOLS", "UNITTOOLS"))
         if updated != content:
             original.write_bytes(updated.encode("utf-8"))
             changes += 1
 
-    new_relative = Path(str(relative).replace("UnitConverter", "UnitTools")
-                                     .replace("unitconverter", "unittools")
-                                     .replace("UNITCONVERTER", "UNITTOOLS"))
+    new_relative = Path(str(relative).replace("UnitTools", "UnitTools")
+                                     .replace("unittools", "unittools")
+                                     .replace("UNITTOOLS", "UNITTOOLS"))
     if new_relative != relative:
         target = ROOT / new_relative
         if target.exists():

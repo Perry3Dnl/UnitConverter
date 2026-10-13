@@ -4,8 +4,8 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "src" / "UnitConverter"
-files = sorted(SOURCE.glob("*/UnitConverter*Extensions.cs"))
+SOURCE = ROOT / "src" / "UnitTools"
+files = sorted(SOURCE.glob("*/UnitTools*Extensions.cs"))
 errors = []
 
 if len(files) != 150:
@@ -18,8 +18,8 @@ for path in files:
         errors.append(f"{path.relative_to(ROOT)} has no decimal Convert extension.")
     if legacy.search(text) or "Convert((double)value, from, to)" in text:
         errors.append(f"{path.relative_to(ROOT)} still routes decimal input through double.")
-    if "UnitConverterExact.Convert(value, from, to)" not in text:
-        errors.append(f"{path.relative_to(ROOT)} does not use UnitConverterExact for decimal conversion.")
+    if "UnitToolsExact.Convert(value, from, to)" not in text:
+        errors.append(f"{path.relative_to(ROOT)} does not use UnitToolsExact for decimal conversion.")
 
 if errors:
     print("Decimal precision verification failed:", file=sys.stderr)

@@ -10,7 +10,7 @@ import json
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFINITIONS = ROOT / "definitions/quantity-api.json"
-OUTPUT_DIR = ROOT / "src/UnitConverter/Quantities/Generated"
+OUTPUT_DIR = ROOT / "src/UnitTools/Quantities/Generated"
 
 def render_family(family_name, family):
     quantity_type = family["type"]
@@ -23,7 +23,7 @@ def render_family(family_name, family):
         "using System;",
         "using System.Numerics;",
         "",
-        "namespace UnitConverter.Quantities",
+        "namespace UnitTools.Quantities",
         "{",
         f"    public static partial class {helper_name}",
         "    {",

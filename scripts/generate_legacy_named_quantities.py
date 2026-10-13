@@ -12,12 +12,12 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-DESCRIPTORS = ROOT / "src/UnitConverter/Catalog/UnitConverterDescriptors.cs"
-UNIT_VALUES = ROOT / "src/UnitConverter/Catalog/UnitConverterUnitValues.Generated.cs"
+DESCRIPTORS = ROOT / "src/UnitTools/Catalog/UnitToolsDescriptors.cs"
+UNIT_VALUES = ROOT / "src/UnitTools/Catalog/UnitToolsUnitValues.Generated.cs"
 QUANTITY_API = ROOT / "definitions/quantity-api.json"
-OUTPUT_DIR = ROOT / "src/UnitConverter/Quantities/GeneratedLegacy"
-PARSING_OUTPUT = ROOT / "src/UnitConverter/Quantities/QuantityParsing.cs"
-FORMATTING_OUTPUT = ROOT / "src/UnitConverter/Quantities/QuantityFormattingExtensions.cs"
+OUTPUT_DIR = ROOT / "src/UnitTools/Quantities/GeneratedLegacy"
+PARSING_OUTPUT = ROOT / "src/UnitTools/Quantities/QuantityParsing.cs"
+FORMATTING_OUTPUT = ROOT / "src/UnitTools/Quantities/QuantityFormattingExtensions.cs"
 
 INLINE_PARSING_TYPES = {"Length", "Time", "Speed"}
 
@@ -36,9 +36,9 @@ def parse_model():
     }
 
     pattern = re.compile(
-        r'Create<UnitConverter\.([A-Za-z0-9_]+)\.(UnitConverter[A-Za-z0-9_]+Unit)>'
-        r'\(UnitConverterFamily\.([A-Za-z0-9_]+),\s*"([^"]+)",\s*"([^"]+)",\s*'
-        r'UnitConverter\.\1\.(UnitConverter[A-Za-z0-9_]+)\.GetSymbol'
+        r'Create<UnitTools\.([A-Za-z0-9_]+)\.(UnitTools[A-Za-z0-9_]+Unit)>'
+        r'\(UnitToolsFamily\.([A-Za-z0-9_]+),\s*"([^"]+)",\s*"([^"]+)",\s*'
+        r'UnitTools\.\1\.(UnitTools[A-Za-z0-9_]+)\.GetSymbol'
     )
 
     families = []
@@ -47,7 +47,7 @@ def parse_model():
         if family == "FuelEconomy":
             continue
 
-        full_enum = f"UnitConverter.{folder}.{enum_type}"
+        full_enum = f"UnitTools.{folder}.{enum_type}"
         marker = f"if (type == typeof({full_enum}))"
         index = unit_values.find(marker)
         if index < 0:
@@ -81,10 +81,10 @@ def parse_model():
     return families
 
 def enum_type(family):
-    return f"global::UnitConverter.{family['folder']}.{family['enumType']}"
+    return f"global::UnitTools.{family['folder']}.{family['enumType']}"
 
 def converter_type(family):
-    return f"global::UnitConverter.{family['folder']}.{family['converter']}"
+    return f"global::UnitTools.{family['folder']}.{family['converter']}"
 
 def unit_property_name(family, unit):
     return unit + "Value" if unit == family["type"] else unit
@@ -129,7 +129,7 @@ def parse_symbol_literals(family):
     source = (
         ROOT
         / "src"
-        / "UnitConverter"
+        / "UnitTools"
         / family["folder"]
         / f"{family['converter']}.cs"
     ).read_text(encoding="utf-8")
@@ -282,7 +282,7 @@ def render_full(family):
         "using System;",
         "using System.Numerics;",
         "",
-        "namespace UnitConverter.Quantities",
+        "namespace UnitTools.Quantities",
         "{",
         f"    /// <summary>Strongly typed {humanize(name)} quantity backed by the catalog base unit.</summary>",
         f"    public readonly partial struct {name}<T> :",
@@ -306,7 +306,7 @@ def render_full(family):
         if unit == base:
             lines.append(f"        public T {property_name} => _baseValue;")
         else:
-            lines.append(f"        public T {property_name} => UnitConverterNumeric.Convert(_baseValue, BaseUnit, {e}.{unit});")
+            lines.append(f"        public T {property_name} => UnitToolsNumeric.Convert(_baseValue, BaseUnit, {e}.{unit});")
 
     lines.append("")
     for unit in family["units"]:
@@ -315,16 +315,16 @@ def render_full(family):
         else:
             lines.append(
                 f"        public static {name}<T> From{unit}(T value) => "
-                f"new {name}<T>(UnitConverterNumeric.Convert(value, {e}.{unit}, BaseUnit));"
+                f"new {name}<T>(UnitToolsNumeric.Convert(value, {e}.{unit}, BaseUnit));"
             )
 
     lines.extend([
         "",
         f"        public static {name}<T> From(T value, {e} unit)",
-        f"            => new {name}<T>(UnitConverterNumeric.Convert(value, unit, BaseUnit));",
+        f"            => new {name}<T>(UnitToolsNumeric.Convert(value, unit, BaseUnit));",
         "",
         f"        public T In({e} unit)",
-        "            => UnitConverterNumeric.Convert(_baseValue, BaseUnit, unit);",
+        "            => UnitToolsNumeric.Convert(_baseValue, BaseUnit, unit);",
         "",
     ])
     lines.extend(render_resolver(family))
@@ -452,7 +452,7 @@ def render_augmentation(family):
         "using System;",
         "using System.Numerics;",
         "",
-        "namespace UnitConverter.Quantities",
+        "namespace UnitTools.Quantities",
         "{",
         declaration,
         "    {",
@@ -470,7 +470,7 @@ def render_augmentation(family):
         ])
     lines.extend([
         "                default:",
-        f"                    return {base_factory}(UnitConverterNumeric.Convert(value, unit, FullCatalogBaseUnit));",
+        f"                    return {base_factory}(UnitToolsNumeric.Convert(value, unit, FullCatalogBaseUnit));",
         "            }",
         "        }",
         "",
@@ -486,7 +486,7 @@ def render_augmentation(family):
         ])
     lines.extend([
         "                default:",
-        f"                    return UnitConverterNumeric.Convert({base_property}, FullCatalogBaseUnit, unit);",
+        f"                    return UnitToolsNumeric.Convert({base_property}, FullCatalogBaseUnit, unit);",
         "            }",
         "        }",
         "",
@@ -560,7 +560,7 @@ def render_existing_parsing(families):
         "using System;",
         "using System.Numerics;",
         "",
-        "namespace UnitConverter.Quantities",
+        "namespace UnitTools.Quantities",
         "{",
     ]
     for family in families:
@@ -604,7 +604,7 @@ def render_existing_formatting(families):
         "using System;",
         "using System.Numerics;",
         "",
-        "namespace UnitConverter.Quantities",
+        "namespace UnitTools.Quantities",
         "{",
         "    public static class QuantityFormattingExtensions",
         "    {",

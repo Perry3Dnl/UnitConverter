@@ -10,39 +10,39 @@
 
 UnitTools is a high-performance, dependency-free .NET unit conversion engine built for both simple application code and demanding engineering/scientific workloads. The current core catalog contains **150 conversion families**, **1,858 registered units**, and **9,395 accepted unit names, symbols, aliases, and notation variants**. Those units provide **39,458 directed non-identity unit-to-unit conversion pairs** inside their compatible families, while the core assembly exposes **1,102 public types** and **14,494 public methods/overloads** across direct converters, numeric extensions, typed quantities, parsing/formatting, exact conversion, dynamic detection, composite expressions, custom units, metadata, and arbitrary-scale numbers.
 
-UnitConverter does not force one programming model. Use a direct `double`/`float`/`decimal` conversion when that is all you need, fluent numeric extensions when you want compact code, `UnitValue<TUnit>` when the unit should travel with the value, or strongly typed quantities when compile-time dimensional safety matters. Exact decimal/rational routes, allocation-aware span APIs, runtime unit detection, localization, NativeAOT validation, and BenchmarkDotNet regression gates are all part of the same standalone core design.
+UnitTools does not force one programming model. Use a direct `double`/`float`/`decimal` conversion when that is all you need, fluent numeric extensions when you want compact code, `UnitValue<TUnit>` when the unit should travel with the value, or strongly typed quantities when compile-time dimensional safety matters. Exact decimal/rational routes, allocation-aware span APIs, runtime unit detection, localization, NativeAOT validation, and BenchmarkDotNet regression gates are all part of the same standalone core design.
 
-The current synchronized package version is **`1.0.1`** across `UnitTools`, `UnitTools.SystemTextJson`, and `UnitTools.Analyzers`. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. Version `1.0.1` is prepared for release; publication is verified separately on NuGet.org.
+The current synchronized package version is **`1.0.1`** across `UnitTools`, `UnitTools.SystemTextJson`, and `UnitTools.Analyzers`. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitTools.SystemTextJson` and `UnitTools.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. Version `1.0.1` is prepared for release; publication is verified separately on NuGet.org.
 
-> **Scale metrics are generated from the compiled catalog/API, not estimated.** A conversion pair is one directed `from → to` route within the same family and excludes identity conversions such as `Meter → Meter`. Reproduce the current numbers with `dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj -c Release -- --stats`.
+> **Scale metrics are generated from the compiled catalog/API, not estimated.** A conversion pair is one directed `from → to` route within the same family and excludes identity conversions such as `Meter → Meter`. Reproduce the current numbers with `dotnet run --project tools/UnitTools.ApiCompat/UnitTools.ApiCompat.csproj -c Release -- --stats`.
 
-## Why UnitConverter
+## Why UnitTools
 
-UnitConverter is designed for developers who want to choose the right safety level for each part of an application instead of being forced into one quantity model. The dependency-free core supports ordinary numeric conversion, fluent numeric extensions, value-plus-unit wrappers, strongly typed quantities, runtime/dynamic conversion, exact decimal/rational paths, composite expressions, custom units, metadata, and arbitrary-scale numbers.
+UnitTools is designed for developers who want to choose the right safety level for each part of an application instead of being forced into one quantity model. The dependency-free core supports ordinary numeric conversion, fluent numeric extensions, value-plus-unit wrappers, strongly typed quantities, runtime/dynamic conversion, exact decimal/rational paths, composite expressions, custom units, metadata, and arbitrary-scale numbers.
 
 ### Choose the API style that fits
 
 ```csharp
-using UnitConverter;
-using UnitConverter.Length;
-using UnitConverter.Quantities;
+using UnitTools;
+using UnitTools.Length;
+using UnitTools.Quantities;
 
 // 1. Straightforward numeric conversion.
-double metres = UnitConverterLength.Convert(
+double metres = UnitToolsLength.Convert(
     4d,
-    UnitConverterLengthUnit.Kilometer,
-    UnitConverterLengthUnit.Meter);
+    UnitToolsLengthUnit.Kilometer,
+    UnitToolsLengthUnit.Meter);
 
 // 2. Fluent numeric conversion. The developer controls the current unit.
 double metresAgain = 4d.Convert(
-    UnitConverterLengthUnit.Kilometer,
-    UnitConverterLengthUnit.Meter);
+    UnitToolsLengthUnit.Kilometer,
+    UnitToolsLengthUnit.Meter);
 
 // 3. Value + unit when the unit should travel with the value.
-double metresFromValue = new UnitValue<UnitConverterLengthUnit>(
+double metresFromValue = new UnitValue<UnitToolsLengthUnit>(
     4d,
-    UnitConverterLengthUnit.Kilometer)
-    .To(UnitConverterLengthUnit.Meter)
+    UnitToolsLengthUnit.Kilometer)
+    .To(UnitToolsLengthUnit.Meter)
     .Value;
 
 // 4. Strongly typed quantity when compile-time dimensional safety matters.
@@ -53,14 +53,14 @@ decimal typedMetres = distance.Metres;
 For runtime text, exact decimal workflows, or composite units:
 
 ```csharp
-double parsed = UnitConverterDynamic.Convert("36 km/h", "m/s");
+double parsed = UnitToolsDynamic.Convert("36 km/h", "m/s");
 
-decimal exact = UnitConverterExact.Convert(
+decimal exact = UnitToolsExact.Convert(
     1m,
-    UnitConverterLengthUnit.Inch,
-    UnitConverterLengthUnit.Foot);
+    UnitToolsLengthUnit.Inch,
+    UnitToolsLengthUnit.Foot);
 
-double composite = UnitConverterComposite.Convert(
+double composite = UnitToolsComposite.Convert(
     1d,
     "N*m",
     "J");
@@ -71,7 +71,7 @@ The core package has **no third-party runtime package dependencies**. Install on
 
 ## Performance baseline
 
-UnitConverter has a dedicated BenchmarkDotNet suite covering direct/routed conversion, exact decimal arithmetic, named and universal quantities, span parsing/formatting, catalog lookup, dynamic conversion, and composite expressions.
+UnitTools has a dedicated BenchmarkDotNet suite covering direct/routed conversion, exact decimal arithmetic, named and universal quantities, span parsing/formatting, catalog lookup, dynamic conversion, and composite expressions.
 
 Recent GitHub-hosted runs keep routed `double` conversion in the low-single-digit nanosecond range with **0 B/op**, named `decimal` conversion in the tens-of-nanoseconds range with **0 B/op**, and span parsing/formatting around the ~100 ns range with **0 B/op**. Exact decimal conversion is also allocation-free on the benchmarked hot path. Cached composite parsing/conversion run in the tens-of-nanoseconds range with only **24 B/op** and **48 B/op** respectively. Hosted-runner timings vary between runs, so `docs/benchmarks/latest.json`, the generated badges, and the full baseline are the source of truth rather than hard-coded latency claims.
 
@@ -80,8 +80,8 @@ See [the full benchmark baseline](docs/benchmarks/BASELINE.md) for all measureme
 Locally, BenchmarkDotNet filters can be used to focus a run, for example:
 
 ```sh
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --filter "*ConversionBenchmarks*"
-dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj -c Release -- --anyCategories Span
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --filter "*ConversionBenchmarks*"
+dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj -c Release -- --anyCategories Span
 ```
 
 ## Build, test and create a package
@@ -89,12 +89,12 @@ dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmark
 Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0), then run these commands from the repository root:
 
 ```sh
-dotnet restore UnitConverter.sln
-dotnet build UnitConverter.sln --configuration Release --no-restore
-dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
-dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
-dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
-dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
+dotnet restore UnitTools.sln
+dotnet build UnitTools.sln --configuration Release --no-restore
+dotnet test tests/UnitTools.Tests/UnitTools.Tests.csproj --configuration Release --no-build
+dotnet pack src/UnitTools/UnitTools.csproj --configuration Release --no-build --output artifacts/packages
+dotnet pack src/UnitTools.SystemTextJson/UnitTools.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+dotnet pack src/UnitTools.Analyzers/UnitTools.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
 python scripts/verify_package.py artifacts/packages
 ```
 
@@ -103,7 +103,7 @@ The `.nupkg` and `.snupkg` are written to `artifacts/packages`. The SDK is a bui
 Install the candidate into an existing application using the absolute path to that directory:
 
 ```sh
-dotnet add package UnitTools --version 1.0.0 --source /absolute/path/to/UnitConverter/artifacts/packages
+dotnet add package UnitTools --version 1.0.0 --source /absolute/path/to/UnitTools/artifacts/packages
 ```
 
 GitHub Actions also builds the solution, runs the NUnit suite, verifies the checked-in public API fingerprint baseline, creates all three packages, and installs the produced packages into clean **netstandard2.0**, **net8.0**, and **net10.0** consumers. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors. Parser abuse/fuzz tests and explicit expression-complexity limits guard malformed and adversarial input.
@@ -111,36 +111,36 @@ GitHub Actions also builds the solution, runs the NUnit suite, verifies the chec
 ## Use the existing API
 
 ```csharp
-using UnitConverter.Length;
-using UnitConverter.Length.Metric;
+using UnitTools.Length;
+using UnitTools.Length.Metric;
 
 // Static router: source unit -> family base unit -> target unit.
-double millimeters = UnitConverterLength.Convert(
+double millimeters = UnitToolsLength.Convert(
     12.5,
-    UnitConverterLengthUnit.Centimeter,
-    UnitConverterLengthUnit.Millimeter);
+    UnitToolsLengthUnit.Centimeter,
+    UnitToolsLengthUnit.Millimeter);
 
 // Numeric extension: the same converter and arithmetic.
 double centimeters = 12.5;
 double alsoMillimeters = centimeters.Convert(
-    UnitConverterLengthUnit.Centimeter,
-    UnitConverterLengthUnit.Millimeter);
+    UnitToolsLengthUnit.Centimeter,
+    UnitToolsLengthUnit.Millimeter);
 
 // Direct method for a known conversion.
-double meters = UnitConverterMetricLength.CentimeterToMeter(12.5);
+double meters = UnitToolsMetricLength.CentimeterToMeter(12.5);
 ```
 
-The root namespace is now `UnitConverter`. Converter class names, existing enum values, conversion factors, overloads, and the base-unit conversion flow are preserved from version 1.1.3. Higher-level APIs are additive: strings can be parsed and formatted through the shared catalog, and `UnitValue<TUnit>` can retain a unit when that is useful without replacing the numeric API.
+The root namespace is now `UnitTools`. Converter class names, existing enum values, conversion factors, overloads, and the base-unit conversion flow are preserved from version 1.1.3. Higher-level APIs are additive: strings can be parsed and formatted through the shared catalog, and `UnitValue<TUnit>` can retain a unit when that is useful without replacing the numeric API.
 
 
-UnitConverter deliberately supports multiple safety levels. Strongly typed quantities are available when compile-time dimensional safety matters, while direct methods, numeric/family converters, dynamic conversion, and low-level APIs remain supported for developers who intentionally need them. The optional `UnitConverter.Analyzers` package adds IntelliSense guidance for selected escape-hatch patterns without making those APIs unavailable.
+UnitTools deliberately supports multiple safety levels. Strongly typed quantities are available when compile-time dimensional safety matters, while direct methods, numeric/family converters, dynamic conversion, and low-level APIs remain supported for developers who intentionally need them. The optional `UnitTools.Analyzers` package adds IntelliSense guidance for selected escape-hatch patterns without making those APIs unavailable.
 
 Culture-aware numeric parsing/formatting is supported through `IFormatProvider`. Culture-specific unit display names and parsing aliases keep symbols and enum names invariant. Dutch localization is currently **complete** for Angle, Area, Energy, Force, Frequency, Power, Pressure, Speed, Temperature, and Time; Length, Mass, and Volume remain explicitly **partial** until every catalog entry has been reviewed. CI verifies generated localization data and completeness metadata. See [Culture and localization](docs/Localization.md), [Localization coverage](docs/LocalizationCoverage.md), and [Analyzers](docs/Analyzers.md).
 
 ```csharp
-double miles = UnitConverterParser.Convert("1.8 km", UnitConverterLengthUnit.Mile);
+double miles = UnitToolsParser.Convert("1.8 km", UnitToolsLengthUnit.Mile);
 
-var distance = new UnitValue<UnitConverterLengthUnit>(1.8, UnitConverterLengthUnit.Kilometer);
+var distance = new UnitValue<UnitToolsLengthUnit>(1.8, UnitToolsLengthUnit.Kilometer);
 string text = distance.ToString(); // "1.8 km"
 ```
 
@@ -149,10 +149,10 @@ string text = distance.ToString(); // "1.8 km"
 Runtime family detection is also available when the caller does not know the family in advance:
 
 ```csharp
-UnitConverterDetectionResult detected = UnitConverterDetector.Detect("2 light-year");
+UnitToolsDetectionResult detected = UnitToolsDetector.Detect("2 light-year");
 
 // Or convert directly when the detected family is unambiguous.
-double meters = UnitConverterDynamic.Convert("2 light-year", "m");
+double meters = UnitToolsDynamic.Convert("2 light-year", "m");
 ```
 
 Global detection returns explicit candidates for ambiguous symbols instead of guessing. Family and unit descriptors also expose physical dimensions, including a separate information dimension for digital storage/data rate. Dimensions can be multiplied, divided, and raised to integer powers for future dimensional-analysis APIs. Fuel economy is modeled with unit-specific reciprocal dimensions because `km/L` and `L/100 km` are physically reciprocal representations.
@@ -162,18 +162,18 @@ Aliases are definition-driven. Curated vocabulary lives in `definitions/unit-ali
 Composite unit expressions are supported through the dimensional metadata:
 
 ```csharp
-double metersPerSecond = UnitConverterComposite.Convert(
+double metersPerSecond = UnitToolsComposite.Convert(
     36,
     "km/h",
     "m/s"); // 10
 
-double joules = UnitConverterComposite.Convert(
+double joules = UnitToolsComposite.Convert(
     1,
     "N*m",
     "J"); // 1
 
-UnitConverterUnitExpression expression =
-    UnitConverterExpressionParser.Parse("kg*m/s^2");
+UnitToolsUnitExpression expression =
+    UnitToolsExpressionParser.Parse("kg*m/s^2");
 ```
 
 The expression parser supports multiplication, division, parentheses, integer powers, superscript `²`/`³`, and middle-dot notation. Ambiguous symbols remain explicit when parsed alone. When a complete conversion provides enough dimensional context, ambiguity can be resolved safely; for example `h` can mean hour or Planck constant, but `km/h -> m/s` has only one dimensionally compatible interpretation.
@@ -183,15 +183,15 @@ The expression parser supports multiplication, division, parentheses, integer po
 Runtime custom units can be registered without modifying the built-in enums or generated catalogue:
 
 ```csharp
-UnitConverterCustomUnit perryLength =
-    UnitConverterCustomUnits.RegisterLinear(
-        UnitConverterFamily.Length,
+UnitToolsCustomUnit perryLength =
+    UnitToolsCustomUnits.RegisterLinear(
+        UnitToolsFamily.Length,
         "PerryLength",
         "perryLength",
         "Meter",
         1.7018);
 
-double meters = UnitConverterDynamic.Convert(
+double meters = UnitToolsDynamic.Convert(
     "2 perryLength",
     "Meter");
 ```
@@ -199,9 +199,9 @@ double meters = UnitConverterDynamic.Convert(
 Affine units are also supported when a scale and offset are required:
 
 ```csharp
-UnitConverterCustomUnit customTemperature =
-    UnitConverterCustomUnits.RegisterAffine(
-        UnitConverterFamily.Temperature,
+UnitToolsCustomUnit customTemperature =
+    UnitToolsCustomUnits.RegisterAffine(
+        UnitToolsFamily.Temperature,
         "CustomTemperature",
         "°X",
         "Custom temperature",
@@ -214,10 +214,10 @@ Custom aliases cannot shadow built-in aliases in the same family. Registered uni
 
 ### Arbitrary-scale number conversion
 
-UnitConverter now also includes the former Ginor number-conversion engine under `UnitConverter.Numbers`. It handles exact sparse base-10 values whose exponents can be far beyond conventional CLR numeric ranges:
+UnitTools now also includes the former Ginor number-conversion engine under `UnitTools.Numbers`. It handles exact sparse base-10 values whose exponents can be far beyond conventional CLR numeric ranges:
 
 ```csharp
-using UnitConverter.Numbers;
+using UnitTools.Numbers;
 
 ArbitraryScaleNumber huge =
     ArbitraryScaleNumber.Parse("1e100000000000000000000");
@@ -301,29 +301,29 @@ This functionality is part of the dependency-free core package; existing unit-co
 
 ### System.Text.Json serialization
 
-Serialization support is kept out of the dependency-free core package. Install the companion package `UnitConverter.SystemTextJson` and register its converter factory:
+Serialization support is kept out of the dependency-free core package. Install the companion package `UnitTools.SystemTextJson` and register its converter factory:
 
 ```csharp
 using System.Text.Json;
-using UnitConverter.SystemTextJson;
+using UnitTools.SystemTextJson;
 
 var options = new JsonSerializerOptions()
-    .AddUnitConverter();
+    .AddUnitTools();
 
-var distance = new UnitValue<UnitConverterLengthUnit>(
+var distance = new UnitValue<UnitToolsLengthUnit>(
     1.8,
-    UnitConverterLengthUnit.Kilometer);
+    UnitToolsLengthUnit.Kilometer);
 
 string json = JsonSerializer.Serialize(distance, options);
 // {"value":1.8,"unit":"Kilometer"}
 
-UnitValue<UnitConverterLengthUnit> restored =
-    JsonSerializer.Deserialize<UnitValue<UnitConverterLengthUnit>>(
+UnitValue<UnitToolsLengthUnit> restored =
+    JsonSerializer.Deserialize<UnitValue<UnitToolsLengthUnit>>(
         json,
         options);
 ```
 
-Deserialization accepts the catalogue's aliases as unit values, while serialization writes the stable enum name. The companion package depends on `System.Text.Json`; the `UnitConverter` core package remains free of third-party runtime dependencies.
+Deserialization accepts the catalogue's aliases as unit values, while serialization writes the stable enum name. The companion package depends on `System.Text.Json`; the `UnitTools` core package remains free of third-party runtime dependencies.
 
 
 ### Exact decimal and strongly typed quantities
@@ -331,37 +331,37 @@ Deserialization accepts the catalogue's aliases as unit values, while serializat
 Decimal extension conversions now stay on a decimal-native path. Linear conversion factors are composed as reduced rational numbers before they are applied, so conversions such as inch-to-foot and extreme SI-prefix ratios do not need a `decimal -> double -> decimal` round trip or an underflow-prone intermediate base value.
 
 ```csharp
-using UnitConverter;
-using UnitConverter.Length;
+using UnitTools;
+using UnitTools.Length;
 
 decimal feet = 1m.Convert(
-    UnitConverterLengthUnit.Inch,
-    UnitConverterLengthUnit.Foot); // rational factor is exactly 1/12 before decimal rounding
+    UnitToolsLengthUnit.Inch,
+    UnitToolsLengthUnit.Foot); // rational factor is exactly 1/12 before decimal rounding
 
-decimal tinyRatio = UnitConverterExact.Convert(
+decimal tinyRatio = UnitToolsExact.Convert(
     1m,
-    UnitConverterLengthUnit.Quectometer,
-    UnitConverterLengthUnit.Rontometer); // 0.001m
+    UnitToolsLengthUnit.Quectometer,
+    UnitToolsLengthUnit.Rontometer); // 0.001m
 ```
 
 On .NET 8 or later, `UnitQuantity<T, TUnit>` provides a strongly typed wrapper for every catalog family with uniform physical dimensions. The unit enum is part of the CLR type, so unrelated families cannot be mixed by addition, subtraction, comparison, or assignment.
 
 ```csharp
-using UnitConverter.Quantities;
-using UnitConverter.Torque;
+using UnitTools.Quantities;
+using UnitTools.Torque;
 
 var torque = UnitQuantity.From(
     12.5m,
-    UnitConverterTorqueUnit.NewtonMeter);
+    UnitToolsTorqueUnit.NewtonMeter);
 
 var doubled = torque + torque;
-decimal value = doubled.As(UnitConverterTorqueUnit.NewtonMeter);
+decimal value = doubled.As(UnitToolsTorqueUnit.NewtonMeter);
 ```
 
 The named quantity layer now covers the complete 150-family catalog on .NET 8+. Every uniform family has a first-class named generic type with a property and `From<Unit>` factory for every registered unit, enum-based `From/In/Convert`, generic arithmetic, comparisons, span parsing, and span formatting. The original named types such as `Length<T>`, `Time<T>`, `Pressure<T>`, and `Voltage<T>` retain their existing friendly names while also exposing the rest of their catalog units. Fuel economy remains intentionally represented by the two reciprocal-safe types `FuelEfficiency<T>` and `FuelConsumption<T>`.
 
 ```csharp
-using UnitConverter.Quantities;
+using UnitTools.Quantities;
 
 Stress<decimal> stress =
     YoungModulus<decimal>.FromGigapascal(200m) *
@@ -384,11 +384,11 @@ Integral extensions continue to return `double` to preserve fractional results. 
 
 ## Short numbers: conventional, gaming, and Ginor
 
-UnitConverter offers independent numeric notation APIs in `UnitConverter.Numbers`.
+UnitTools offers independent numeric notation APIs in `UnitTools.Numbers`.
 All parsed values use the same exact `ArbitraryScaleNumber` representation.
 
 ```csharp
-using UnitConverter.Numbers;
+using UnitTools.Numbers;
 
 var conventional = CompactNumberNotation.Parse("2.5B");  // 2.5e9
 var gaming = GamingNumberNotation.Parse("1.25aa");         // 1.25e114
@@ -440,9 +440,9 @@ Before the first nuget.org publication, the remaining account/repository setup i
 
 ## License
 
-UnitConverter and `UnitConverter.SystemTextJson` are **source-available** under the **Apache License 2.0 subject to the Commons Clause License Condition v1.0**.
+UnitTools and `UnitTools.SystemTextJson` are **source-available** under the **Apache License 2.0 subject to the Commons Clause License Condition v1.0**.
 
-You may use UnitConverter free of charge in personal, open, internal, and commercial software. You may distribute and sell products that include or depend on UnitConverter. The Commons Clause restriction means you may not sell UnitConverter itself, or a product or service whose value derives entirely or substantially from UnitConverter, without a separate license from the licensor.
+You may use UnitTools free of charge in personal, open, internal, and commercial software. You may distribute and sell products that include or depend on UnitTools. The Commons Clause restriction means you may not sell UnitTools itself, or a product or service whose value derives entirely or substantially from UnitTools, without a separate license from the licensor.
 
 This licensing model is intentionally **not OSI Open Source** because the Commons Clause adds a commercial-sale restriction to Apache 2.0.
 
@@ -452,17 +452,17 @@ See [LICENSE.md](LICENSE.md) and [NOTICE](NOTICE) for the complete terms and att
 
 | Path | Contents |
 | --- | --- |
-| `src/UnitConverter` | Conversion library, retaining the family and unit-system folders |
-| `tests/UnitConverter.Tests` | NUnit tests, catalog-wide conformance, API contracts, localization completeness, and parser abuse/fuzz coverage |
-| `samples/UnitConverter.Demo` | Console examples of the existing APIs |
+| `src/UnitTools` | Conversion library, retaining the family and unit-system folders |
+| `tests/UnitTools.Tests` | NUnit tests, catalog-wide conformance, API contracts, localization completeness, and parser abuse/fuzz coverage |
+| `samples/UnitTools.Demo` | Console examples of the existing APIs |
 | `docs` | API guides, supported units, migration notes, and developer documentation |
 | `scripts/verify_package.py` | Package inspection plus netstandard2.0/net8.0/net10.0 clean-consumer verification |
-| `tools/UnitConverter.ApiCompat` | Dependency-free public API fingerprint checker used by CI |
+| `tools/UnitTools.ApiCompat` | Dependency-free public API fingerprint checker used by CI |
 
 Run the sample with:
 
 ```sh
-dotnet run --project samples/UnitConverter.Demo --configuration Release
+dotnet run --project samples/UnitTools.Demo --configuration Release
 ```
 
 ## Documentation

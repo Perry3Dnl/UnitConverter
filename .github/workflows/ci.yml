@@ -39,7 +39,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release -- --check 2>&1 | tee api-compat-check.log
+          dotnet run --project tools/UnitTools.ApiCompat/UnitTools.ApiCompat.csproj --configuration Release -- --check 2>&1 | tee api-compat-check.log
           result=${PIPESTATUS[0]}
           if [ "$result" -ne 0 ]; then
             {
@@ -52,32 +52,32 @@ jobs:
           fi
           exit "$result"
       - name: Restore
-        run: dotnet restore UnitConverter.sln
+        run: dotnet restore UnitTools.sln
       - name: Build
-        run: dotnet build UnitConverter.sln --configuration Release --no-restore
+        run: dotnet build UnitTools.sln --configuration Release --no-restore
       - name: Test
-        run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitConverter.trx" --results-directory artifacts/test-results
+        run: dotnet test tests/UnitTools.Tests/UnitTools.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=UnitTools.trx" --results-directory artifacts/test-results
       - name: Verify analyzer diagnostic
         shell: bash
         run: |
           mkdir -p artifacts/analyzers
-          dotnet build tests/UnitConverter.AnalyzerSmoke/UnitConverter.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
+          dotnet build tests/UnitTools.AnalyzerSmoke/UnitTools.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
           test "$(grep -Eo 'Program\.cs\([0-9]+,[0-9]+\): warning UC0002' artifacts/analyzers/build.log | sort -u | wc -l)" -eq 2
       - name: Pack
         run: |
-          dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
-          dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
-          dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitTools/UnitTools.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitTools.SystemTextJson/UnitTools.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitTools.Analyzers/UnitTools.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
       - name: Verify package and consume it in a clean project
         run: python scripts/verify_package.py artifacts/packages
       - name: Publish NativeAOT smoke consumer
-        run: dotnet publish samples/UnitConverter.NativeAotSmoke/UnitConverter.NativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/nativeaot
+        run: dotnet publish samples/UnitTools.NativeAotSmoke/UnitTools.NativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/nativeaot
       - name: Run NativeAOT smoke consumer
-        run: ./artifacts/nativeaot/UnitConverter.NativeAotSmoke
+        run: ./artifacts/nativeaot/UnitTools.NativeAotSmoke
       - name: Publish JSON NativeAOT smoke consumer
-        run: dotnet publish samples/UnitConverter.JsonNativeAotSmoke/UnitConverter.JsonNativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/json-nativeaot
+        run: dotnet publish samples/UnitTools.JsonNativeAotSmoke/UnitTools.JsonNativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/json-nativeaot
       - name: Run JSON NativeAOT smoke consumer
-        run: ./artifacts/json-nativeaot/UnitConverter.JsonNativeAotSmoke
+        run: ./artifacts/json-nativeaot/UnitTools.JsonNativeAotSmoke
       - name: Upload NuGet packages
         uses: actions/upload-artifact@v7
         with:
