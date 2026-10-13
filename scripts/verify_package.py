@@ -64,7 +64,8 @@ with zipfile.ZipFile(core_package) as archive:
     assert "T:UnitConverter.UnitConverterDynamic" in documented_members
     assert "T:UnitConverter.UnitConverterExact" in documented_members
     assert "T:UnitConverter.Catalog.UnitConverterCatalog" in documented_members
-    assert "README.md" in names
+    assert "README.NUGET.md" in names
+    assert archive.read("README.NUGET.md") == (root / "README.NUGET.md").read_bytes()
     assert "LICENSE.md" in names
     assert "NOTICE" in names
     assert "unitconverter.png" in names
@@ -89,7 +90,7 @@ with zipfile.ZipFile(core_package) as archive:
     assert metadata.findtext("n:copyright", namespaces=namespace) == "Copyright © 2026 Perry3Dnl"
     dependencies = metadata.findall(".//n:dependency", namespace)
     assert all(dependency.attrib["id"] == "NETStandard.Library" for dependency in dependencies)
-    assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
     assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
@@ -107,7 +108,8 @@ with zipfile.ZipFile(json_package) as archive:
         for member in json_docs.findall(".//member")
     }
     assert "T:UnitConverter.SystemTextJson.UnitConverterJson" in json_documented_members
-    assert "README.md" in names
+    assert "README.NUGET.md" in names
+    assert archive.read("README.NUGET.md") == (root / "README.NUGET.md").read_bytes()
     assert "LICENSE.md" in names
     assert "NOTICE" in names
     assert "unitconverter.png" in names
@@ -129,7 +131,7 @@ with zipfile.ZipFile(json_package) as archive:
     }
     assert "UnitConverter" in dependency_ids
     assert "System.Text.Json" in dependency_ids
-    assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
     assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
@@ -139,7 +141,8 @@ with zipfile.ZipFile(json_package) as archive:
 with zipfile.ZipFile(analyzer_package) as archive:
     names = archive.namelist()
     assert "analyzers/dotnet/cs/UnitConverter.Analyzers.dll" in names
-    assert "README.md" in names
+    assert "README.NUGET.md" in names
+    assert archive.read("README.NUGET.md") == (root / "README.NUGET.md").read_bytes()
     assert "LICENSE.md" in names
     assert "NOTICE" in names
     assert "unitconverter.png" in names
@@ -154,7 +157,7 @@ with zipfile.ZipFile(analyzer_package) as archive:
     assert analyzer_id == "UnitConverter.Analyzers"
     assert analyzer_version == expected_version
     assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter.Analyzers"
-    assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
     assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
