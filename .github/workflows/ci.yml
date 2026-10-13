@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
+      - name: Verify UnitTools package identity and shared version
+        run: python scripts/verify_package_identity.py
       - name: Verify generated additional families
         run: python scripts/generate_additional_families.py --check
       - name: Verify generated aliases
