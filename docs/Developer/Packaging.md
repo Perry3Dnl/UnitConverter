@@ -1,5 +1,7 @@
 # Packaging
 
+Release v1.0.0: three-package tagged release using the validated NuGet publication pipeline.
+
 The core package ID is `UnitConverter`, targeting `netstandard2.0` and `net8.0`. The optional companion packages are `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers`, both targeting `netstandard2.0`. The current public-release candidate is `1.0.0`, defined centrally in `Directory.Build.props`.
 
 ## Create the package
