@@ -1,8 +1,8 @@
 # Packaging
 
-Release v1.0.1: synchronized three-package patch release with NuGet gallery README and immutable v1.0.0 tag.
+Release v1.0.2: synchronized three-package patch release with NuGet gallery README and immutable v1.0.0 tag.
 
-The core package ID is `UnitTools`, targeting `netstandard2.0` and `net8.0`. The optional companion packages are `UnitTools.SystemTextJson` and `UnitTools.Analyzers`, both targeting `netstandard2.0`. The current public-release candidate is `1.0.1`, defined centrally in `Directory.Build.props`.
+The core package ID is `UnitTools`, targeting `netstandard2.0` and `net8.0`. The optional companion packages are `UnitTools.SystemTextJson` and `UnitTools.Analyzers`, both targeting `netstandard2.0`. The current public-release candidate is `1.0.2`, defined centrally in `Directory.Build.props`.
 
 ## Create the package
 
@@ -35,12 +35,12 @@ Before publication, confirm ownership or availability of the intended NuGet pack
 
 The workflow `.github/workflows/publish-nuget.yml` runs package validation on pushes, pull requests and manual dispatches. It publishes **only a validated version tag** matching the central `Directory.Build.props` version and pointing at the current `main` commit.
 
-To publish `1.0.1`:
+To publish `1.0.2`:
 
 1. Confirm all main CI checks and package validation are green.
 2. Configure GitHub Actions secret `NUGET_USER` to the owning NuGet.org username (not an email or API key).
 3. Configure the NuGet Trusted Publishing policy for owner `Perry3Dnl`, repository `UnitTools`, workflow `publish-nuget.yml`, and GitHub environment `nuget-release`. Create the matching GitHub environment.
-4. Push a dedicated commit to `main` whose message begins with **`Release v1.0.1`**. After validation succeeds, the workflow creates `v1.0.1` and dispatches a tagged workflow run.
+4. Push a dedicated commit to `main` whose message begins with **`Release v1.0.2`**. After validation succeeds, the workflow creates `v1.0.2` and dispatches a tagged workflow run.
 5. That tagged run validates the version/tag and all release gates again, publishes the three packages and available symbol packages using short-lived OIDC credentials, then creates a GitHub Release with all packages and `SHA256SUMS.txt`.
 
 The release commit is the only automatic publishing trigger on `main`. Manually dispatching the workflow on `main` performs validation only. Publishing is restricted to a version tag. Do not reuse a published version or move an existing release tag.
