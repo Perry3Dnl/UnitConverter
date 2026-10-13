@@ -87,7 +87,9 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: api-compat-diagnostics
-          path: api-compat-check.log
+          path: |
+            api-compat-check.log
+            artifacts/api-compat/public-api-current.txt
           if-no-files-found: ignore
       - name: Upload test results
         if: always()
