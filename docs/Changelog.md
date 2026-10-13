@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2 — UnitTools naming migration and first branded release
+
+- Complete the repository-wide rename of source namespaces, public types, assemblies, projects, tests and generated code to `UnitTools`.
+- Update CI, NativeAOT, benchmark and NuGet release workflows for renamed paths.
+- Publish the synchronized packages `UnitTools`, `UnitTools.SystemTextJson` and `UnitTools.Analyzers` at version `1.0.2`.
+- Existing `UnitConverter` API names are intentionally replaced; consumers must update their references.
+
 ## 1.0.1 — synchronized NuGet package maintenance release
 
 - Keep all three package versions aligned at `1.0.1`.
