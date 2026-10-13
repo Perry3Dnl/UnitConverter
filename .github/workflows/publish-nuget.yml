@@ -54,34 +54,34 @@ jobs:
           python scripts/verify_decimal_precision.py
       - name: Restore
         run: |
-          dotnet restore UnitConverter.sln
-          dotnet restore tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj
+          dotnet restore UnitTools.sln
+          dotnet restore tools/UnitTools.ApiCompat/UnitTools.ApiCompat.csproj
       - name: Verify public API compatibility baseline
-        run: dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj --configuration Release --no-restore -- --check
+        run: dotnet run --project tools/UnitTools.ApiCompat/UnitTools.ApiCompat.csproj --configuration Release --no-restore -- --check
       - name: Build
-        run: dotnet build UnitConverter.sln --configuration Release --no-restore
+        run: dotnet build UnitTools.sln --configuration Release --no-restore
       - name: Test
-        run: dotnet test tests/UnitConverter.Tests/UnitConverter.Tests.csproj --configuration Release --no-build
+        run: dotnet test tests/UnitTools.Tests/UnitTools.Tests.csproj --configuration Release --no-build
       - name: Verify analyzer diagnostic
         shell: bash
         run: |
           mkdir -p artifacts/analyzers
-          dotnet build tests/UnitConverter.AnalyzerSmoke/UnitConverter.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
+          dotnet build tests/UnitTools.AnalyzerSmoke/UnitTools.AnalyzerSmoke.csproj --configuration Release 2>&1 | tee artifacts/analyzers/build.log
           test "$(grep -Eo 'Program\.cs\([0-9]+,[0-9]+\): warning UC0002' artifacts/analyzers/build.log | sort -u | wc -l)" -eq 2
       - name: Publish NativeAOT smoke consumer
-        run: dotnet publish samples/UnitConverter.NativeAotSmoke/UnitConverter.NativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/nativeaot
+        run: dotnet publish samples/UnitTools.NativeAotSmoke/UnitTools.NativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/nativeaot
       - name: Run NativeAOT smoke consumer
-        run: ./artifacts/nativeaot/UnitConverter.NativeAotSmoke
+        run: ./artifacts/nativeaot/UnitTools.NativeAotSmoke
       - name: Publish JSON NativeAOT smoke consumer
-        run: dotnet publish samples/UnitConverter.JsonNativeAotSmoke/UnitConverter.JsonNativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/json-nativeaot
+        run: dotnet publish samples/UnitTools.JsonNativeAotSmoke/UnitTools.JsonNativeAotSmoke.csproj --configuration Release --runtime linux-x64 --self-contained true --output artifacts/json-nativeaot
       - name: Run JSON NativeAOT smoke consumer
-        run: ./artifacts/json-nativeaot/UnitConverter.JsonNativeAotSmoke
+        run: ./artifacts/json-nativeaot/UnitTools.JsonNativeAotSmoke
       - name: Pack release packages
         run: |
           mkdir -p artifacts/packages
-          dotnet pack src/UnitConverter/UnitConverter.csproj --configuration Release --no-build --output artifacts/packages
-          dotnet pack src/UnitConverter.SystemTextJson/UnitConverter.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
-          dotnet pack src/UnitConverter.Analyzers/UnitConverter.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitTools/UnitTools.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitTools.SystemTextJson/UnitTools.SystemTextJson.csproj --configuration Release --no-build --output artifacts/packages
+          dotnet pack src/UnitTools.Analyzers/UnitTools.Analyzers.csproj --configuration Release --no-build --output artifacts/packages
       - name: Verify packages and clean consumer matrix
         run: python scripts/verify_package.py artifacts/packages
       - name: Upload verified packages
@@ -123,7 +123,7 @@ jobs:
           import json
           import urllib.error
           import urllib.request
-          ids = ["UnitConverter", "UnitConverter.SystemTextJson", "UnitConverter.Analyzers"]
+          ids = ["UnitTools", "UnitTools.SystemTextJson", "UnitTools.Analyzers"]
           for package_id in ids:
               url = "https://api.nuget.org/v3-flatcontainer/" + package_id.lower() + "/index.json"
               try:
@@ -204,6 +204,6 @@ jobs:
           set -euo pipefail
           TAG="${{ github.ref_name }}"
           if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "UnitConverter $TAG" --generate-notes --verify-tag
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "UnitTools $TAG" --generate-notes --verify-tag
           fi
           gh release upload "$TAG" artifacts/packages/*.nupkg artifacts/packages/*.snupkg artifacts/packages/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --clobber
