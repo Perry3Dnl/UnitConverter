@@ -97,6 +97,9 @@ jobs:
       actions: write
       contents: write
     steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Tag release commit and dispatch workflow
         shell: bash
         env:
@@ -122,6 +125,9 @@ jobs:
       contents: write
       id-token: write
     steps:
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
       - uses: actions/download-artifact@v7
         with:
           name: nuget-release-candidate
@@ -146,13 +152,8 @@ jobs:
           shopt -s nullglob
           packages=()
           symbols=()
-          for package in artifacts/packages/*.nupkg; do
-            if [[ "$package" == *.snupkg ]]; then
-              symbols+=("$package")
-            else
-              packages+=("$package")
-            fi
-          done
+          for package in artifacts/packages/*.nupkg; do packages+=("$package"); done
+          for symbol in artifacts/packages/*.snupkg; do symbols+=("$symbol"); done
 
           if [ "${#packages[@]}" -ne 3 ]; then
             echo "Expected exactly 3 release packages, found ${#packages[@]}."
@@ -169,8 +170,7 @@ jobs:
           for symbol in "${symbols[@]}"; do
             dotnet nuget push "$symbol" \
               --api-key "$NUGET_API_KEY" \
-              --source https://api.nuget.org/v3/index.json \
- 
+              --source https://api.nuget.org/v3/index.json
           done
       - name: Generate SHA256 hashes
         shell: bash
