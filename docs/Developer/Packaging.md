@@ -29,24 +29,21 @@ The packages use a custom license file because the project is licensed under Apa
 Before publication, confirm ownership or availability of the intended NuGet package IDs.
 
 
-## NuGet publication
+## NuGet publication — Unclaimable-style tagged workflow
 
-Publication is intentionally separate from the normal build workflow. `.github/workflows/publish-nuget.yml` is manual-only and first reruns generated-source checks, the public API compatibility baseline, the full test suite, package verification, and the clean consumer matrix. Only the second job receives GitHub OIDC permission.
+The workflow `.github/workflows/publish-nuget.yml` runs package validation on pushes, pull requests and manual dispatches. It publishes **only a validated version tag** matching the central `Directory.Build.props` version and pointing at the current `main` commit.
 
-The workflow uses NuGet Trusted Publishing through `NuGet/login@v1`; no long-lived NuGet API key is stored in the repository.
+To publish `1.0.0`:
 
-Before the first publish:
+1. Confirm all main CI checks and package validation are green.
+2. Configure GitHub Actions secret `NUGET_USER` to the owning NuGet.org username (not an email or API key).
+3. Configure the NuGet Trusted Publishing policy for owner `Perry3Dnl`, repository `UnitConverter`, workflow `publish-nuget.yml`, and GitHub environment `nuget-release`. Create the matching GitHub environment.
+4. Push a dedicated commit to `main` whose message begins with **`Release v1.0.0`**. After validation succeeds, the workflow creates `v1.0.0` and dispatches a tagged workflow run.
+5. That tagged run validates the version/tag and all release gates again, publishes the three packages and available symbol packages using short-lived OIDC credentials, then creates a GitHub Release with all packages and `SHA256SUMS.txt`.
 
-1. Confirm that the intended IDs `UnitConverter`, `UnitConverter.SystemTextJson`, and `UnitConverter.Analyzers` are available to or already owned by the intended NuGet.org account. The repository does not assume ID ownership.
-2. On NuGet.org, create a Trusted Publishing policy for this GitHub repository and workflow file `publish-nuget.yml`.
-3. Configure the policy with GitHub environment `nuget-release`.
-4. Create the matching GitHub environment `nuget-release`; required reviewers are recommended so a manual dispatch still needs human approval.
-5. Run **Publish NuGet release** manually, provide the NuGet.org username that owns the policy, and type exactly `publish` in the confirmation input.
-6. After the first successful publish, verify package README rendering, license presentation, symbols, dependency metadata, target frameworks, and ownership directly on nuget.org.
+The release commit is the only automatic publishing trigger on `main`. Manually dispatching the workflow on `main` performs validation only. Publishing is restricted to a version tag. Do not reuse a published version or move an existing release tag.
 
-For a private GitHub repository, NuGet.org can initially show a Trusted Publishing policy as temporarily active until the first successful publish associates the immutable GitHub owner/repository identifiers.
-
-The publication workflow uses `--skip-duplicate`, but a version should still be treated as immutable once published. Change the central version in `Directory.Build.props` for every subsequent release.
+GitHub Actions can also be manually dispatched on an existing correct version tag for recovery. The first NuGet publication requires the package IDs to be available or owned by the NuGet account; a public GitHub repository does not confer NuGet package ownership.
 
 ## Release checklist
 
