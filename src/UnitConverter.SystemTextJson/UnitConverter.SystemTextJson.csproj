@@ -16,7 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
-    <PackageReleaseNotes>2.0.0-preview.2: System.Text.Json support for UnitValue&lt;TUnit&gt;; stable enum-name output with exact-name round-trip guarantees; catalog alias input; catalog-wide round-trip validation; explicit JSON token validation; shipped XML IntelliSense documentation; NativeAOT validation; Apache-2.0 with Commons Clause v1.0 licensing.</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.0: System.Text.Json support for UnitValue&lt;TUnit&gt;; stable enum-name output with exact-name round-trip guarantees; catalog alias input; catalog-wide round-trip validation; explicit JSON token validation; shipped XML IntelliSense documentation; NativeAOT validation; Apache-2.0 with Commons Clause v1.0 licensing.</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <IncludeSymbols>true</IncludeSymbols>
