@@ -2,7 +2,7 @@
 
 Release v1.0.1: synchronized three-package patch release with NuGet gallery README and immutable v1.0.0 tag.
 
-The core package ID is `UnitConverter`, targeting `netstandard2.0` and `net8.0`. The optional companion packages are `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers`, both targeting `netstandard2.0`. The current public-release candidate is `1.0.1`, defined centrally in `Directory.Build.props`.
+The core package ID is `UnitTools`, targeting `netstandard2.0` and `net8.0`. The optional companion packages are `UnitTools.SystemTextJson` and `UnitTools.Analyzers`, both targeting `netstandard2.0`. The current public-release candidate is `1.0.1`, defined centrally in `Directory.Build.props`.
 
 ## Create the package
 
