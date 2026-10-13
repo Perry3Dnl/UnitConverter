@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   verify:
+    outputs:
+      version: ${{ steps.release-version.outputs.version }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -27,11 +29,13 @@ jobs:
         with:
           dotnet-version: "10.0.x"
       - name: Check version and tagged release
+        id: release-version
         shell: bash
         run: |
           set -euo pipefail
           VERSION="$(python -c 'import xml.etree.ElementTree as E; print(E.parse("Directory.Build.props").findtext(".//Version"))')"
           echo "Release version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           if [ "${{ github.ref_type }}" = "tag" ]; then
             test "${{ github.ref_name }}" = "v$VERSION"
             git fetch origin main --quiet
@@ -140,37 +144,24 @@ jobs:
           test -n "$NUGET_USER" || { echo "::error::Configure GitHub secret NUGET_USER"; exit 1; }
       - name: NuGet login with Trusted Publishing
         id: nuget-login
-        uses: NuGet/login@v1
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
         with:
           user: ${{ secrets.NUGET_USER }}
-      - name: Push NuGet packages
+      - name: Publish three packages using Unclaimable's Trusted Publishing flow
         shell: bash
         env:
           NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
+          VERSION: ${{ needs.verify.outputs.version }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          packages=()
-          symbols=()
-          for package in artifacts/packages/*.nupkg; do packages+=("$package"); done
-          for symbol in artifacts/packages/*.snupkg; do symbols+=("$symbol"); done
-
-          if [ "${#packages[@]}" -ne 3 ]; then
-            echo "Expected exactly 3 release packages, found ${#packages[@]}."
-            exit 1
-          fi
-
-          for package in "${packages[@]}"; do
-            dotnet nuget push "$package" \
+          extra_args=()
+          if [ "$RUN_ATTEMPT" -gt 1 ]; then extra_args+=(--skip-duplicate); fi
+          for id in UnitConverter UnitConverter.SystemTextJson UnitConverter.Analyzers; do
+            dotnet nuget push "artifacts/packages/${id}.${VERSION}.nupkg" \
               --api-key "$NUGET_API_KEY" \
               --source https://api.nuget.org/v3/index.json \
-              --no-symbols
-          done
-
-          for symbol in "${symbols[@]}"; do
-            dotnet nuget push "$symbol" \
-              --api-key "$NUGET_API_KEY" \
-              --source https://api.nuget.org/v3/index.json
+              "${extra_args[@]}"
           done
       - name: Generate SHA256 hashes
         shell: bash
