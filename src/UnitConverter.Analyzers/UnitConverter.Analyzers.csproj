@@ -4,14 +4,14 @@
     <AssemblyName>UnitConverter.Analyzers</AssemblyName>
     <RootNamespace>UnitConverter.Analyzers</RootNamespace>
     <IsPackable>true</IsPackable>
-    <PackageId>UnitConverter.Analyzers</PackageId>
+    <PackageId>UnitTools.Analyzers</PackageId>
     <PackageIcon>unitconverter.png</PackageIcon>
-    <Title>UnitConverter.Analyzers</Title>
+    <Title>UnitTools.Analyzers</Title>
     <Authors>Perry3Dnl</Authors>
     <Description>Optional Roslyn diagnostics for UnitConverter that guide developers toward typed or family-specific APIs when dynamic escape hatches are used with compile-time-known units.</Description>
     <PackageTags>units;conversion;analyzers;roslyn;intellisense;type-safety</PackageTags>
-    <PackageProjectUrl>https://github.com/Perry3Dnl/UnitConverter</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Perry3Dnl/UnitTools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Perry3Dnl/UnitTools</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageReadmeFile>README.NUGET.md</PackageReadmeFile>
