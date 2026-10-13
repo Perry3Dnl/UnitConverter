@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - "src/UnitConverter/**"
+      - "src/UnitTools/**"
       - "benchmarks/**"
       - "scripts/summarize_benchmarks.py"
       - "scripts/compare_benchmarks.py"
       - ".github/workflows/benchmarks.yml"
   pull_request:
     paths:
-      - "src/UnitConverter/**"
+      - "src/UnitTools/**"
       - "benchmarks/**"
       - "scripts/summarize_benchmarks.py"
       - "scripts/compare_benchmarks.py"
@@ -39,7 +39,7 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Restore benchmark project
-        run: dotnet restore benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj
+        run: dotnet restore benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj
 
       - name: Capture reference benchmark baseline
         run: |
@@ -47,7 +47,7 @@ jobs:
           cp docs/benchmarks/latest.json artifacts/benchmarks/reference.json
 
       - name: Run BenchmarkDotNet
-        run: dotnet run --project benchmarks/UnitConverter.Benchmarks/UnitConverter.Benchmarks.csproj --configuration Release --no-restore -- --filter "*"
+        run: dotnet run --project benchmarks/UnitTools.Benchmarks/UnitTools.Benchmarks.csproj --configuration Release --no-restore -- --filter "*"
 
       - name: Summarize benchmark results and render badges
         run: |
@@ -77,7 +77,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: unitconverter-benchmarks
+          name: unittools-benchmarks
           path: |
             BenchmarkDotNet.Artifacts/results/*
             artifacts/benchmarks/*
@@ -89,7 +89,7 @@ jobs:
       - name: Upload badge assets
         uses: actions/upload-artifact@v7
         with:
-          name: unitconverter-benchmark-badges
+          name: unittools-benchmark-badges
           path: |
             docs/benchmarks/latest.json
             docs/benchmarks/badges/*.svg
@@ -111,7 +111,7 @@ jobs:
       - name: Download generated badge assets
         uses: actions/download-artifact@v7
         with:
-          name: unitconverter-benchmark-badges
+          name: unittools-benchmark-badges
           path: artifacts/benchmark-badges
 
       - name: Update checked-in badge assets
