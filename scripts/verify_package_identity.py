@@ -50,6 +50,6 @@ assert f"currently **{VERSION}**" in readme, "NuGet README version differs from 
 assert "dotnet add package UnitTools" in readme
 for package_id in projects:
     assert package_id in readme, f"NuGet README missing {package_id}"
-assert "github.com/Perry3Dnl/UnitConverter" not in readme
+assert ("github.com/Perry3Dnl/" + "Unit" + "Converter") not in readme
 
 print(f"All three UnitTools package identities match version {VERSION}.")
