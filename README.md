@@ -12,7 +12,7 @@ A high-performance, dependency-free .NET unit conversion engine built for both s
 
 UnitConverter does not force one programming model. Use a direct `double`/`float`/`decimal` conversion when that is all you need, fluent numeric extensions when you want compact code, `UnitValue<TUnit>` when the unit should travel with the value, or strongly typed quantities when compile-time dimensional safety matters. Exact decimal/rational routes, allocation-aware span APIs, runtime unit detection, localization, NativeAOT validation, and BenchmarkDotNet regression gates are all part of the same standalone core design.
 
-The current public-release candidate is **`UnitConverter` `2.0.0-preview.2`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. The packages have not yet been published to nuget.org.
+The initial public-release candidate is **`UnitConverter` `1.0.0`**. The core package targets **.NET Standard 2.0 and .NET 8**. Optional `UnitConverter.SystemTextJson` and `UnitConverter.Analyzers` companion packages target **.NET Standard 2.0**. The release candidate is validated by **5,218 tests**, public-API compatibility fingerprints, clean NuGet consumers on **netstandard2.0 / net8.0 / net10.0**, NativeAOT smoke applications, and BenchmarkDotNet regression gates. The packages have not yet been published to nuget.org.
 
 > **Scale metrics are generated from the compiled catalog/API, not estimated.** A conversion pair is one directed `from → to` route within the same family and excludes identity conversions such as `Meter → Meter`. Reproduce the current numbers with `dotnet run --project tools/UnitConverter.ApiCompat/UnitConverter.ApiCompat.csproj -c Release -- --stats`.
 
@@ -103,7 +103,7 @@ The `.nupkg` and `.snupkg` are written to `artifacts/packages`. The SDK is a bui
 Install the candidate into an existing application using the absolute path to that directory:
 
 ```sh
-dotnet add package UnitConverter --version 2.0.0-preview.2 --source /absolute/path/to/UnitConverter/artifacts/packages
+dotnet add package UnitConverter --version 1.0.0 --source /absolute/path/to/UnitConverter/artifacts/packages
 ```
 
 GitHub Actions also builds the solution, runs the NUnit suite, verifies the checked-in public API fingerprint baseline, creates all three packages, and installs the produced packages into clean **netstandard2.0**, **net8.0**, and **net10.0** consumers. Successful runs expose a `nuget-packages` artifact. CI also publishes and executes NativeAOT smoke consumers for the core APIs and the System.Text.Json companion; AOT builds treat trimming/dynamic-code warnings as errors. Parser abuse/fuzz tests and explicit expression-complexity limits guard malformed and adversarial input.
