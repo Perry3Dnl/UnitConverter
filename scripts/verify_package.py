@@ -67,6 +67,8 @@ with zipfile.ZipFile(core_package) as archive:
     assert "README.md" in names
     assert "LICENSE.md" in names
     assert "NOTICE" in names
+    assert "unitconverter.png" in names
+    assert archive.read("unitconverter.png") == (root / "assets/unitconverter.png").read_bytes()
     assert sorted(name for name in names if name.endswith(".dll")) == [
         "lib/net8.0/UnitConverter.dll",
         "lib/netstandard2.0/UnitConverter.dll",
@@ -88,6 +90,7 @@ with zipfile.ZipFile(core_package) as archive:
     dependencies = metadata.findall(".//n:dependency", namespace)
     assert all(dependency.attrib["id"] == "NETStandard.Library" for dependency in dependencies)
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
     assert license_element.attrib.get("type") == "file"
@@ -125,6 +128,7 @@ with zipfile.ZipFile(json_package) as archive:
     assert "UnitConverter" in dependency_ids
     assert "System.Text.Json" in dependency_ids
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
     assert license_element.attrib.get("type") == "file"
@@ -147,6 +151,7 @@ with zipfile.ZipFile(analyzer_package) as archive:
     assert analyzer_version == expected_version
     assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter.Analyzers"
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.md"
+    assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
     license_element = metadata.find("n:license", namespace)
     assert license_element is not None
     assert license_element.attrib.get("type") == "file"
