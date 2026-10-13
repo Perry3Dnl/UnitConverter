@@ -113,7 +113,33 @@ jobs:
           VERSION="$(python -c 'import xml.etree.ElementTree as E; print(E.parse("Directory.Build.props").findtext(".//Version"))')"
           TAG="v$VERSION"
           if OLD="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" --jq '.object.sha' 2>/dev/null)"; then
-            test "$OLD" = "$GITHUB_SHA" || { echo "::error::Existing tag points at another commit"; exit 1; }
+            if [ "$OLD" != "$GITHUB_SHA" ]; then
+              # A version tag is immutable after a successful publication.
+              # Only repair the failed initial v1.0.0 tag when no package exists.
+              test "$TAG" = "v1.0.0" || { echo "::error::Refusing to move an existing release tag"; exit 1; }
+              python - <<'PY'
+          import json
+          import urllib.error
+          import urllib.request
+          ids = ["UnitConverter", "UnitConverter.SystemTextJson", "UnitConverter.Analyzers"]
+          for package_id in ids:
+              url = "https://api.nuget.org/v3-flatcontainer/" + package_id.lower() + "/index.json"
+              try:
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      versions = json.load(response)["versions"]
+              except urllib.error.HTTPError as error:
+                  if error.code == 404:
+                      versions = []
+                  else:
+                      raise
+              if "1.0.0" in versions:
+                  raise SystemExit(f"Refusing to move v1.0.0: {package_id} 1.0.0 is already published.")
+              print(f"Confirmed not published: {package_id} 1.0.0")
+          PY
+              gh api --method PATCH "repos/$GITHUB_REPOSITORY/git/refs/tags/$TAG" \
+                -f sha="$GITHUB_SHA" -F force=true > /dev/null
+              echo "Repaired unpublished initial release tag $TAG."
+            fi
           else
             gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$TAG" -f sha="$GITHUB_SHA" > /dev/null
           fi
