@@ -15,6 +15,10 @@ tracked = [Path(p.decode()) for p in git("ls-files", "-z").split(b"\0") if p]
 changes = 0
 renamed = 0
 for relative in sorted(tracked, key=lambda p: (len(p.parts), len(str(p))), reverse=True):
+    # The GitHub Actions token cannot push modifications to workflow files.
+    # Update those separately through the authorized GitHub connector after PR creation.
+    if relative.parts[:2] == (".github", "workflows"):
+        continue
     original = ROOT / relative
     if not original.is_file():
         continue
