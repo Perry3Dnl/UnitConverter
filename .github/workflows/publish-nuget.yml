@@ -39,7 +39,7 @@ jobs:
           if [ "${{ github.ref_type }}" = "tag" ]; then
             test "${{ github.ref_name }}" = "v$VERSION"
             git fetch origin main --quiet
-            test "${{ github.sha }}" = "$(git rev-parse origin/main)"
+            git merge-base --is-ancestor "${{ github.sha }}" origin/main || { echo "::error::Release tag must reference a commit on main."; exit 1; }
           fi
       - name: Verify generated sources
         run: |
