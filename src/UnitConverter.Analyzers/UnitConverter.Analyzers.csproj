@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/Perry3Dnl/UnitConverter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.NUGET.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
     <PackageReleaseNotes>1.0.0: optional UC0002 guidance for compile-time-known dynamic conversions with conservative false-positive filtering across Convert/TryConvert and Roslyn release tracking.</PackageReleaseNotes>
@@ -32,7 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(OutputPath)$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../README.NUGET.md" Pack="true" PackagePath="/" />
     <None Include="../../LICENSE.md" Pack="true" PackagePath="/" />
     <None Include="../../NOTICE" Pack="true" PackagePath="/" />
     <None Include="../../assets/unitconverter.png" Pack="true" PackagePath="/" />
