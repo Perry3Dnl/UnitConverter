@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 — synchronized NuGet package maintenance release
+
+- Keep all three package versions aligned at `1.0.1`.
+- Package a separate NuGet gallery README (`README.NUGET.md`) while retaining the full GitHub README.
+- Validate the README and logo payloads in all three packages.
+- Use tagged Trusted Publishing with immutable prior release tags.
+
+
 ## 1.0.0 — standalone NuGet release candidate
 
 This is the first planned public NuGet release of the standalone library. The feature and hardening history below was prepared under the internal `2.0.0-preview.2` candidate label before publication.
