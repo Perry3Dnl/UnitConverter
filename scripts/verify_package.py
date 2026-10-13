@@ -25,9 +25,9 @@ packages = {
 }
 
 expected_package_names = {
-    "core": "UnitConverter." + expected_version + ".nupkg",
-    "json": "UnitConverter.SystemTextJson." + expected_version + ".nupkg",
-    "analyzers": "UnitConverter.Analyzers." + expected_version + ".nupkg",
+    "core": "UnitTools." + expected_version + ".nupkg",
+    "json": "UnitTools.SystemTextJson." + expected_version + ".nupkg",
+    "analyzers": "UnitTools.Analyzers." + expected_version + ".nupkg",
 }
 
 missing = [
@@ -83,9 +83,9 @@ with zipfile.ZipFile(core_package) as archive:
     metadata = specification.find("n:metadata", namespace)
     core_id = metadata.findtext("n:id", namespaces=namespace)
     core_version = metadata.findtext("n:version", namespaces=namespace)
-    assert core_id == "UnitConverter"
+    assert core_id == "UnitTools"
     assert core_version == expected_version
-    assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter"
+    assert metadata.findtext("n:title", namespaces=namespace) == "UnitTools"
     assert metadata.findtext("n:releaseNotes", namespaces=namespace)
     assert metadata.findtext("n:copyright", namespaces=namespace) == "Copyright © 2026 Perry3Dnl"
     dependencies = metadata.findall(".//n:dependency", namespace)
@@ -120,16 +120,16 @@ with zipfile.ZipFile(json_package) as archive:
     metadata = specification.find("n:metadata", namespace)
     json_id = metadata.findtext("n:id", namespaces=namespace)
     json_version = metadata.findtext("n:version", namespaces=namespace)
-    assert json_id == "UnitConverter.SystemTextJson"
+    assert json_id == "UnitTools.SystemTextJson"
     assert json_version == expected_version
-    assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter.SystemTextJson"
+    assert metadata.findtext("n:title", namespaces=namespace) == "UnitTools.SystemTextJson"
     assert metadata.findtext("n:releaseNotes", namespaces=namespace)
     assert metadata.findtext("n:copyright", namespaces=namespace) == "Copyright © 2026 Perry3Dnl"
     dependency_ids = {
         dependency.attrib["id"]
         for dependency in metadata.findall(".//n:dependency", namespace)
     }
-    assert "UnitConverter" in dependency_ids
+    assert "UnitTools" in dependency_ids
     assert "System.Text.Json" in dependency_ids
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
     assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
@@ -154,9 +154,9 @@ with zipfile.ZipFile(analyzer_package) as archive:
     metadata = specification.find("n:metadata", namespace)
     analyzer_id = metadata.findtext("n:id", namespaces=namespace)
     analyzer_version = metadata.findtext("n:version", namespaces=namespace)
-    assert analyzer_id == "UnitConverter.Analyzers"
+    assert analyzer_id == "UnitTools.Analyzers"
     assert analyzer_version == expected_version
-    assert metadata.findtext("n:title", namespaces=namespace) == "UnitConverter.Analyzers"
+    assert metadata.findtext("n:title", namespaces=namespace) == "UnitTools.Analyzers"
     assert metadata.findtext("n:readme", namespaces=namespace) == "README.NUGET.md"
     assert metadata.findtext("n:icon", namespaces=namespace) == "unitconverter.png"
     license_element = metadata.find("n:license", namespace)
