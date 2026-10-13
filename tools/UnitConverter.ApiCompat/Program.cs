@@ -39,7 +39,13 @@ internal static class Program
         }
 
         string expected = File.ReadAllText(baselinePath);
-        if (string.Equals(expected, current, StringComparison.Ordinal))
+        // Compare canonical API fingerprints, not incidental ordering or line endings.
+        // Sorting retains duplicates, so meaningful additions/removals still fail.
+        string[] expectedCanonical = expected.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] currentCanonical = current.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        Array.Sort(expectedCanonical, StringComparer.Ordinal);
+        Array.Sort(currentCanonical, StringComparer.Ordinal);
+        if (expectedCanonical.SequenceEqual(currentCanonical, StringComparer.Ordinal))
         {
             Console.WriteLine("Public API baseline is unchanged.");
             return 0;
