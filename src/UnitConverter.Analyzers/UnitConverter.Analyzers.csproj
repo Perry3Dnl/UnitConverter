@@ -5,6 +5,7 @@
     <RootNamespace>UnitConverter.Analyzers</RootNamespace>
     <IsPackable>true</IsPackable>
     <PackageId>UnitConverter.Analyzers</PackageId>
+    <PackageIcon>unitconverter.png</PackageIcon>
     <Title>UnitConverter.Analyzers</Title>
     <Authors>Perry3Dnl</Authors>
     <Description>Optional Roslyn diagnostics for UnitConverter that guide developers toward typed or family-specific APIs when dynamic escape hatches are used with compile-time-known units.</Description>
@@ -34,5 +35,6 @@
     <None Include="../../README.md" Pack="true" PackagePath="/" />
     <None Include="../../LICENSE.md" Pack="true" PackagePath="/" />
     <None Include="../../NOTICE" Pack="true" PackagePath="/" />
+    <None Include="../../assets/unitconverter.png" Pack="true" PackagePath="/" />
   </ItemGroup>
 </Project>

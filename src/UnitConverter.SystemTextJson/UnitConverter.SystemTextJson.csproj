@@ -5,6 +5,7 @@
     <RootNamespace>UnitConverter.SystemTextJson</RootNamespace>
     <IsPackable>true</IsPackable>
     <PackageId>UnitConverter.SystemTextJson</PackageId>
+    <PackageIcon>unitconverter.png</PackageIcon>
     <Title>UnitConverter.SystemTextJson</Title>
     <Authors>Perry3Dnl</Authors>
     <Description>System.Text.Json serialization companion for UnitConverter typed unit values, with stable enum-name output, catalog alias input, and NativeAOT validation.</Description>
@@ -30,5 +31,6 @@
     <None Include="../../README.md" Pack="true" PackagePath="/" />
     <None Include="../../LICENSE.md" Pack="true" PackagePath="/" />
     <None Include="../../NOTICE" Pack="true" PackagePath="/" />
+    <None Include="../../assets/unitconverter.png" Pack="true" PackagePath="/" />
   </ItemGroup>
 </Project>

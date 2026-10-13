@@ -5,6 +5,7 @@
     <RootNamespace>UnitConverter</RootNamespace>
     <IsPackable>true</IsPackable>
     <PackageId>UnitConverter</PackageId>
+    <PackageIcon>unitconverter.png</PackageIcon>
     <Title>UnitConverter</Title>
     <Authors>Perry3Dnl</Authors>
     <Description>Dependency-free high-performance .NET unit conversion library with 150 physical and engineering families, direct numeric APIs, strongly typed quantities, exact decimal/rational conversion, span parsing/formatting, dynamic and composite conversion, custom units, metadata, localization, and arbitrary-scale numbers.</Description>
@@ -26,5 +27,6 @@
     <None Include="../../README.md" Pack="true" PackagePath="/" />
     <None Include="../../LICENSE.md" Pack="true" PackagePath="/" />
     <None Include="../../NOTICE" Pack="true" PackagePath="/" />
+    <None Include="../../assets/unitconverter.png" Pack="true" PackagePath="/" />
   </ItemGroup>
 </Project>
