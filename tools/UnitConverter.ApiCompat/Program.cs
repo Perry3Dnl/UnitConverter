@@ -47,7 +47,13 @@ internal static class Program
 
         var expectedLines = new HashSet<string>(expected.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries), StringComparer.Ordinal);
         var currentLines = new HashSet<string>(current.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries), StringComparer.Ordinal);
+        string actualPath = Path.Combine(root, "artifacts", "api-compat", "public-api-current.txt");
+        Directory.CreateDirectory(Path.GetDirectoryName(actualPath));
+        File.WriteAllText(actualPath, current, new UTF8Encoding(false));
         Console.Error.WriteLine("Public API baseline changed.");
+        Console.Error.WriteLine("Current snapshot written to " + actualPath);
+        Console.Error.WriteLine("Removed or modified fingerprints: " + expectedLines.Except(currentLines).Count());
+        Console.Error.WriteLine("Added or modified fingerprints: " + currentLines.Except(expectedLines).Count());
         foreach (string line in expectedLines.Except(currentLines).OrderBy(x => x, StringComparer.Ordinal)) Console.Error.WriteLine("- " + line);
         foreach (string line in currentLines.Except(expectedLines).OrderBy(x => x, StringComparer.Ordinal)) Console.Error.WriteLine("+ " + line);
         Console.Error.WriteLine("If intentional, regenerate with: dotnet run --project tools/UnitConverter.ApiCompat -- --write");
